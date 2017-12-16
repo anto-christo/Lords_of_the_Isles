@@ -1,0 +1,25 @@
+.hb {
+	height: 90%;
+	width: 100%;
+	margin: 0;
+}
+
+.logo {
+	display: block;
+    margin: auto;
+    width: 40%;
+    margin-top: 15%;
+
+}
+
+.btn{
+	display: block;
+    margin: auto;
+    width: 40%;
+    margin-top: 3%;
+	width: 10%;
+	font-size: 25px;
+	font-style: italic;
+	border-radius: 50px 20px
+
+}
