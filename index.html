@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Hello, world!</title>
+    <title>Lords of the Isles</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,14 +16,52 @@
       }
 
     </style>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="css/custom.css">
 
+    <script type="text/javascript">
+      $(document).ready(function(){
+          $('[data-toggle="popover"]').popover({
+              placement : 'left',
+              trigger : 'hover'
+          });
+      });
+    </script>
+
   </head>
   <body>
+
+  <div class="wiki">
+    <button type="button" class="sideb btn btn-dark" data-container="body" data-toggle="popover" data-placement="left" data-content="Go to Lords of the Isles Wiki">W</button>
+    <br> 
+    <button style="margin-top: 9px" type="button" class="sideb btn btn-dark" data-container="body" data-toggle="popover" data-placement="left" data-content="Visit the forums">&nbsp;F&nbsp;</button>
+  </div>
+
+  <div class="help" data-toggle="modal" data-target="#exampleModal" > 
+      <img width="50" height="50" src="assets/ques.png" data-container="body" data-toggle="popover" data-placement="left" data-content="Click for help">
+  </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Hint</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        // game description here
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
    <!--  <img src="assets/b2.jpg"> -->
   <div>
@@ -32,7 +70,7 @@
     </div>
     <div>
       <!-- <button class="button button2">Play</button> -->
-      <button type="button" class="btn btn-primary">Play</button>
+      <button type="button" class=" playb btn btn-primary">Play</button>
     </div>
   </div>
 
@@ -41,5 +79,6 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
   </body>
 </html>

@@ -12,7 +12,7 @@
 
 }
 
-.btn{
+.playb{
 	display: block;
     margin: auto;
     width: 40%;
@@ -22,4 +22,23 @@
 	font-style: italic;
 	border-radius: 50px 20px
 
+}
+
+.help {
+	z-index: 1;
+	position: absolute;
+	margin-left: 95%;
+	margin-top: 28%;
+}
+
+.wiki {
+	z-index: 2;
+	position: absolute;
+	margin-left: 95%;
+	margin-top: 5%;
+
+}
+
+.sideb {
+	font-size: 18px
 }
