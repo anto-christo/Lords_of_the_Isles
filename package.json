@@ -1,0 +1,24 @@
+{
+  "name": "lords_of_the_isles",
+  "version": "1.0.0",
+  "description": "Teknack2k18 game",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/AkashG6/Lords_Of_The_Isles.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/AkashG6/Lords_Of_The_Isles/issues"
+  },
+  "homepage": "https://gitlab.com/AkashG6/Lords_Of_The_Isles#README",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongodb": "^2.2.33",
+    "socket.io": "^2.0.4"
+  }
+}

@@ -35,6 +35,33 @@
   </head>
   <body>
 
+  <script type="text/javascript">
+      
+      function send_player_name()
+      {
+         $.ajax({
+                    type: 'POST',
+                    url: '/player_name',
+                    data: { username:person },
+                    dataType: 'json',
+         
+                     });
+      }
+
+    </script>
+
+
+
+
+  <script type="text/javascript">
+    var person="";
+    while(!person)
+    {
+      person  = prompt("Please enter your name");
+    }
+    send_player_name();
+    console.log(person);
+  </script>
   <div class="wiki">
     <button type="button" class="sideb btn btn-dark" data-container="body" data-toggle="popover" data-placement="left" data-content="Go to Lords of the Isles Wiki">W</button>
     <br> 
@@ -82,6 +109,10 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+    
+
+
 
   </body>
 </html>
