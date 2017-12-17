@@ -1,0 +1,50 @@
+#timer {
+	font-style: oblique;
+	margin-top: 8px ;
+}
+
+#ticks {
+	font-weight: bold;
+	margin-top: 8px ;
+}
+
+.col-md-8{
+	margin: 0px;
+	padding: 0px;
+}
+
+.columns{
+	margin: 0px;
+	padding: 0px;
+}
+
+.col-md-6{
+	margin: 0px;
+	padding: 0px;
+}
+
+.top-left {
+	padding: 0px
+}
+
+.money {
+	font-family: "Algerian";
+	font-size: 25px;
+	font-weight: bold;
+	position: absolute;
+	margin-top: -40px;
+	margin-left: 55px
+}
+
+.three {
+	position: fixed; 
+	bottom: 0;
+}
+
+.linksb {
+	font-size: 25px;
+	width: 100%;
+	height: 100%;
+	border-radius: 0px;
+	/*padding: 10px;*/
+}

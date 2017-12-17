@@ -2,88 +2,227 @@
 <html>
 <head>
 	<title>Home</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" type="text/css" href="css/home.css">
+
+  <script type="text/javascript">
+      $(document).ready(function(){
+          $('[data-toggle="popover"]').popover({
+              placement : 'bottom',
+              trigger : 'hover'
+          });
+      });
+    </script>
+    <script type="text/javascript">
+      var x = 0;  // value to be taken from database
+      var text;
+      if (x==1) 
+      {
+        text =  "Already used random event for this tick";
+      }
+      else
+      {
+        text =  "Click to trigger random event";
+      }
+      $(document).ready(function(){
+          $('[data-toggle="dice"]').popover({
+              placement : 'bottom',
+              trigger : 'hover',
+              html : true,
+              content : text
+          });
+      });
+    </script>
+
 </head>
 
 
 <body>
 
-	<div class="container-fluid">
-  		<div class="row row-eq-height">
-    		<div class="col-md-1" style="border: 1px solid grey">
-    				<p>$100,000</p>
-    		</div>
-    
-    		<div class="col-md-1" style="border: 1px solid grey">
-      			<center>
-      				<button class="btn btn-warning" style="height: 100%">Visit Bank</button>
-      			</center>
-    		</div>
-    
-    		<div class="col-md-8" style="border: 1px solid grey">
-      			<center>
-      				<p>LORD OF THE ISLES</p>
-      			</center>
-    		</div>
+	<div class="container-fluid" >
+  		<div class="row row-eq-height" >
 
-    		<div class="col-md-1" style="border: 1px solid grey">
-      			<center>
-      				<button class="btn btn-info">Roll Dice</button>
-      			</center>
-    		</div>
+        <div class="col-md-2" >
+          <div class="row">
+            <div class="col-md-8" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Your Gold">
+                <img src="assets/bg/gold.png" height="50" style="padding-left: 10px;" >
+                <div class="money">
+                    <script type="text/javascript">
+                        
+                        var value = 2000000 // value to be taken from databse
+                        document.write(value);
 
-    		<div class="col-md-1" style="border: 1px solid grey">
+                    </script>
+                </div> 
+            </div>
+            <div class="col-md-4" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Go to Bank">
+                <img height="45" src="assets/bg/bank.png">
+            </div>
+          </div>
+          
+        </div>
+        <div class="col-md-1" style="border: 1px solid grey;">
+          <div class="row" style="height: 50px">
+            <div class="col-md-6 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Wiki">
+              <button type="button" class="btn btn-light linksb">W</button>
+            </div>
+            <div class="col-md-6 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Forums">
+              <button type="button" class="btn btn-light linksb">F</button>
+            </div>
+          </div>
+        </div>
+    		<div class="col-md-6" style="border: 1px solid grey" >
       			<center>
-      				<p>Timer</p>
+      				<img height="50" src="assets/bg/logo.png" style="padding: 5px;" >  
       			</center>
     		</div>
+        <div class="col-md-1" style="border: 1px solid grey" >
+          <div class="row" style="height: 50px">
+            <div class="col-md-6 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Help">
+              <button type="button" class="btn btn-light linksb">H</button>
+
+
+            </div>
+            <div class="col-md-6 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Refresh Leaderboard">
+              <button type="button" class="btn btn-light linksb">R</button>
+
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2" style="border: 1px solid grey">
+            <div class="row">
+              <div class="col-md-4 dice" style="border: 1px solid grey; height: 50px" data-container="body" data-toggle="dice" data-placement="bottom">
+                    <img height="50" src="assets/buttons/dice.png" style="margin-left: -15px; padding: 5px">
+              </div>
+              <div class="col-md-4" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Time left before next tick">
+                  <center>
+                    <h5 id="timer"></h5>
+                  </center>
+              </div>
+              <div class="col-md-4" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Current tick">
+                  <center>
+                    <h5 id="ticks"></h5>
+                  </center>
+              </div>
+            </div>
+        </div>
   		</div>
 	</div>
 
 
+
 	<div class="container-fluid">
-  		<div class="row row-eq-height">
-    		<div class="col-md-2" style="border: 1px solid grey">
-    			<center>
-					<iframe height="500" width="200" src="https://getbootstrap.com/" allowfullscreen></iframe>
-      			</center>   
-      		</div>
+  		<div class="row " > 
+    		<div class="col-md-2 columns" style="border: 1px solid grey;" >
+              <center >
+                <iframe height="600 "  width="225" src="vertical.html" frameborder="0" allowfullscreen ></iframe>
+              </center> 
+      	</div>
     
-    		<div class="col-md-8" style="border: 1px solid grey">
+    		<div class="col-md-8 col-md-8c" style="border: 1px solid grey; ">
       			<center>
       				<div class="embed-responsive embed-responsive-16by9">
-					  <iframe class="embed-responsive-item" src="https://getbootstrap.com/" allowfullscreen></iframe>
+					  <iframe class="embed-responsive-item"  src="island.html" allowfullscreen scrolling="no"></iframe>
 					</div>
       			</center>
     		</div>
     
-    		<div class="col-md-2" style="border: 1px solid grey">
+    		<div class="col-md-2 columns" style="border: 1px solid grey">
     			<center>
-					<iframe height="500" width="200" src="https://getbootstrap.com/" allowfullscreen></iframe>
+					<iframe height="600" width="225" src="vertical.html" frameborder="0" allowfullscreen ></iframe>
       			</center>   
       		</div>
     	</div>
 	</div>
 
-
-
-	<div class="container-fluid">
-  		<div class="row row-eq-height">
+	<div class="container-fluid three">
+  		<div class="row">
     		<div class="col-md-6" style="border: 1px solid grey">
     			<center>
-					<iframe height="100" width="650" src="https://getbootstrap.com/" allowfullscreen></iframe>
+					<iframe height="117" width="100%" src="horizontal.html" frameborder="0" allowfullscreen ></iframe>
       			</center>   
       		</div>
     
     		<div class="col-md-6" style="border: 1px solid grey">
     			<center>
-					<iframe height="100" width="650" src="https://getbootstrap.com/" allowfullscreen></iframe>
+					<iframe height="117" width="100%" src="horizontal.html" frameborder="0" allowfullscreen></iframe>
       			</center>   
       		</div>    	
       	</div>
 	</div>
 
 
+
+
+
+
+  <script>
+
+    var m,min;
+    var s,sec;
+    var h,ms;
+    var d,x,y,z;
+    var sum,n,n1;
+    var temp;
+    var t;
+    var current_tick = 0;
+
+    setInterval(function(){ 
+      myFunction()
+    }, 1000);
+
+  function addZero(x,n) {
+      while (x.toString().length < n) {
+          x = "0" + x;
+      }
+      return x;
+  }
+  
+
+  var dur = 10; // 10 mins i.e. 6 ticks per hour
+  var duration = dur* 60; 
+  var adjust;
+  function myFunction() {
+    sum = m*60+h*3600+n*86400; // in secs
+      d = new Date();
+    n = d.getUTCDate();
+    n1 = 17;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
+      adjust = n1*24*(60/dur);
+      // x = document.getElementById("demo");
+      y = document.getElementById("ticks");
+      z = document.getElementById("timer");
+
+      h = addZero(d.getUTCHours(), 2);
+      m = addZero(d.getUTCMinutes(), 2);  
+      s = addZero(d.getUTCSeconds(), 2);
+      // ms = addZero(d.getUTCMilliseconds(), 3); 
+
+      // x.innerHTML =n + ":" + h + ":" + m + ":" + s;
+
+      sec = addZero(60 - s, 2);
+      min = 60 - m -1 ;
+      t = parseInt(min/dur);
+      min = min - (t*dur);
+      temp = sum / duration;
+      current_tick = parseInt(temp) - adjust ;
+      
+      y.innerHTML = current_tick;
+      z.innerHTML =min + ":" + sec;
+
+
+
+  }
+
+  
+
+  if (true) {}
+
+  </script>
 
 
 

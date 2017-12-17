@@ -1,0 +1,17 @@
+body {
+	font-size: 40px;
+}
+
+.outer{
+	display: block;
+}
+
+.box {
+	margin: 10px;
+	padding: 20px;
+	background-color: green;
+	width: 100px;
+	height: 60px;
+
+
+}

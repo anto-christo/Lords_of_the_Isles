@@ -1,9 +1,26 @@
 .man {
-	width: 20%;
-	height: 20%;
-	margin-top: 31.5%;
+
+	position: absolute;
+	position: fixed;
+	bottom: 0;
+	z-index: 1;
+	height: 154px;
+	width: 158px;
+	margin-top: 37.5%;
+
 }
 
-.man1 {
+.help {
+	z-index: 2;
+	position: absolute;
+	margin-left: 93%;
+	margin-top: 47%;
+}
 
+.name{
+	z-index: 1;
+	position: absolute;
+	font-family: Algerian;
+	font-weight: bold;
+	font-size: 30px;	
 }
