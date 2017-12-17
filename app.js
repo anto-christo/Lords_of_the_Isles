@@ -4,7 +4,7 @@ var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
-var url = 'mongodb://202.177.24.26:27017/LOI';
+var url = 'mongodb://202.177.241.26:27017/LOI';
 var assert = require('assert');
 
 app.use(express.static(__dirname));
