@@ -1,0 +1,29 @@
+body {
+	/*font-size: 40px;*/
+}
+
+.outer{
+	display: block;
+}
+
+.box {
+	margin: 10px;
+	padding: 20px;
+	background-color: green;
+	width: 100px;
+	height: 60px;
+
+}
+
+.cardc {
+	background-image: url("../assets/bg/c4.jpg");
+	width: 200px;
+	height: 30px;
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin: 15px;
+    font-size: 15px;
+
+}
