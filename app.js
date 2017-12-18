@@ -55,3 +55,47 @@ app.post('/player_name', function(req, res) {
   res.redirect('/');
   
 });
+
+
+
+//--------------------------------------------------------------------------------------------------------------------
+
+app.post('/island_info', function(req, res) {
+  name = req.body.name;
+  resource = req.body.resource;
+  cap = req.body.cap;
+
+  console.log(name);
+
+  MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+
+    var object = {
+        name : name,
+        resource : resource,
+        cap : cap
+      };
+
+   db.collection('islands').find( { name:name } ).count(function(err,results){
+      count = results;
+      if (count>0) 
+      {
+          res.send(JSON.stringify({'msg':'owned'}));
+      }
+
+      else
+      { 
+        db.collection("islands").insert(object, function(err, r) {
+            assert.equal(null, err);
+            assert.equal(1, r.insertedCount);
+            db.close(); 
+          });
+
+        res.send(JSON.stringify({'msg':'new'}));
+      }
+  });
+
+  });
+  
+});
+
