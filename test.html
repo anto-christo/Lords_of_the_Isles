@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test</title>
+</head>
+<body>
+
+	<center>
+		<button id="roll">Roll Dice</button>
+	</center>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+
+	var islands = ["Greenland","New Guinea","Borneo","Madagascar","Baffin Island","Sumatra","Honshu","Victoria Island","Great Britain","Ellesmere Island","Sulawesi","South Island","Java","North Island","Luzon","Newfoundland","Cuba","Iceland"];
+
+	var resources = ["copper","iron","bronze","wood","oil","coal","uranium","lead","aluminium","diamond","emerald","coconut","salt","rice","wheat"];
+	
+	$(document).ready(function(){
+
+		function assign_values(){
+			var random_name = Math.floor(Math.random()*(islands.length-1));
+			var island_name = islands[random_name];
+
+			var random_res = Math.floor(Math.random()*(resources.length-1));
+			var res_name = resources[random_res];
+
+			var random_cap = Math.floor(Math.random()*1000) + 30;
+
+			create_island(island_name, res_name, random_cap);
+				
+		}
+
+		function create_island(name,resource,cap){
+
+			$.ajax({
+                type: 'POST',
+                url: '/island_info',
+                data: { name:name , resource:resource, cap:cap },
+                dataType: 'json',
+         		success: function(res){
+
+         			if(res.msg==="owned")
+         				alert("Owned island: "+name);
+
+         			else if(res.msg==="new")
+         				alert("New island: "+name+"\nInitial Resource: "+resource+"\nPopulation Cap: "+cap);
+         		}
+            });
+		}
+
+		$("#roll").click(function(){
+
+			assign_values();
+	
+		});
+	});
+
+</script>
+
+</body>
+</html>
