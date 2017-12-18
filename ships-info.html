@@ -1,0 +1,101 @@
+
+<!doctype html>
+<html lang="en"><!DOCTYPE html>
+<html>
+<head>
+	<title>Island</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<style type="text/css">
+
+      body {
+          /*background: url('assets/bg/i1.png') no-repeat fixed;*/
+          /*background: url('assets/bg/i3.jpg') no-repeat fixed;*/
+          background: url('assets/bg/i5.jpg') no-repeat fixed;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+      }
+
+    </style>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/island.css">
+
+    <script type="text/javascript">
+    	var a = 60;
+    	var b = parseInt(a/12);
+    	var text = '<b>Population</b> <br>'+a+'<br> <b>Resources consumed</b><br>'+b+' per tick';
+
+      $(document).ready(function(){
+          $('[data-toggle="popover"]').popover({
+              placement : 'right',
+              trigger : 'hover',
+              html : true,
+              content : text 
+          });
+      });
+    </script>
+
+
+
+</head>
+<body>
+
+	
+	<div class="help" data-toggle="modal" data-target="#ques" > 
+      <img width="50" height="50" src="assets/buttons/ques.png" data-container="body" data-toggle="popover" data-placement="left" data-content="Click for help">
+ 	 </div>
+
+  <div class="modal fade" id="ques" tabindex="-1" role="dialog" aria-labelledby="ques" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ques">Your owned island</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        // what your can do here
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+		<div class="col-md-5">
+			
+		</div>
+		<div class="col-md-2">
+			<div class="name">
+				<script type="text/javascript">
+					var name = "Mumbai"; //to be taken from databse (which island clicked in left menu)
+					document.write(name);
+				</script>
+			</div>
+		</div>
+		<div class="col-md-5">
+			
+		</div>
+		
+	
+</div>
+
+
+
+<div class="man1" >
+	<img class="man" src="assets/bg/m.png" data-container="body" data-toggle="popover" data-placement="right">
+</div>
+
+ <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+</body>
+</html>

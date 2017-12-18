@@ -13,5 +13,17 @@ body {
 	width: 100px;
 	height: 60px;
 
+}
+
+.cardc {
+	background-image: url("../assets/bg/c4.jpg");
+	width: 150px;
+	height: 125px;
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin: 15px;
+    font-size: 20px;
 
 }

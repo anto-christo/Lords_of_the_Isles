@@ -13,17 +13,16 @@ div{
   width:128px;
   max-height:1000px;
   margin:-10px;
-  background:#abc;
+  /*background:#abc;*/
   overflow-y:auto;
   overflow-x:hidden;
   transform:rotate(-90deg) translateY(-80px);
   transform-origin:right top;
-  margin-left: -50px;  
 }
 .horizontal-scroll-wrapper > div{
   display:block;
   padding:5px;
-  background:#cab;
+  /*background:#cab;*/
   transform:rotate(90deg);
   transform-origin: right top;
 }
@@ -36,4 +35,80 @@ div{
   width:80px;
   height:80px;
   margin:20px;
+
+}
+
+.cardc {
+  background-image: url("../assets/bg/s1.png");
+  width: 100px;
+  height: 100px;
+  -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin: 15px;
+    font-size: 20px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 10px;
+}
+
+.card1 {
+  background-image: url("../assets/bg/s1.png");
+  width: 100px;
+  height: 100px;
+  -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin: 15px;
+    font-size: 20px;
+  border-style: solid;
+  border-width: 2px;
+  padding: 10px;
+}
+
+.card2 {
+  background-image: url("../assets/bg/s2.jpg");
+  width: 100px;
+  height: 100px;
+  -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin: 15px;
+    font-size: 20px;
+  border-style: solid;
+  border-width: 2px;
+  padding: 10px;
+}
+
+.card3 {
+  background-image: url("../assets/bg/s3.jpg");
+  width: 100px;
+  height: 100px;
+  -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin: 15px;
+    font-size: 20px;
+  border-style: solid;
+  border-width: 2px;
+  padding: 10px;
+}
+
+.card4 {
+  background-image: url("../assets/bg/s4.jpg");
+  width: 100px;
+  height: 100px;
+  -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin: 15px;
+    font-size: 20px;
+  border-style: solid;
+  border-width: 2px;
+  padding: 10px;
 }
