@@ -16,11 +16,21 @@
 		}
 	</style>
 
+	<script type="text/javascript">
+        $(function() {
+            $("#nav a").click(function(e) {
+                e.preventDefault();
+                // call function in a parent frame
+                parent.window.change_iframe_src(this.rel);
+            })
+        })
+    </script>
+
 </head>
 <body>
 
-<div class="data">
-
+<div class="data" id="nav">
+<a href="#" rel="ships-info.html">
 	<div class="horizontal-scroll-wrapper squares" onclick="goto_ships_info()" >
 	<div></div>
 	  <div class="cardc">a</div>
@@ -37,7 +47,7 @@
 	 <div></div>
 	 <div></div>
 	</div>
-
+</a>
 </div>
 
 <script type="text/javascript">

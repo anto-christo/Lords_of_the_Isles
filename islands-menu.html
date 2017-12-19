@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Game</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/vertical.css">
 	
 	<style type="text/css">
@@ -27,14 +28,29 @@
 			 display: none;
 			}
 	</style>
+
+
+	<script type="text/javascript">
+        $(function() {
+            $("#nav a").click(function(e) {
+                e.preventDefault();
+                // call function in a parent frame
+                parent.window.change_iframe_src(this.rel);
+            })
+        })
+    </script>
+
 </head>
 <body>
 <div class="outer-container">
  <div class="inner-container">
  <div class="element">
 	
-
-<div class="outer" style="margin-bottom: 125px;" onclick="goto_islands_info()" >
+  <div id="nav">
+       
+      <a href="#" rel="islands-info.html">
+		
+		<div class="outer" style="margin-bottom: 125px;" onclick="goto_islands_info()" >
 				<center>
 						<div class="cardc"></div>
 						<div class="cardc"></div>
@@ -45,8 +61,12 @@
 
 				</center>
 
-</div>
+		</div>
 
+	</a>
+
+
+   </div>
  </div>
  </div>
  </div>
@@ -59,6 +79,6 @@
   }
     
 </script>
- 
+
 </body>
 </html>
