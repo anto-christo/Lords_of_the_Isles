@@ -60,10 +60,106 @@ app.post('/player_name', function(req, res) {
 
 //--------------------------------------------------------------------------------------------------------------------
 
+// app.post('/island_info', function(req, res) {
+//   name = req.body.name;
+//   resource = req.body.resource;
+//   cap = req.body.cap;
+//   xpos = req.body.xpos;
+//   ypos = req.body.ypos;
+
+//   console.log(xpos+","+ypos);
+
+//   MongoClient.connect(url, function(err, db) {
+//   assert.equal(null, err);
+
+//     var object = {
+//         xpos : xpos,
+//         ypos : ypos,
+//         name : name,
+//         resource : resource,
+//         cap : cap
+//       };
+
+//       db.collection('islands').find( { $or:[{xpos:{$gt:(xpos-100)}}, {xpos:{$lt:(xpos+100)}}, {ypos:{$gt:(ypos-100)}}, {ypos:{$lt:(ypos+100)}} ] } )
+//       .count(function(err,results){
+
+//           if(results > 0){
+//               res.send(JSON.stringify({'msg':'near'}));
+//           }
+
+//           else{
+
+//               db.collection('islands').find( { name:name } ).count(function(err,results){
+//               count = results;
+//               if (count>0) 
+//               {
+//                   res.send(JSON.stringify({'msg':'owned'}));
+//               }
+
+//               else
+//               { 
+//                 db.collection("islands").insert(object, function(err, r) {
+//                     assert.equal(null, err);
+//                     assert.equal(1, r.insertedCount);
+//                     db.close(); 
+//                   });
+
+//                 res.send(JSON.stringify({'msg':'new'}));
+//               }
+//             });
+//           }
+
+//       });
+
+//   });
+  
+// });
+
+app.get('/prev_pos', function(req, res){
+
+  MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+
+      db.collection("map").find({}).toArray(function(err, result) {
+        assert.equal(null, err);
+        res.send(result);
+        db.close();
+    });
+  });
+
+});
+
+app.post('/update_map', function(req, res) {
+
+  pxpos = req.body.pxpos;
+  xpos = req.body.xpos;
+  pypos = req.body.pypos;
+  ypos = req.body.ypos;
+
+  console.log(pxpos+","+xpos+","+pypos+","+ypos);
+
+  MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+
+    db.collection("map").update({xpos:pxpos, ypos:pypos}, {xpos:xpos, ypos:ypos}, function(err, result) {
+      if(err) throw err;
+
+      res.send(JSON.stringify({'msg':'success'}));
+      db.close();
+    });
+
+  });
+  
+ });
+
+
+
 app.post('/island_info', function(req, res) {
   name = req.body.name;
   resource = req.body.resource;
   cap = req.body.cap;
+  xpos = req.body.xpos;
+  ypos = req.body.ypos;
 
   console.log(name);
 
@@ -71,31 +167,33 @@ app.post('/island_info', function(req, res) {
   assert.equal(null, err);
 
     var object = {
+        xpos : xpos,
+        ypos : ypos,
         name : name,
         resource : resource,
         cap : cap
       };
 
-   db.collection('islands').find( { name:name } ).count(function(err,results){
-      count = results;
-      if (count>0) 
-      {
-          res.send(JSON.stringify({'msg':'owned'}));
-      }
+          db.collection('islands').find( { name:name } ).count(function(err,results){
+          count = results;
+          if (count>0) 
+          {
+                  res.send(JSON.stringify({'msg':'owned'}));
+          }
 
-      else
-      { 
-        db.collection("islands").insert(object, function(err, r) {
-            assert.equal(null, err);
-            assert.equal(1, r.insertedCount);
-            db.close(); 
-          });
+          else
+          { 
+            db.collection("islands").insert(object, function(err, r) {
+                assert.equal(null, err);
+                assert.equal(1, r.insertedCount);
+                db.close(); 
+              });
 
-        res.send(JSON.stringify({'msg':'new'}));
-      }
+             res.send(JSON.stringify({'msg':'new'}));
+          }
+    });
+
   });
 
-  });
-  
 });
 
