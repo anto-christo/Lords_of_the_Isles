@@ -21,7 +21,7 @@
 
 <div class="data">
 
-	<div class="horizontal-scroll-wrapper squares">
+	<div class="horizontal-scroll-wrapper squares" onclick="goto_ships_info()" >
 	<div></div>
 	  <div class="cardc">a</div>
 	  <div class="cardc">b</div>
@@ -39,6 +39,15 @@
 	</div>
 
 </div>
+
+<script type="text/javascript">
+  function goto_ships_info(argument) {
+    console.log("1");
+    document.getElementById("info-screen").contentWindow.document.location.href="islands-info.html";
+  }
+
+    
+</script>
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>

@@ -1,0 +1,14 @@
+.help {
+	z-index: 2;
+	position: absolute;
+	margin-left: 93%;
+	margin-top: 47%;
+}
+
+.name{
+	z-index: 1;
+	position: absolute;
+	font-family: Algerian;
+	font-weight: bold;
+	font-size: 30px;	
+}

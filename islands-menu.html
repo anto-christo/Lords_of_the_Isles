@@ -34,7 +34,7 @@
  <div class="element">
 	
 
-<div class="outer" style="margin-bottom: 125px;">
+<div class="outer" style="margin-bottom: 125px;" onclick="goto_islands_info()" >
 				<center>
 						<div class="cardc"></div>
 						<div class="cardc"></div>
@@ -50,5 +50,15 @@
  </div>
  </div>
  </div>
+
+<script type="text/javascript">
+
+  function goto_islands_info(argument) {
+    console.log("2");
+    document.getElementById("info-screen").contentWindow.document.location.href="ships-info.html";
+  }
+    
+</script>
+ 
 </body>
 </html>
