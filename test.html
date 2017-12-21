@@ -20,7 +20,7 @@
 	
 	$(document).ready(function(){
 
-		function prev_pos(){
+		function prev_pos(name,resource,cap){
 
 			$.ajax({
              type: 'GET',
@@ -39,7 +39,7 @@
 					var py = y;
 					x+=randx;
 
-					update_map(px,x,py,y);
+					update_map(px,x,py,y,name,resource,cap);
              	}
 
              	else{
@@ -49,14 +49,14 @@
              		x=10;
              		y+=randy;
 
-             		update_map(px,x,py,y);
+             		update_map(px,x,py,y,name,resource,cap);
              	}
              }
          
             });
 		}
 
-		function update_map(pxpos,xpos,pypos,ypos){
+		function update_map(pxpos,xpos,pypos,ypos,name,resource,cap){
 			
 			$.ajax({
              type: 'POST',
@@ -67,48 +67,59 @@
              	console.log(resp.msg);
 
              	if(resp.msg==="success")
-             	assign_values(xpos,ypos);
+             	create_island(xpos,ypos,name,resource,cap);
              }
          
             });
 		}
 
-		function assign_values(xpos,ypos){
-			var random_name = Math.floor(Math.random()*(islands.length-1));
-			var island_name = islands[random_name];
 
-			var random_res = Math.floor(Math.random()*(resources.length-1));
-			var res_name = resources[random_res];
-
-			var random_cap = Math.floor(Math.random()*1000) + 30;
-
-			create_island(xpos, ypos, island_name, res_name, random_cap);
-				
-		}
-
-		function create_island(xpos,ypos,name,resource,cap){
+		function check_island(){
+            var random_name = Math.floor(Math.random()*(islands.length-1));
+            var name = islands[random_name];
 
 			$.ajax({
                 type: 'POST',
-                url: '/island_info',
-                data: { xpos:xpos, ypos:ypos, name:name , resource:resource, cap:cap },
+                url: '/island_check',
+                data: { name:name },
                 dataType: 'json',
          		success: function(resp){
 
-         			if(resp.msg==="near")
-         				assign_pos(name, resource, cap);
-
-         			else if(resp.msg==="owned")
+         			if(resp.msg==="owned")
          				alert("Owned island: "+name);
 
-         			else if(resp.msg==="new")
-         				alert("New island: "+name+"\nXpos: "+xpos+"\nYpos: "+ypos+"\nInitial Resource: "+resource+"\nPopulation Cap: "+cap);
-         		}
+         			else if(resp.msg==="new"){
+                        var random_res = Math.floor(Math.random()*(resources.length-1));
+                        var resource = resources[random_res];
+
+                        var cap = Math.floor(Math.random()*1000) + 30;
+
+                        prev_pos(name,resource,cap);
+                    }
+                }
+    
             });
 		}
 
+        function create_island(xpos,ypos,name,resource,cap){
+
+            $.ajax({
+                type: 'POST',
+                url: '/island_info',
+                data: { xpos:xpos, ypos:ypos, name:name, resource:resource, cap:cap },
+                dataType: 'json',
+                success: function(resp){
+
+                    if(resp.msg==="success"){
+                        alert("New island: "+name+"\nXpos: "+xpos+"\nYpos: "+ypos+"\nInitial Resource: "+resource+"\nPopulation Cap: "+cap);
+                    }
+                }
+    
+            });
+        }
+
 		$("#roll").click(function(){
-			prev_pos();
+            check_island();
 		});
 	});
 

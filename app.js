@@ -152,8 +152,6 @@ app.post('/update_map', function(req, res) {
   
  });
 
-
-
 app.post('/island_info', function(req, res) {
   name = req.body.name;
   resource = req.body.resource;
@@ -174,6 +172,26 @@ app.post('/island_info', function(req, res) {
         cap : cap
       };
 
+    db.collection("islands").insert(object, function(err, r) {
+      assert.equal(null, err);
+      assert.equal(1, r.insertedCount);
+      res.send(JSON.stringify({'msg':'success'}));
+      db.close(); 
+    });
+
+  });
+
+});
+
+
+
+app.post('/island_check', function(req, res) {
+  name = req.body.name;
+
+  MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+
+
           db.collection('islands').find( { name:name } ).count(function(err,results){
           count = results;
           if (count>0) 
@@ -183,12 +201,6 @@ app.post('/island_info', function(req, res) {
 
           else
           { 
-            db.collection("islands").insert(object, function(err, r) {
-                assert.equal(null, err);
-                assert.equal(1, r.insertedCount);
-                db.close(); 
-              });
-
              res.send(JSON.stringify({'msg':'new'}));
           }
     });
