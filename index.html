@@ -30,13 +30,7 @@
               trigger : 'hover'
           });
       });
-    </script>
 
-  </head>
-  <body>
-
-  <script type="text/javascript">
-      
       function send_player_name()
       {
          $.ajax({
@@ -47,20 +41,71 @@
          
                      });
       }
+    </script>
+    
+    <script>
+
+    function setCookie(cname,cvalue,exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function checkCookie() {
+        user=getCookie("username");
+        if (user != "") {
+            alert("Welcome again " + user);
+        } else {
+          flag = 1;
+        }
+    }
 
     </script>
+
+  </head>
+  <body >
+
+    <!-- /////////////////////////////COOKIE/////////////////////////////   -->
+
+
+
+
 
 
 
 
   <script type="text/javascript">
     var person="";
-    while(!person)
-    {
-      person  = prompt("Please enter your name");
+    var user = "";
+    var flag = 0;
+    checkCookie();
+    if (flag==1) {
+        while(!person)
+        {
+          person  = prompt("Please enter your name");
+        }
+        setCookie("username", person, 30);
+        send_player_name();
+        console.log(person);
     }
-    send_player_name();
-    console.log(person);
+    
   </script>
 
 

@@ -1,9 +1,18 @@
+var mongoose = require('mongoose');
+var player = require('models/players_schema');
+var island = require('models/islands_schema');
+var ship = require('models/ships_schema');
+var bank = require('models/bank_schema');
+
 var express = require('express');
 var app = express();
+
 var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
+
+
 var url = 'mongodb://202.177.241.26:27017/LOI';
 var assert = require('assert');
 
@@ -22,39 +31,33 @@ server.listen(process.env.PORT || 3000,function(){
 
 
 app.post('/player_name', function(req, res) {
-  person = req.body.username;
-  console.log(person);
+  
+  var p = new player();
+  p.name = req.body.username;
+  console.log(p.name);
 
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
-
-  	var object = {
-	      user : person,
-	    };
-
-    db.collection('players').find( { user:person } ).count(function(err,results){
+    
+    db.collection('players').find( { name:p.name } ).count(function(err,results){
       count = results;
       if (count>0) 
       {
           console.log("old player");
-          
       }
       else
       { 
         console.log("new player");
-        db.collection("players").insert(object, function(err, r) {
-            assert.equal(null, err);
-            assert.equal(1, r.insertedCount);
-            db.close(); 
-          });
+        db.collection("players").insert(p);
       }
   });
 
   });
-
-  res.redirect('/');
   
 });
+
+
+
 
 
 
