@@ -30,31 +30,54 @@ server.listen(process.env.PORT || 3000,function(){
 });
 
 
-app.post('/player_name', function(req, res) {
-  
-  var p = new player();
-  p.name = req.body.username;
-  console.log(p.name);
 
-  MongoClient.connect(url, function(err, db) {
-  assert.equal(null, err);
-    
-    db.collection('players').find( { name:p.name } ).count(function(err,results){
-      count = results;
-      if (count>0) 
-      {
-          console.log("old player");
-      }
-      else
-      { 
-        console.log("new player");
-        db.collection("players").insert(p);
-      }
-  });
 
-  });
+var islands = ["Greenland","New Guinea","Borneo","Madagascar","Baffin Island","Sumatra","Honshu","Victoria Island","Great Britain","Ellesmere Island","Sulawesi","South Island","Java","North Island","Luzon","Newfoundland","Cuba","Iceland"];
+var resources = ["copper","iron","bronze","wood","oil","coal","uranium","lead","aluminium","diamond","emerald","coconut","salt","rice","wheat"];
   
+app.post('/init_islands', function(req, res) {
+
+    var isl = new islands(); 
+    var j,k;
+    for (var i = 0; i <= 10; i++) {
+        
+    }
+
 });
+
+
+
+
+
+
+
+
+// app.post('/player_name', function(req, res) {
+  
+//   var p = new player();
+//   p.name = req.body.username;
+//   console.log(p.name);
+
+//   MongoClient.connect(url, function(err, db) {
+//   assert.equal(null, err);
+    
+//     db.collection('players').find( { name:p.name } ).count(function(err,results){
+//       count = results;
+//       if (count>0) 
+//       {
+//           console.log("old player");
+//       }
+//       else
+//       { 
+//         console.log("new player");
+//         db.collection("players").insert(p);
+
+//       }
+//   });
+
+//   });
+  
+// });
 
 
 
