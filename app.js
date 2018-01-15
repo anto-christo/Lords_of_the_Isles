@@ -13,7 +13,7 @@ var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 
 
-var url = 'mongodb://202.177.241.26:27017/LOI';
+var url = 'mongodb://58.146.116.38:27017/LOI';
 var assert = require('assert');
 
 app.use(express.static(__dirname));
@@ -52,32 +52,32 @@ app.post('/init_islands', function(req, res) {
 
 
 
-// app.post('/player_name', function(req, res) {
+app.post('/player_name', function(req, res) {
   
-//   var p = new player();
-//   p.name = req.body.username;
-//   console.log(p.name);
+  var p = new player();
+  p.name = req.body.username;
+  console.log(p.name);
 
-//   MongoClient.connect(url, function(err, db) {
-//   assert.equal(null, err);
+  MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
     
-//     db.collection('players').find( { name:p.name } ).count(function(err,results){
-//       count = results;
-//       if (count>0) 
-//       {
-//           console.log("old player");
-//       }
-//       else
-//       { 
-//         console.log("new player");
-//         db.collection("players").insert(p);
+    db.collection('players').find( { name:p.name } ).count(function(err,results){
+      count = results;
+      if (count>0) 
+      {
+          console.log("old player");
+      }
+      else
+      { 
+        console.log("new player");
+        db.collection("players").insert(p);
 
-//       }
-//   });
+      }
+  });
 
-//   });
+  });
   
-// });
+});
 
 
 
@@ -206,6 +206,18 @@ app.post('/island_info', function(req, res) {
     });
 
   });
+
+});
+
+app.get('/getLeaderboard', function(req, res) {
+    var results;
+    MongoClient.connect(url, function(err, db) {
+       assert.equal(null, err);
+                db.collection('players').find().sort({wealth:-1}).limit(5).toArray(function(err, results){
+                      return res.send(results);
+                });
+                db.close(); 
+      });
 
 });
 

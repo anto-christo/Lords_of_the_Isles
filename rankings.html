@@ -4,6 +4,8 @@
 	<title>Game</title>
 	<!-- <link rel="stylesheet" type="text/css" href="css/vertical.css"> -->
 	<link rel="stylesheet" type="text/css" href="css/rankings.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 	
 	<style type="text/css">
 		.element, .outer-container {
@@ -27,6 +29,10 @@
 			.inner-container::-webkit-scrollbar {
 			 display: none;
 			}
+
+			.row {
+				display: inline;
+			}
 	</style>
 </head>
 <body>
@@ -38,18 +44,53 @@
 
 	<div class="outer" style="margin-bottom: 125px;">
 					<center>
-							<div class="cardc">a</div>
-							<div class="cardc">b</div>
-							<div class="cardc">c</div>
-							<div class="cardc">d</div>
-							<div class="cardc">e</div>
-							<div class="cardc">f</div>
-							<div class="cardc">g</div>
-							<div class="cardc">h</div>
-							<div class="cardc">i</div>
-							<div class="cardc">j</div>
-							<div class="cardc">k</div>
-							<div class="cardc">l</div>
+						<script type="text/javascript">
+							 $.ajax({
+						        type:'GET',
+						        url:'/getLeaderboard',
+						        dataType:'json',
+						 		success:function(response){
+						 			var counter = 0;
+										        while(counter<5){
+										        	var nid = "n"+counter;
+										        	var wid = "w"+counter;
+										        	nid = nid.toString();
+										        	wid = wid.toString();
+										        	var n = document.getElementById(nid);
+										        	var w = document.getElementById(wid);
+										        	n.innerHTML = response[counter].name;
+										        	w.innerHTML = response[counter].wealth;
+
+									 				counter++;
+									 			}
+						        }
+						    });
+
+						</script>
+						<div class="row">
+							<div class="row" id="n0"></div>
+							<div class="row" id="w0"></div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="row" id="n1"></div>
+							<div class="row" id="w1"></div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="row" id="n2"></div>
+							<div class="row" id="w2"></div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="row" id="n3"></div>
+							<div class="row" id="w3"></div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="row" id="n4"></div>
+							<div class="row" id="w4"></div>
+						</div>
 
 					</center>
 
