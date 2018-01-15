@@ -71,9 +71,10 @@
         <div class="name" style="background-color: #A7E9F9;opacity: 0.9; width: 300%; ">
           <div style="opacity: 1">
             <script type="text/javascript" style="opacity: 1">
-                var name = "Falcon"; //to be taken from databse (which island clicked in left menu)
-                var Class = "A"; //to be taken from databse (which island clicked in left menu)
-                document.write(name+" - Class" + Class);
+                var name = localStorage.getItem("s_id");
+                // var name = "Falcon"; //to be taken from databse (which island clicked in left menu)
+                // var Class = "A"; //to be taken from databse (which island clicked in left menu)
+                document.write(name);
             </script>
           </div> 
         </div>

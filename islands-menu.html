@@ -40,6 +40,20 @@
         })
     </script>
 
+    <script type="text/javascript">
+    	function pickIsland(i_id) {
+    		console.log(i_id);
+    		if (typeof(Storage) !== "undefined") {
+			    // Store
+			    localStorage.setItem("i_id", i_id);
+			    // Retrieve
+			    console.log("i_id " + localStorage.getItem("i_id"));
+			} else {
+			    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+			}
+    	}
+    </script>
+
 </head>
 <body>
 <div class="outer-container">
@@ -48,22 +62,35 @@
 	
   <div id="nav">
        
-      <a href="#" rel="islands-info.html">
+      
 		
-		<div class="outer" style="margin-bottom: 125px;" onclick="goto_islands_info()" >
+		<div class="outer" style="margin-bottom: 125px;">
 				<center>
-						<div class="cardc"></div>
-						<div class="cardc"></div>
-						<div class="cardc"></div>
-						<div class="cardc"></div>
-						<div class="cardc"></div>
-						<div class="cardc"></div>
+					<a href="#" rel="islands-info.html" onclick="pickIsland(1)">
+						<div class="cardc">1</div>
+					</a>
+					<a href="#" rel="islands-info.html" onclick="pickIsland(2)">
+						<div class="cardc">2</div>
+					</a>
+					<a href="#" rel="islands-info.html" onclick="pickIsland(3)">
+						<div class="cardc">3</div>
+					</a>
+					<a href="#" rel="islands-info.html" onclick="pickIsland(4)">
+						<div class="cardc">4</div>
+					</a>
+					<a href="#" rel="islands-info.html" onclick="pickIsland(5)">
+						<div class="cardc">5</div>
+					</a>
+					<a href="#" rel="islands-info.html" onclick="pickIsland(6)">
+						<div class="cardc">6</div>
+					</a>
+
 
 				</center>
 
 		</div>
 
-	</a>
+	
 
 
    </div>
@@ -71,14 +98,6 @@
  </div>
  </div>
 
-<script type="text/javascript">
-
-  function goto_islands_info(argument) {
-    console.log("2");
-    document.getElementById("info-screen").contentWindow.document.location.href="ships-info.html";
-  }
-    
-</script>
 
 </body>
 </html>
