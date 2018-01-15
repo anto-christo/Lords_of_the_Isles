@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
-var player = require('models/players_schema');
-var island = require('models/islands_schema');
-var ship = require('models/ships_schema');
-var bank = require('models/bank_schema');
+var player = require('./models/players_schema');
+var island = require('./models/islands_schema');
+var ship = require('./models/ships_schema');
+var bank = require('./models/bank_schema');
 
 var express = require('express');
 var app = express();
@@ -14,6 +14,7 @@ var MongoClient = require('mongodb').MongoClient;
 
 
 var url = 'mongodb://58.146.116.38:27017/LOI';
+
 var assert = require('assert');
 
 app.use(express.static(__dirname));
