@@ -26,6 +26,20 @@
         })
     </script>
 
+    <script type="text/javascript">
+    	function pickShip(s_id) {
+    		console.log(s_id);
+    		if (typeof(Storage) !== "undefined") {
+			    // Store
+			    localStorage.setItem("s_id", s_id);
+			    // Retrieve
+			    console.log("s_id " + localStorage.getItem("s_id"));
+			} else {
+			    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+			}
+    	}
+    </script>
+
 </head>
 <body>
 
@@ -33,16 +47,17 @@
 <a href="#" rel="ships-info.html">
 	<div class="horizontal-scroll-wrapper squares" onclick="goto_ships_info()" >
 	<div></div>
-	  <div class="cardc">a</div>
-	  <div class="cardc">b</div>
-	  <div class="cardc">c</div>
-	  <div class="cardc">d</div>
-	  <div class="carde"></div>
-	  <div class="carde"></div>
-	  <div class="carde"></div>
-	  <div class="carde"></div>
-	  <div class="carde"></div>
-	  <div class="carde"></div>
+	
+	  <div class="cardc" onclick="pickShip(1)">a</div>
+	  <div class="cardc" onclick="pickShip(2)">b</div>
+	  <div class="cardc" onclick="pickShip(3)">c</div>
+	  <div class="cardc" onclick="pickShip(4)">d</div>
+	  <div class="carde" onclick="pickShip(5)"></div>
+	  <div class="carde" onclick="pickShip(6)"></div>
+	  <div class="carde" onclick="pickShip(7)"></div>
+	  <div class="carde" onclick="pickShip(8)"></div>
+	  <div class="carde" onclick="pickShip(9)"></div>
+	  <div class="carde" onclick="pickShip(10)"></div>
 	 <div></div>
 	 <div></div>
 	 <div></div>
@@ -50,14 +65,6 @@
 </a>
 </div>
 
-<script type="text/javascript">
-  function goto_ships_info(argument) {
-    console.log("1");
-    document.getElementById("info-screen").contentWindow.document.location.href="islands-info.html";
-  }
-
-    
-</script>
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>

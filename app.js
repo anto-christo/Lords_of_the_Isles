@@ -12,8 +12,8 @@ var io = require('socket.io').listen(server);
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 
+var url = 'mongodb://58.146.116.38:27017/LOI';
 
-var url = 'mongodb://58.146.116.38/LOI';
 var assert = require('assert');
 
 var global_user;
@@ -217,6 +217,18 @@ app.post('/island_info', function(req, res) {
     });
 
   });
+
+});
+
+app.get('/getLeaderboard', function(req, res) {
+    var results;
+    MongoClient.connect(url, function(err, db) {
+       assert.equal(null, err);
+                db.collection('players').find().sort({wealth:-1}).limit(5).toArray(function(err, results){
+                      return res.send(results);
+                });
+                db.close(); 
+      });
 
 });
 
