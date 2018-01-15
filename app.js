@@ -5,6 +5,7 @@ var ship = require('./models/ships_schema');
 var bank = require('./models/bank_schema');
 
 var express = require('express');
+var fs = require("fs");
 var app = express();
 
 var server = require('http').Server(app);
@@ -34,7 +35,7 @@ server.listen(process.env.PORT || 3000,function(){
 
 
 
-var islands = ["Greenland","New Guinea","Borneo","Madagascar","Baffin Island","Sumatra","Honshu","Victoria Island","Great Britain","Ellesmere Island","Sulawesi","South Island","Java","North Island","Luzon","Newfoundland","Cuba","Iceland"];
+var islands;
 var resources = ["copper","iron","bronze","wood","oil","coal","uranium","lead","aluminium","diamond","emerald","coconut","salt","rice","wheat"];
   
 app.post('/init_islands', function(req, res) {
@@ -50,6 +51,18 @@ app.post('/init_islands', function(req, res) {
 app.post('/set_player', function(req, res) {
     var name = req.body.username;
     global_user = name;  
+
+    fs.readFile('names.txt', function (err, data) {
+      if (err) {
+         return console.error(err);
+      }
+
+      islands = data.toString().split("\n");
+
+      for(i=0;i<islands.length;i++)
+      console.log(islands[i]);
+   });
+
 });
 
 app.post('/player_name', function(req, res) {
@@ -58,6 +71,17 @@ app.post('/player_name', function(req, res) {
   p.name = req.body.username;
   global_user = p.name;
   console.log(p.name);
+
+  fs.readFile('names.txt', function (err, data) {
+    if (err) {
+       return console.error(err);
+    }
+
+    islands = data.toString().split("\n");
+
+    for(i=0;i<islands.length;i++)
+    console.log(islands[i]);
+ });
 
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
