@@ -13,8 +13,10 @@ var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 
 
-var url = 'mongodb://202.177.233.156:27017/LOI';
+var url = 'mongodb://58.146.116.38/LOI';
 var assert = require('assert');
+
+var global_user;
 
 app.use(express.static(__dirname));
 app.use(bodyParser.urlencoded({ extended: true })); 
@@ -45,17 +47,16 @@ app.post('/init_islands', function(req, res) {
 
 });
 
-
-
-
-
-
-
+app.post('/set_player', function(req, res) {
+    var name = req.body.username;
+    global_user = name;  
+});
 
 app.post('/player_name', function(req, res) {
   
   var p = new player();
   p.name = req.body.username;
+  global_user = p.name;
   console.log(p.name);
 
   MongoClient.connect(url, function(err, db) {
@@ -179,29 +180,39 @@ app.post('/update_map', function(req, res) {
  });
 
 app.post('/island_info', function(req, res) {
-  name = req.body.name;
-  resource = req.body.resource;
-  cap = req.body.cap;
-  xpos = req.body.xpos;
-  ypos = req.body.ypos;
 
-  console.log(name);
+  var i = new island();
+
+  i.name = req.body.name;
+  i.resource = req.body.resource;
+  i.cap = req.body.cap;
+  i.xpos = req.body.xpos;
+  i.ypos = req.body.ypos;
+
+  console.log(i.name);
 
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
 
-    var object = {
-        xpos : xpos,
-        ypos : ypos,
-        name : name,
-        resource : resource,
-        cap : cap
-      };
+    var island_details = {
+      x_cord : i.xpos,
+      y_cord : i.ypos,
+        name : i.name,
+        res_produced : i.resource,
+        max_population : i.cap
+    };
 
-    db.collection("islands").insert(object, function(err, r) {
+    db.collection("islands").insert(island_details, function(err, r) {
       assert.equal(null, err);
       assert.equal(1, r.insertedCount);
-      res.send(JSON.stringify({'msg':'success'}));
+      res.send(JSON.stringify({'imsg':'success'}));
+    });
+
+    console.log("user="+global_user);
+
+    db.collection("players").update({name:global_user},{$push:{explored_islands_name:{island_name:i.name}}}, function(err, r) {
+      assert.equal(null, err);
+      console.log("player updated");
       db.close(); 
     });
 
@@ -212,13 +223,14 @@ app.post('/island_info', function(req, res) {
 
 
 app.post('/island_check', function(req, res) {
-  name = req.body.name;
+  var i = new island();
+  i.name = req.body.name;
 
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
 
 
-          db.collection('islands').find( { name:name } ).count(function(err,results){
+          db.collection('islands').find( { name:i.name } ).count(function(err,results){
           count = results;
           if (count>0) 
           {
