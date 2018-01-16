@@ -13,7 +13,7 @@ var io = require('socket.io').listen(server);
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 
-var url = 'mongodb://58.146.116.38:27017/LOI';
+var url = 'mongodb://127.0.0.1:27017/LOI';
 
 var assert = require('assert');
 
@@ -61,6 +61,29 @@ app.post('/set_player', function(req, res) {
 
       for(i=0;i<islands.length;i++)
       console.log(islands[i]);
+
+      var rand = Math.floor(Math.random()*islands.length-1);
+      console.log(rand);
+      console.log(islands[rand]);
+
+      var ind = islands.indexOf(islands[rand]);
+
+      if(ind != -1){
+        islands.splice(ind,1);
+      }
+
+      for(i=0;i<islands.length;i++)
+      console.log(islands[i]);
+
+      var new_list = islands.join("");
+
+      fs.writeFile('names1.txt',new_list,  function(err) {
+        if (err) {
+           return console.error(err);
+        }
+        
+        console.log("Data written successfully!");     
+     });
    });
 
 });
