@@ -12,12 +12,12 @@ var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
-
 var url = 'mongodb://127.0.0.1:27017/LOI';
 
 var assert = require('assert');
 
 var global_user;
+var send= [];
 
 app.use(express.static(__dirname));
 app.use(bodyParser.urlencoded({ extended: true })); 
@@ -32,8 +32,30 @@ server.listen(process.env.PORT || 3000,function(){
     console.log('Listening on '+server.address().port);
 });
 
+io.on('connection', function(socket) {
+    updateLeaderboard();
+    socket.emit('getLeaderboard', send);
+    setInterval(function(){ 
+      updateLeaderboard();
+      socket.emit('getLeaderboard', send);
+   
+    }, 10000);
+});
 
-
+function updateLeaderboard(){
+    MongoClient.connect(url, function(err, db) {
+       assert.equal(null, err);
+                db.collection('players').find().sort({wealth:-1}).limit(5).toArray(function(err, results){
+                      var j=0;
+                      while(j<5){
+                        var obj = {name: results[j].name,wealth: results[j].wealth}
+                        send[j] = obj;
+                        j++;
+                      }
+                });
+                db.close(); 
+      });
+}
 
 var islands;
 var resources = ["copper","iron","bronze","wood","oil","coal","uranium","lead","aluminium","diamond","emerald","coconut","salt","rice","wheat"];
@@ -60,11 +82,11 @@ app.post('/set_player', function(req, res) {
       islands = data.toString().split("\n");
 
       for(i=0;i<islands.length;i++)
-      console.log(islands[i]);
+      // console.log(islands[i]);
 
       var rand = Math.floor(Math.random()*islands.length-1);
-      console.log(rand);
-      console.log(islands[rand]);
+      // console.log(rand);
+      // console.log(islands[rand]);
 
       var ind = islands.indexOf(islands[rand]);
 
@@ -73,7 +95,7 @@ app.post('/set_player', function(req, res) {
       }
 
       for(i=0;i<islands.length;i++)
-      console.log(islands[i]);
+      // console.log(islands[i]);
 
       var new_list = islands.join("");
 
@@ -267,7 +289,9 @@ app.post('/island_info', function(req, res) {
 
 });
 
+
 app.get('/getLeaderboard', function(req, res) {
+
     var results;
     MongoClient.connect(url, function(err, db) {
        assert.equal(null, err);
