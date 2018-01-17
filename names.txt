@@ -76,12 +76,10 @@ Iceland
 India
 Indonesia
 Iran
-Iraq
 Ireland {Republic}
 Israel
 Italy
 Ivory Coast
-Jamaica
 Japan
 Jordan
 Kazakhstan
@@ -184,7 +182,6 @@ Uganda
 Ukraine
 United Arab Emirates
 United Kingdom
-United States
 Uruguay
 Uzbekistan
 Vanuatu
