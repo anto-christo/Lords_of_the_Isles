@@ -38,55 +38,167 @@ server.listen(process.env.PORT || 3000,function(){
 var islands;
 var resources = ["copper","iron","bronze","wood","oil","coal","uranium","lead","aluminium","diamond","emerald","coconut","salt","rice","wheat"];
   
-app.post('/init_islands', function(req, res) {
+// app.post('/init_islands', function(req, res) {
 
-    var isl = new islands(); 
-    var j,k;
-    for (var i = 0; i <= 10; i++) {
+//     var isl = new islands(); 
+//     var j,k;
+//     for (var i = 0; i <= 10; i++) {
         
+//     }
+
+// });
+
+app.post('/assign_island', function(req, res) {
+
+  var p = new player();
+  p.name = req.body.username;
+
+  fs.readFile('names.txt', function (err, data) {
+    if (err) {
+       return console.error(err);
     }
 
-});
+    islands = data.toString().split("\n");
 
-app.post('/set_player', function(req, res) {
-    var name = req.body.username;
-    global_user = name;  
+    for(i=0;i<islands.length;i++)
+    console.log(islands[i]);
 
-    fs.readFile('names.txt', function (err, data) {
+    var rand = Math.floor(Math.random()*islands.length-1);
+    console.log(rand);
+    console.log(islands[rand]);
+
+    var island_name = islands[rand];
+
+    var ind = islands.indexOf(island_name);
+
+    if(ind != -1){
+      islands.splice(ind,1);
+    }
+
+    for(i=0;i<islands.length;i++)
+    console.log(islands[i]);
+
+    var new_list = islands.join("\n");
+
+    fs.writeFile('names.txt',new_list,  function(err) {
       if (err) {
          return console.error(err);
       }
-
-      islands = data.toString().split("\n");
-
-      for(i=0;i<islands.length;i++)
-      console.log(islands[i]);
-
-      var rand = Math.floor(Math.random()*islands.length-1);
-      console.log(rand);
-      console.log(islands[rand]);
-
-      var ind = islands.indexOf(islands[rand]);
-
-      if(ind != -1){
-        islands.splice(ind,1);
-      }
-
-      for(i=0;i<islands.length;i++)
-      console.log(islands[i]);
-
-      var new_list = islands.join("");
-
-      fs.writeFile('names1.txt',new_list,  function(err) {
-        if (err) {
-           return console.error(err);
-        }
-        
-        console.log("Data written successfully!");     
-     });
+      
+      console.log("Data written successfully!");     
    });
 
+   MongoClient.connect(url, function(err, db) {
+
+    var x;
+    var y;
+
+    db.collection("map").find({}).toArray(function(err, result) {
+      assert.equal(null, err);
+      x = result[0].xpos;
+      y = result[0].ypos;
+
+      if(x<1000){
+        var randx = Math.floor(Math.random()*200)+50;
+        console.log(randx);
+        var px = x;
+        var py = y;
+        x+=randx;
+      }
+
+      else{
+        var randy = Math.floor(Math.random()*200)+50;
+        var py = y;
+        var px = x;
+        x=10;
+        y+=randy;
+      }
+
+      db.collection("map").update({xpos:px, ypos:py}, {xpos:x, ypos:y}, function(err, result) {
+        if(err) throw err;
+      });
+
+      var i = new island();
+
+      var random_res = Math.floor(Math.random()*(resources.length-1));
+      var resource = resources[random_res];
+
+      var cap = Math.floor(Math.random()*1000) + 30;
+
+      i.xpos = x;
+      i.ypos = y;
+      i.name = island_name;
+      i.resource = resource;
+      i.cap = cap;
+
+      var island_details = {
+        x_cord : i.xpos,
+        y_cord : i.ypos,
+          name : i.name,
+          res_produced : i.resource,
+          max_population : i.cap
+      };
+
+      db.collection("islands").insert(island_details, function(err, r) {
+        assert.equal(null, err);
+        assert.equal(1, r.insertedCount);
+        res.send(JSON.stringify({'imsg':'success'}));
+      });
+
+      db.collection("players").update({name:p.name},{$push:{explored_islands_name:{island_name:i.name}}}, function(err, r) {
+        assert.equal(null, err);
+        console.log("player updated");
+        db.close(); 
+      });
+
+
+    });  
+      
+  
+    });
+ });
+
 });
+
+// app.post('/set_player', function(req, res) {
+//     var name = req.body.username;
+//     global_user = name;  
+
+//     fs.readFile('names.txt', function (err, data) {
+//       if (err) {
+//          return console.error(err);
+//       }
+
+//       islands = data.toString().split("\n");
+
+//       for(i=0;i<islands.length;i++)
+//       console.log(islands[i]);
+
+//       var rand = Math.floor(Math.random()*islands.length-1);
+//       console.log(rand);
+//       console.log(islands[rand]);
+
+//       var ind = islands.indexOf(islands[rand]);
+
+//       if(ind != -1){
+//         islands.splice(ind,1);
+//       }
+
+//       for(i=0;i<islands.length;i++)
+//       console.log(islands[i]);
+
+//       var new_list = islands.join("");
+
+//       fs.writeFile('names1.txt',new_list,  function(err) {
+//         if (err) {
+//            return console.error(err);
+//         }
+        
+//         console.log("Data written successfully!");     
+//      });
+//    });
+
+// });
 
 app.post('/player_name', function(req, res) {
   
@@ -189,83 +301,83 @@ app.post('/player_name', function(req, res) {
   
 // });
 
-app.get('/prev_pos', function(req, res){
+// app.get('/prev_pos', function(req, res){
 
-  MongoClient.connect(url, function(err, db) {
-  assert.equal(null, err);
+//   MongoClient.connect(url, function(err, db) {
+//   assert.equal(null, err);
 
-      db.collection("map").find({}).toArray(function(err, result) {
-        assert.equal(null, err);
-        res.send(result);
-        db.close();
-    });
-  });
+//       db.collection("map").find({}).toArray(function(err, result) {
+//         assert.equal(null, err);
+//         res.send(result);
+//         db.close();
+//     });
+//   });
 
-});
+// });
 
-app.post('/update_map', function(req, res) {
+// app.post('/update_map', function(req, res) {
 
-  pxpos = req.body.pxpos;
-  xpos = req.body.xpos;
-  pypos = req.body.pypos;
-  ypos = req.body.ypos;
+//   pxpos = req.body.pxpos;
+//   xpos = req.body.xpos;
+//   pypos = req.body.pypos;
+//   ypos = req.body.ypos;
 
-  console.log(pxpos+","+xpos+","+pypos+","+ypos);
+//   console.log(pxpos+","+xpos+","+pypos+","+ypos);
 
-  MongoClient.connect(url, function(err, db) {
-  assert.equal(null, err);
+//   MongoClient.connect(url, function(err, db) {
+//   assert.equal(null, err);
 
-    db.collection("map").update({xpos:pxpos, ypos:pypos}, {xpos:xpos, ypos:ypos}, function(err, result) {
-      if(err) throw err;
+//     db.collection("map").update({xpos:pxpos, ypos:pypos}, {xpos:xpos, ypos:ypos}, function(err, result) {
+//       if(err) throw err;
 
-      res.send(JSON.stringify({'msg':'success'}));
-      db.close();
-    });
+//       res.send(JSON.stringify({'msg':'success'}));
+//       db.close();
+//     });
 
-  });
+//   });
   
- });
+//  });
 
-app.post('/island_info', function(req, res) {
+// app.post('/island_info', function(req, res) {
 
-  var i = new island();
+//   var i = new island();
 
-  i.name = req.body.name;
-  i.resource = req.body.resource;
-  i.cap = req.body.cap;
-  i.xpos = req.body.xpos;
-  i.ypos = req.body.ypos;
+//   i.name = req.body.name;
+//   i.resource = req.body.resource;
+//   i.cap = req.body.cap;
+//   i.xpos = req.body.xpos;
+//   i.ypos = req.body.ypos;
 
-  console.log(i.name);
+//   console.log(i.name);
 
-  MongoClient.connect(url, function(err, db) {
-  assert.equal(null, err);
+//   MongoClient.connect(url, function(err, db) {
+//   assert.equal(null, err);
 
-    var island_details = {
-      x_cord : i.xpos,
-      y_cord : i.ypos,
-        name : i.name,
-        res_produced : i.resource,
-        max_population : i.cap
-    };
+//     var island_details = {
+//       x_cord : i.xpos,
+//       y_cord : i.ypos,
+//         name : i.name,
+//         res_produced : i.resource,
+//         max_population : i.cap
+//     };
 
-    db.collection("islands").insert(island_details, function(err, r) {
-      assert.equal(null, err);
-      assert.equal(1, r.insertedCount);
-      res.send(JSON.stringify({'imsg':'success'}));
-    });
+//     db.collection("islands").insert(island_details, function(err, r) {
+//       assert.equal(null, err);
+//       assert.equal(1, r.insertedCount);
+//       res.send(JSON.stringify({'imsg':'success'}));
+//     });
 
-    console.log("user="+global_user);
+//     console.log("user="+global_user);
 
-    db.collection("players").update({name:global_user},{$push:{explored_islands_name:{island_name:i.name}}}, function(err, r) {
-      assert.equal(null, err);
-      console.log("player updated");
-      db.close(); 
-    });
+//     db.collection("players").update({name:global_user},{$push:{explored_islands_name:{island_name:i.name}}}, function(err, r) {
+//       assert.equal(null, err);
+//       console.log("player updated");
+//       db.close(); 
+//     });
 
-  });
+//   });
 
-});
+// });
 
 app.get('/getLeaderboard', function(req, res) {
     var results;
@@ -281,28 +393,28 @@ app.get('/getLeaderboard', function(req, res) {
 
 
 
-app.post('/island_check', function(req, res) {
-  var i = new island();
-  i.name = req.body.name;
+// app.post('/island_check', function(req, res) {
+//   var i = new island();
+//   i.name = req.body.name;
 
-  MongoClient.connect(url, function(err, db) {
-  assert.equal(null, err);
+//   MongoClient.connect(url, function(err, db) {
+//   assert.equal(null, err);
 
 
-          db.collection('islands').find( { name:i.name } ).count(function(err,results){
-          count = results;
-          if (count>0) 
-          {
-                  res.send(JSON.stringify({'msg':'owned'}));
-          }
+//           db.collection('islands').find( { name:i.name } ).count(function(err,results){
+//           count = results;
+//           if (count>0) 
+//           {
+//                   res.send(JSON.stringify({'msg':'owned'}));
+//           }
 
-          else
-          { 
-             res.send(JSON.stringify({'msg':'new'}));
-          }
-    });
+//           else
+//           { 
+//              res.send(JSON.stringify({'msg':'new'}));
+//           }
+//     });
 
-  });
+//   });
 
-});
+// });
 
