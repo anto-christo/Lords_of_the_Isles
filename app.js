@@ -72,7 +72,7 @@ function updateLeaderboard(){
 function updateGold(){
     MongoClient.connect(url, function(err, db) {
        assert.equal(null, err);
-       // global_user = "newbie"; // uncomment later. when commented, works only if entry is through index.html
+       global_user = "newbie"; // when commented, works only if entry is through index.html
        console.log("global_user "+ global_user);
                 db.collection('players').find({name:global_user}).toArray(function(err, results){
                      gold = results[0].gold;
