@@ -41,6 +41,7 @@ Congo {Democratic Rep}
 Costa Rica
 Croatia
 Cuba
+Cyprus
 Czech Republic
 Denmark
 Djibouti
@@ -55,6 +56,7 @@ Eritrea
 Estonia
 Ethiopia
 Fiji
+Finland
 France
 Gabon
 Gambia
@@ -77,6 +79,7 @@ Iran
 Iraq
 Ireland {Republic}
 Israel
+Italy
 Ivory Coast
 Jamaica
 Japan
@@ -136,6 +139,7 @@ Peru
 Philippines
 Poland
 Portugal
+Qatar
 Romania
 Russian Federation
 Rwanda
@@ -157,6 +161,7 @@ Solomon Islands
 Somalia
 South Africa
 South Sudan
+Spain
 Sri Lanka
 Sudan
 Suriname
