@@ -16,7 +16,6 @@ var url = 'mongodb://127.0.0.1:27017/LOI';
 
 var assert = require('assert');
 
-var global_user;
 var rankings= [];
 var gold = 0;
 var p = new player();
@@ -199,7 +198,6 @@ app.post('/assign_island', function(req, res) {
 app.post('/player_name', function(req, res) {
   
   p.name = req.body.username;
-  global_user = p.name;
   console.log(p.name);
 
   MongoClient.connect(url, function(err, db) {
@@ -217,6 +215,21 @@ app.post('/player_name', function(req, res) {
         db.collection("players").insert(p);
 
       }
+  });
+
+  });
+  
+});
+
+app.post('/island_nos', function(req, res) {
+  
+  MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+    
+    db.collection('islands').find( {} ).count(function(err,results){
+      count = results;
+      
+      return res.send(count);
   });
 
   });
