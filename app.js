@@ -214,7 +214,7 @@ app.post('/player_name', function(req, res) {
 var p = new player();
   
   p.name = req.body.username;
-  // console.log(p.name);
+
 
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
@@ -231,6 +231,21 @@ var p = new player();
         db.collection("players").insert(p);
 
       }
+  });
+
+  });
+  
+});
+
+app.post('/island_nos', function(req, res) {
+  
+  MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+    
+    db.collection('islands').find( {} ).count(function(err,results){
+      count = results;
+      
+      return res.send(count);
   });
 
   });
