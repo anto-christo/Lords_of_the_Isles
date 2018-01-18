@@ -10,7 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" type="text/css" href="css/home.css">
 
-<<<<<<< HEAD
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
   <script type="text/javascript">
       $(document).ready(function(){
           $('[data-toggle="popover"]').popover({
@@ -50,8 +51,7 @@
     </script>
   <script src = "/socket.io/socket.io.js"></script>
 
-=======
->>>>>>> 0c20ee6847ec52120feaccc424261b4630112583
+
 </head>
 
 <body>
@@ -66,7 +66,14 @@
                 <div class="money">
                     <script type="text/javascript">
                         var socket = io();
-                        socket.on('getGold', function(data){
+
+                        var person = localStorage.getItem("username");
+                        socket.emit("add-user", {"username": person}); // LATER THIS SHOULD BE FROM INDEX.HTML
+                        setInterval(function(){ 
+                            socket.emit('getGold', {"username": person});
+                        }, 3000);
+
+                        socket.on('responseGold', function(data){
                             document.getElementById('gold').innerHTML = data;
                         });
                     </script>
@@ -121,13 +128,10 @@
         </div>
   		</div>
 	</div>
-<<<<<<< HEAD
 
-=======
  
 <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
->>>>>>> 0c20ee6847ec52120feaccc424261b4630112583
 
 
 
@@ -185,7 +189,6 @@
 	</div>
 
 
-<<<<<<< HEAD
 
 
 
@@ -257,9 +260,7 @@
 
 
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-=======
-  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
->>>>>>> 0c20ee6847ec52120feaccc424261b4630112583
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>

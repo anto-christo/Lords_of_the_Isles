@@ -16,11 +16,9 @@ var url = 'mongodb://127.0.0.1:27017/LOI';
 
 var assert = require('assert');
 
-var global_user;
 var rankings= [];
+var clients = {};
 var gold = 0;
-var p = new player();
-
 app.use(express.static(__dirname));
 app.use(bodyParser.urlencoded({ extended: true })); 
 
@@ -35,6 +33,7 @@ server.listen(process.env.PORT || 3000,function(){
 });
 
 io.on('connection', function(socket) {
+    
     updateLeaderboard();
     socket.emit('getLeaderboard', rankings);
     setInterval(function(){ 
@@ -42,37 +41,48 @@ io.on('connection', function(socket) {
       socket.emit('getLeaderboard', rankings);
     }, 10000);
 
+	socket.on('add-user', function(data){
+	    clients[data.username] = {
+	      "socket": socket.id
+	    };
 
-    updateGold();
-    socket.emit('getGold', gold);
-    setInterval(function(){ 
-      updateGold();
-      socket.emit('getGold', gold);
-    }, 5000);
+    });
 
-
-
-});
-
-
-function updateGold(){
-    MongoClient.connect(url, function(err, db) {
+    socket.on('getGold', function(data){
+      var my_gold;
+      if (clients[data.username]){
+      MongoClient.connect(url, function(err, db) {
        assert.equal(null, err);
-       global_user = "newbie"; // when commented, works only if entry is through index.html
-       console.log("global_user "+ global_user);
-                db.collection('players').find({name:global_user}).toArray(function(err, results){
-                     gold = results[0].gold;
+                db.collection('players').find({name:data.username}).toArray(function(err, results){
+                    io.sockets.connected[clients[data.username].socket].emit("responseGold", results[0].gold);
                 });
                 db.close(); 
       });
-}
+      }
+      else {
+        console.log("User does not exist: " + data.username); 
+      }
+    	
+    });
+
+    socket.on('disconnect', function() {
+    for(var name in clients) {
+      if(clients[name].socket === socket.id) {
+        delete clients[name];
+        break;
+      }
+    } 
+  })
+
+});
+
 
 function updateLeaderboard(){
     MongoClient.connect(url, function(err, db) {
        assert.equal(null, err);
                 db.collection('players').find().sort({wealth:-1}).limit(5).toArray(function(err, results){
                       var j=0;
-                      while(j<5){
+                      while(j<0){
                         var obj = {name: results[j].name,wealth: results[j].wealth}
                         rankings[j] = obj;
                         j++;
@@ -100,11 +110,11 @@ app.post('/assign_island', function(req, res) {
     islands = data.toString().split("\n");
 
     for(i=0;i<islands.length;i++)
-    console.log(islands[i]);
+    // console.log(islands[i]);
 
     var rand = Math.floor(Math.random()*islands.length-1);
-    console.log(rand);
-    console.log(islands[rand]);
+    // console.log(rand);
+    // console.log(islands[rand]);
 
     var island_name = islands[rand];
 
@@ -115,7 +125,7 @@ app.post('/assign_island', function(req, res) {
     }
 
     for(i=0;i<islands.length;i++)
-    console.log(islands[i]);
+    // console.log(islands[i]);
 
     var new_list = islands.join("\n");
 
@@ -124,7 +134,7 @@ app.post('/assign_island', function(req, res) {
          return console.error(err);
       }
       
-      console.log("Data written successfully!");     
+      // console.log("Data written successfully!");     
    });
 
    MongoClient.connect(url, function(err, db) {
@@ -139,7 +149,7 @@ app.post('/assign_island', function(req, res) {
 
       if(x<1000){
         var randx = Math.floor(Math.random()*200)+50;
-        console.log(randx);
+        // console.log(randx);
         var px = x;
         var py = y;
         x+=randx;
@@ -186,7 +196,7 @@ app.post('/assign_island', function(req, res) {
 
       db.collection("players").update({name:p.name},{$push:{explored_islands_name:{island_name:i.name}}}, function(err, r) {
         assert.equal(null, err);
-        console.log("player updated");
+        // console.log("player updated");
         db.close(); 
       });
 
@@ -200,10 +210,11 @@ app.post('/assign_island', function(req, res) {
 });
 
 app.post('/player_name', function(req, res) {
+
+var p = new player();
   
   p.name = req.body.username;
-  global_user = p.name;
-  console.log(p.name);
+  // console.log(p.name);
 
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
