@@ -10,17 +10,40 @@ var user;
 
         console.log(player);
 
-        function assign_island(){
+        function assign_island(x){
             $.ajax({
                 type: 'POST',
-                url: '/assign_island',
-                data: {username:user},
-                dataType : 'json',
+                url: '/create_island',
+                dataType: 'json',
                 success: function(resp){
+
+                    console.log(resp.name);
+
+                    if(x==1)
+                        var reply = confirm("Do you want to buy "+resp.name+"?");
+
+                    else
+                        var reply = 1;
+
+                    if(reply){
+                        $.ajax({
+                            type: 'POST',
+                            url: '/assign_island',
+                            data: {username:user, island:resp.name},
+                            dataType : 'json',
+                            success: function(resp){
+                            }
+                        
+                        });
+                    }
 
                 }
             
             });
+        }
+
+        if(old == 0){
+            assign_island(0);
         }
 
         function old_island(){
@@ -30,36 +53,24 @@ var user;
                 data: {username:user},
                 dataType : 'json',
                 success: function(resp){
-                    
+                    alert("Owned Island:"+resp[0].name);
                 }
             
             });
-        }
-
-        if(old == 0){
-            assign_island();
         }
 
 		$("#dice_btn").click(function(){
 
-            $.ajax({
-                type: 'POST',
-                url: '/assign_island',
-                success: function(resp){
+            var rand = Math.floor(Math.random()*2);
 
-                var nos = Number(resp);
+            console.log("rand="+rand);
 
-                    var rand = Math.floor(Math.random()*nos);
+            if(rand==0)
+                assign_island(1);
 
-                    if(nos%5 == 0){
-                        assign_island();
-                    }
-
-                    else{
-                        old_island();
-                    }
-                }
+            else{
+                old_island();
+            }
             
-            });
 		});
 	});

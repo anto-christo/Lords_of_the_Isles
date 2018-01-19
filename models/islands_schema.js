@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var islandSchema = new mongoose.Schema({
     name: {type: String, default: null},
-    owner_id: { type: Number, default: null },
+    owner_name: { type: String, default: "AI" },
     current_population: { type: Number, default: 0 },
     max_population: { type: Number, default: 0 },
     res_produced: { type: String, default: null },

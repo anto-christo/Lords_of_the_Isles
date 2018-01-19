@@ -18,7 +18,6 @@ var assert = require('assert');
 
 var rankings= [];
 var gold = 0;
-var p = new player();
 
 app.use(express.static(__dirname));
 app.use(bodyParser.urlencoded({ extended: true })); 
@@ -79,14 +78,49 @@ server.listen(process.env.PORT || 3000,function(){
 //                 db.close(); 
 //       });
 // }
+function create_island(x,y,island_name){
+
+    var i = new island();
+
+    var random_res = Math.floor(Math.random()*(resources.length-1));
+    var resource = resources[random_res];
+
+    var cap = Math.floor(Math.random()*1000) + 30;
+
+    console.log("name="+island_name);
+
+    i.x_cord = x;
+    i.y_cord = y;
+    i.res_produced = resource;
+    i.name = island_name;
+    i.max_population = cap;
+
+    console.log(i);
+
+    MongoClient.connect(url, function(err, db) {
+    db.collection("islands").insert(i);
+    db.close();
+    });
+}
+
+
+function update_map(x,y,px,py){
+  MongoClient.connect(url, function(err, db) {
+
+  db.collection("map").update({xpos:px, ypos:py}, {xpos:x, ypos:y}, function(err, result) {
+    if(err) throw err;
+    db.close();
+  });
+
+});
+}
 
 var islands;
 var resources = ["copper","iron","bronze","wood","oil","coal","uranium","lead","aluminium","diamond","emerald","coconut","salt","rice","wheat"];
   
-app.post('/assign_island', function(req, res) {
+app.post('/create_island', function(req, res) {
 
-  var p = new player();
-  p.name = req.body.username;
+  var island_name;
 
   fs.readFile('names.txt', function (err, data) {
     if (err) {
@@ -95,14 +129,16 @@ app.post('/assign_island', function(req, res) {
 
     islands = data.toString().split("\n");
 
-    for(i=0;i<islands.length;i++)
-    console.log(islands[i]);
+    for(k=0;k<islands.length;k++)
+    console.log(islands[k]);
 
     var rand = Math.floor(Math.random()*islands.length-1);
     console.log(rand);
     console.log(islands[rand]);
 
-    var island_name = islands[rand];
+    island_name = islands[rand];
+
+    res.send(JSON.stringify({"name":island_name}));
 
     var ind = islands.indexOf(island_name);
 
@@ -110,8 +146,8 @@ app.post('/assign_island', function(req, res) {
       islands.splice(ind,1);
     }
 
-    for(i=0;i<islands.length;i++)
-    console.log(islands[i]);
+    // for(i=0;i<islands.length;i++)
+    // console.log(islands[i]);
 
     var new_list = islands.join("\n");
 
@@ -123,79 +159,79 @@ app.post('/assign_island', function(req, res) {
       console.log("Data written successfully!");     
    });
 
-   MongoClient.connect(url, function(err, db) {
+   var x,y,px,py;
 
-    var x;
-    var y;
+   MongoClient.connect(url, function(err, db) {
 
     db.collection("map").find({}).toArray(function(err, result) {
       assert.equal(null, err);
-      x = result[0].xpos;
-      y = result[0].ypos;
+      x = Number(result[0].xpos);
+      y = Number(result[0].ypos);
 
       if(x<1000){
         var randx = Math.floor(Math.random()*200)+50;
         console.log(randx);
-        var px = x;
-        var py = y;
+        px = x;
+        py = y;
         x+=randx;
       }
 
       else{
         var randy = Math.floor(Math.random()*200)+50;
-        var py = y;
-        var px = x;
+        py = y;
+        px = x;
         x=10;
         y+=randy;
       }
 
-      db.collection("map").update({xpos:px, ypos:py}, {xpos:x, ypos:y}, function(err, result) {
-        if(err) throw err;
-      });
+      update_map(x,y,px,py);
+      create_island(x,y,island_name);
 
-      var i = new island();
+      db.close();
 
-      var random_res = Math.floor(Math.random()*(resources.length-1));
-      var resource = resources[random_res];
+    });
 
-      var cap = Math.floor(Math.random()*1000) + 30;
+  });
+  
+  }); 
+    
+});
 
-      i.xpos = x;
-      i.ypos = y;
-      i.name = island_name;
-      i.resource = resource;
-      i.cap = cap;
+app.post('/assign_island', function(req, res) {
+  
+  uname = req.body.username;
+  is_name = req.body.island;
 
-      var island_details = {
-        x_cord : i.xpos,
-        y_cord : i.ypos,
-          name : i.name,
-          res_produced : i.resource,
-          max_population : i.cap
-      };
+  MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+    
+    db.collection("islands").update({name:is_name},{$set:{owner_name:uname}}, function(err, r) {
+      assert.equal(null, err);
+      console.log("island updated");
+      db.close(); 
+    });
 
-      db.collection("islands").insert(island_details, function(err, r) {
-        assert.equal(null, err);
-        assert.equal(1, r.insertedCount);
-        res.send(JSON.stringify({'imsg':'success'}));
-      });
-
-      db.collection("players").update({name:p.name},{$push:{explored_islands_name:{island_name:i.name}}}, function(err, r) {
+      db.collection("players").update({name:uname},{$push:{explored_islands_name:{island_name:is_name}}}, function(err, r) {
         assert.equal(null, err);
         console.log("player updated");
         db.close(); 
       });
 
-
-    });  
-      
+  });
   
-    });
- });
-
 });
 
+function insert_player(p){
+  console.log("new player");
+  MongoClient.connect(url, function(err, db) {
+        db.collection("players").insert(p);
+        db.close();
+  });
+}
+
 app.post('/player_name', function(req, res) {
+
+  var p = new player();
   
   p.name = req.body.username;
   console.log(p.name);
@@ -211,32 +247,30 @@ app.post('/player_name', function(req, res) {
       }
       else
       { 
-        console.log("new player");
-        db.collection("players").insert(p);
-
+        insert_player(p);
       }
+
+      db.close();
   });
 
   });
   
 });
 
-app.post('/island_nos', function(req, res) {
-  
+app.post('/old_island', function(req, res) {
+
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
     
-    db.collection('islands').find( {} ).count(function(err,results){
-      count = results;
-      
-      return res.send(count);
-  });
+    db.collection("islands").aggregate(
+      { $sample: { size: 1 } }, function(err,result){
+        return res.send(result);
+      }
+    );
 
   });
   
 });
-
-
 
 app.get('/getLeaderboard', function(req, res) {
 
