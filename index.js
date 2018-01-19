@@ -47,6 +47,8 @@ function checkCookie() {
         player = user;
         old = 1;
         alert("Welcome again " + user);
+        localStorage.setItem("username", user);
+
     } else {
       flag = 1;
     }
@@ -64,7 +66,12 @@ var person="";
           old = 0;
         }
         setCookie("username", person, 30);
+        localStorage.setItem("username", person);
+
         send_player_name();
         console.log(person);
+
     }
+    
+
 });
