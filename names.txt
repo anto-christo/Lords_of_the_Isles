@@ -7,11 +7,9 @@ Antigua & Deps
 Argentina
 Armenia
 Australia
-Austria
 Azerbaijan
 Bahamas
 Bahrain
-Bangladesh
 Barbados
 Belarus
 Belgium
@@ -40,7 +38,6 @@ Congo
 Congo {Democratic Rep}
 Croatia
 Cuba
-Cyprus
 Czech Republic
 Denmark
 Djibouti
@@ -56,24 +53,19 @@ Estonia
 Ethiopia
 Fiji
 Finland
-France
 Gabon
 Gambia
 Georgia
 Germany
 Ghana
 Greece
-Grenada
 Guatemala
 Guinea
 Guinea-Bissau
 Guyana
 Haiti
-Honduras
 Hungary
-Iceland
 India
-Indonesia
 Iran
 Iraq
 Ireland {Republic}
@@ -126,7 +118,6 @@ Netherlands
 New Zealand
 Nicaragua
 Niger
-Nigeria
 Norway
 Oman
 Pakistan
@@ -187,7 +178,6 @@ United States
 Uruguay
 Uzbekistan
 Vanuatu
-Vatican City
 Venezuela
 Vietnam
 Yemen

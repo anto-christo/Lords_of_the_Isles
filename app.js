@@ -33,6 +33,29 @@ server.listen(process.env.PORT || 3000,function(){
     console.log('Listening on '+server.address().port);
 });
 
+function assign_ship(uname, is_name){
+
+  var s = new ship();
+
+  s.owner_name = uname;
+  s.source = is_name; 
+
+  MongoClient.connect(url, function(err, db) {
+    db.collection("ships").insert(s,function(err,result){
+
+      console.log(result);
+      console.log(result.insertedIds[0]);
+
+      var id = result.insertedIds[0];
+
+      db.collection("players").update({name:uname},{$push:{owned_ships_id:{id:id}}}, function(err, r) {
+        assert.equal(null, err);
+        db.close(); 
+      });
+    });
+  });
+}
+
 function create_island(x,y,island_name){
 
     var i = new island();
@@ -216,6 +239,7 @@ app.post('/create_island', function(req, res) {
 app.post('/assign_island', function(req, res) {
   
   uname = req.body.username;
+  console.log("uname="+uname);
   is_name = req.body.island;
 
   MongoClient.connect(url, function(err, db) {
@@ -234,6 +258,8 @@ app.post('/assign_island', function(req, res) {
       });
 
   });
+
+  assign_ship(uname,is_name);
   
 });
 
