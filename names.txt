@@ -12,7 +12,6 @@ Bahamas
 Bahrain
 Barbados
 Belarus
-Belgium
 Belize
 Benin
 Bhutan
@@ -23,13 +22,11 @@ Brazil
 Brunei
 Bulgaria
 Burkina
-Burundi
 Cambodia
 Cameroon
 Canada
 Cape Verde
 Central African Rep
-Chad
 Chile
 China
 Colombia
@@ -54,7 +51,6 @@ Ethiopia
 Fiji
 Finland
 Gabon
-Gambia
 Georgia
 Germany
 Ghana
@@ -64,7 +60,6 @@ Guinea
 Guinea-Bissau
 Guyana
 Haiti
-Hungary
 India
 Iran
 Iraq
@@ -105,7 +100,6 @@ Mauritius
 Mexico
 Micronesia
 Moldova
-Monaco
 Mongolia
 Montenegro
 Morocco
@@ -124,7 +118,6 @@ Pakistan
 Palau
 Panama
 Papua New Guinea
-Paraguay
 Peru
 Philippines
 Poland
@@ -175,7 +168,6 @@ Ukraine
 United Arab Emirates
 United Kingdom
 United States
-Uruguay
 Uzbekistan
 Vanuatu
 Venezuela

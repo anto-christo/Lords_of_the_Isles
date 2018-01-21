@@ -44,6 +44,7 @@ var user;
 
         if(old == 0){
             assign_island(0);
+            old = 1;
         }
 
         function old_island(){
