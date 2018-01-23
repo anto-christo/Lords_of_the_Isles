@@ -55,7 +55,6 @@ function assign_ship(uname, is_name, res){
     });
   });
 
-  return res.send("Done");
 }
 
 
@@ -196,13 +195,20 @@ app.post('/create_island', function(req, res) {
       var random_res = Math.floor(Math.random()*(resources.length-1));
       var resource = resources[random_res];
 
+      var res_qty = Math.floor(Math.random()*200) + 30;
+      var res_val = Math.floor(Math.random()*1000) + 100;
+
       var cap = Math.floor(Math.random()*1000) + 30;
+
+      
 
       console.log("name="+island_name);
 
       i.x_cord = x;
       i.y_cord = y;
-      i.res_produced = resource;
+      i.res_produced.res_name = resource;
+      i.res_produced.res_quantity = res_qty;
+      i.res_produced.res_value = res_val;
       i.name = island_name;
       i.max_population = cap;
 
@@ -266,6 +272,8 @@ app.post('/assign_island', function(req, res) {
         });
       });
     }
+
+    return res.send("Done");
   
 });
 
@@ -369,6 +377,34 @@ app.post('/get_island',function(req,res){
   MongoClient.connect(url, function(err, db) {
 
     db.collection("players").find({name:user}).toArray(function(err, result) {
+        return res.send(result);
+        db.close();
+    });
+
+  });
+});
+
+app.post('/get_ship',function(req,res){
+
+  var user = req.body.user;
+
+  MongoClient.connect(url, function(err, db) {
+
+    db.collection("ships").find({owner_name:user}).toArray(function(err, result) {
+        return res.send(result);
+        db.close();
+    });
+
+  });
+});
+
+app.post('/get_island_info',function(req,res){
+
+  var island = req.body.island;
+
+  MongoClient.connect(url, function(err, db) {
+
+    db.collection("islands").find({name:island}).toArray(function(err, result) {
         return res.send(result);
         db.close();
     });

@@ -5,10 +5,14 @@ var islandSchema = new mongoose.Schema({
     owner_name: { type: String, default: "AI" },
     current_population: { type: Number, default: 0 },
     max_population: { type: Number, default: 0 },
-    res_produced: { type: String, default: null },
+    res_produced: { 
+        res_name: { type: String, default: null }, 
+        res_quantity: { type: Number, default: 0 },
+        res_value: { type: Number, default: 0 }
+    },
     res_present: [
     	{ 
-    		res_name: { type: String, default: null },  // res1
+    		res_name: { type: String, default: null },  
     		res_quantity: { type: Number, default: 0 },
     		res_value: { type: Number, default: 0 }
     	},

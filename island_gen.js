@@ -7,8 +7,7 @@ var user;
 
 	$(document).ready(function(){
 
-        user = player;
-        console.log(player);
+        user = localStorage.getItem("user");
 
         function assign_island(x){
             $.ajax({

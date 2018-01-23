@@ -1,5 +1,3 @@
-var player;
-
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover({
         placement : 'left',
@@ -20,7 +18,7 @@ $(document).ready(function(){
 
     var person = prompt("Enter your name:");
 
-    player = person;
+    localStorage.setItem("user", person);
     
     send_player_name(person);
 });
