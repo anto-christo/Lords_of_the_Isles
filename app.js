@@ -33,7 +33,7 @@ server.listen(process.env.PORT || 3000,function(){
     console.log('Listening on '+server.address().port);
 });
 
-function assign_ship(uname, is_name){
+function assign_ship(uname, is_name, res){
 
   var s = new ship();
 
@@ -54,6 +54,8 @@ function assign_ship(uname, is_name){
       });
     });
   });
+
+  return res.send("Done");
 }
 
 
@@ -227,6 +229,7 @@ app.post('/assign_island', function(req, res) {
   var is_name = req.body.island;
   console.log("isname="+is_name);
   var reply = req.body.reply;
+  var old = req.body.old;
 
   console.log("reply="+reply);
     
@@ -246,8 +249,8 @@ app.post('/assign_island', function(req, res) {
               console.log("owned updated");
               db.close();
         
-              //if(old==0)
-                //assign_ship(uname,is_name);
+              if(old==0)
+                assign_ship(uname,is_name,res);
             });
           });
         });
@@ -298,6 +301,8 @@ app.post('/player_name', function(req, res) {
   });
 
   });
+
+  return res.send("Done");
   
 });
 
