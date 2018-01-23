@@ -56,42 +56,7 @@ function assign_ship(uname, is_name){
   });
 }
 
-function create_island(x,y,island_name){
 
-    var i = new island();
-
-    var random_res = Math.floor(Math.random()*(resources.length-1));
-    var resource = resources[random_res];
-
-    var cap = Math.floor(Math.random()*1000) + 30;
-
-    console.log("name="+island_name);
-
-    i.x_cord = x;
-    i.y_cord = y;
-    i.res_produced = resource;
-    i.name = island_name;
-    i.max_population = cap;
-
-    console.log(i);
-
-    MongoClient.connect(url, function(err, db) {
-    db.collection("islands").insert(i);
-    db.close();
-    });
-}
-
-
-function update_map(x,y,px,py){
-  MongoClient.connect(url, function(err, db) {
-
-  db.collection("map").update({xpos:px, ypos:py}, {xpos:x, ypos:y}, function(err, result) {
-    if(err) throw err;
-    db.close();
-  });
-
-});
-}
 io.on('connection', function(socket) {
     
     updateLeaderboard();
@@ -168,16 +133,14 @@ app.post('/create_island', function(req, res) {
 
     islands = data.toString().split("\n");
 
-    for(k=0;k<islands.length;k++)
-    console.log(islands[k]);
+    // for(k=0;k<islands.length;k++)
+    // console.log(islands[k]);
 
     var rand = Math.floor(Math.random()*islands.length-1);
     // console.log(rand);
     // console.log(islands[rand]);
 
     island_name = islands[rand];
-
-    res.send(JSON.stringify({"name":island_name}));
 
     var ind = islands.indexOf(island_name);
 
@@ -209,7 +172,6 @@ app.post('/create_island', function(req, res) {
 
       if(x<1000){
         var randx = Math.floor(Math.random()*200)+50;
-        console.log(randx);
         px = x;
         py = y;
         x+=randx;
@@ -223,8 +185,30 @@ app.post('/create_island', function(req, res) {
         y+=randy;
       }
 
-      update_map(x,y,px,py);
-      create_island(x,y,island_name);
+      db.collection("map").update({xpos:px, ypos:py}, {xpos:x, ypos:y}, function(err, result) {
+        if(err) throw err;
+      });
+
+      var i = new island();
+
+      var random_res = Math.floor(Math.random()*(resources.length-1));
+      var resource = resources[random_res];
+
+      var cap = Math.floor(Math.random()*1000) + 30;
+
+      console.log("name="+island_name);
+
+      i.x_cord = x;
+      i.y_cord = y;
+      i.res_produced = resource;
+      i.name = island_name;
+      i.max_population = cap;
+
+      console.log(i);
+
+      db.collection("islands").insert(i);
+      
+      res.send(JSON.stringify({"name":island_name}));
 
       db.close();
 
@@ -238,28 +222,47 @@ app.post('/create_island', function(req, res) {
 
 app.post('/assign_island', function(req, res) {
   
-  uname = req.body.username;
+  var uname = req.body.username;
   console.log("uname="+uname);
-  is_name = req.body.island;
+  var is_name = req.body.island;
+  console.log("isname="+is_name);
+  var reply = req.body.reply;
 
-  MongoClient.connect(url, function(err, db) {
-  assert.equal(null, err);
+  console.log("reply="+reply);
     
-    db.collection("islands").update({name:is_name},{$set:{owner_name:uname}}, function(err, r) {
-      assert.equal(null, err);
-      console.log("island updated");
-      db.close(); 
-    });
+      if(reply == 'true'){
+        MongoClient.connect(url, function(err, db) {
+          db.collection("islands").update({name:is_name},{$set:{owner_name:uname}}, function(err, r) {
+            // assert.equal(null, err);
+            if(err)
+            {
+              console.log("booo!!");
+            }
 
-      db.collection("players").update({name:uname},{$push:{explored_islands_name:{island_name:is_name}}}, function(err, r) {
-        assert.equal(null, err);
-        // console.log("player updated");
-        db.close(); 
+            console.log("island updated");
+            
+            db.collection("players").update({name:uname},{$push:{owned_islands_name:{island_name:is_name}}}, function(err, r) {
+              assert.equal(null, err);
+              console.log("owned updated");
+              db.close();
+        
+              //if(old==0)
+                //assign_ship(uname,is_name);
+            });
+          });
+        });
+      }
+
+      else{
+        MongoClient.connect(url, function(err, db) {
+
+        db.collection("players").update({name:uname},{$push:{explored_islands_name:{island_name:is_name}}}, function(err, r) {
+          assert.equal(null, err);
+          console.log("explored updated");
+          db.close();
+        });
       });
-
-  });
-
-  assign_ship(uname,is_name);
+    }
   
 });
 
@@ -274,9 +277,8 @@ function insert_player(p){
 app.post('/player_name', function(req, res) {
 
   var p = new player();
-  
+  console.log("\n\nIN PLAYER NAME\n");
   p.name = req.body.username;
-
 
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
@@ -285,11 +287,38 @@ app.post('/player_name', function(req, res) {
       count = results;
       if (count>0) 
       {
-          console.log("old player");
+        console.log("old player");
       }
       else
       { 
         insert_player(p);
+      }
+
+      db.close();
+  });
+
+  });
+  
+});
+
+app.post('/check_player', function(req, res) {
+
+  var p = new player();
+  
+  p.name = req.body.username;
+
+  MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+    
+    db.collection('players').find( { name:p.name } ).count(function(err,results){
+      count = results;
+      if (count>0) 
+      {
+          res.send(JSON.stringify({"player":"old"}));
+      }
+      else
+      { 
+        res.send(JSON.stringify({"player":"new"}));
       }
 
       db.close();
@@ -307,6 +336,7 @@ app.post('/old_island', function(req, res) {
     db.collection("islands").aggregate(
       { $sample: { size: 1 } }, function(err,result){
         return res.send(result);
+        db.close();
       }
     );
 
@@ -325,4 +355,18 @@ app.get('/getLeaderboard', function(req, res) {
                 db.close(); 
       });
 
+});
+
+app.post('/get_island',function(req,res){
+
+  var user = req.body.user;
+
+  MongoClient.connect(url, function(err, db) {
+
+    db.collection("players").find({name:user}).toArray(function(err, result) {
+        return res.send(result);
+        db.close();
+    });
+
+  });
 });

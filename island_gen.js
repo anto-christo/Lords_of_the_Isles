@@ -1,3 +1,4 @@
+
 var islands = ["Greenland","New Guinea","Borneo","Madagascar","Baffin Island","Sumatra","Honshu","Victoria Island","Great Britain","Ellesmere Island","Sulawesi","South Island","Java","North Island","Luzon","Newfoundland","Cuba","Iceland"];
 
 var resources = ["copper","iron","bronze","wood","oil","coal","uranium","lead","aluminium","diamond","emerald","coconut","salt","rice","wheat"];
@@ -8,7 +9,31 @@ var user;
 
         user = player;
 
+        var reply;
+        var flag = 0;
+        var island_name;
+        var x;
+
         console.log(player);
+
+        function assign(){
+            $.ajax({
+                type: 'POST',
+                url: '/assign_island',
+                data: {username:user, island:island_name, reply:reply},
+                dataType : 'json',
+            
+            });
+        }
+
+        setInterval(function(){
+            console.log("ewger");
+            if(flag==1){
+                console.log("assign");
+                assign();
+                flag = 0;
+            }
+        },500);
 
         function assign_island(x){
             $.ajax({
@@ -19,31 +44,27 @@ var user;
 
                     console.log(resp.name);
 
-                    if(x==1)
-                        var reply = confirm("Do you want to buy "+resp.name+"?");
+                    if(x==1){
+                        reply = confirm("Do you want to buy "+resp.name+"?");
+
+                        if(reply==true){
+                            reply = 'true';
+                        }
+
+                        else
+                            reply = 'false';
+                    }
 
                     else
-                        var reply = 1;
+                        reply = 'true';
 
-                    if(reply){
-                        $.ajax({
-                            type: 'POST',
-                            url: '/assign_island',
-                            data: {username:user, island:resp.name},
-                            dataType : 'json',
-                            success: function(resp){
-                            }
-                        
-                        });
-                    }
+                    flag = 1;
+
+                    island_name = resp.name;
 
                 }
             
             });
-        }
-
-        if(old == 0){
-            assign_island(0);
         }
 
         function old_island(){
@@ -72,5 +93,22 @@ var user;
                 old_island();
             }
             
-		});
+        });
+        
+        function check_player(){
+            $.ajax({
+                type: 'POST',
+                url: '/check_player',
+                data: { username:user },
+                dataType: 'json',
+                success: function(x){
+                    if(x.player=="new"){
+                        console.log("new player");
+                        assign_island(0);
+                    }
+                }
+            });
+        }
+
+        check_player();
 	});
