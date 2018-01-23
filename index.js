@@ -12,7 +12,9 @@ $(document).ready(function(){
         type: 'POST',
         url: '/player_name',
         data: { username:person },
-        dataType: 'json'
+        success: function(data){
+            console.log("Player check complete");
+        }
         });
     }
 

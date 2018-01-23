@@ -8,39 +8,14 @@ var user;
 	$(document).ready(function(){
 
         user = player;
-
-        var reply;
-        var flag = 0;
-        var island_name;
-        var x;
-
         console.log(player);
-
-        function assign(){
-            $.ajax({
-                type: 'POST',
-                url: '/assign_island',
-                data: {username:user, island:island_name, reply:reply},
-                dataType : 'json',
-            
-            });
-        }
-
-        setInterval(function(){
-            console.log("ewger");
-            if(flag==1){
-                console.log("assign");
-                assign();
-                flag = 0;
-            }
-        },500);
 
         function assign_island(x){
             $.ajax({
                 type: 'POST',
                 url: '/create_island',
-                dataType: 'json',
-                success: function(resp){
+                dataType: 'json'}).
+                done(function(resp){
 
                     console.log(resp.name);
 
@@ -58,14 +33,18 @@ var user;
                     else
                         reply = 'true';
 
-                    flag = 1;
+                    $.ajax({
+                        type: 'POST',
+                        url: '/assign_island',
+                        data: {username:user, island:resp.name, reply:reply, old:x},
+                        success: function(data){
+                            console.log("Assign island successfull");
+                        }
+                    });
 
-                    island_name = resp.name;
-
-                }
-            
-            });
-        }
+                });
+            }
+        
 
         function old_island(){
             $.ajax({
