@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 	<title>Game</title>
@@ -30,61 +29,6 @@
 			 display: none;
 			}
 	</style>
-
-<script>
-		$(function() {
-			   $("#nav").click(function(e) {
-				   console.log("in click");
-				   e.preventDefault();
-				   // call function in a parent frame
-				   parent.window.change_iframe_src(this.rel);
-			   })
-		   })
-
-		   function pickIsland(name) {
-			   console.log(name);
-
-			   if (typeof(Storage) !== "undefined") {
-				   // Store
-				   localStorage.setItem("i_name", name);
-				   // Retrieve
-				   console.log("i_name " + localStorage.getItem("i_name"));
-			   } else {
-				   document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-			   }
-		   }
-
-		$(document).ready(function(){
-
-		   var user = localStorage.getItem("user");
-
-		   $.ajax({
-			   type: 'POST',
-			   url: '/get_island',
-			   data:{user:user},
-			   success: function(result){
-				   
-				   console.log(result);
-					
-
-				   for(i=0;i<result[0].owned_islands_name.length;i++){
-
-					var func = "pickIsland('"+result[0].owned_islands_name[i].island_name+"')";
-
-				   $('#is_card').append(
-					   '<center>'+
-						   '<a href="#" rel="islands-info.html" onclick='+func+'>'+
-							   '<div class="cardc">'+result[0].owned_islands_name[i].island_name+'</div>'+
-						   '</a>'+
-					   '</center>'
-				   );
-
-				   }
-			   }
-		   });
-		});
-	</script>
-
 </head>
 <body>
 <div class="outer-container">
@@ -93,30 +37,6 @@
 	
   <div id="nav">
 		<div class="outer" style="margin-bottom: 125px;" id="is_card">
-				<!-- <center>
-					<a href="#" rel="islands-info.html" onclick="pickIsland(1)">
-						<div class="cardc">1</div>
-					</a>
-					<a href="#" rel="islands-info.html" onclick="pickIsland(2)">
-						<div class="cardc">2</div>
-					</a>
-					<a href="#" rel="islands-info.html" onclick="pickIsland(3)">
-						<div class="cardc">3</div>
-					</a>
-					<a href="#" rel="islands-info.html" onclick="pickIsland(4)">
-						<div class="cardc">4</div>
-					</a>
-					<a href="#" rel="islands-info.html" onclick="pickIsland(5)">
-						<div class="cardc">5</div>
-					</a>
-					<a href="#" rel="islands-info.html" onclick="pickIsland(6)">
-						<div class="cardc">6</div>
-					</a>
-
-
-				</center> -->
-
-
 		</div>
 
    </div>
@@ -124,9 +44,57 @@
  </div>
  </div>
 
+    <script>
+    function pickIsland(name) {
+    console.log(name);
+
+    if (typeof(Storage) !== "undefined") {
+        // Store
+        localStorage.setItem("i_name", name);
+        // Retrieve
+        console.log("i_name " + localStorage.getItem("i_name"));
+    } else {
+        document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+    }
+
+    parent.window.change_iframe_src('islands-info.html');
+}
+
+$(document).ready(function(){
+
+   var user = localStorage.getItem("user");
+
+   $.ajax({
+       type: 'POST',
+       url: '/get_island',
+       data:{user:user},
+       success: function(result){
+           
+           console.log(result);
+            
+
+           for(i=0;i<result[0].owned_islands_name.length;i++){
+
+            var func = "pickIsland('"+result[0].owned_islands_name[i].island_name+"')";
+
+           $('#is_card').append(
+               '<center>'+
+                   '<a href="#" rel="islands-info.html" onclick='+func+'>'+
+                       '<div class="cardc">'+result[0].owned_islands_name[i].island_name+'</div>'+
+                   '</a>'+
+               '</center>'
+           );
+
+           }
+       }
+   });
+});
+    </script>
+
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
 </body>
 </html>
