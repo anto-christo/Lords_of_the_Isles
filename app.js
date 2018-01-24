@@ -374,6 +374,8 @@ app.post('/get_island',function(req,res){
 
   var user = req.body.user;
 
+  console.log(user);
+
   MongoClient.connect(url, function(err, db) {
 
     db.collection("players").find({name:user}).toArray(function(err, result) {

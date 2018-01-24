@@ -16,19 +16,20 @@
 		}
 	</style>
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
         $(function() {
             $("#nav a").click(function(e) {
                 e.preventDefault();
                 // call function in a parent frame
-                parent.window.change_iframe_src(this.rel);
             })
         })
-    </script>
+    </script> -->
 
     <script type="text/javascript">
     	function pickShip(s_id) {
-    		console.log(s_id);
+			console.log(s_id);
+			parent.window.change_iframe_src(this.rel);
+			
     		if (typeof(Storage) !== "undefined") {
 			    // Store
 			    localStorage.setItem("s_id", s_id);
