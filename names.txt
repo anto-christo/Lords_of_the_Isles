@@ -81,7 +81,6 @@ Italy
 Ivory Coast
 Jamaica
 Japan
-Jordan
 Kazakhstan
 Kenya
 Kiribati
@@ -97,7 +96,6 @@ Lesotho
 Liberia
 Libya
 Liechtenstein
-Lithuania
 Luxembourg
 Macedonia
 Madagascar
@@ -107,10 +105,8 @@ Maldives
 Mali
 Malta
 Marshall Islands
-Mauritania
 Mauritius
 Mexico
-Micronesia
 Moldova
 Monaco
 Mongolia
@@ -135,7 +131,6 @@ Papua New Guinea
 Paraguay
 Peru
 Philippines
-Poland
 Portugal
 Qatar
 Romania
@@ -176,7 +171,6 @@ Trinidad & Tobago
 Tunisia
 Turkmenistan
 Tuvalu
-Uganda
 Ukraine
 United Kingdom
 United States

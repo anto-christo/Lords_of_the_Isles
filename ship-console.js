@@ -3,38 +3,34 @@ var user;
 $(document).ready(function(){
 
     user = localStorage.getItem("user");
+    var ship = localStorage.getItem("s_id");
 
-    $('#user_name').text("Owner: "+user);
+    // $.ajax({
+    //     type:'POST',
+    //     url:'/get_island',
+    //     data:{user:user},
+    //     success: function(result){
+
+    //         console.log(result);
+            
+    //         for(i=0;i<result[0].owned_islands_name.length;i++){
+    //             $('#islands').append('<option>'+result[0].owned_islands_name[i].island_name+'</option>');
+    //         }
+
+    //         for(i=0;i<result[0].explored_islands_name.length;i++){
+    //             $('#islands').append('<option>'+result[0].explored_islands_name[i].island_name+'</option>');
+    //         }
+    //     }
+    // });
 
     $.ajax({
         type:'POST',
-        url:'/get_island',
-        data:{user:user},
+        url:'/get_ship_info',
+        data:{ship:ship},
         success: function(result){
 
             console.log(result);
             
-            for(i=0;i<result[0].owned_islands_name.length;i++){
-                $('#islands').append('<option>'+result[0].owned_islands_name[i].island_name+'</option>');
-            }
-
-            for(i=0;i<result[0].explored_islands_name.length;i++){
-                $('#islands').append('<option>'+result[0].explored_islands_name[i].island_name+'</option>');
-            }
-        }
-    });
-
-    $.ajax({
-        type:'POST',
-        url:'/get_ship',
-        data:{user:user},
-        success: function(result){
-
-            console.log(result);
-            
-            $('#ships').append('<option>'+result[0]._id+'</option>');
-
-            $('#ships').on('change', function (e) {        
                 $('#source').text("Anchored at : "+result[0].source);
 
                 $.ajax({
@@ -74,8 +70,6 @@ $(document).ready(function(){
                     }
 
                 });
-            });
-
         }
     });
 

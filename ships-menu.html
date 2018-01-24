@@ -16,16 +16,6 @@
 		}
 	</style>
 
-	<script type="text/javascript">
-        $(function() {
-            $("#nav a").click(function(e) {
-                e.preventDefault();
-				// call function in a parent frame
-				parent.window.change_iframe_src(this.rel);
-            })
-        })
-    </script>
-
     <script type="text/javascript">
     	function pickShip(s_id) {
 			console.log(s_id);
@@ -35,10 +25,29 @@
 			    localStorage.setItem("s_id", s_id);
 			    // Retrieve
 			    console.log("s_id " + localStorage.getItem("s_id"));
-			} else {
-			    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
 			}
-    	}
+
+			parent.window.change_iframe_src('ship-console.html');
+		}
+		
+		$(document).ready(function(){
+
+			var user = localStorage.getItem("user");
+
+			$.ajax({
+				type:'POST',
+				url:'/get_ship',
+				data:{user:user},
+				success: function(result){
+
+					console.log(result);
+
+					var func = "pickShip('"+result[0]._id+"')";
+
+					$('#ship_list').append('<div class="carde" onclick='+func+'>1</div>')
+				}
+			});
+		});
     </script>
 
 </head>
@@ -46,10 +55,10 @@
 
 <div class="data" id="nav">
 <a href="#" rel="ships-info.html">
-	<div class="horizontal-scroll-wrapper squares" >
+	<div class="horizontal-scroll-wrapper squares" id="ship_list">
 	<div></div>
 	
-	  <div class="cardc" onclick="pickShip(1)">a</div>
+	  <!-- <div class="cardc" onclick="pickShip(1)">a</div>
 	  <div class="cardc" onclick="pickShip(2)">b</div>
 	  <div class="cardc" onclick="pickShip(3)">c</div>
 	  <div class="cardc" onclick="pickShip(4)">d</div>
@@ -58,18 +67,17 @@
 	  <div class="carde" onclick="pickShip(0)"></div>
 	  <div class="carde" onclick="pickShip(0)"></div>
 	  <div class="carde" onclick="pickShip(0)"></div>
-	  <div class="carde" onclick="pickShip(0)"></div>
-	 <div></div>
-	 <div></div>
-	 <div></div>
+	  <div class="carde" onclick="pickShip(0)"></div> -->
+	 
 	</div>
 </a>
 </div>
 
 
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
 </body>
 </html>

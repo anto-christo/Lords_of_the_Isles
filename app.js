@@ -299,11 +299,10 @@ app.post('/create_island', function(req, res) {
           i.max_population = cap;
           console.log(i);
           db.collection("islands").insert(i,function(err,result){
+            res.send(JSON.stringify({"name":island_name}));
             db.close();
           });
         });
-
-      res.send(JSON.stringify({"name":island_name}));
     });
 
   });
@@ -477,6 +476,21 @@ app.post('/get_ship',function(req,res){
   MongoClient.connect(url, function(err, db) {
 
     db.collection("ships").find({owner_name:user}).toArray(function(err, result) {
+        return res.send(result);
+        db.close();
+    });
+
+  });
+});
+
+app.post('/get_ship_info',function(req,res){
+
+  var ship = req.body.ship;
+  console.log(ship);
+
+  MongoClient.connect(url, function(err, db) {
+
+    db.collection("ships").find({_id:ship}).toArray(function(err, result) {
         return res.send(result);
         db.close();
     });
