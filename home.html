@@ -67,7 +67,7 @@
                     <script type="text/javascript">
                         var socket = io();
 
-                        var person = localStorage.getItem("username");
+                        var person = localStorage.getItem("user");
                         socket.emit("add-user", {"username": person}); // LATER THIS SHOULD BE FROM INDEX.HTML
                         setInterval(function(){ 
                             socket.emit('getGold', {"username": person});

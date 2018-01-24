@@ -79,6 +79,7 @@ io.on('connection', function(socket) {
       if (clients[data.username]){
       MongoClient.connect(url, function(err, db) {
        assert.equal(null, err);
+
                 db.collection('players').find({name:data.username}).toArray(function(err, results){
                     io.sockets.connected[clients[data.username].socket].emit("responseGold", results[0].gold);
                 });
@@ -121,11 +122,57 @@ function updateLeaderboard(){
 
 
 var islands;
-var resources = ["copper","iron","bronze","wood","oil","coal","uranium","lead","aluminium","diamond","emerald","coconut","salt","rice","wheat"];
+var resources = [
+  "copper",
+  "iron",
+  "bronze",
+  "wood",
+  "oil",
+  "coal",
+  "uranium",
+  "lead",
+  "aluminium",
+  "diamond",
+  "emerald",
+  "coconut",
+  "salt",
+  "rice",
+  "wheat"
+  ];
+
+  var common = [
+  "copper",
+  "iron",
+  "bronze",
+  "wood",
+  "coal",
+  "lead",
+  "rice",
+  "wheat",
+  "aluminium",
+  ];
+
+  var rare = [
+  "oil",
+  "uranium",
+  "diamond",
+  "emerald",
+  "coconut",
+  "salt",
+  ];
   
 app.post('/create_island', function(req, res) {
 
   var island_name;
+  var uname = req.body.username;
+    
+    // MongoClient.connect(url, function(err, db) {
+    // assert.equal(null, err);
+    //     db.collection("players").find({name:uname}).toArray(function(err, result) {
+    //       console.log("player gold: " + result[0].gold);
+    //       db.close();
+    //     });
+    // });
 
   fs.readFile('names.txt', function (err, data) {
     if (err) {
@@ -166,7 +213,11 @@ app.post('/create_island', function(req, res) {
 
    MongoClient.connect(url, function(err, db) {
 
+    
+    
+     
     db.collection("map").find({}).toArray(function(err, result) {
+
       assert.equal(null, err);
       x = Number(result[0].xpos);
       y = Number(result[0].ypos);
@@ -192,30 +243,67 @@ app.post('/create_island', function(req, res) {
 
       var i = new island();
 
-      var random_res = Math.floor(Math.random()*(resources.length-1));
-      var resource = resources[random_res];
-
-      var res_qty = Math.floor(Math.random()*200) + 30;
-      var res_val = Math.floor(Math.random()*1000) + 100;
-
-      var cap = Math.floor(Math.random()*1000) + 30;
-
       
-
-      console.log("name="+island_name);
-
-      i.x_cord = x;
-      i.y_cord = y;
-      i.res_produced.res_name = resource;
-      i.res_produced.res_quantity = res_qty;
-      i.res_produced.res_value = res_val;
-      i.name = island_name;
-      i.max_population = cap;
-
-      console.log(i);
-
-      db.collection("islands").insert(i);
       
+      db.collection("players").find({name:uname}).toArray(function(err, result) {
+          console.log("player gold: " + result[0].gold);
+
+          if (result[0].gold<3000) // very poor
+          {
+              var random_res = Math.floor(Math.random()*(common.length-1));
+              var resource = common[random_res];
+          }
+          else if (result[0].gold< 15000)  // middle class
+          {
+            var luck = Math.random()*10;
+            if (luck>=7) 
+            {
+                var random_res = Math.floor(Math.random()*(rare.length-1));
+                var resource = rare[random_res];
+            }
+            else
+            {
+                var random_res = Math.floor(Math.random()*(common.length-1));
+                var resource = common[random_res];
+            }
+          }
+          else // rich 
+          {
+              var luck = (Math.random()*10);
+              if (luck>8) 
+              {
+                  var random_res = Math.floor(Math.random()*(rare.length-1));
+                  var resource = rare[random_res];
+              }
+              else
+              {
+                  var random_res = Math.floor(Math.random()*(common.length-1));
+                  var resource = common[random_res];
+              }
+          }
+
+
+          var res_qty = Math.floor(Math.random()*200) + 30;
+          var res_val = Math.floor(Math.random()*1000) + 100;
+
+          var cap = Math.floor(Math.random()*1000) + 30;  
+
+          console.log("name="+island_name);
+
+          i.x_cord = x;
+          i.y_cord = y;
+          i.res_produced.res_name = resource;
+          i.res_produced.res_quantity = res_qty;
+          i.res_produced.res_value = res_val;
+          i.name = island_name;
+          i.max_population = cap;
+          console.log(i);
+          db.collection("islands").insert(i);
+
+
+          db.close();
+        });
+
       res.send(JSON.stringify({"name":island_name}));
 
       db.close();
