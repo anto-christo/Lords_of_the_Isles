@@ -24,9 +24,9 @@ $(document).ready(function(){
 });
 
 
-    var change_iframe_src = function(new_src) {
-        $("#info-screen").attr('src', new_src);
-    }
+    // var change_iframe_src = function(new_src) {
+    //     $("#info-screen").attr('src', new_src);
+    // }
 
     var m,min;
     var s,sec;

@@ -168,7 +168,7 @@ app.post('/create_island', function(req, res) {
 
   var island_name;
   var uname = req.body.username;
-    
+
   fs.readFile('names.txt', function (err, data) {
     if (err) {
        return console.error(err);
@@ -207,7 +207,7 @@ app.post('/create_island', function(req, res) {
    var x,y,px,py;
 
    MongoClient.connect(url, function(err, db) {
-    
+
     db.collection("map").find({}).toArray(function(err, result) {
 
       assert.equal(null, err);
@@ -245,6 +245,7 @@ app.post('/create_island', function(req, res) {
               var random_res = Math.floor(Math.random()*(common.length-1));
               var resource = common[random_res].name;
               common_flag = 1;
+
           }
           else if (result[0].gold< 15000)  // middle class
           {
@@ -255,13 +256,13 @@ app.post('/create_island', function(req, res) {
                 var resource = rare[random_res].name;
                 common_flag = 0;
 
+
             }
             else
             {
                 var random_res = Math.floor(Math.random()*(common.length-1));
                 var resource = common[random_res].name;
                 common_flag = 1;
-
             }
           }
           else // rich 
@@ -272,13 +273,12 @@ app.post('/create_island', function(req, res) {
                   var random_res = Math.floor(Math.random()*(rare.length-1));
                   var resource = rare[random_res].name;
                 common_flag = 0;
-                                }
+              }
               else
               {
                   var random_res = Math.floor(Math.random()*(common.length-1));
                   var resource = common[random_res].name;
                 common_flag = 1;
-
               }
           }
 
@@ -327,15 +327,14 @@ app.post('/create_island', function(req, res) {
           i.current_population = current_pop;
           i.max_population = cap;
           i.value = island_value;
+
           console.log(i);
           db.collection("islands").insert(i,function(err,result){
             res.send(JSON.stringify({"name":island_name}));
             db.close();
           });
 
-
         });
-
     });
 
   });
@@ -478,6 +477,8 @@ app.post('/get_island',function(req,res){
 
   var user = req.body.user;
 
+  console.log(user);
+
   MongoClient.connect(url, function(err, db) {
 
     db.collection("players").find({name:user}).toArray(function(err, result) {
@@ -495,6 +496,21 @@ app.post('/get_ship',function(req,res){
   MongoClient.connect(url, function(err, db) {
 
     db.collection("ships").find({owner_name:user}).toArray(function(err, result) {
+        return res.send(result);
+        db.close();
+    });
+
+  });
+});
+
+app.post('/get_ship_info',function(req,res){
+
+  var ship = req.body.ship;
+  console.log(ship);
+
+  MongoClient.connect(url, function(err, db) {
+
+    db.collection("ships").find({_id:ship}).toArray(function(err, result) {
         return res.send(result);
         db.close();
     });
