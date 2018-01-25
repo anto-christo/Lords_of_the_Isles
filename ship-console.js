@@ -1,27 +1,44 @@
-var user;
+
+var user = localStorage.getItem("user");
+var ship = localStorage.getItem("s_id");
+
+console.log("Ship="+ship);
+
+function rename(){
+
+    var name = $('#ship_name').val();
+    console.log("Name:"+name);
+
+    $.ajax({
+        type: 'POST',
+        url: '/rename_ship',
+        data: {ship:ship, name:name},
+        success: function(){
+
+        }
+    });
+}
+
 
 $(document).ready(function(){
 
-    user = localStorage.getItem("user");
-    var ship = localStorage.getItem("s_id");
+    $.ajax({
+        type:'POST',
+        url:'/get_island',
+        data:{user:user},
+        success: function(result){
 
-    // $.ajax({
-    //     type:'POST',
-    //     url:'/get_island',
-    //     data:{user:user},
-    //     success: function(result){
-
-    //         console.log(result);
+            console.log(result);
             
-    //         for(i=0;i<result[0].owned_islands_name.length;i++){
-    //             $('#islands').append('<option>'+result[0].owned_islands_name[i].island_name+'</option>');
-    //         }
+            for(i=0;i<result[0].owned_islands_name.length;i++){
+                $('#islands').append('<option>'+result[0].owned_islands_name[i].island_name+'</option>');
+            }
 
-    //         for(i=0;i<result[0].explored_islands_name.length;i++){
-    //             $('#islands').append('<option>'+result[0].explored_islands_name[i].island_name+'</option>');
-    //         }
-    //     }
-    // });
+            for(i=0;i<result[0].explored_islands_name.length;i++){
+                $('#islands').append('<option>'+result[0].explored_islands_name[i].island_name+'</option>');
+            }
+        }
+    });
 
     $.ajax({
         type:'POST',
@@ -29,9 +46,13 @@ $(document).ready(function(){
         data:{ship:ship},
         success: function(result){
 
+            console.log("Ship details");
             console.log(result);
             
+                $('#_id').text("Registration No. : "+result[0]._id);
                 $('#source').text("Anchored at : "+result[0].source);
+
+                $('#mod').prepend('<input id="ship_name" type="text" value='+result[0].name+'>');
 
                 $.ajax({
                     type:'POST',

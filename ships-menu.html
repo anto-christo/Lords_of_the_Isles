@@ -42,9 +42,11 @@
 
 					console.log(result);
 
-					var func = "pickShip('"+result[0]._id+"')";
+					for(i=0;i<result.length;i++){
+						var func = "pickShip('"+result[i]._id+"')";
 
-					$('#ship_list').append('<div class="carde" onclick='+func+'>1</div>')
+						$('#ship_list').append('<div class="cardc" onclick='+func+'>'+result[i].name+'</div>')
+					}
 				}
 			});
 		});

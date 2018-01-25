@@ -510,8 +510,30 @@ app.post('/get_ship_info',function(req,res){
 
   MongoClient.connect(url, function(err, db) {
 
-    db.collection("ships").find({_id:ship}).toArray(function(err, result) {
+    var ObjectId = new mongoose.Types.ObjectId(ship);
+
+    db.collection("ships").find({_id:ObjectId}).toArray(function(err, result) {
+        console.log(result);
         return res.send(result);
+        db.close();
+    });
+
+  });
+});
+
+app.post('/rename_ship',function(req,res){
+
+  var ship = req.body.ship;
+  var name = req.body.name;
+  console.log(ship);
+  console.log(name);
+
+  MongoClient.connect(url, function(err, db) {
+
+    var ObjectId = new mongoose.Types.ObjectId(ship);
+
+    db.collection("ships").update({_id:ObjectId},{$set:{name:name}},function(err, result) {
+        return res.send("Done");
         db.close();
     });
 

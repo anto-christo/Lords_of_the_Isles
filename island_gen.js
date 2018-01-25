@@ -34,6 +34,7 @@ var user;
                         data: {username:user, island:resp.name, reply:reply, old:x},
                         success: function(data){
                             console.log("Assign island successfull");
+                            parent.window.reload_page();
                         }
                     });
 
