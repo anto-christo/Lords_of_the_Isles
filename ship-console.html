@@ -3,6 +3,9 @@
         <title>
             Ship Console
         </title>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
     </head>
     <body>
         
@@ -10,7 +13,8 @@
 
     <center>
 
-        <h4 id="source"></h6>
+        <h4 id="_id"></h4><br><br>
+        <h4 id="source"></h4><br><br>
 
         <table border="1px" id="res_table">
             <tr>
@@ -21,9 +25,35 @@
             </tr>
         </table><br><br>
 
-        <select id="islands"><option>Select Destination</option></select>
+        <select id="islands"><option>Select Destination</option></select><br><br><br>
+
+
+        <button class="btn btn-primary" data-toggle="modal" data-target="#ques">Rename Ship</button>
+      
+        <div class="modal fade" id="ques" tabindex="-1" role="dialog" aria-labelledby="ques" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="ques">Rename Ship</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" id="mod"> 
+              
+                <br><br><button class="btn btn-primary" onclick="rename()">Rename</button>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </center>
+
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
