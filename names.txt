@@ -1,5 +1,6 @@
 Afghanistan
 Albania
+Algeria
 Andorra
 Angola
 Antigua & Deps
@@ -60,6 +61,7 @@ Gabon
 Gambia
 Georgia
 Germany
+Ghana
 Greece
 Grenada
 Guatemala
@@ -80,6 +82,7 @@ Italy
 Ivory Coast
 Jamaica
 Japan
+Jordan
 Kazakhstan
 Kenya
 Kiribati
@@ -95,6 +98,7 @@ Lesotho
 Liberia
 Libya
 Liechtenstein
+Lithuania
 Luxembourg
 Macedonia
 Madagascar
@@ -104,8 +108,10 @@ Maldives
 Mali
 Malta
 Marshall Islands
+Mauritania
 Mauritius
 Mexico
+Micronesia
 Moldova
 Monaco
 Mongolia
@@ -124,12 +130,12 @@ Nigeria
 Norway
 Oman
 Pakistan
-Palau
 Panama
 Papua New Guinea
 Paraguay
 Peru
 Philippines
+Poland
 Portugal
 Qatar
 Romania
@@ -140,6 +146,7 @@ St Lucia
 Saint Vincent & the Grenadines
 Samoa
 San Marino
+Sao Tome & Principe
 Saudi Arabia
 Senegal
 Serbia
@@ -166,9 +173,12 @@ Thailand
 Tonga
 Trinidad & Tobago
 Tunisia
+Turkey
 Turkmenistan
 Tuvalu
+Uganda
 Ukraine
+United Arab Emirates
 United Kingdom
 United States
 Uruguay

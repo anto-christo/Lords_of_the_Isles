@@ -19,7 +19,7 @@ var islandSchema = new mongoose.Schema({
     ],
     x_cord : {type: Number, default: 0},
     y_cord : {type: Number, default: 0},
-    island_value:{type: Number, default: 0}
+    value: {type: Number, default: 0}
 });
 
 var islandSchema = mongoose.model('islands', islandSchema);

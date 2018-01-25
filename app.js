@@ -43,8 +43,8 @@ function assign_ship(uname, is_name, res){
   MongoClient.connect(url, function(err, db) {
     db.collection("ships").insert(s,function(err,result){
 
-      console.log(result);
-      console.log(result.insertedIds[0]);
+      // console.log(result);
+      // console.log(result.insertedIds[0]);
 
       var id = result.insertedIds[0];
 
@@ -65,7 +65,7 @@ io.on('connection', function(socket) {
     setInterval(function(){ 
       updateLeaderboard();
       socket.emit('getLeaderboard', rankings);
-    }, 10000);
+    }, 2000);
 
 	socket.on('add-user', function(data){
 	    clients[data.username] = {
@@ -105,13 +105,15 @@ io.on('connection', function(socket) {
 
 
 function updateLeaderboard(){
+  // console.log("\nINSIDE UPDATE LEADERBOARD\n");
     MongoClient.connect(url, function(err, db) {
        assert.equal(null, err);
                 db.collection('players').find().sort({wealth:-1}).limit(5).toArray(function(err, results){
                       var j=0;
-                      while(j<0){
+                      while(j<5){
                         var obj = {name: results[j].name,wealth: results[j].wealth}
                         rankings[j] = obj;
+                        // console.log("obj" + obj);
                         j++;
                       }
                 });
@@ -122,57 +124,50 @@ function updateLeaderboard(){
 
 
 var islands;
-var resources = [
-  "copper",
-  "iron",
-  "bronze",
-  "wood",
-  "oil",
-  "coal",
-  "uranium",
-  "lead",
-  "aluminium",
-  "diamond",
-  "emerald",
-  "coconut",
-  "salt",
-  "rice",
-  "wheat"
-  ];
+
+// var resources = [
+//   "copper",
+//   "iron",
+//   "bronze",
+//   "wood",
+//   "oil",
+//   "coal",
+//   "uranium",
+//   "lead",
+//   "aluminium",
+//   "diamond",
+//   "emerald",
+//   "coconut",
+//   "salt",
+//   "rice",
+//   "wheat"
+//   ];
 
   var common = [
-  "copper",
-  "iron",
-  "bronze",
-  "wood",
-  "coal",
-  "lead",
-  "rice",
-  "wheat",
-  "aluminium",
+    {name:"copper",base_cost:10},
+    {name:"iron",base_cost:20},
+    {name:"bronze",base_cost:30},
+    {name:"wood",base_cost:40},
+    {name:"coal",base_cost:50},
+    {name:"lead",base_cost:60},
+    {name:"rice",base_cost:70},
+    {name:"wheat",base_cost:80},
+    {name:"aluminium",base_cost:90}
   ];
 
   var rare = [
-  "oil",
-  "uranium",
-  "diamond",
-  "emerald",
-  "coconut",
-  "salt",
+    {name:"oil",base_cost:200},
+    {name:"uranium",base_cost:210},
+    {name:"diamond",base_cost:220},
+    {name:"emerald",base_cost:230},
+    {name:"coconut",base_cost:240},
+    {name:"salt",base_cost:250}
   ];
   
 app.post('/create_island', function(req, res) {
 
   var island_name;
   var uname = req.body.username;
-    
-    // MongoClient.connect(url, function(err, db) {
-    // assert.equal(null, err);
-    //     db.collection("players").find({name:uname}).toArray(function(err, result) {
-    //       console.log("player gold: " + result[0].gold);
-    //       db.close();
-    //     });
-    // });
 
   fs.readFile('names.txt', function (err, data) {
     if (err) {
@@ -213,9 +208,6 @@ app.post('/create_island', function(req, res) {
 
    MongoClient.connect(url, function(err, db) {
 
-    
-    
-     
     db.collection("map").find({}).toArray(function(err, result) {
 
       assert.equal(null, err);
@@ -243,15 +235,17 @@ app.post('/create_island', function(req, res) {
 
       var i = new island();
 
-      
+      var common_flag;
       
       db.collection("players").find({name:uname}).toArray(function(err, result) {
-          console.log("player gold: " + result[0].gold);
+          // console.log("player gold: " + result[0].gold);
 
           if (result[0].gold<3000) // very poor
           {
               var random_res = Math.floor(Math.random()*(common.length-1));
-              var resource = common[random_res];
+              var resource = common[random_res].name;
+              common_flag = 1;
+
           }
           else if (result[0].gold< 15000)  // middle class
           {
@@ -259,12 +253,16 @@ app.post('/create_island', function(req, res) {
             if (luck>=7) 
             {
                 var random_res = Math.floor(Math.random()*(rare.length-1));
-                var resource = rare[random_res];
+                var resource = rare[random_res].name;
+                common_flag = 0;
+
+
             }
             else
             {
                 var random_res = Math.floor(Math.random()*(common.length-1));
-                var resource = common[random_res];
+                var resource = common[random_res].name;
+                common_flag = 1;
             }
           }
           else // rich 
@@ -273,22 +271,52 @@ app.post('/create_island', function(req, res) {
               if (luck>8) 
               {
                   var random_res = Math.floor(Math.random()*(rare.length-1));
-                  var resource = rare[random_res];
+                  var resource = rare[random_res].name;
+                common_flag = 0;
               }
               else
               {
                   var random_res = Math.floor(Math.random()*(common.length-1));
-                  var resource = common[random_res];
+                  var resource = common[random_res].name;
+                common_flag = 1;
               }
           }
 
 
           var res_qty = Math.floor(Math.random()*200) + 30;
           var res_val = Math.floor(Math.random()*1000) + 100;
+          var big = (Math.random()*2);
+          if (big<1) 
+          {
+            var cap = Math.floor(Math.random()*1000) + 800;  
+          }
+          else
+          {
+            var cap = Math.floor(Math.random()*600) + 400;              
+          }
 
-          var cap = Math.floor(Math.random()*1000) + 30;  
+          var current_pop = Math.floor(Math.random()*200) + 100;              
 
-          console.log("name="+island_name);
+          // console.log("name="+island_name);
+
+          var island_value;
+
+          var production_factor;
+          if (common_flag==1) 
+          {
+            production_factor = common[random_res].base_cost*5;
+          }
+          else
+          {
+            production_factor = rare[random_res].base_cost*10;
+          }
+          var population_factor  = current_pop*5;
+
+          island_value = production_factor + population_factor;
+
+          console.log("production_factor " + production_factor);
+          console.log("population_factor " + population_factor);
+          console.log("island_value " + island_value);
 
           i.x_cord = x;
           i.y_cord = y;
@@ -296,12 +324,16 @@ app.post('/create_island', function(req, res) {
           i.res_produced.res_quantity = res_qty;
           i.res_produced.res_value = res_val;
           i.name = island_name;
+          i.current_population = current_pop;
           i.max_population = cap;
+          i.value = island_value;
+
           console.log(i);
           db.collection("islands").insert(i,function(err,result){
             res.send(JSON.stringify({"name":island_name}));
             db.close();
           });
+
         });
     });
 
@@ -314,13 +346,13 @@ app.post('/create_island', function(req, res) {
 app.post('/assign_island', function(req, res) {
   
   var uname = req.body.username;
-  console.log("uname="+uname);
+  // console.log("uname="+uname);
   var is_name = req.body.island;
   console.log("isname="+is_name);
   var reply = req.body.reply;
   var old = req.body.old;
 
-  console.log("reply="+reply);
+  // console.log("reply="+reply);
     
       if(reply == 'true'){
         MongoClient.connect(url, function(err, db) {
@@ -331,11 +363,11 @@ app.post('/assign_island', function(req, res) {
               console.log("booo!!");
             }
 
-            console.log("island updated");
+            // console.log("island updated");
             
             db.collection("players").update({name:uname},{$push:{owned_islands_name:{island_name:is_name}}}, function(err, r) {
               assert.equal(null, err);
-              console.log("owned updated");
+              // console.log("owned updated");
               db.close();
         
               if(old==0)
@@ -350,7 +382,7 @@ app.post('/assign_island', function(req, res) {
 
         db.collection("players").update({name:uname},{$push:{explored_islands_name:{island_name:is_name}}}, function(err, r) {
           assert.equal(null, err);
-          console.log("explored updated");
+          // console.log("explored updated");
           db.close();
         });
       });
@@ -371,7 +403,7 @@ function insert_player(p){
 app.post('/player_name', function(req, res) {
 
   var p = new player();
-  console.log("\n\nIN PLAYER NAME\n");
+  // console.log("\n\nIN PLAYER NAME\n");
   p.name = req.body.username;
 
   MongoClient.connect(url, function(err, db) {
@@ -440,18 +472,6 @@ app.post('/old_island', function(req, res) {
   
 });
 
-app.get('/getLeaderboard', function(req, res) {
-
-    var results;
-    MongoClient.connect(url, function(err, db) {
-       assert.equal(null, err);
-                db.collection('players').find().sort({wealth:-1}).limit(5).toArray(function(err, results){
-                      return res.send(results);
-                });
-                db.close(); 
-      });
-
-});
 
 app.post('/get_island',function(req,res){
 
