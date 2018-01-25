@@ -110,7 +110,7 @@ function updateLeaderboard(){
        assert.equal(null, err);
                 db.collection('players').find().sort({wealth:-1}).limit(5).toArray(function(err, results){
                       var j=0;
-                      while(j<5){
+                      while(j<2){
                         var obj = {name: results[j].name,wealth: results[j].wealth}
                         rankings[j] = obj;
                         // console.log("obj" + obj);

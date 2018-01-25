@@ -10,7 +10,6 @@ Australia
 Austria
 Azerbaijan
 Bahamas
-Bahrain
 Bangladesh
 Barbados
 Belarus
@@ -20,7 +19,6 @@ Benin
 Bhutan
 Bolivia
 Bosnia Herzegovina
-Botswana
 Brazil
 Brunei
 Bulgaria
@@ -93,7 +91,6 @@ Kosovo
 Kuwait
 Kyrgyzstan
 Laos
-Latvia
 Lebanon
 Lesotho
 Liberia
@@ -102,7 +99,6 @@ Liechtenstein
 Lithuania
 Luxembourg
 Macedonia
-Madagascar
 Malawi
 Malaysia
 Maldives
@@ -127,7 +123,6 @@ Netherlands
 New Zealand
 Nicaragua
 Niger
-Nigeria
 Norway
 Oman
 Pakistan
@@ -144,7 +139,6 @@ Russian Federation
 Rwanda
 St Kitts & Nevis
 St Lucia
-Saint Vincent & the Grenadines
 Samoa
 San Marino
 Sao Tome & Principe
