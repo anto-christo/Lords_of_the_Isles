@@ -1,8 +1,3 @@
-
-var islands = ["Greenland","New Guinea","Borneo","Madagascar","Baffin Island","Sumatra","Honshu","Victoria Island","Great Britain","Ellesmere Island","Sulawesi","South Island","Java","North Island","Luzon","Newfoundland","Cuba","Iceland"];
-
-var resources = ["copper","iron","bronze","wood","oil","coal","uranium","lead","aluminium","diamond","emerald","coconut","salt","rice","wheat"];
-	
 var user;
 
 	$(document).ready(function(){
@@ -13,6 +8,7 @@ var user;
             $.ajax({
                 type: 'POST',
                 url: '/create_island',
+                data: {username:user},
                 dataType: 'json'}).
                 done(function(resp){
 

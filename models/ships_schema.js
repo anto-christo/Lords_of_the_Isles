@@ -9,7 +9,8 @@ var shipSchema = new mongoose.Schema({
     		res_name: { type: String, default: null },  // res1
     		res_quantity: { type: Number, default: 0 },
     	}
-    ]
+    ],
+    value: {type: Number, default: 0}
 });
 
 var shipSchema = mongoose.model('ships', shipSchema);
