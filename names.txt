@@ -3,7 +3,6 @@ Albania
 Algeria
 Andorra
 Angola
-Antigua & Deps
 Argentina
 Armenia
 Australia
@@ -31,6 +30,7 @@ Cameroon
 Canada
 Cape Verde
 Central African Rep
+Chad
 Chile
 China
 Colombia
@@ -75,7 +75,6 @@ Iceland
 India
 Indonesia
 Iran
-Iraq
 Ireland {Republic}
 Israel
 Italy
@@ -106,7 +105,6 @@ Malawi
 Malaysia
 Maldives
 Mali
-Malta
 Marshall Islands
 Mauritania
 Mauritius
@@ -130,6 +128,7 @@ Nigeria
 Norway
 Oman
 Pakistan
+Palau
 Panama
 Papua New Guinea
 Paraguay
@@ -165,11 +164,13 @@ Sudan
 Suriname
 Swaziland
 Sweden
+Switzerland
 Syria
 Taiwan
 Tajikistan
 Tanzania
 Thailand
+Togo
 Tonga
 Trinidad & Tobago
 Tunisia
@@ -188,4 +189,5 @@ Vatican City
 Venezuela
 Vietnam
 Yemen
+Zambia
 Zimbabwe
