@@ -553,3 +553,61 @@ app.post('/get_island_info',function(req,res){
 
   });
 });
+
+app.post('/send_ship',function(req,res){
+
+  var ship = req.body.ship;
+  var names = req.body.names;
+  var qtys = req.body.qtys;
+  var dest = req.body.dest;
+
+  console.log(names.length);
+  console.log(qtys);
+
+  var doc = [];
+
+    for(i=0;i<names.length;i++){
+
+        if(qtys[i]!=0)
+        {
+          var obj = {name: names[i], quantity:qtys[i]};
+          doc.push(obj);
+        }
+    }
+
+  console.log(doc);
+
+  MongoClient.connect(url, function(err, db) {
+
+    var ObjectId = new mongoose.Types.ObjectId(ship);
+
+    db.collection('ships').update({_id:ObjectId}, {$set:{res_present:[]}}, {multi:true},function(err,result){
+      console.log("Removed");
+    });
+
+    db.collection('ships').update({_id:ObjectId}, {$set:{res_present: doc, destination:dest}}, function(err,result){
+      console.log("Updated");
+    });
+
+    //   db.collection('ships').find( { _id:ObjectId,  res_present:{$elemMatch: {name:names[i]}} } ).count(function(err,results){
+    //     console.log("result="+results);
+
+    //     if(results==0)
+    //     {
+    //         db.collection("ships").update({_id:ObjectId},{$push:{res_present:{name:names[i], quantity:qtys[i]}}},function(err, result) {
+    //           console.log("Push complete");
+    //         });
+    //     }
+
+    //     else{
+    //         db.collection("ships").update({_id:ObjectId, "res_present.name":names[i]}, {$set:{"res_present.$.quantity":qtys[i]}},function(err, result) {
+    //           console.log("Set complete");
+    //         });
+    //     }
+    // });
+
+    return res.send("Done");
+    db.close();
+
+  });
+});
