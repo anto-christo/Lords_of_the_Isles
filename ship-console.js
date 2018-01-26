@@ -44,7 +44,7 @@ function send_ship(){
         $.ajax({
             type:'POST',
             url:'/send_ship',
-            data:{ship:ship, names:res_names, qtys:res_qtys, dest:dest},
+            data:{ship:ship, names:res_names, qtys:res_qtys, src:source,dest:dest},
             success: function(data){
                 alert("Ship has set sail successfully !!");
             }
@@ -120,10 +120,10 @@ $(document).ready(function(){
                         for(i=0;i<result[0].res_present.length;i++){
                             $('#res_table').append(
                                 '<tr>'+
-                                    '<td>'+result[0].res_present[i].res_name+'</td>'+
-                                    '<td>'+result[0].res_present[i].res_quantity+'</td>'+
-                                    '<td>'+result[0].res_present[i].res_value+'</td>'+
-                                    '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].res_name+'" value="0" min="0" max="'+result[0].res_present[i].res_quantity+'"></td>'+
+                                    '<td>'+result[0].res_present[i].name+'</td>'+
+                                    '<td>'+result[0].res_present[i].quantity+'</td>'+
+                                    '<td>'+result[0].res_present[i].value+'</td>'+
+                                    '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+result[0].res_present[i].quantity+'"></td>'+
                                 '</tr>'
                             );
                         }

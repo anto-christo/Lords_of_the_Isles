@@ -94,6 +94,20 @@
           <div style="opacity: 1">
             <script type="text/javascript">
               var name = localStorage.getItem("i_name");
+
+              function buy_ship(){
+
+                  $.ajax({
+                    type: 'POST',
+                    url: '/buy_ship',
+                    data:{user:localStorage.getItem("user"), island:localStorage.getItem("i_name")},
+                    success: function(data){
+                      alert("You new ship is anchored at "+localStorage.getItem("i_name"));
+                      parent.window.ship_menu.location.reload();
+                    }
+                  });
+                }
+
               document.write(name);
 
               $(document).ready(function(){
@@ -123,9 +137,9 @@
                         for(i=0;i<result[0].res_present.length;i++){
                             $('#res_table').append(
                                 '<tr>'+
-                                    '<td>'+result[0].res_present[i].res_name+'</td>'+
-                                    '<td>'+result[0].res_present[i].res_quantity+'</td>'+
-                                    '<td>'+result[0].res_present[i].res_value+'</td>'+
+                                    '<td>'+result[0].res_present[i].name+'</td>'+
+                                    '<td>'+result[0].res_present[i].quantity+'</td>'+
+                                    '<td>'+result[0].res_present[i].value+'</td>'+
                                 '</tr>'
                             );
                         }
@@ -139,7 +153,7 @@
       </center>
     </div>
 
-    <div style="margin-top:40%">
+    <div style="margin-top:10%">
       <center>
         <table border="1px" id="res_table">
           <tr>
@@ -152,7 +166,7 @@
     </div>
 
       
-
+    <button style="float:right" class="btn btn-success" onclick="buy_ship()">Buy Ship</button>
 
 <div class="man1" >
 	<img class="man" src="assets/bg/m.png" data-container="body" data-toggle="popover" data-placement="right">
