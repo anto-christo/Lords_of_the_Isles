@@ -13,6 +13,7 @@ var user;
                 done(function(resp){
 
                     console.log(resp.name);
+                    localStorage.setItem("i_name", resp.name);
 
                     if(x==1){
                         reply = confirm("Do you want to buy "+resp.name+"?");

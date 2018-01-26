@@ -7,14 +7,14 @@ var islandSchema = new mongoose.Schema({
     max_population: { type: Number, default: 0 },
     res_produced: { 
         res_name: { type: String, default: null }, 
-        res_quantity: { type: Number, default: 0 },
-        res_value: { type: Number, default: 0 }
+        // res_quantity: { type: Number, default: 0 },
+        // res_value: { type: Number, default: 0 }
     },
     res_present: [
     	{ 
     		name: { type: String, default: null },  
     		quantity: { type: Number, default: 0 },
-    		value: { type: Number, default: 0 }
+    		// value: { type: Number, default: 0 }
     	},
     ],
     x_cord : {type: Number, default: 0},

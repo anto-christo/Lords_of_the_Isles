@@ -125,21 +125,18 @@
                             '<tr>'+
                                 '<th>Resource</th>'+
                                 '<th>Quantity</th>'+
-                                '<th>Value</th>'+
-                            '</tr>'+
-                            '<tr>'+
-                                '<td>'+result[0].res_produced.res_name+'</td>'+
-                                '<td>'+result[0].res_produced.res_quantity+'</td>'+
-                                '<td>'+result[0].res_produced.res_value+'</td>'+
+                                // '<th>Value</th>'+
                             '</tr>'
+
                         );
+
 
                         for(i=0;i<result[0].res_present.length;i++){
                             $('#res_table').append(
                                 '<tr>'+
                                     '<td>'+result[0].res_present[i].name+'</td>'+
                                     '<td>'+result[0].res_present[i].quantity+'</td>'+
-                                    '<td>'+result[0].res_present[i].value+'</td>'+
+                                    // '<td>'+result[0].res_present[i].value+'</td>'+
                                 '</tr>'
                             );
                         }
