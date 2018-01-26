@@ -110,7 +110,7 @@ function updateLeaderboard(){
        assert.equal(null, err);
                 db.collection('players').find().sort({wealth:-1}).limit(5).toArray(function(err, results){
                       var j=0;
-                      while(j<0){
+                      while(j<2){
                         var obj = {name: results[j].name,wealth: results[j].wealth}
                         rankings[j] = obj;
                         // console.log("obj" + obj);
@@ -280,7 +280,6 @@ app.post('/create_island', function(req, res) {
               }
           }
 
-          var island_value;
           var index;
           
 
@@ -346,6 +345,8 @@ app.post('/create_island', function(req, res) {
                 {
                   island_value = island_value + 400;
                 }
+                island_value =  Math.floor(island_value);
+
                 console.log("island value : " + island_value);
                 i.x_cord = x;
                 i.y_cord = y;
@@ -358,18 +359,13 @@ app.post('/create_island', function(req, res) {
                 i.value = island_value;
 
                 console.log(i);
+                
                 db.collection("islands").insert(i,function(err,result){
                   res.send(JSON.stringify({"name":island_name}));
                   db.close();
                 });
 
-
-               
-
-
-          });
-          
-         
+          }); 
 
         });
     });
@@ -401,7 +397,15 @@ app.post('/assign_island', function(req, res) {
             }
 
             // console.log("island updated");
-            
+            db.collection("islands").find({name:is_name}).toArray(function(err, result) {
+              console.log("result[0].value "+result[0].value);
+               db.collection("players").update({name:uname},{$inc:{wealth:result[0].value}}, function(err, r) {
+                  assert.equal(null, err);
+                  // +island value to wealth if new island buyed / home island
+               });
+            });
+           
+
             db.collection("players").update({name:uname},{$push:{owned_islands_name:{island_name:is_name}}}, function(err, r) {
               assert.equal(null, err);
               // console.log("owned updated");
@@ -416,7 +420,10 @@ app.post('/assign_island', function(req, res) {
 
       else{
         MongoClient.connect(url, function(err, db) {
-
+        db.collection("players").update({name:uname},{$inc:{wealth:25}}, function(err, r) {
+          assert.equal(null, err);
+          // +25 wealth if new island explored (not buyed)
+        });
         db.collection("players").update({name:uname},{$push:{explored_islands_name:{island_name:is_name}}}, function(err, r) {
           assert.equal(null, err);
           // console.log("explored updated");
