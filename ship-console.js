@@ -13,8 +13,9 @@ function rename(){
         type: 'POST',
         url: '/rename_ship',
         data: {ship:ship, name:name},
-        success: function(){
-
+        success: function(data){
+            console.log("Rename successfull");
+            parent.window.ship_menu.location.reload();
         }
     });
 }
