@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var shipSchema = new mongoose.Schema({
-    name: { type: String, default: "NoName" },
+    name: { type: String, default: "Ship" },
     owner_name: { type: String, default: null },
     source: { type: String, default: null },
     destination: { type: String, default: null },

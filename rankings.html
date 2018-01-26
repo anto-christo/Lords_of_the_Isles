@@ -42,7 +42,7 @@
       socket.on('getLeaderboard', function(data){
       	var i = 0;
       	// console.log("UPDATING LEADERBOARD WITH" + data);
-      	while(i<0){
+      	while(i<1){
 				var nid = "n"+i;
 				var wid = "w"+i;
 				nid = nid.toString();
@@ -50,7 +50,7 @@
 				var n = document.getElementById(nid);
 				var w = document.getElementById(wid);
 				n.innerHTML = data[i].name;
-				w.innerHTML = data[i].wealth;
+				w.innerHTML = data[i].total_wealth;
 			i++;
 		}
 

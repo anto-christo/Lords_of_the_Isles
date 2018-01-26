@@ -49,11 +49,11 @@ $(document).ready(function(){
   }
   
 
-  var dur = 10; // 10 mins i.e. 6 ticks per hour
+  var dur = 1; // 10 mins i.e. 6 ticks per hour
   var duration = dur* 60; 
   var adjust;
   function myFunction() {
-    sum = m*60+h*3600+n*86400; // in secs
+  var sum = m*60+h*3600+n*86400; // in secs
       d = new Date();
     n = d.getUTCDate();
     n1 = 20;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
@@ -78,14 +78,19 @@ $(document).ready(function(){
       
       y.innerHTML = current_tick;
       z.innerHTML =min + ":" + sec;
-
-
-
+      if (s == "01") 
+      {
+          $.ajax({
+          type: 'POST',
+          url: '/tick_changed',
+          data: { username:person },
+          success: function(data){
+              console.log("new tick started");
+          }
+          });
+      }
+      
   }
-
-  
-
-  if (true) {}
 });
 
 
