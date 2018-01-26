@@ -14,7 +14,6 @@ Bangladesh
 Barbados
 Belarus
 Belgium
-Belize
 Benin
 Bhutan
 Bolivia
@@ -23,7 +22,6 @@ Botswana
 Brazil
 Brunei
 Bulgaria
-Burkina
 Burundi
 Cambodia
 Cameroon
@@ -43,7 +41,6 @@ Cuba
 Czech Republic
 Denmark
 Djibouti
-Dominica
 Dominican Republic
 Ecuador
 Egypt
@@ -76,10 +73,8 @@ Ireland {Republic}
 Israel
 Italy
 Ivory Coast
-Jamaica
 Japan
 Jordan
-Kazakhstan
 Kenya
 Kiribati
 Korea North
@@ -88,9 +83,7 @@ Kosovo
 Kuwait
 Kyrgyzstan
 Latvia
-Lebanon
 Lesotho
-Liberia
 Libya
 Liechtenstein
 Luxembourg
@@ -124,12 +117,10 @@ Panama
 Papua New Guinea
 Paraguay
 Peru
-Philippines
 Poland
 Portugal
 Qatar
 Romania
-Russian Federation
 St Kitts & Nevis
 St Lucia
 Saint Vincent & the Grenadines
@@ -150,7 +141,6 @@ South Africa
 South Sudan
 Spain
 Sri Lanka
-Sudan
 Suriname
 Swaziland
 Sweden
@@ -163,7 +153,6 @@ Togo
 Tonga
 Trinidad & Tobago
 Turkey
-Turkmenistan
 Tuvalu
 Uganda
 Ukraine
@@ -171,9 +160,7 @@ United Arab Emirates
 United Kingdom
 United States
 Uruguay
-Uzbekistan
 Vanuatu
-Vatican City
 Venezuela
 Vietnam
 Yemen

@@ -110,7 +110,7 @@ function updateLeaderboard(){
        assert.equal(null, err);
                 db.collection('players').find().sort({wealth:-1}).limit(5).toArray(function(err, results){
                       var j=0;
-                      while(j<2){
+                      while(j<0){
                         var obj = {name: results[j].name,wealth: results[j].wealth}
                         rankings[j] = obj;
                         // console.log("obj" + obj);
@@ -386,40 +386,71 @@ app.post('/assign_island', function(req, res) {
   var old = req.body.old;
 
   // console.log("reply="+reply);
-    
+      var buyed = 0;
       if(reply == 'true'){
         MongoClient.connect(url, function(err, db) {
-          db.collection("islands").update({name:is_name},{$set:{owner_name:uname}}, function(err, r) {
-            // assert.equal(null, err);
-            if(err)
-            {
-              console.log("booo!!");
-            }
+              
+              db.collection("islands").find({name:is_name}).toArray(function(err, result) {
+                  // console.log("result[0].value "+result[0].value);
+                  var island_cost = result[0].value;
+                  db.collection("players").find({name:uname}).toArray(function(err,result){
+                      var player_gold = result[0].gold;
+                      console.log("player_gold: "+ player_gold);
+                      console.log("island_cost: "+ island_cost);
+                      if (player_gold >= island_cost)  // console.log("can buy");
+                      {
+                        if (old==1) 
+                        {
+                            db.collection("players").update({name:uname},{$inc:{gold:-island_cost}}, function(err, r) {
+                              assert.equal(null, err);
+                              // reducing player gold here
+                            });
+                        }
+                        
+                         db.collection("players").update({name:uname},{$inc:{wealth:island_cost}}, function(err, r) {
+                            assert.equal(null, err);
+                            // +island value to wealth if new island buyed / home island
+                         });
+                         db.collection("islands").update({name:is_name},{$set:{owner_name:uname}}, function(err, r) {
+                          // assert.equal(null, err);
+                          if(err)
+                          {
+                            console.log("booo!!");
+                          }
 
-            // console.log("island updated");
-            db.collection("islands").find({name:is_name}).toArray(function(err, result) {
-              console.log("result[0].value "+result[0].value);
-               db.collection("players").update({name:uname},{$inc:{wealth:result[0].value}}, function(err, r) {
-                  assert.equal(null, err);
-                  // +island value to wealth if new island buyed / home island
-               });
-            });
-           
+                          // console.log("island updated");
+                          
+                          db.collection("players").update({name:uname},{$push:{owned_islands_name:{island_name:is_name}}}, function(err, r) {
+                            assert.equal(null, err);
+                            // console.log("owned updated");
+                            db.close();
+                      
+                            if(old==0)
+                              assign_ship(uname,is_name,res);
+                          });
+                        });
+                        console.log("INSIDE BUYED");
 
-            db.collection("players").update({name:uname},{$push:{owned_islands_name:{island_name:is_name}}}, function(err, r) {
-              assert.equal(null, err);
-              // console.log("owned updated");
-              db.close();
-        
-              if(old==0)
-                assign_ship(uname,is_name,res);
-            });
-          });
+                        buyed = 1;
+
+                      }
+                      else  // cannot buy
+                      {
+                        explored();
+                      }
+                  });
+              });
         });
       }
 
       else{
-        MongoClient.connect(url, function(err, db) {
+        console.log("INSIDE NOT BUYED");
+        explored();
+      } 
+
+    return res.send("Done");
+    function explored(){
+    MongoClient.connect(url, function(err, db) {
         db.collection("players").update({name:uname},{$inc:{wealth:25}}, function(err, r) {
           assert.equal(null, err);
           // +25 wealth if new island explored (not buyed)
@@ -430,11 +461,11 @@ app.post('/assign_island', function(req, res) {
           db.close();
         });
       });
-    }
-
-    return res.send("Done");
+  }
   
 });
+
+
 
 function insert_player(p){
   console.log("new player");
