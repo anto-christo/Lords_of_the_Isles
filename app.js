@@ -144,24 +144,24 @@ var islands;
 //   ];
 
   var common = [
-    {name:"copper",base_cost:10},
-    {name:"iron",base_cost:20},
-    {name:"bronze",base_cost:30},
-    {name:"wood",base_cost:40},
-    {name:"coal",base_cost:50},
-    {name:"lead",base_cost:60},
-    {name:"rice",base_cost:70},
-    {name:"wheat",base_cost:80},
-    {name:"aluminium",base_cost:90}
+    {name:"copper",base_cost:5}, //0
+    {name:"iron",base_cost:5},  //1
+    {name:"bronze",base_cost:5},  //2
+    {name:"wood",base_cost:6},  //3
+    {name:"coal",base_cost:6}, //4
+    {name:"lead",base_cost:8},  //5
+    {name:"rice",base_cost:8},  //6
+    {name:"wheat",base_cost:10},  //7
+    {name:"aluminium",base_cost:10}  //8
   ];
 
   var rare = [
-    {name:"oil",base_cost:200},
-    {name:"uranium",base_cost:210},
-    {name:"diamond",base_cost:220},
-    {name:"emerald",base_cost:230},
-    {name:"coconut",base_cost:240},
-    {name:"salt",base_cost:250}
+    {name:"oil",base_cost:20},  //9
+    {name:"uranium",base_cost:20},  //10
+    {name:"diamond",base_cost:25},  //11
+    {name:"emerald",base_cost:25},  //12
+    {name:"coconut",base_cost:30},  //13
+    {name:"salt",base_cost:30} //14
   ];
   
 app.post('/create_island', function(req, res) {
@@ -235,7 +235,7 @@ app.post('/create_island', function(req, res) {
 
       var i = new island();
 
-      var common_flag;
+      var common_flag = 0;
       
       db.collection("players").find({name:uname}).toArray(function(err, result) {
           // console.log("player gold: " + result[0].gold);
@@ -249,14 +249,12 @@ app.post('/create_island', function(req, res) {
           }
           else if (result[0].gold< 15000)  // middle class
           {
-            var luck = Math.random()*10;
+            var luck = Math.random() * (10 - 1 + 1) + 1;
             if (luck>=7) 
             {
                 var random_res = Math.floor(Math.random()*(rare.length-1));
                 var resource = rare[random_res].name;
                 common_flag = 0;
-
-
             }
             else
             {
@@ -272,67 +270,102 @@ app.post('/create_island', function(req, res) {
               {
                   var random_res = Math.floor(Math.random()*(rare.length-1));
                   var resource = rare[random_res].name;
-                common_flag = 0;
+                  common_flag = 0;
               }
               else
               {
                   var random_res = Math.floor(Math.random()*(common.length-1));
                   var resource = common[random_res].name;
-                common_flag = 1;
+                  common_flag = 1;
               }
           }
 
-
-          var res_qty = Math.floor(Math.random()*200) + 30;
-          var res_val = Math.floor(Math.random()*1000) + 100;
-          var big = (Math.random()*2);
-          if (big<1) 
-          {
-            var cap = Math.floor(Math.random()*1000) + 800;  
-          }
-          else
-          {
-            var cap = Math.floor(Math.random()*600) + 400;              
-          }
-
-          var current_pop = Math.floor(Math.random()*200) + 100;              
-
-          // console.log("name="+island_name);
-
-          var island_value;
+          var index;
+          
 
           var production_factor;
           if (common_flag==1) 
           {
             production_factor = common[random_res].base_cost*5;
+            index = random_res;
           }
           else
           {
             production_factor = rare[random_res].base_cost*10;
+            index = random_res + 9;
           }
-          var population_factor  = current_pop*5;
+          console.log("index : "+index);
+         
+          db.collection("res").update({index:index},{$inc:{ct:1}});
 
-          island_value = production_factor + population_factor;
+          // var res_qty = Math.floor(Math.random()*200) + 30;
+          // var res_val = Math.floor(Math.random()*1000) + 100;
+          // Math.floor(Math.random() * (max - min + 1)) + min; // gives between min and max both inclusive
+          var big = Math.random() * (2 - 0 + 1) + 0; 
+          if (big<1) 
+          {
+            // var cap = 50*(Math.floor(Math.random()*20) + 16);
+            var cap = 50*(Math.floor(Math.random() * (20 - 16 + 1)) + 16);
+          }
+          else
+          {
+            // var cap = 50*(Math.floor(Math.random()*12) + 8);           
+            var cap = 50*(Math.floor(Math.random() * (12 - 8 + 1)) + 8);              
+          }
 
-          console.log("production_factor " + production_factor);
-          console.log("population_factor " + population_factor);
-          console.log("island_value " + island_value);
+          var current_pop = Math.floor(Math.random() * (200 - 100 + 1)) + 100;              
 
-          i.x_cord = x;
-          i.y_cord = y;
-          i.res_produced.res_name = resource;
-          i.res_produced.res_quantity = res_qty;
-          i.res_produced.res_value = res_val;
-          i.name = island_name;
-          i.current_population = current_pop;
-          i.max_population = cap;
-          i.value = island_value;
+          // console.log("name="+island_name);
 
-          console.log(i);
-          db.collection("islands").insert(i,function(err,result){
-            res.send(JSON.stringify({"name":island_name}));
-            db.close();
-          });
+          db.collection("res").find({}).toArray(function(err, result1) {
+              console.log("\n\nCOUNT : "+ result1[index].ct);
+              var sum = 0; // sum is the total no. of islands on map
+              var this_res = result1[index].ct;
+              for (var j =0; j < 15; j++) {
+                  sum = sum + result1[j].ct;
+                  // console.log("sum :"+sum);
+                  // console.log("result1[j].ct :"+result1[j].ct);
+
+              }
+              if (sum > 0) 
+              {
+                  if (this_res>0) 
+                  {
+                      production_factor = production_factor*(sum/this_res);
+                  }
+              }
+              
+              console.log("sum :"+sum);
+
+              // console.log("production_factor :"+production_factor); // if commented, island value becomes NAN ???
+          
+                var population_factor  = current_pop*5;
+                island_value = production_factor + population_factor;
+                if (big<1) 
+                {
+                  island_value = island_value + 400;
+                }
+                island_value =  Math.floor(island_value);
+
+                console.log("island value : " + island_value);
+                i.x_cord = x;
+                i.y_cord = y;
+                i.res_produced.res_name = resource;
+                // i.res_produced.res_quantity = res_qty;
+                // i.res_produced.res_value = res_val;
+                i.name = island_name;
+                i.current_population = current_pop;
+                i.max_population = cap;
+                i.value = island_value;
+
+                console.log(i);
+                
+                db.collection("islands").insert(i,function(err,result){
+                  res.send(JSON.stringify({"name":island_name}));
+                  db.close();
+                });
+
+          }); 
 
         });
     });
@@ -353,44 +386,86 @@ app.post('/assign_island', function(req, res) {
   var old = req.body.old;
 
   // console.log("reply="+reply);
-    
+      var buyed = 0;
       if(reply == 'true'){
         MongoClient.connect(url, function(err, db) {
-          db.collection("islands").update({name:is_name},{$set:{owner_name:uname}}, function(err, r) {
-            // assert.equal(null, err);
-            if(err)
-            {
-              console.log("booo!!");
-            }
+              
+              db.collection("islands").find({name:is_name}).toArray(function(err, result) {
+                  // console.log("result[0].value "+result[0].value);
+                  var island_cost = result[0].value;
+                  db.collection("players").find({name:uname}).toArray(function(err,result){
+                      var player_gold = result[0].gold;
+                      console.log("player_gold: "+ player_gold);
+                      console.log("island_cost: "+ island_cost);
+                      if (player_gold >= island_cost)  // console.log("can buy");
+                      {
+                        if (old==1) 
+                        {
+                            db.collection("players").update({name:uname},{$inc:{gold:-island_cost}}, function(err, r) {
+                              assert.equal(null, err);
+                              // reducing player gold here
+                            });
+                        }
+                        
+                         db.collection("players").update({name:uname},{$inc:{wealth:island_cost}}, function(err, r) {
+                            assert.equal(null, err);
+                            // +island value to wealth if new island buyed / home island
+                         });
+                         db.collection("islands").update({name:is_name},{$set:{owner_name:uname}}, function(err, r) {
+                          // assert.equal(null, err);
+                          if(err)
+                          {
+                            console.log("booo!!");
+                          }
 
-            // console.log("island updated");
-            
-            db.collection("players").update({name:uname},{$push:{owned_islands_name:{island_name:is_name}}}, function(err, r) {
-              assert.equal(null, err);
-              // console.log("owned updated");
-              db.close();
-        
-              if(old==0)
-                assign_ship(uname,is_name,res);
-            });
-          });
+                          // console.log("island updated");
+                          
+                          db.collection("players").update({name:uname},{$push:{owned_islands_name:{island_name:is_name}}}, function(err, r) {
+                            assert.equal(null, err);
+                            // console.log("owned updated");
+                            db.close();
+                      
+                            if(old==0)
+                              assign_ship(uname,is_name,res);
+                          });
+                        });
+                        console.log("INSIDE BUYED");
+
+                        buyed = 1;
+
+                      }
+                      else  // cannot buy
+                      {
+                        explored();
+                      }
+                  });
+              });
         });
       }
 
       else{
-        MongoClient.connect(url, function(err, db) {
+        console.log("INSIDE NOT BUYED");
+        explored();
+      } 
 
+    return res.send("Done");
+    function explored(){
+    MongoClient.connect(url, function(err, db) {
+        db.collection("players").update({name:uname},{$inc:{wealth:25}}, function(err, r) {
+          assert.equal(null, err);
+          // +25 wealth if new island explored (not buyed)
+        });
         db.collection("players").update({name:uname},{$push:{explored_islands_name:{island_name:is_name}}}, function(err, r) {
           assert.equal(null, err);
           // console.log("explored updated");
           db.close();
         });
       });
-    }
-
-    return res.send("Done");
+  }
   
 });
+
+
 
 function insert_player(p){
   console.log("new player");
