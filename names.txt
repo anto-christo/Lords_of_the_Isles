@@ -6,7 +6,6 @@ Antigua & Deps
 Armenia
 Australia
 Austria
-Azerbaijan
 Bahamas
 Bahrain
 Bangladesh
@@ -17,7 +16,6 @@ Belize
 Benin
 Bhutan
 Bolivia
-Bosnia Herzegovina
 Botswana
 Brazil
 Brunei
@@ -32,18 +30,15 @@ Central African Rep
 Chad
 Chile
 China
-Colombia
 Comoros
 Congo {Democratic Rep}
 Costa Rica
-Croatia
 Cuba
 Czech Republic
 Denmark
 Djibouti
 Dominica
 Dominican Republic
-East Timor
 Ecuador
 Egypt
 El Salvador
@@ -53,7 +48,6 @@ Estonia
 Ethiopia
 Fiji
 Finland
-France
 Gabon
 Gambia
 Georgia
@@ -98,20 +92,15 @@ Lithuania
 Luxembourg
 Macedonia
 Malawi
-Malaysia
 Maldives
 Mali
 Malta
-Marshall Islands
 Mauritania
 Mauritius
 Mexico
-Micronesia
 Moldova
 Monaco
 Mongolia
-Montenegro
-Morocco
 Mozambique
 Myanmar, {Burma}
 Namibia
@@ -139,13 +128,11 @@ St Lucia
 Saint Vincent & the Grenadines
 Samoa
 San Marino
-Saudi Arabia
 Senegal
 Serbia
 Seychelles
 Sierra Leone
 Singapore
-Slovakia
 Slovenia
 Solomon Islands
 South Africa

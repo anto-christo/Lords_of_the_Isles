@@ -163,7 +163,6 @@
 
                         else{
                           $('#owner').text("Owner:"+owner);
-                          $('#buy_btn').hide();
                         }
 
                         $('#res_table').empty();
@@ -189,7 +188,7 @@
                             
                         }
 
-                        if(localStorage.getItem("user_click") == 0){
+                        if(localStorage.getItem("user_click") == 0 && owner == 'AI'){
                             time_int = setInterval(function(){
                             $('#timer').text("Time left to buy :"+time);
                             time--;

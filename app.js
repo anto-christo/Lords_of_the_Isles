@@ -611,15 +611,22 @@ app.post('/check_player', function(req, res) {
 
 app.post('/old_island', function(req, res) {
 
+  var user = req.body.user;
+
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
     
-    db.collection("islands").aggregate(
-      { $sample: { size: 1 } }, function(err,result){
-        return res.send(result);
+    // db.collection("islands").aggregate(
+    //   { $sample: { size: 1 } }, function(err,result){
+    //     return res.send(result);
+    //     db.close();
+    //   }
+    // );
+
+    db.collection('islands').aggregate([{$sample: { size: 1 }}, {$match:{name:{$ne:user}}}], function(err,result){
+      return res.send(result);
         db.close();
-      }
-    );
+    });
 
   });
   

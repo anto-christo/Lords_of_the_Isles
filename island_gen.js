@@ -46,10 +46,16 @@ var user;
             $.ajax({
                 type: 'POST',
                 url: '/old_island',
-                data: {username:user},
+                data: {user:user},
                 dataType : 'json',
                 success: function(resp){
-                    alert("Owned Island:"+resp[0].name);
+
+                    console.log("island name:"+resp[0].name)
+                    
+                    localStorage.setItem("i_name", resp[0].name);
+                    localStorage.setItem("user_click",0);
+                    parent.window.change_iframe_src('islands-info.html');
+
                 }
             
             });
