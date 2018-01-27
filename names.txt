@@ -1,78 +1,49 @@
 Afghanistan
 Albania
-Algeria
 Angola
-Antigua & Deps
 Australia
-Austria
 Azerbaijan
 Bahamas
 Bangladesh
-Barbados
 Belarus
-Bosnia Herzegovina
 Botswana
-Burkina
 Burundi
 Cambodia
 Cameroon
-Cape Verde
 Central African Rep
-China
-Comoros
 Congo {Democratic Rep}
-Costa Rica
 Croatia
 Cyprus
-Denmark
 Dominica
-Dominican Republic
-East Timor
 Ecuador
-Egypt
 El Salvador
 Eritrea
 Estonia
-Ethiopia
 Fiji
 Finland
-France
 Gabon
-Gambia
-Germany
 Ghana
 Greece
 Grenada
-Guatemala
 Guyana
 Haiti
 Honduras
-Iceland
-Indonesia
 Iran
 Israel
 Ivory Coast
 Jamaica
 Japan
 Jordan
-Kazakhstan
 Kosovo
 Kyrgyzstan
-Laos
-Latvia
-Lebanon
 Liberia
 Liechtenstein
 Malawi
 Malaysia
 Mali
-Mauritania
 Moldova
-Morocco
-Mozambique
 Myanmar, {Burma}
 Namibia
-Nauru
 Nepal
 Netherlands
 Nicaragua
@@ -81,41 +52,26 @@ Oman
 Pakistan
 Palau
 Peru
-Philippines
 Portugal
 Qatar
 Romania
-Russian Federation
-Rwanda
-St Kitts & Nevis
 St Lucia
 Saint Vincent & the Grenadines
 Samoa
 Sao Tome & Principe
-Saudi Arabia
-Senegal
-Sierra Leone
 Slovenia
 Solomon Islands
-Somalia
 South Africa
-Spain
-Sri Lanka
 Suriname
 Swaziland
 Sweden
 Tanzania
 Thailand
-Tonga
-Trinidad & Tobago
 Turkey
 Turkmenistan
 Ukraine
 United Arab Emirates
-United Kingdom
 Uruguay
-Uzbekistan
-Vanuatu
 Vatican City
 Vietnam
 Yemen

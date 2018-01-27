@@ -34,6 +34,15 @@ var user;
                         url: '/assign_island',
                         data: {username:user, island:resp.name, reply:reply, old:x},
                         success: function(data){
+                            console.log("data: "+data.message);
+                            if (data.message=="success") 
+                            {
+                                console.log("bought");
+                            }
+                            else
+                            {
+                                console.log("boo!!");
+                            }
                             console.log("Assign island successfull");
                             window.island_menu.location.reload();
                         }

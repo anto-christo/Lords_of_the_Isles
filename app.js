@@ -287,7 +287,7 @@ app.post('/create_island', function(req, res) {
 
           if (result[0].gold<3500) // very poor
           {
-              var random_res = Math.floor(Math.random()*(common.length-1));
+              var random_res = Math.floor(Math.random() * (8 - 0 + 1)) + 0;
               var resource = common[random_res].name;
               common_flag = 1;
 
@@ -297,13 +297,13 @@ app.post('/create_island', function(req, res) {
             var luck = Math.random() * (10 - 1 + 1) + 1;
             if (luck>=7) 
             {
-                var random_res = Math.floor(Math.random()*(rare.length-1));
+                var random_res = Math.floor(Math.random() * (5 - 0 + 1)) + 0;
                 var resource = rare[random_res].name;
                 common_flag = 0;
             }
             else
             {
-                var random_res = Math.floor(Math.random()*(common.length-1));
+                var random_res = Math.floor(Math.random() * (8 - 0 + 1)) + 0;
                 var resource = common[random_res].name;
                 common_flag = 1;
             }
@@ -313,13 +313,13 @@ app.post('/create_island', function(req, res) {
               var luck = (Math.random()*10);
               if (luck>8) 
               {
-                  var random_res = Math.floor(Math.random()*(rare.length-1));
+                  var random_res = Math.floor(Math.random() * (5 - 0 + 1)) + 0;
                   var resource = rare[random_res].name;
                   common_flag = 0;
               }
               else
               {
-                  var random_res = Math.floor(Math.random()*(common.length-1));
+                  var random_res = Math.floor(Math.random() * (8 - 0 + 1)) + 0;
                   var resource = common[random_res].name;
                   common_flag = 1;
               }
@@ -488,6 +488,7 @@ app.post('/assign_island', function(req, res) {
                           db.collection("players").update({name:uname},{$push:{owned_islands_name:{island_name:is_name}}}, function(err, r) {
                             assert.equal(null, err);
                             // console.log("owned updated");
+                            res.send({"message":"success"});
                             db.close();
                       
                             if(old==0)
@@ -502,6 +503,7 @@ app.post('/assign_island', function(req, res) {
                       else  // cannot buy
                       {
                         explored();
+                        return res.send({"message":"failure"});
                       }
                   });
               });
@@ -511,9 +513,9 @@ app.post('/assign_island', function(req, res) {
       else{
         // console.log("INSIDE NOT BUYED");
         explored();
+        return res.send({"message":"success"});
       } 
 
-    return res.send("Done");
     function explored(){
     MongoClient.connect(url, function(err, db) {
         db.collection("players").update({name:uname},{$inc:{island_wealth:25,total_wealth:25}}, function(err, r) {
@@ -819,7 +821,7 @@ app.post('/send_ship',function(req,res){
 
 
 app.post('/tick_changed', function(req, res) {
-  console.log("\n\nTICK CHANGED\n\n");
+  // console.log("\n\nTICK CHANGED\n\n");
   var uname = req.body.username;
       // 1) increase pop on all islands of all players
       // 2) .... res ....
@@ -827,30 +829,95 @@ app.post('/tick_changed', function(req, res) {
       // 4) wealth calculation
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
-
     db.collection("players").find({name:uname}).toArray(function(err,result){
-        var i = 0;
-        while(i < result[0].owned_islands_name.length)
-        {
-            var is_name = result[0].owned_islands_name[i].island_name;
-            db.collection("islands").find({name:is_name}).toArray(function(err,result1){
-              console.log("res produced: "+ result1[0].res_produced.res_name);
-              var resource_name = result1[0].res_produced.res_name;
-              var pop = result1[0].current_population;
-              var produced = Math.floor(pop/10);
-              console.log("produced:"+produced);
-               db.collection("islands").update({name:is_name,"res_present.name":resource_name},{$inc:{"res_present.$.quantity":produced}});  //  INCOMPLETE
-            });
-            i++;
-          }
-
         var total_wealth = Math.floor(result[0].island_wealth + (result[0].gold/5));
         db.collection("players").update({name:uname},{$set:{total_wealth:total_wealth}})
+        db.close();
+    });
+  }); 
+
+});
+
+
+var m,min;
+    var s,sec;
+    var h,ms;
+    var d;
+    var sum,n,n1;
+    var temp;
+    var t;
+    var current_tick = 0;
+
+    setInterval(function(){ 
+      myFunction()
+    }, 1000);
+
+  function addZero(x,n) {
+      while (x.toString().length < n) {
+          x = "0" + x;
+      }
+      return x;
+  }
+  
+
+  var dur = 1; // 10 mins i.e. 6 ticks per hour
+  var duration = dur* 60; 
+  var adjust;
+  function myFunction() {
+  var sum = m*60+h*3600+n*86400; // in secs
+    d = new Date();
+    n = d.getUTCDate();
+    n1 = 20;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
+      adjust = n1*24*(60/dur);
+
+      h = addZero(d.getUTCHours(), 2);
+      m = addZero(d.getUTCMinutes(), 2);  
+      s = addZero(d.getUTCSeconds(), 2);
+
+      sec = addZero(60 - s, 2);
+      min = 60 - m -1 ;
+      t = parseInt(min/dur);
+      min = min - (t*dur);
+      temp = sum / duration;
+      current_tick = parseInt(temp) - adjust ;
+      console.log("timer: "+min + ":" + sec);
+      
+      if (s == "01") 
+      {
+          console.log("SERVER SIDE TICK CHANGED");
+          newTick();
+      }
+      
+  }
+
+
+function newTick(){
+
+MongoClient.connect(url, function(err, db) {
+  assert.equal(null, err);
+    // update res on all islands of all players
+    db.collection("islands").find().forEach(function(data){
+        console.log("island_name:" + data.name);
+        console.log("production:" + data.res_produced.res_name);
+        var produced = Math.floor(data.current_population / 10);
+        console.log("produced:" + produced);
+
+        db.collection("islands").update(
+            {name:data.name,"res_present.name":data.res_produced.res_name},
+            {$inc:{"res_present.$.quantity":produced}},
+            function(err,res){
+            db.close();
+        });
+
+
     });
 
   });
-  
-});
+
+
+}
+
+
 
 
 
