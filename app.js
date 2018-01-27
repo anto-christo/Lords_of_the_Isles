@@ -895,13 +895,44 @@ function newTick(){
 
 MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
-    // update res on all islands of all players
     db.collection("islands").find().forEach(function(data){
         console.log("island_name:" + data.name);
-        console.log("production:" + data.res_produced.res_name);
-        var produced = Math.floor(data.current_population / 10);
-        console.log("produced:" + produced);
+        // console.log("production:" + data.res_produced.res_name);
+        // console.log("produced:" + produced);
+        console.log("current_population:" + data.current_population);
 
+
+        var inc_pop=0;
+        var types = 0;
+        for (var i1 = 0; i1 < 15; i1++) {
+          // console.log(data.res_present[i1].name);
+          // console.log(data.res_present[i1].quantity);
+          if (i1<9) 
+          {
+            if (data.res_present[i1].quantity > 0) {
+                types++;
+                inc_pop = inc_pop + Math.floor(data.res_present[i1].quantity/100);
+            }
+          }
+          else
+          {
+            if (data.res_present[i1].quantity > 0) {
+                types++;
+                inc_pop = inc_pop + Math.floor(data.res_present[i1].quantity/50);
+            }
+          }
+        }
+        inc_pop = inc_pop*types;
+        console.log("inc_pop "+inc_pop);
+        // db.collection("islands").update(
+        //     {name:data.name,"res_present.name":data.res_produced.res_name},
+        //     {$inc:{"res_present.$.quantity":produced}},
+        //     function(err,res){
+        //     db.close();
+        // });
+
+        var produced = Math.floor(data.current_population / 10);
+        // update res on all islands
         db.collection("islands").update(
             {name:data.name,"res_present.name":data.res_produced.res_name},
             {$inc:{"res_present.$.quantity":produced}},
