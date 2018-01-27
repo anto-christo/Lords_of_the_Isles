@@ -821,12 +821,7 @@ app.post('/send_ship',function(req,res){
 
 
 app.post('/tick_changed', function(req, res) {
-  // console.log("\n\nTICK CHANGED\n\n");
   var uname = req.body.username;
-      // 1) increase pop on all islands of all players
-      // 2) .... res ....
-      // 3) ships landing on that tick ka unloading of goods
-      // 4) wealth calculation
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
     db.collection("players").find({name:uname}).toArray(function(err,result){
@@ -898,11 +893,21 @@ MongoClient.connect(url, function(err, db) {
     db.collection("islands").find().forEach(function(data){
         console.log("island_name:" + data.name);
         console.log("current_population:" + data.current_population);
+        
+        // constant gold production based on pop
+        if (data.owner_name!="AI") 
+        {
+          var inc_gold = Math.floor(data.current_population/25);
+          db.collection("players").update({name:data.owner_name},{$inc:{gold:inc_gold}})
+        }
+
+        // increasing / decreasing population
         var max_pop = data.max_population;
-        // increasing population
         var inc_pop=0;
         var types = 0;
+        var total_res_present =0;
         for (var i1 = 0; i1 < 15; i1++) {
+          total_res_present = total_res_present + data.res_present[i1].quantity;
           if (i1<9) 
           {
             if (data.res_present[i1].quantity > 0) {
@@ -919,12 +924,24 @@ MongoClient.connect(url, function(err, db) {
           }
         }
         inc_pop = inc_pop*types;
-        console.log("inc_pop "+inc_pop);
-        if ((data.current_population+inc_pop)>max_pop) 
+        if ((data.current_population+inc_pop)>max_pop) // doesnt let pop overflow
         {
           inc_pop = max_pop - data.current_population;
         }
+        if (total_res_present<data.current_population) // reduce population if not enough res on island
+        {
+          if (data.current_population<200) // dont reduce below a certain limit
+          {
+            inc_pop = 0;
+          }
+          else
+          {
+            inc_pop = -Math.floor(data.current_population/20);
+          }
+        }
+        console.log("inc_pop "+inc_pop);
         db.collection("islands").update({name:data.name},{$inc:{current_population:inc_pop}});
+
 
         // consumption of res
         var consume = Math.floor(data.current_population / 25); // 25 ppl consume 1 unit of each res
@@ -954,16 +971,9 @@ MongoClient.connect(url, function(err, db) {
             db.close();
         });
 
-        
-
     });
 
   });
 
-
 }
-
-
-
-
 
