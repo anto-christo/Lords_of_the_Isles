@@ -188,18 +188,20 @@
                             );
                         }
 
-                        time_int = setInterval(function(){
-                          $('#timer').text("Time left to buy :"+time);
-                          time--;
+                        if(localStorage.getItem("user_click") == 0){
+                            time_int = setInterval(function(){
+                            $('#timer').text("Time left to buy :"+time);
+                            time--;
 
-                          if(time == 0){
-                            buy_island('false');
-                            $('#buy_btn').hide();
-                            $('#ign_btn').hide();
-                            $('#timer').hide();
-                            clearInterval(time_int);
-                          }
-                        },1000);
+                            if(time == 0){
+                              buy_island('false');
+                              $('#buy_btn').hide();
+                              $('#ign_btn').hide();
+                              $('#timer').hide();
+                              clearInterval(time_int);
+                            }
+                          },1000);
+                        }
                     }
 
                 });
