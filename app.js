@@ -897,16 +897,12 @@ MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
     db.collection("islands").find().forEach(function(data){
         console.log("island_name:" + data.name);
-        // console.log("production:" + data.res_produced.res_name);
-        // console.log("produced:" + produced);
         console.log("current_population:" + data.current_population);
-
-
+        var max_pop = data.max_population;
+        // increasing population
         var inc_pop=0;
         var types = 0;
         for (var i1 = 0; i1 < 15; i1++) {
-          // console.log(data.res_present[i1].name);
-          // console.log(data.res_present[i1].quantity);
           if (i1<9) 
           {
             if (data.res_present[i1].quantity > 0) {
@@ -924,22 +920,41 @@ MongoClient.connect(url, function(err, db) {
         }
         inc_pop = inc_pop*types;
         console.log("inc_pop "+inc_pop);
-        // db.collection("islands").update(
-        //     {name:data.name,"res_present.name":data.res_produced.res_name},
-        //     {$inc:{"res_present.$.quantity":produced}},
-        //     function(err,res){
-        //     db.close();
-        // });
+        if ((data.current_population+inc_pop)>max_pop) 
+        {
+          inc_pop = max_pop - data.current_population;
+        }
+        db.collection("islands").update({name:data.name},{$inc:{current_population:inc_pop}});
 
-        var produced = Math.floor(data.current_population / 10);
+        // consumption of res
+        var consume = Math.floor(data.current_population / 25); // 25 ppl consume 1 unit of each res
+        for (var i2 = 0; i2 < 15; i2++) {
+            var present = data.res_present[i2].quantity;
+            if (present > consume) 
+            {
+                db.collection("islands").update({name:data.name,"res_present.name":data.res_present[i2].name},{$inc:{"res_present.$.quantity":-consume}});
+            }
+            else
+            {
+                db.collection("islands").update(
+                {name:data.name,"res_present.name":data.res_present[i2].name},
+                {$inc:{"res_present.$.quantity":-present}});
+            }
+            
+        }
+        
+
+        // increasing resources (produced on that island)
+        var produced = Math.floor(data.current_population / 10); // 10 ppl produce 1 unit of res.
         // update res on all islands
         db.collection("islands").update(
-            {name:data.name,"res_present.name":data.res_produced.res_name},
+            {name:data.name,"res_present.name":data.res_produced.resource_name},
             {$inc:{"res_present.$.quantity":produced}},
             function(err,res){
             db.close();
         });
 
+        
 
     });
 
