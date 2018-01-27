@@ -887,17 +887,31 @@ var m,min;
 
 
 function newTick(){
-
+// CAN COMBINE SOME FEATURES HERE
 MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
+
+  var ct_arr = [];
+  var sum=0;
+  db.collection("res").find({}).toArray(function(err, result1) {
+              for (var j =0; j < 15; j++) {
+                  ct_arr[j] = result1[j].ct;
+                  sum = sum + result1[j].ct;
+              }
+      });
+
+
     db.collection("islands").find().forEach(function(data){
         console.log("island_name:" + data.name);
         console.log("current_population:" + data.current_population);
-        
+      
+
+
         // constant gold production based on pop
         if (data.owner_name!="AI") 
         {
           var inc_gold = Math.floor(data.current_population/25);
+          // console.log("added "+inc_gold+" to "+data.owner_name);
           db.collection("players").update({name:data.owner_name},{$inc:{gold:inc_gold}})
         }
 
@@ -939,7 +953,7 @@ MongoClient.connect(url, function(err, db) {
             inc_pop = -Math.floor(data.current_population/20);
           }
         }
-        console.log("inc_pop "+inc_pop);
+        // console.log("inc_pop "+inc_pop);
         db.collection("islands").update({name:data.name},{$inc:{current_population:inc_pop}});
 
 
@@ -957,9 +971,26 @@ MongoClient.connect(url, function(err, db) {
                 {name:data.name,"res_present.name":data.res_present[i2].name},
                 {$inc:{"res_present.$.quantity":-present}});
             }
-            
         }
         
+        // updating island wealth based on res present and pop
+        console.log("ct_arr "+ct_arr);
+        var value;
+        value = (data.current_population)*5;
+        var res_pres_factor=0;
+        for (var i3 = 0; i3 < 15; i3++) {
+            if (sum>0) 
+            {
+              if (ct_arr[i3]>0) 
+              {
+                res_pres_factor =  res_pres_factor + Math.floor((data.res_present[i3].quantity)*(sum/ct_arr[i3]));
+              }
+            }
+        }
+        console.log("res_pres_factor "+res_pres_factor);
+        value = value + res_pres_factor;
+        console.log("value "+value);
+        db.collection("islands").update({name:data.name},{$set:{value:value}})
 
         // increasing resources (produced on that island)
         var produced = Math.floor(data.current_population / 10); // 10 ppl produce 1 unit of res.
