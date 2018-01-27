@@ -73,16 +73,16 @@
         }
 
     function pickIsland(name) {
-    console.log(name);
+	    console.log(name);
 
-    if (typeof(Storage) !== "undefined") {
-        // Store
-        localStorage.setItem("i_name", name);
-        // Retrieve
-        console.log("i_name " + localStorage.getItem("i_name"));
-    } else {
-        document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-    }
+	    if (typeof(Storage) !== "undefined") {
+	        // Store
+	        localStorage.setItem("i_name", name);
+	        // Retrieve
+	        console.log("i_name " + localStorage.getItem("i_name"));
+	    } else {
+	        document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+	    }
 
     localStorage.setItem("user_click",1);
     parent.window.change_iframe_src('islands-info.html');
@@ -98,16 +98,13 @@ $(document).ready(function(){
        data:{user:user},
        success: function(result){
            
-           console.log(result);
-            
-
            for(i=0;i<result[0].owned_islands_name.length;i++){
-
-            var func = "pickIsland('"+result[0].owned_islands_name[i].island_name+"')";
+           	// var i_name = result[0].owned_islands_name[i].island_name;
+            var func = "pickIsland('" + result[0].owned_islands_name[i].island_name + "')";
 
            $('#is_card').append(
                '<center>'+
-                   '<a href="#" rel="islands-info.html" onclick='+func+'>'+
+                   '<a href="#" rel="islands-info.html" onclick="'+func+'">'+
                        '<div class="cardc">'+result[0].owned_islands_name[i].island_name+'</div>'+
                    '</a>'+
                '</center>'
@@ -117,11 +114,11 @@ $(document).ready(function(){
 
            for(i=0;i<result[0].explored_islands_name.length;i++){
 
-                var func = "pickIsland('"+result[0].explored_islands_name[i].island_name+"')";
+                var func = "pickIsland('" + result[0].explored_islands_name[i].island_name + "')";
 
                 $('#is_card').append(
                 '<center>'+
-                    '<a href="#" rel="islands-info.html" onclick='+func+'>'+
+                    '<a href="#" rel="islands-info.html" onclick="'+func+'">'+
                         '<div class="cardc">'+result[0].explored_islands_name[i].island_name+'</div>'+
                     '</a>'+
                 '</center>'
