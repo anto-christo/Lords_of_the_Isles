@@ -14,29 +14,28 @@ var user;
 
                     console.log(resp.name);
 
-                    if(x==1){
-                        reply = confirm("Do you want to buy "+resp.name+"?");
+                    if(x==0){
+                        
 
-                        if(reply==true){
-                            reply = 'true';
-                        }
-
-                        else
-                            reply = 'false';
+                        $.ajax({
+                            type: 'POST',
+                            url: '/assign_island',
+                            data: {username:user, island:resp.name, reply:'true', old:x},
+                            success: function(data){
+                                console.log("Assign island successfull");
+                                window.island_menu.location.reload();
+                            }
+                        });
+    
                     }
 
-                    else
-                        reply = 'true';
+                    else{
+                        localStorage.setItem("i_name", resp.name);
+                        localStorage.setItem("user_click",0);
+                        parent.window.change_iframe_src('islands-info.html');
+                    }
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '/assign_island',
-                        data: {username:user, island:resp.name, reply:reply, old:x},
-                        success: function(data){
-                            console.log("Assign island successfull");
-                            window.island_menu.location.reload();
-                        }
-                    });
+                    
 
                 });
             }
@@ -80,7 +79,11 @@ var user;
                     if(x.player=="new"){
                         console.log("new player");
                         assign_island(0);
+                        localStorage.setItem("old",0);
                     }
+
+                    else
+                        localStorage.setItem("old",1);
                 }
             });
         }

@@ -94,6 +94,10 @@
           <div style="opacity: 1">
             <script type="text/javascript">
               var name = localStorage.getItem("i_name");
+              var user = localStorage.getItem("user");
+              var old = localStorage.getItem("old");
+              var time = 60;
+              var time_int;
 
               function buy_ship(){
 
@@ -108,6 +112,25 @@
                   });
                 }
 
+              function buy_island(reply){
+
+                $('#buy_btn').hide();
+                $('#ign_btn').hide();
+                $('#timer').hide();
+
+                clearInterval(time_int);
+
+                $.ajax({
+                        type: 'POST',
+                        url: '/assign_island',
+                        data: {username:user, island:name, reply:reply, old:old},
+                        success: function(data){
+                            console.log("Assign island successfull");
+                            parent.window.island_menu.location.reload();
+                        }
+                    });
+              }
+
               document.write(name);
 
               $(document).ready(function(){
@@ -118,6 +141,30 @@
                     success: function(result){
 
                         console.log(result);
+
+                        var owner = result[0].owner_name;
+
+                        if(owner=='AI'){
+                          $('#owner').text("Owner: Not Owned");
+
+                          console.log(localStorage.getItem("user_click"));
+                          
+                          if(localStorage.getItem("user_click") == 0){
+
+                            var tr = 'true';
+                            var fl = 'false';
+                            var text = "Buy: "+result[0].value;
+
+                            $('#info_div').append('<button style="margin:10px" class="btn btn-success" onclick="buy_island('+tr+')" id="buy_btn">'+text+'</button>');
+                            $('#info_div').append('<button style="margin:10px" class="btn btn-danger" onclick="buy_island('+fl+')" id="ign_btn">Ignore</button><br><br>');
+                            $('#info_div').append('<p id="timer"></p>');
+                          }
+                        }
+
+                        else{
+                          $('#owner').text("Owner:"+owner);
+                          $('#buy_btn').hide();
+                        }
 
                         $('#res_table').empty();
 
@@ -143,6 +190,19 @@
                                 '</tr>'
                             );
                         }
+
+                        time_int = setInterval(function(){
+                          $('#timer').text("Time left to buy :"+time);
+                          time--;
+
+                          if(time == 0){
+                            buy_island('false');
+                            $('#buy_btn').hide();
+                            $('#ign_btn').hide();
+                            $('#timer').hide();
+                            clearInterval(time_int);
+                          }
+                        },1000);
                     }
 
                 });
@@ -153,15 +213,23 @@
       </center>
     </div>
 
+
     <div style="margin-top:10%">
       <center>
-        <table border="1px" id="res_table">
-          <tr>
-              <th>Resource</th>
-              <th>Quantity</th>
-              <th>Value</th>
-          </tr>
-      </table><br><br>
+
+        <div style="background-color:white" id="info_div">
+            <h4 id="owner"></h4>
+
+            <table border="1px" id="res_table">
+                <tr>
+                    <th>Resource</th>
+                    <th>Quantity</th>
+                    <th>Value</th>
+                </tr>
+            </table><br><br>
+    
+        </div>
+
       </center>
     </div>
 
