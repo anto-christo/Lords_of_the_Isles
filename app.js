@@ -405,7 +405,6 @@ app.post('/create_island', function(req, res) {
                 console.log(i);
                 
                 db.collection("islands").insert(i,function(err,result){
-                  res.send(JSON.stringify({"name":island_name}));
                       var resource_name;
                        for (var k = 0; k < 15; k++) {
                         if (k < 9) 
@@ -419,7 +418,15 @@ app.post('/create_island', function(req, res) {
                           db.collection("islands").update({name:island_name},{$push:{res_present:{name:resource_name,quantity:0}}});
                         }
                       }
-                    db.close();
+
+                      setTimeout(function(){
+                        db.collection('islands').update({$and:[ {name:island_name},{'res_present.name':resource} ]}, {$set:{'res_present.$.quantity':100}},function(err,result){
+                          console.log("array updation done");
+                          res.send(JSON.stringify({"name":island_name}));
+                          db.close();
+                        });
+                      },100);
+    
                 });
 
           }); 
@@ -755,22 +762,26 @@ app.post('/send_ship',function(req,res){
 
         // console.log("Qty="+qty);
 
-        db.collection('islands').find( { name:src,  res_present:{$elemMatch: {name:doc[k].name}} } ).count(function(err,results){
-               // console.log("result="+results);
+        // db.collection('islands').find( { name:src,  res_present:{$elemMatch: {name:doc[k].name}} } ).count(function(err,results){
+        //        // console.log("result="+results);
 
-            if(results > 0){
-              db.collection("islands").update({name:src, "res_present.name":doc[k].name}, {$inc:{"res_present.$.quantity":-qty}},function(err, result) {
-                // console.log("res present decremented");
-              });
-            }
+        //     if(results > 0){
+        //       db.collection("islands").update({name:src, "res_present.name":doc[k].name}, {$inc:{"res_present.$.quantity":-qty}},function(err, result) {
+        //         // console.log("res present decremented");
+        //       });
+        //     }
 
-            else{
-              db.collection("islands").update({name:src}, {$inc:{"res_produced.res_quantity":-qty}},function(err, result) {
-                // console.log("res produced decremented");
-              });
+        //     else{
+        //       db.collection("islands").update({name:src}, {$inc:{"res_produced.res_quantity":-qty}},function(err, result) {
+        //         // console.log("res produced decremented");
+        //       });
           
-            }
+        //     }
         
+        // });
+
+        db.collection('islands').update({$and:[ {name:dest},{'res_present.name':doc[k].name} ]}, {$inc:{'res_present.$.quantity':-qty}},function(err,result){
+          console.log("dest updation done");
         });
       }
     });
@@ -781,24 +792,28 @@ app.post('/send_ship',function(req,res){
 
         var qty = Number(doc[k].quantity);
 
-        db.collection('islands').find( { name:dest,  res_present:{$elemMatch: {name:doc[k].name}} } ).count(function(err,results){
-               // console.log("result="+results);
+        // db.collection('islands').find( { name:dest,  res_present:{$elemMatch: {name:doc[k].name}} } ).count(function(err,results){
+        //        // console.log("result="+results);
 
-            if(results == 0){
-            db.collection('islands').update({name:dest},{$push:{res_present:doc[k]}}, function(err,result){
-              // console.log("push complete");
-              // console.log("reached");
-            });
-            }
+        //     if(results == 0){
+        //     db.collection('islands').update({name:dest},{$push:{res_present:doc[k]}}, function(err,result){
+        //       // console.log("push complete");
+        //       // console.log("reached");
+        //     });
+        //     }
 
-            else{
-            db.collection("islands").update({name:dest, "res_present.name":doc[k].name}, {$inc:{"res_present.$.quantity":qty}},function(err, result) {
-              // console.log("Set complete");
-              // console.log("reached");
-            });
+        //     else{
+        //     db.collection("islands").update({name:dest, "res_present.name":doc[k].name}, {$inc:{"res_present.$.quantity":qty}},function(err, result) {
+        //       // console.log("Set complete");
+        //       // console.log("reached");
+        //     });
           
-            }
+        //     }
         
+        // });
+
+        db.collection('islands').update({$and:[ {name:dest},{'res_present.name':doc[k].name} ]}, {$inc:{'res_present.$.quantity':qty}},function(err,result){
+          console.log("dest updation done");
         });
       }
     }, 5000);
@@ -875,7 +890,7 @@ var m,min;
       min = min - (t*dur);
       temp = sum / duration;
       current_tick = parseInt(temp) - adjust ;
-      console.log("timer: "+min + ":" + sec);
+      //console.log("timer: "+min + ":" + sec);
       
       if (s == "01") 
       {

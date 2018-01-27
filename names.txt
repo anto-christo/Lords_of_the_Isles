@@ -3,7 +3,6 @@ Algeria
 Andorra
 Angola
 Antigua & Deps
-Argentina
 Armenia
 Australia
 Austria
@@ -39,7 +38,6 @@ Congo {Democratic Rep}
 Costa Rica
 Croatia
 Cuba
-Cyprus
 Czech Republic
 Denmark
 Djibouti
@@ -92,7 +90,6 @@ Kuwait
 Kyrgyzstan
 Laos
 Latvia
-Lebanon
 Lesotho
 Liberia
 Libya
@@ -126,7 +123,6 @@ Nicaragua
 Niger
 Nigeria
 Norway
-Oman
 Pakistan
 Panama
 Papua New Guinea
@@ -138,13 +134,11 @@ Portugal
 Qatar
 Romania
 Russian Federation
-Rwanda
 St Kitts & Nevis
 St Lucia
 Saint Vincent & the Grenadines
 Samoa
 San Marino
-Sao Tome & Principe
 Saudi Arabia
 Senegal
 Serbia
@@ -154,10 +148,8 @@ Singapore
 Slovakia
 Slovenia
 Solomon Islands
-Somalia
 South Africa
 South Sudan
-Spain
 Sri Lanka
 Suriname
 Swaziland

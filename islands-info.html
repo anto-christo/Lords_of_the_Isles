@@ -172,13 +172,12 @@
                             '<tr>'+
                                 '<th>Resource</th>'+
                                 '<th>Quantity</th>'+
-                                // '<th>Value</th>'+
                             '</tr>'
 
                         );
 
-
                         for(i=0;i<result[0].res_present.length;i++){
+                          if(result[0].res_present[i].quantity){
                             $('#res_table').append(
                                 '<tr>'+
                                     '<td>'+result[0].res_present[i].name+'</td>'+
@@ -186,6 +185,8 @@
                                     // '<td>'+result[0].res_present[i].value+'</td>'+
                                 '</tr>'
                             );
+                          }
+                            
                         }
 
                         if(localStorage.getItem("user_click") == 0){
@@ -223,7 +224,6 @@
                 <tr>
                     <th>Resource</th>
                     <th>Quantity</th>
-                    <th>Value</th>
                 </tr>
             </table><br><br>
     

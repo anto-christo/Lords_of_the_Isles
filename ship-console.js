@@ -106,26 +106,21 @@ $(document).ready(function(){
                             '<tr>'+
                                 '<th>Resource</th>'+
                                 '<th>Quantity</th>'+
-                                '<th>Value</th>'+
                                 '<th>Export Quantity</th>'+
-                            '</tr>'+
-                            '<tr>'+
-                                '<td>'+result[0].res_produced.res_name+'</td>'+
-                                '<td>'+result[0].res_produced.res_quantity+'</td>'+
-                                '<td>'+result[0].res_produced.res_value+'</td>'+
-                                '<td><input type="number" name="res_input[]" id="'+result[0].res_produced.res_name+'" value="0" min="0" max="'+result[0].res_produced.res_quantity+'"></td>'+
                             '</tr>'
                         );
 
                         for(i=0;i<result[0].res_present.length;i++){
-                            $('#res_table').append(
-                                '<tr>'+
-                                    '<td>'+result[0].res_present[i].name+'</td>'+
-                                    '<td>'+result[0].res_present[i].quantity+'</td>'+
-                                    '<td>'+result[0].res_present[i].value+'</td>'+
-                                    '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+result[0].res_present[i].quantity+'"></td>'+
-                                '</tr>'
-                            );
+                            
+                            if(result[0].res_present[i].quantity>0){
+                                $('#res_table').append(
+                                    '<tr>'+
+                                        '<td>'+result[0].res_present[i].name+'</td>'+
+                                        '<td>'+result[0].res_present[i].quantity+'</td>'+
+                                        '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+result[0].res_present[i].quantity+'"></td>'+
+                                    '</tr>'
+                                );
+                            }
                         }
                     }
 
