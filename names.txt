@@ -3,7 +3,6 @@ Algeria
 Andorra
 Angola
 Antigua & Deps
-Armenia
 Australia
 Austria
 Bahamas
@@ -32,14 +31,11 @@ Chile
 China
 Comoros
 Congo {Democratic Rep}
-Costa Rica
 Cuba
 Czech Republic
 Denmark
 Djibouti
-Dominica
 Dominican Republic
-Ecuador
 Egypt
 El Salvador
 Equatorial Guinea
@@ -67,7 +63,6 @@ India
 Indonesia
 Iran
 Iraq
-Ireland {Republic}
 Israel
 Italy
 Ivory Coast
@@ -83,13 +78,11 @@ Kosovo
 Kuwait
 Kyrgyzstan
 Laos
-Latvia
 Lesotho
 Liberia
 Libya
 Liechtenstein
 Lithuania
-Luxembourg
 Macedonia
 Malawi
 Maldives
@@ -98,7 +91,6 @@ Malta
 Mauritania
 Mauritius
 Mexico
-Moldova
 Monaco
 Mongolia
 Mozambique

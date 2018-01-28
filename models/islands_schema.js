@@ -7,7 +7,7 @@ var islandSchema = new mongoose.Schema({
     max_population: { type: Number, default: 0 },
     res_produced: { 
         res_name: { type: String, default: null }, 
-        res_quantity: { type: Number, default: 100 },
+        //res_quantity: { type: Number, default: 100 },
         // res_value: { type: Number, default: 0 }
     },
     res_present: [

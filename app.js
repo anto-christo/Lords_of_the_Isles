@@ -787,8 +787,8 @@ app.post('/send_ship',function(req,res){
         
         // });
 
-        db.collection('islands').update({$and:[ {name:dest},{'res_present.name':doc[k].name} ]}, {$inc:{'res_present.$.quantity':-qty}},function(err,result){
-          console.log("dest updation done");
+        db.collection('islands').update({$and:[ {name:src},{'res_present.name':doc[k].name} ]}, {$inc:{'res_present.$.quantity':-qty}},function(err,result){
+          console.log("src updation done");
         });
       }
     });
