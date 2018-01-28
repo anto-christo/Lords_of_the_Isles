@@ -24,22 +24,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/island.css">
 
-    <script type="text/javascript">
-    	var a = 60;
-    	var b = parseInt(a/12);
-    	var text = '<b>Population</b> <br>'+a+'<br> <b>Resources consumed</b><br>'+b+' per tick';
-
-      $(document).ready(function(){
-          $('[data-toggle="popover"]').popover({
-              placement : 'right',
-              trigger : 'hover',
-              html : true,
-              content : text 
-          });
-      });
-    </script>
-
-
     
 
 
@@ -93,6 +77,9 @@
         <div class="name" style="background-color: #A7E9F9;opacity: 0.9; width: 300%; ">
           <div style="opacity: 1">
             <script type="text/javascript">
+            var a = 60;
+            var b = parseInt(a/12);
+            var text = '<b>Population</b> <br>'+a+'<br> <b>Resources consumed</b><br>'+b+' per tick';
               var name = localStorage.getItem("i_name");
               var user = localStorage.getItem("user");
               var old = localStorage.getItem("old");
@@ -134,6 +121,14 @@
               document.write(name);
 
               $(document).ready(function(){
+
+                $('[data-toggle="popover"]').popover({
+              placement : 'right',
+              trigger : 'hover',
+              html : true,
+              content : text 
+          });
+
                 $.ajax({
                     type:'POST',
                     url:'/get_island_info',
@@ -143,6 +138,10 @@
                         console.log("island "+result);
 
                         var owner = result[0].owner_name;
+
+                        a = result[0].current_population;
+
+                        $('#pop').text("Population:"+result[0].current_population);
 
                         if(owner=='AI'){
                           $('#owner').text("Owner: Not Owned");
@@ -218,6 +217,7 @@
 
         <div style="background-color:white" id="info_div">
             <h4 id="owner"></h4>
+            <h4 id="pop"></h4>
 
             <table border="1px" id="res_table">
                 <tr>
