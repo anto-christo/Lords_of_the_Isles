@@ -680,7 +680,8 @@ app.post('/old_island', function(req, res) {
     //   }
     // );
 
-    db.collection('islands').aggregate([{$sample: { size: 1 }}, {$match:{name:{$ne:user}}}], function(err,result){
+    db.collection('islands').aggregate([{$match:{ owner_name:{$ne:user} }}, {$sample:{size:1}} ], function(err,result){
+      console.log(result);
       return res.send(result);
         db.close();
     });
