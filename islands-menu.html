@@ -92,39 +92,56 @@ $(document).ready(function(){
 
    var user = localStorage.getItem("user");
 
+   var owned = [];
+   var explored = [];
+
    $.ajax({
        type: 'POST',
        url: '/get_island',
        data:{user:user},
        success: function(result){
+
+			console.log(result);
+
+			for(i=0;i<result[0].owned_islands_name.length;i++){
+				owned.push(result[0].owned_islands_name[i].island_name);
+			}
+
+			for(i=0;i<result[0].explored_islands_name.length;i++){
+				explored.push(result[0].explored_islands_name[i].island_name);
+			}
+
+			owned.sort();
+			explored.sort();
            
-           for(i=0;i<result[0].owned_islands_name.length;i++){
+           for(i=0;i<owned.length;i++){
            	// var i_name = result[0].owned_islands_name[i].island_name;
-            var func = "pickIsland('" + result[0].owned_islands_name[i].island_name + "')";
+            var func = "pickIsland('" + owned[i] + "')";
 
            $('#is_card').append(
                '<center>'+
                    '<a href="#" rel="islands-info.html" onclick="'+func+'">'+
-                       '<div class="cardc">'+result[0].owned_islands_name[i].island_name+'</div>'+
+                       '<div class="cardc">'+owned[i]+'</div>'+
+                   '</a>'+
+               '</center>'
+           );
+
+		   }
+		   
+		   for(i=0;i<explored.length;i++){
+           	// var i_name = result[0].owned_islands_name[i].island_name;
+            var func = "pickIsland('" + explored[i] + "')";
+
+           $('#is_card').append(
+               '<center>'+
+                   '<a href="#" rel="islands-info.html" onclick="'+func+'">'+
+                       '<div class="cardc">'+explored[i]+'</div>'+
                    '</a>'+
                '</center>'
            );
 
            }
 
-           for(i=0;i<result[0].explored_islands_name.length;i++){
-
-                var func = "pickIsland('" + result[0].explored_islands_name[i].island_name + "')";
-
-                $('#is_card').append(
-                '<center>'+
-                    '<a href="#" rel="islands-info.html" onclick="'+func+'">'+
-                        '<div class="cardc">'+result[0].explored_islands_name[i].island_name+'</div>'+
-                    '</a>'+
-                '</center>'
-                );
-
-            }
        }
    });
 });

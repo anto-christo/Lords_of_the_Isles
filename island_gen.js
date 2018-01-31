@@ -50,7 +50,7 @@ var user;
                 dataType : 'json',
                 success: function(resp){
 
-                    console.log("island name:"+resp[0].name)
+                    console.log(resp[0])
                     
                     localStorage.setItem("i_name", resp[0].name);
                     localStorage.setItem("user_click",0);

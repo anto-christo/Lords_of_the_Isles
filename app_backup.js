@@ -906,7 +906,7 @@ app.post('/tick_changed', function(req, res) {
   assert.equal(null, err);
     db.collection("players").find({name:uname}).toArray(function(err,result){
         var total_wealth = Math.floor(result[0].island_wealth + (result[0].gold/5));
-        db.collection("players").update({name:uname},{$set:{total_wealth:total_wealth}})   // only when user is logged in
+        db.collection("players").update({name:uname},{$set:{total_wealth:total_wealth}})
         db.close();
     });
   }); 
@@ -973,14 +973,6 @@ MongoClient.connect(url, function(err, db) {
 
   var ct_arr = [];
   var sum=0;
-  var inc_pop=0;
-  var types = 0;
-  var total_res_present =0;
-  var consume;
-  var present;
-  var produced = 0;
-  var res_cap;
-
   db.collection("res").find({}).toArray(function(err, result1) {
               for (var j =0; j < 15; j++) {
                   ct_arr[j] = result1[j].ct;
@@ -992,54 +984,22 @@ MongoClient.connect(url, function(err, db) {
     db.collection("islands").find().forEach(function(data){
         console.log("island_name:" + data.name);
         console.log("current_population:" + data.current_population);
-        if (data.max_population>700) 
-        {
-          res_cap = 1450;
-        }
-        else
-        {
-          res_cap = 1450;
-        }
-        // consumption and updation of res
-        consume = Math.floor(data.current_population / 25); // 25 ppl consume 1 unit of each res
+      
+        // consumption of res
+        var consume = Math.floor(data.current_population / 25); // 25 ppl consume 1 unit of each res
         for (var i2 = 0; i2 < 15; i2++) {
-            produced = 0
-            present = data.res_present[i2].quantity;
-            // console.log("checking "+data.res_produced.res_name);
-            // console.log("checking "+data.res_present[i2].name);
-            if (data.res_produced.res_name==data.res_present[i2].name) 
-            {
-              produced = Math.floor(data.current_population / 10);
-              // console.log("produced: "+produced);
-              // present = present + produced;
-            }
-
+            var present = data.res_present[i2].quantity;
             if (present > consume) 
             {
-                var put = produced - consume;
-                if (present+produced>res_cap) 
-                {
-                  // console.log("in");
-                  put = res_cap - present;
-                }
-
-                // console.log("put "+put);
-                db.collection("islands").update({name:data.name,"res_present.name":data.res_present[i2].name},{$inc:{"res_present.$.quantity":put}});
+                console.log("consuming "+consume);
+                db.collection("islands").update({name:data.name,"res_present.name":data.res_present[i2].name},{$inc:{"res_present.$.quantity":-consume}});
             }
             else
             {
-                if (produced > 0) 
-                {
-                  put = produced - consume
-                }
-                else
-                {
-                  put = -present;
-                }
-                // console.log("consuming present "+present);
+                console.log("consuming present "+present);
                 db.collection("islands").update(
                 {name:data.name,"res_present.name":data.res_present[i2].name},
-                {$inc:{"res_present.$.quantity":put}});
+                {$inc:{"res_present.$.quantity":-present}});
             }
         }
 
@@ -1051,8 +1011,11 @@ MongoClient.connect(url, function(err, db) {
           db.collection("players").update({name:data.owner_name},{$inc:{gold:inc_gold}})
         }
 
-        //increasing / decreasing population
-        
+        // increasing / decreasing population
+        var max_pop = data.max_population;
+        var inc_pop=0;
+        var types = 0;
+        var total_res_present =0;
         for (var i1 = 0; i1 < 15; i1++) {
           total_res_present = total_res_present + data.res_present[i1].quantity;
           if (i1<9) 
@@ -1071,8 +1034,6 @@ MongoClient.connect(url, function(err, db) {
           }
         }
         inc_pop = inc_pop*types;
-        var max_pop = data.max_population;
-
         if ((data.current_population+inc_pop)>max_pop) // doesnt let pop overflow
         {
           inc_pop = max_pop - data.current_population;
@@ -1114,15 +1075,15 @@ MongoClient.connect(url, function(err, db) {
         db.collection("islands").update({name:data.name},{$set:{value:value}})
 
         // increasing resources (produced on that island)
-        // var produced = Math.floor(data.current_population / 10); // 10 ppl produce 1 unit of res.
-        // // update res on all islands
-        // console.log("producing "+produced);
-        // db.collection("islands").update(
-        //     {name:data.name,"res_present.name":data.res_produced.resource_name},
-        //     {$inc:{"res_present.$.quantity":produced}},
-        //     function(err,res){
-        //     db.close();
-        // });
+        var produced = Math.floor(data.current_population / 10); // 10 ppl produce 1 unit of res.
+        // update res on all islands
+        console.log("producing "+produced);
+        db.collection("islands").update(
+            {name:data.name,"res_present.name":data.res_produced.resource_name},
+            {$inc:{"res_present.$.quantity":produced}},
+            function(err,res){
+            db.close();
+        });
 
     });
 

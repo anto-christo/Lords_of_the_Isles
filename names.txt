@@ -9,7 +9,6 @@ Armenia
 Australia
 Austria
 Azerbaijan
-Bahamas
 Bahrain
 Bangladesh
 Barbados
@@ -25,7 +24,6 @@ Brazil
 Brunei
 Bulgaria
 Burkina
-Burundi
 Cambodia
 Cameroon
 Canada
@@ -62,13 +60,11 @@ Gabon
 Gambia
 Georgia
 Germany
-Ghana
 Greece
 Grenada
 Guatemala
 Guinea
 Guinea-Bissau
-Guyana
 Haiti
 Honduras
 Hungary
@@ -83,7 +79,6 @@ Italy
 Ivory Coast
 Jamaica
 Japan
-Jordan
 Kazakhstan
 Kenya
 Kiribati
@@ -147,7 +142,6 @@ St Kitts & Nevis
 St Lucia
 Saint Vincent & the Grenadines
 Samoa
-San Marino
 Sao Tome & Principe
 Saudi Arabia
 Senegal

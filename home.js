@@ -38,7 +38,8 @@ $(document).ready(function(){
     var current_tick = 0;
 
     setInterval(function(){ 
-      myFunction()
+      myFunction();
+      
     }, 1000);
 
   function addZero(x,n) {
@@ -53,6 +54,13 @@ $(document).ready(function(){
   var duration = dur* 60; 
   var adjust;
   function myFunction() {
+    if (min=="0"&&sec=="55") 
+      {
+        console.log("refreshing");
+        var ifr = document.getElementById('info-screen');  
+        ifr.src = ifr.src; 
+      }
+
   var sum = m*60+h*3600+n*86400; // in secs
       d = new Date();
     n = d.getUTCDate();
@@ -75,7 +83,7 @@ $(document).ready(function(){
       min = min - (t*dur);
       temp = sum / duration;
       current_tick = parseInt(temp) - adjust ;
-      
+
       y.innerHTML = current_tick;
       z.innerHTML =min + ":" + sec;
       // if (s == "01") 
