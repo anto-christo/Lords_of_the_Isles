@@ -459,6 +459,19 @@ app.post('/assign_island', function(req, res) {
 
   // console.log("reply="+reply);
       var buyed = 0;
+      var exists = 0;
+
+      MongoClient.connect(url, function(err, db) {
+        db.collection('players').find( { $and:[ {name:uname},{explored_islands_name:{$elemMatch:{island_name:is_name}}} ] }).count(function(err,result){
+          console.log("-------------------------result="+result);
+          console.log("-------------------------exists="+exists);
+
+          if(result>0){
+            exists = 1;
+          } 
+        }); 
+      });
+
       if(reply == 'true'){
         MongoClient.connect(url, function(err, db) {
               
@@ -491,6 +504,19 @@ app.post('/assign_island', function(req, res) {
                           }
 
                           // console.log("island updated");
+
+                          db.collection('players').find( { $and:[ {name:uname},{explored_islands_name:{$elemMatch:{island_name:is_name}}} ] }).count(function(err,result){
+                            console.log("-------------------------result="+result);
+                            console.log("-------------------------exists="+exists);
+
+                            if(result>0){
+                              exists = 1;
+
+                              db.collection('players').update({name:uname}, {$pull:{explored_islands_name:{island_name:is_name}} }, function(err,rlt){
+                                console.log("-------------------------exp island pulled");
+                              });
+                            } 
+                          });                           
                           
                           db.collection("players").update({name:uname},{$push:{owned_islands_name:{island_name:is_name}}}, function(err, r) {
                             assert.equal(null, err);
@@ -509,8 +535,23 @@ app.post('/assign_island', function(req, res) {
                       }
                       else  // cannot buy
                       {
-                        explored();
-                        return res.send({"message":"failure"});
+                        MongoClient.connect(url, function(err, db) {
+
+                          db.collection('players').find( { $and:[ {name:uname},{explored_islands_name:{$elemMatch:{island_name:is_name}}} ] }).count(function(err,result){
+                            console.log("-------------------------result="+result);
+                  
+                            if(result==0){
+                              explored();
+                              return res.send({"message":"success"});
+                            }
+                    
+                            else{
+                              return res.send({"message":"failure"});
+                            }
+                  
+                          });
+                          
+                        });
                       }
                   });
               });
@@ -519,8 +560,24 @@ app.post('/assign_island', function(req, res) {
 
       else{
         // console.log("INSIDE NOT BUYED");
-        explored();
-        return res.send({"message":"success"});
+        MongoClient.connect(url, function(err, db) {
+
+        db.collection('players').find( { $and:[ {name:uname},{explored_islands_name:{$elemMatch:{island_name:is_name}}} ] }).count(function(err,result){
+          console.log("-------------------------result="+result);
+
+          if(result==0){
+            explored();
+            return res.send({"message":"success"});
+          }
+  
+          else{
+            return res.send({"message":"failure"});
+          }
+
+        });
+        
+      });
+        
       } 
 
     function explored(){
