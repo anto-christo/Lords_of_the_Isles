@@ -38,8 +38,8 @@ function send_ship(){
 
         var res_names = $("input[name='res_input[]']").map(function(){return $(this).attr('id');}).get();
         
-        console.log(res_names);
-        console.log(res_qtys);
+        console.log("res_name "+res_names);
+        console.log("res_qtys "+res_qtys);
 
         $.ajax({
             type:'POST',
