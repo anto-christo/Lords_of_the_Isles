@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var playerSchema = new mongoose.Schema({
     name: { type: String, default: null },
-    gold: { type: Number, default: 3000 },
+    gold: { type: Number, default: 300000 },
     island_wealth: { type: Number, default: 0 },
     total_wealth: { type: Number, default: 0 },
     rank: { type: Number, default: 0 },

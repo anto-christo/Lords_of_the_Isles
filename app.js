@@ -567,19 +567,13 @@ app.post('/assign_island', function(req, res) {
 function assign_ship(uname, is_name){
 
   var s = new ship();
-
   s.owner_name = uname;
-  s.source = is_name; 
+  s.source = is_name;
+  s.eta = 0;
 
   MongoClient.connect(url, function(err, db) {
 
-    
-
     db.collection("ships").insert(s,function(err,result){
-
-      // console.log(result);
-      // console.log(result.insertedIds[0]);
-
       var id = result.insertedIds[0];
       for (var k = 0; k < 15; k++) {
        if (k < 9) 
@@ -806,10 +800,7 @@ app.post('/send_ship',function(req,res){
   var qtys = req.body.qtys;
   var dest = req.body.dest;
   var src = req.body.src;
-
-  // console.log(names.length);
-  // console.log(qtys);
-  // console.log(src);
+  var eta;
 
   var doc = [];
 
@@ -826,17 +817,33 @@ app.post('/send_ship',function(req,res){
 
   // console.log(doc);
 
+  var ObjectId = new mongoose.Types.ObjectId(ship);
+
   MongoClient.connect(url, function(err, db) {
 
-    var ObjectId = new mongoose.Types.ObjectId(ship);
-    db.collection('ships').update({_id:ObjectId},{$set:{destination:dest}});
+
+    //calculate eta
+    db.collection('islands').find({name:src}).toArray(function(err,result){
+        var x1 = result[0].x_cord;
+        var y1 = result[0].y_cord;
+        db.collection('islands').find({name:dest}).toArray(function(err,result){
+            var x2 = result[0].x_cord;
+            var y2 = result[0].y_cord;
+            var xt= x2-x1;
+            var yt= y2-y1;
+            eta = Math.sqrt(xt*xt+yt*yt);
+            eta = Math.ceil(eta/200);
+            // console.log("eta "+eta);
+            db.collection('ships').update({_id:ObjectId},{$set:{eta:eta,destination:dest}});
+        });
+    });
+
+
     //loading on ship
     for (item in doc) {
-      // console.log("doc[item].name: "+doc[item].name);
-      // console.log("doc[item].name: "+doc[item].quantity);
-      // console.log("doc.length: "+doc.length);
       var temp_name = doc[item].name;
       var temp_qty = doc[item].quantity;
+      console.log("temp_qty "+temp_qty );
       db.collection('ships').update({_id:ObjectId,"res_present.name":temp_name},{$inc:{'res_present.$.quantity':temp_qty}})
       db.collection('islands').update({$and:[ {name:src},{'res_present.name':temp_name} ]}, {$inc:{'res_present.$.quantity':-temp_qty}});
     }
@@ -876,37 +883,37 @@ app.post('/send_ship',function(req,res){
     // });
 
     //unloading from ship
-    setTimeout(function(){
+    // setTimeout(function(){
       
-      for(var k in doc){
+    //   for(var k in doc){
 
-        var qty = Number(doc[k].quantity);
+    //     var qty = Number(doc[k].quantity);
 
-        // db.collection('islands').find( { name:dest,  res_present:{$elemMatch: {name:doc[k].name}} } ).count(function(err,results){
-        //        // console.log("result="+results);
+    //     // db.collection('islands').find( { name:dest,  res_present:{$elemMatch: {name:doc[k].name}} } ).count(function(err,results){
+    //     //        // console.log("result="+results);
 
-        //     if(results == 0){
-        //     db.collection('islands').update({name:dest},{$push:{res_present:doc[k]}}, function(err,result){
-        //       // console.log("push complete");
-        //       // console.log("reached");
-        //     });
-        //     }
+    //     //     if(results == 0){
+    //     //     db.collection('islands').update({name:dest},{$push:{res_present:doc[k]}}, function(err,result){
+    //     //       // console.log("push complete");
+    //     //       // console.log("reached");
+    //     //     });
+    //     //     }
 
-        //     else{
-        //     db.collection("islands").update({name:dest, "res_present.name":doc[k].name}, {$inc:{"res_present.$.quantity":qty}},function(err, result) {
-        //       // console.log("Set complete");
-        //       // console.log("reached");
-        //     });
+    //     //     else{
+    //     //     db.collection("islands").update({name:dest, "res_present.name":doc[k].name}, {$inc:{"res_present.$.quantity":qty}},function(err, result) {
+    //     //       // console.log("Set complete");
+    //     //       // console.log("reached");
+    //     //     });
           
-        //     }
+    //     //     }
         
-        // });
-        console.log(doc);
-        db.collection('islands').update({$and:[ {name:dest},{'res_present.name':doc[k].name} ]}, {$inc:{'res_present.$.quantity':qty}});
-        db.collection('ships').update({_id:ObjectId,"res_present.name":doc[k].name}, {$inc:{'res_present.$.quantity':-qty}});
-      }
-      db.collection('ships').update({_id:ObjectId},{$set:{source:dest,destination:null}})
-    }, 5000);
+    //     // });
+    //     console.log(doc);
+    //     db.collection('islands').update({$and:[ {name:dest},{'res_present.name':doc[k].name} ]}, {$inc:{'res_present.$.quantity':qty}});
+    //     db.collection('ships').update({_id:ObjectId,"res_present.name":doc[k].name}, {$inc:{'res_present.$.quantity':-qty}});
+    //   }
+    //   db.collection('ships').update({_id:ObjectId},{$set:{source:dest,destination:null}})
+    // }, 5000);
 
     return res.send("Done");
     db.close();
@@ -930,6 +937,7 @@ app.post('/tick_changed', function(req, res) {
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
     db.collection("players").find({name:uname}).toArray(function(err,result){
+        // console.log("result[0].gold "+result[0].gold);
         var total_wealth = Math.floor(result[0].island_wealth + (result[0].gold/5));
         db.collection("players").update({name:uname},{$set:{total_wealth:total_wealth}})   // only when user is logged in
         db.close();
@@ -1013,6 +1021,36 @@ MongoClient.connect(url, function(err, db) {
               }
       });
 
+
+    db.collection("ships").find().forEach(function(data){
+
+      if (data.eta>1) // if eta == 1 ship lands end of this tick
+      {
+        db.collection("ships").update({_id:data._id},{$inc:{eta:-1}})
+      }
+      else if (data.eta==1) // ship lands
+      {
+        db.collection("ships").update({_id:data._id},{$inc:{eta:-1}}) // eta becomes 0 in db indicating ship is at halt.
+        
+        for (k in data.res_present) {
+          if (data.res_present[k].quantity>0) {
+            db.collection('islands').update({
+              $and:[ {name:data.destination},{'res_present.name':data.res_present[k].name} ]},
+              {$inc:{'res_present.$.quantity':data.res_present[k].quantity}
+            });
+            db.collection('ships').update({
+              _id:data._id,"res_present.name":data.res_present[k].name},
+              {$inc:{'res_present.$.quantity':-data.res_present[k].quantity}
+            });
+          }
+        }
+        
+
+        db.collection('ships').update({_id:data._id},{$set:{source:data.destination,destination:null}})
+
+      }
+
+    });
 
     db.collection("islands").find().forEach(function(data){
         // console.log("island_name:" + data.name);
@@ -1137,17 +1175,6 @@ MongoClient.connect(url, function(err, db) {
         value = value + res_pres_factor;
         // console.log("value "+value);
         db.collection("islands").update({name:data.name},{$set:{value:value}})
-
-        // increasing resources (produced on that island)
-        // var produced = Math.floor(data.current_population / 10); // 10 ppl produce 1 unit of res.
-        // // update res on all islands
-        // console.log("producing "+produced);
-        // db.collection("islands").update(
-        //     {name:data.name,"res_present.name":data.res_produced.resource_name},
-        //     {$inc:{"res_present.$.quantity":produced}},
-        //     function(err,res){
-        //     db.close();
-        // });
 
     });
 
