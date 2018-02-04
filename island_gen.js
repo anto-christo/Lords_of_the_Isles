@@ -17,7 +17,6 @@ var user;
 
                     if(x==0){
                         
-
                         $.ajax({
                             type: 'POST',
                             url: '/assign_island',

@@ -451,7 +451,7 @@ app.post('/assign_island', function(req, res) {
                             });
                         }
                         
-                         db.collection("players").update({name:uname},{$inc:{island_wealth:island_cost,total_wealth:island_cost}}, function(err, r) {
+                         db.collection("players").update({name:uname},{$inc:{island_wealth:island_cost,total_wealth:island_cost,empty_ship_slots:1}}, function(err, r) {
                             assert.equal(null, err);
                             // +island value to wealth if new island buyed / home island
                          });
@@ -485,6 +485,9 @@ app.post('/assign_island', function(req, res) {
                       
                             if(old==0)
                               assign_ship(uname,is_name);
+                          	else
+	                          console.log("New ship slot added");
+
                           });
                         });
                         // console.log("INSIDE BUYED");
@@ -587,7 +590,7 @@ function assign_ship(uname, is_name){
         db.collection("ships").update({_id:id},{$push:{res_present:{name:resource_name,quantity:0}}});
       }
      }
-      db.collection("players").update({name:uname},{$push:{owned_ships_id:{id:id}}}, function(err, r) {
+      db.collection("players").update({name:uname},{$push:{owned_ships_id:{id:id}},$inc:{empty_ship_slots:-1}}, function(err, r) {
         assert.equal(null, err);
         db.close(); 
       });
@@ -602,6 +605,7 @@ app.post('/buy_ship',function(req,res){
   var is_name = req.body.island;
 
   assign_ship(uname, is_name);
+
 
   return res.send("Done");
 });
@@ -741,6 +745,20 @@ app.post('/get_ship',function(req,res){
   });
 });
 
+
+app.post('/get_ship_slots',function(req,res){
+
+  var user = req.body.user1;
+  MongoClient.connect(url, function(err, db) {
+    db.collection("players").find({name:user}).toArray(function(err, result) {
+        return res.send(result);
+        db.close();
+    });
+
+  });
+});
+
+
 app.post('/get_ship_info',function(req,res){
 
   var ship = req.body.ship;
@@ -872,7 +890,8 @@ app.post('/tick_changed', function(req, res) {
     db.collection("players").find({name:uname}).toArray(function(err,result){
         // console.log("result[0].gold "+result[0].gold);
         var total_wealth = Math.floor(result[0].island_wealth + (result[0].gold/5));
-        db.collection("players").update({name:uname},{$set:{total_wealth:total_wealth}})   // only when user is logged in
+        db.collection("players").update({name:uname},{$set:{total_wealth:total_wealth}});// only when user is logged in
+ 		return res.send("Done");
         db.close();
     });
   }); 

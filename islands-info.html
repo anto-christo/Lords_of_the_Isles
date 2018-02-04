@@ -86,18 +86,7 @@
               var time = 60;
               var time_int;
 
-              function buy_ship(){
-
-                  $.ajax({
-                    type: 'POST',
-                    url: '/buy_ship',
-                    data:{user:localStorage.getItem("user"), island:localStorage.getItem("i_name")},
-                    success: function(data){
-                      alert("You new ship is anchored at "+localStorage.getItem("i_name"));
-                      parent.window.ship_menu.location.reload();
-                    }
-                  });
-                }
+              
 
               function buy_island(reply){
 
@@ -114,6 +103,7 @@
                         success: function(data){
                             console.log("Assign island successfull");
                             parent.window.island_menu.location.reload();
+                            parent.window.ship_menu.location.reload();
                         }
                     });
               }
@@ -232,7 +222,7 @@
     </div>
 
       
-    <button style="float:right" class="btn btn-success" onclick="buy_ship()">Buy Ship</button>
+    <!-- <button style="float:right" class="btn btn-success" onclick="buy_ship()">Buy Ship</button> -->
 
 <div class="man1" >
 	<img class="man" src="assets/bg/m.png" data-container="body" data-toggle="popover" data-placement="right">

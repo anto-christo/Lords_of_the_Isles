@@ -30,11 +30,23 @@
 
 			parent.window.change_iframe_src('ship-console.html');
 		}
+
+		function buy_ship(){
+
+                  $.ajax({
+                    type: 'POST',
+                    url: '/buy_ship',
+                    data:{user:localStorage.getItem("user"), island:localStorage.getItem("i_name")},
+                    success: function(data){
+                      alert("Your new ship is anchored at "+localStorage.getItem("i_name"));
+                      parent.window.ship_menu.location.reload();
+                    }
+                  });
+                }
 		
 		$(document).ready(function(){
 
 			var user = localStorage.getItem("user");
-
 			$.ajax({
 				type:'POST',
 				url:'/get_ship',
@@ -48,6 +60,23 @@
 
 						$('#ship_list').append('<div class="cardc" onclick='+func+'>'+result[i].name+'</div>')
 					}
+					console.log("localStorage user "+ user);
+
+					$.ajax({
+						type:'POST',
+						url:'/get_ship_slots',
+						data:{user1:user},
+						success: function(result){
+							console.log(result);
+							console.log(result[0].empty_ship_slots);
+							var len = result[0].empty_ship_slots;
+							for(i=0;i<len;i++){
+								var func1 = "buy_ship()";
+								$('#ship_list').append('<div class="carde" onclick='+func1+'>'+"Empty Slot"+'</div>')
+							}
+						}
+					});
+
 				}
 			});
 		});
