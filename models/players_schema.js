@@ -5,7 +5,7 @@ var playerSchema = new mongoose.Schema({
     gold: { type: Number, default: 300000 },
     island_wealth: { type: Number, default: 0 },
     total_wealth: { type: Number, default: 0 },
-    rank: { type: Number, default: 0 },
+    // rank: { type: Number, default: 0 },
     random_event_used: { type: Number, default: 0 },
     owned_islands_name: [
     	{	island_name: {type: String, default: null}},

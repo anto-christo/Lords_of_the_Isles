@@ -848,73 +848,6 @@ app.post('/send_ship',function(req,res){
       db.collection('islands').update({$and:[ {name:src},{'res_present.name':temp_name} ]}, {$inc:{'res_present.$.quantity':-temp_qty}});
     }
 
-
-    // db.collection('ships').update({_id:ObjectId},{$set:{res_present: doc, destination:dest}}, function(err,result){
-    //   // console.log("Updated");
-
-    //   for(var k in doc){
-
-    //     var qty = Number(doc[k].quantity);
-
-    //     // console.log("Qty="+qty);
-
-    //     // db.collection('islands').find( { name:src,  res_present:{$elemMatch: {name:doc[k].name}} } ).count(function(err,results){
-    //     //        // console.log("result="+results);
-
-    //     //     if(results > 0){
-    //     //       db.collection("islands").update({name:src, "res_present.name":doc[k].name}, {$inc:{"res_present.$.quantity":-qty}},function(err, result) {
-    //     //         // console.log("res present decremented");
-    //     //       });
-    //     //     }
-
-    //     //     else{
-    //     //       db.collection("islands").update({name:src}, {$inc:{"res_produced.res_quantity":-qty}},function(err, result) {
-    //     //         // console.log("res produced decremented");
-    //     //       });
-          
-    //     //     }
-        
-    //     // });
-
-    //     db.collection('islands').update({$and:[ {name:src},{'res_present.name':doc[k].name} ]}, {$inc:{'res_present.$.quantity':-qty}},function(err,result){
-    //       console.log("src updation done");
-    //     });
-    //   }
-    // });
-
-    //unloading from ship
-    // setTimeout(function(){
-      
-    //   for(var k in doc){
-
-    //     var qty = Number(doc[k].quantity);
-
-    //     // db.collection('islands').find( { name:dest,  res_present:{$elemMatch: {name:doc[k].name}} } ).count(function(err,results){
-    //     //        // console.log("result="+results);
-
-    //     //     if(results == 0){
-    //     //     db.collection('islands').update({name:dest},{$push:{res_present:doc[k]}}, function(err,result){
-    //     //       // console.log("push complete");
-    //     //       // console.log("reached");
-    //     //     });
-    //     //     }
-
-    //     //     else{
-    //     //     db.collection("islands").update({name:dest, "res_present.name":doc[k].name}, {$inc:{"res_present.$.quantity":qty}},function(err, result) {
-    //     //       // console.log("Set complete");
-    //     //       // console.log("reached");
-    //     //     });
-          
-    //     //     }
-        
-    //     // });
-    //     console.log(doc);
-    //     db.collection('islands').update({$and:[ {name:dest},{'res_present.name':doc[k].name} ]}, {$inc:{'res_present.$.quantity':qty}});
-    //     db.collection('ships').update({_id:ObjectId,"res_present.name":doc[k].name}, {$inc:{'res_present.$.quantity':-qty}});
-    //   }
-    //   db.collection('ships').update({_id:ObjectId},{$set:{source:dest,destination:null}})
-    // }, 5000);
-
     return res.send("Done");
     db.close();
 
@@ -932,7 +865,7 @@ app.post('/send_ship',function(req,res){
 
 
 
-app.post('/tick_changed', function(req, res) {
+app.post('/tick_changed', function(req, res) {  
   var uname = req.body.username;
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
