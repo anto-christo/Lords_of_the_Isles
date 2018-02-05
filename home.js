@@ -86,17 +86,7 @@ $(document).ready(function(){
 
       y.innerHTML = current_tick;
       z.innerHTML =min + ":" + sec;
-      if (s == "01") 
-      {
-          $.ajax({
-          type: 'POST',
-          url: '/tick_changed',
-          data: { username:person },
-          success: function(data){
-              console.log("new tick started");
-          }
-          });
-      }
+    
       
   }
 });

@@ -12,3 +12,6 @@ middleware
 db.map.insert({xpos:10,ypos:10})
 
 db.res.insert([{index:0,ct:0},{index:1,ct:0},{index:2,ct:0},{index:3,ct:0},{index:4,ct:0},{index:5,ct:0},{index:6,ct:0},{index:7,ct:0},{index:8,ct:0},{index:9,ct:0},{index:10,ct:0},{index:11,ct:0},{index:12,ct:0},{index:13,ct:0},{index:14,ct:0}])
+
+
+db.islands.aggregate({$match:{owner_name:"test1"}},{$group:{_id:null,sum:{$sum:"$value"}}})

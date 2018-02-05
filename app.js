@@ -13,7 +13,7 @@ var io = require('socket.io').listen(server);
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://127.0.0.1:27017/LOI';
-
+//23 close 19 open 
 var assert = require('assert');
 
 var rankings= [];
@@ -380,7 +380,7 @@ app.post('/create_island', function(req, res) {
 
                       setTimeout(function(){
                         db.collection('islands').update({$and:[ {name:island_name},{'res_present.name':resource} ]}, {$set:{'res_present.$.quantity':200}},function(err,result){
-                          console.log("array updation done");
+                          // console.log("array updation done");
                           res.send(JSON.stringify({"name":island_name}));
                           db.close();
                         });
@@ -422,8 +422,8 @@ app.post('/assign_island', function(req, res) {
 
       MongoClient.connect(url, function(err, db) {
         db.collection('players').find( { $and:[ {name:uname},{explored_islands_name:{$elemMatch:{island_name:is_name}}} ] }).count(function(err,result){
-          console.log("-------------------------result="+result);
-          console.log("-------------------------exists="+exists);
+          // console.log("-------------------------result="+result);
+          // console.log("-------------------------exists="+exists);
 
           if(result>0){
             exists = 1;
@@ -465,14 +465,14 @@ app.post('/assign_island', function(req, res) {
                           // console.log("island updated");
 
                           db.collection('players').find( { $and:[ {name:uname},{explored_islands_name:{$elemMatch:{island_name:is_name}}} ] }).count(function(err,result){
-                            console.log("-------------------------result="+result);
-                            console.log("-------------------------exists="+exists);
+                            // console.log("-------------------------result="+result);
+                            // console.log("-------------------------exists="+exists);
 
                             if(result>0){
                               exists = 1;
 
                               db.collection('players').update({name:uname}, {$pull:{explored_islands_name:{island_name:is_name}} }, function(err,rlt){
-                                console.log("-------------------------exp island pulled");
+                                // console.log("-------------------------exp island pulled");
                               });
                             } 
                           });                           
@@ -485,8 +485,6 @@ app.post('/assign_island', function(req, res) {
                       
                             if(old==0)
                               assign_ship(uname,is_name);
-                          	else
-	                          console.log("New ship slot added");
 
                           });
                         });
@@ -500,7 +498,7 @@ app.post('/assign_island', function(req, res) {
                         MongoClient.connect(url, function(err, db) {
 
                           db.collection('players').find( { $and:[ {name:uname},{explored_islands_name:{$elemMatch:{island_name:is_name}}} ] }).count(function(err,result){
-                            console.log("-------------------------result="+result);
+                            // console.log("-------------------------result="+result);
                   
                             if(result==0){
                               explored();
@@ -525,7 +523,7 @@ app.post('/assign_island', function(req, res) {
         MongoClient.connect(url, function(err, db) {
 
         db.collection('players').find( { $and:[ {name:uname},{explored_islands_name:{$elemMatch:{island_name:is_name}}} ] }).count(function(err,result){
-          console.log("-------------------------result="+result);
+          // console.log("-------------------------result="+result);
 
           if(result==0){
             explored();
@@ -617,7 +615,7 @@ app.post('/buy_ship',function(req,res){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function insert_player(p){
-  console.log("new player");
+  // console.log("new player");
   MongoClient.connect(url, function(err, db) {
         db.collection("players").insert(p);
         db.close();
@@ -637,7 +635,7 @@ app.post('/player_name', function(req, res) {
       count = results;
       if (count>0) 
       {
-        console.log("old player");
+        // console.log("old player");
       }
       else
       { 
@@ -695,7 +693,7 @@ app.post('/old_island', function(req, res) {
     // );
 
     db.collection('islands').aggregate([{$match:{ owner_name:{$ne:user} }}, {$sample:{size:1}} ], function(err,result){
-      console.log(result);
+      // console.log(result);
       return res.send(result);
         db.close();
     });
@@ -861,7 +859,7 @@ app.post('/send_ship',function(req,res){
     for (item in doc) {
       var temp_name = doc[item].name;
       var temp_qty = doc[item].quantity;
-      console.log("temp_qty "+temp_qty );
+      // console.log("temp_qty "+temp_qty );
       db.collection('ships').update({_id:ObjectId,"res_present.name":temp_name},{$inc:{'res_present.$.quantity':temp_qty}})
       db.collection('islands').update({$and:[ {name:src},{'res_present.name':temp_name} ]}, {$inc:{'res_present.$.quantity':-temp_qty}});
     }
@@ -880,24 +878,6 @@ app.post('/send_ship',function(req,res){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////     TICK CHANGED       ////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-app.post('/tick_changed', function(req, res) {  
-  var uname = req.body.username;
-  MongoClient.connect(url, function(err, db) {
-  assert.equal(null, err);
-    db.collection("players").find({name:uname}).toArray(function(err,result){
-        // console.log("result[0].gold "+result[0].gold);
-        var total_wealth = Math.floor(result[0].island_wealth + (result[0].gold/5));
-        db.collection("players").update({name:uname},{$set:{total_wealth:total_wealth}});// only when user is logged in
- 		return res.send("Done");
-        db.close();
-    });
-  }); 
-
-});
-
 
 var m,min;
     var s,sec;
@@ -940,11 +920,12 @@ var m,min;
       min = min - (t*dur);
       temp = sum / duration;
       current_tick = parseInt(temp) - adjust ;
-      //console.log("timer: "+min + ":" + sec);
+      console.log("timer: "+min + ":" + sec);
       
       if (s == "01") 
       {
-          console.log("SERVER SIDE TICK CHANGED");
+          console.log("\nSERVER SIDE TICK CHANGED\n");
+          // console.log(clients);
           newTick();
       }
       
@@ -972,6 +953,37 @@ MongoClient.connect(url, function(err, db) {
                   sum = sum + result1[j].ct;
               }
       });
+
+
+  db.collection("players").find().forEach(function(data){
+
+      // console.log("data.name "+data.name);
+      // console.log("data.owned_islands_name.length "+data.owned_islands_name.length);
+      var name = data.name;
+
+      db.collection("islands").aggregate([{$match:{owner_name:name}},{$group:{_id:null,total:{$sum:"$value"},total_pop:{$sum:"$current_population"}}}]).toArray(function(err,res){
+      	console.log("name "+name);
+      	console.log("res[0].total "+res[0].total);
+      	console.log("res[0].total_pop "+res[0].total_pop);
+      	var is_wealth_total = res[0].total;
+      	var inc_gold = Math.floor(res[0].total_pop/25);
+      	db.collection("players").update({name:name},{$set:{island_wealth:is_wealth_total}});
+      	db.collection("players").update({name:name},{$inc:{gold:inc_gold}});
+
+      })
+
+      // // constant gold production based on pop
+        // if (data.owner_name!="AI") 
+        // {
+        //   var inc_gold = Math.floor(data.current_population/25);
+        //   // console.log("added "+inc_gold+" to "+data.owner_name);
+        //   db.collection("players").update({name:data.owner_name},{$inc:{gold:inc_gold}})
+        // }
+
+      var total_wealth = Math.floor(data.island_wealth + (data.gold/5));
+      db.collection("players").update({name:name},{$set:{total_wealth:total_wealth}});
+
+    });
 
 
     db.collection("ships").find().forEach(function(data){
@@ -1009,11 +1021,11 @@ MongoClient.connect(url, function(err, db) {
         // console.log("current_population:" + data.current_population);
         if (data.max_population>700) 
         {
-          res_cap = 1450;
+          res_cap = 3000;
         }
         else
         {
-          res_cap = 1450;
+          res_cap = 2000;
         }
         // consumption and updation of res
         consume = Math.floor(data.current_population / 25); // 25 ppl consume 1 unit of each res
@@ -1058,13 +1070,13 @@ MongoClient.connect(url, function(err, db) {
             }
         }
 
-        // constant gold production based on pop
-        if (data.owner_name!="AI") 
-        {
-          var inc_gold = Math.floor(data.current_population/25);
-          // console.log("added "+inc_gold+" to "+data.owner_name);
-          db.collection("players").update({name:data.owner_name},{$inc:{gold:inc_gold}})
-        }
+        // // constant gold production based on pop
+        // if (data.owner_name!="AI") 
+        // {
+        //   var inc_gold = Math.floor(data.current_population/25);
+        //   // console.log("added "+inc_gold+" to "+data.owner_name);
+        //   db.collection("players").update({name:data.owner_name},{$inc:{gold:inc_gold}})
+        // }
 
         //increasing / decreasing population
         
@@ -1114,19 +1126,27 @@ MongoClient.connect(url, function(err, db) {
         var value;
         value = (data.current_population)*5;
         var res_pres_factor=0;
+        var multiply=0;
         for (var i3 = 0; i3 < 15; i3++) {
             if (sum>0) 
             {
               if (ct_arr[i3]>0) 
               {
+              	if (data.res_present[i3].quantity>0) 
+              	{
+              		multiply++;
+              	}
                 res_pres_factor =  res_pres_factor + Math.floor((data.res_present[i3].quantity)*(sum/ct_arr[i3]));
               }
             }
         }
+        res_pres_factor = res_pres_factor*multiply;
         // console.log("res_pres_factor "+res_pres_factor);
-        value = value + res_pres_factor;
+        value = Math.floor(value + res_pres_factor);
         // console.log("value "+value);
         db.collection("islands").update({name:data.name},{$set:{value:value}})
+
+
 
     });
 
