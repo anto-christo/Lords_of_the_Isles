@@ -32,16 +32,17 @@
 		}
 
 		function buy_ship(){
+			parent.window.change_iframe_src('ship_buying.html');
 
-                  $.ajax({
-                    type: 'POST',
-                    url: '/buy_ship',
-                    data:{user:localStorage.getItem("user"), island:localStorage.getItem("i_name")},
-                    success: function(data){
-                      alert("Your new ship is anchored at "+localStorage.getItem("i_name"));
-                      parent.window.ship_menu.location.reload();
-                    }
-                  });
+                  // $.ajax({
+                  //   type: 'POST',
+                  //   url: '/buy_ship',
+                  //   data:{user:localStorage.getItem("user"), island:localStorage.getItem("i_name")},
+                  //   success: function(data){
+                  //     alert("Your new ship is anchored at "+localStorage.getItem("i_name"));
+                  //     parent.window.ship_menu.location.reload();
+                  //   }
+                  // });
                 }
 		
 		$(document).ready(function(){
@@ -103,3 +104,4 @@
 
 </body>
 </html>
+

@@ -27,3 +27,17 @@ body {
     font-size: 20px;
 
 }
+
+.carde {
+	background-image: url("../assets/bg/c3.jpg");
+	width: 150px;
+	height: 125px;
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin: 15px;
+    font-size: 20px;
+    opacity: 0.5;
+
+}

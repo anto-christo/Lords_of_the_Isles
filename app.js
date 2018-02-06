@@ -874,7 +874,6 @@ app.post('/send_ship',function(req,res){
 
 
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////     TICK CHANGED       ////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -922,7 +921,7 @@ var m,min;
       current_tick = parseInt(temp) - adjust ;
       console.log("timer: "+min + ":" + sec);
       
-      if (s == "01") 
+      if (s == "02") 
       {
           console.log("\nSERVER SIDE TICK CHANGED\n");
           // console.log(clients);
@@ -957,8 +956,6 @@ MongoClient.connect(url, function(err, db) {
 
   db.collection("players").find().forEach(function(data){
 
-      // console.log("data.name "+data.name);
-      // console.log("data.owned_islands_name.length "+data.owned_islands_name.length);
       var name = data.name;
 
       db.collection("islands").aggregate([{$match:{owner_name:name}},{$group:{_id:null,total:{$sum:"$value"},total_pop:{$sum:"$current_population"}}}]).toArray(function(err,res){
@@ -971,14 +968,6 @@ MongoClient.connect(url, function(err, db) {
       	db.collection("players").update({name:name},{$inc:{gold:inc_gold}});
 
       })
-
-      // // constant gold production based on pop
-        // if (data.owner_name!="AI") 
-        // {
-        //   var inc_gold = Math.floor(data.current_population/25);
-        //   // console.log("added "+inc_gold+" to "+data.owner_name);
-        //   db.collection("players").update({name:data.owner_name},{$inc:{gold:inc_gold}})
-        // }
 
       var total_wealth = Math.floor(data.island_wealth + (data.gold/5));
       db.collection("players").update({name:name},{$set:{total_wealth:total_wealth}});
@@ -1070,16 +1059,6 @@ MongoClient.connect(url, function(err, db) {
             }
         }
 
-        // // constant gold production based on pop
-        // if (data.owner_name!="AI") 
-        // {
-        //   var inc_gold = Math.floor(data.current_population/25);
-        //   // console.log("added "+inc_gold+" to "+data.owner_name);
-        //   db.collection("players").update({name:data.owner_name},{$inc:{gold:inc_gold}})
-        // }
-
-        //increasing / decreasing population
-        
         for (var i1 = 0; i1 < 15; i1++) {
           total_res_present = total_res_present + data.res_present[i1].quantity;
           if (i1<9) 
@@ -1118,13 +1097,10 @@ MongoClient.connect(url, function(err, db) {
         // console.log("inc_pop "+inc_pop);
         db.collection("islands").update({name:data.name},{$inc:{current_population:inc_pop}});
 
-
-        
-        
         // updating island wealth based on res present and pop
         // console.log("ct_arr "+ct_arr);
         var value;
-        value = (data.current_population)*5;
+        value = (data.current_population)*3;
         var res_pres_factor=0;
         var multiply=0;
         for (var i3 = 0; i3 < 15; i3++) {
@@ -1136,7 +1112,7 @@ MongoClient.connect(url, function(err, db) {
               	{
               		multiply++;
               	}
-                res_pres_factor =  res_pres_factor + Math.floor((data.res_present[i3].quantity)*(sum/ct_arr[i3]));
+                res_pres_factor =  res_pres_factor + Math.floor((data.res_present[i3].quantity/10)*(sum/ct_arr[i3]));
               }
             }
         }
@@ -1145,7 +1121,6 @@ MongoClient.connect(url, function(err, db) {
         value = Math.floor(value + res_pres_factor);
         // console.log("value "+value);
         db.collection("islands").update({name:data.name},{$set:{value:value}})
-
 
 
     });

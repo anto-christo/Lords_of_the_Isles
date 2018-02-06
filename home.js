@@ -64,7 +64,7 @@ $(document).ready(function(){
   var sum = m*60+h*3600+n*86400; // in secs
       d = new Date();
     n = d.getUTCDate();
-    n1 = 20;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
+    n1 = 6;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
       adjust = n1*24*(60/dur);
       // x = document.getElementById("demo");
       y = document.getElementById("ticks");
