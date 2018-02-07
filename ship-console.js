@@ -8,14 +8,14 @@ var source = null;
 function rename(){
 
     var name = $('#ship_name').val();
-    console.log("Name:"+name);
+    // console.log("Name:"+name);
 
     $.ajax({
         type: 'POST',
         url: '/rename_ship',
         data: {ship:ship, name:name},
         success: function(data){
-            console.log("Rename successfull");
+            // console.log("Rename successfull");
             parent.window.ship_menu.location.reload();
         }
     });
@@ -37,8 +37,8 @@ function send_ship(){
 
         var res_names = $("input[name='res_input[]']").map(function(){return $(this).attr('id');}).get();
         
-        console.log("res_name "+res_names);
-        console.log("res_qtys "+res_qtys);
+        // console.log("res_name "+res_names);
+        // console.log("res_qtys "+res_qtys);
 
         $.ajax({
             type:'POST',
@@ -63,10 +63,10 @@ $(document).ready(function(){
         url:'/get_ship_info',
         data:{ship:ship},
         success: function(result){
-            console.log("Ship details");
+            // console.log("Ship details");
             console.log(result);
                 var eta = result[0].eta;
-                console.log("eta "+eta);
+                // console.log("eta "+eta);
 
                     $.ajax({
                         type:'POST',
@@ -74,7 +74,7 @@ $(document).ready(function(){
                         data:{user:user},
                         success: function(result){
 
-                            console.log(result);
+                            // console.log(result);
                             
                             for(i=0;i<result[0].owned_islands_name.length;i++){
                                 $('#dest_islands').append('<option>'+result[0].owned_islands_name[i].island_name+'</option>');
@@ -95,10 +95,10 @@ $(document).ready(function(){
                         data:{island:result[0].source},
                         success: function(result){
 
-                            console.log(result);
+                            // console.log(result);
 
                             produced = result[0].res_produced.res_name;
-                            console.log("Produced="+produced);
+                            // console.log("Produced="+produced);
 
                             $('#res_table').empty();
 

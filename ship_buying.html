@@ -14,6 +14,7 @@
     <div>
         Select Model
         <br>
+        <button onclick="buyShip()">click me</button>
     </div>
 
     <script type="text/javascript">
@@ -24,9 +25,12 @@
                 data:{user:localStorage.getItem("user"), island:localStorage.getItem("i_name")},
                 success: function(data){
                   parent.window.ship_menu.location.reload();
+                  // location.href = "ship-console.html";
+                    parent.window.change_iframe_src('ship-console.html');
+
                   alert("Your new ship is anchored at "+localStorage.getItem("i_name"));
                 }
-              });s
+              });
         }
     </script>
 

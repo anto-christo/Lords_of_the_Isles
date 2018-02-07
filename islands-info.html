@@ -101,9 +101,19 @@
                         url: '/assign_island',
                         data: {username:user, island:name, reply:reply, old:old},
                         success: function(data){
-                            console.log("Assign island successfull");
-                            parent.window.island_menu.location.reload();
-                            parent.window.ship_menu.location.reload();
+                            console.log(data);
+                            if (data.message=="success") 
+                            {
+                                parent.window.island_menu.location.reload();
+                                parent.window.ship_menu.location.reload();
+                                parent.window.change_iframe_src('islands-info.html');
+                            }
+                            else
+                            {
+                                parent.window.island_menu.location.reload();
+                                parent.window.ship_menu.location.reload();
+                            }
+                            
                         }
                     });
               }
@@ -125,7 +135,7 @@
                     data:{island:name},
                     success: function(result){
 
-                        console.log("island "+result);
+                        // console.log("island "+result);
 
                         var owner = result[0].owner_name;
 
@@ -136,7 +146,7 @@
                         if(owner=='AI'){
                           $('#owner').text("Owner: Not Owned");
 
-                          console.log(localStorage.getItem("user_click"));
+                          // console.log(localStorage.getItem("user_click"));
                           
                           if(localStorage.getItem("user_click") == 0){
 

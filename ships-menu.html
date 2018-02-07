@@ -19,31 +19,22 @@
 	<script type="text/javascript">
 
     	function pickShip(s_id) {
-			console.log(s_id);
+			// console.log(s_id);
 			
     		if (typeof(Storage) !== "undefined") {
 			    // Store
 			    localStorage.setItem("s_id", s_id);
 			    // Retrieve
-			    console.log("s_id " + localStorage.getItem("s_id"));
+			    // console.log("s_id " + localStorage.getItem("s_id"));
 			}
 
 			parent.window.change_iframe_src('ship-console.html');
 		}
 
 		function buy_ship(){
+			console.log("inside buy_ship");
 			parent.window.change_iframe_src('ship_buying.html');
-
-                  // $.ajax({
-                  //   type: 'POST',
-                  //   url: '/buy_ship',
-                  //   data:{user:localStorage.getItem("user"), island:localStorage.getItem("i_name")},
-                  //   success: function(data){
-                  //     alert("Your new ship is anchored at "+localStorage.getItem("i_name"));
-                  //     parent.window.ship_menu.location.reload();
-                  //   }
-                  // });
-                }
+        }
 		
 		$(document).ready(function(){
 
@@ -54,22 +45,25 @@
 				data:{user:user},
 				success: function(result){
 
-					console.log(result);
+					// console.log(result);
 
 					for(i=0;i<result.length;i++){
 						var func = "pickShip('"+result[i]._id+"')";
-
+			   			if (i==0) 
+			   			{
+			   				localStorage.setItem("s_id", result[i]._id);
+			   			}
 						$('#ship_list').append('<div class="cardc" onclick='+func+'>'+result[i].name+'</div>')
 					}
-					console.log("localStorage user "+ user);
+					// console.log("localStorage user "+ user);
 
 					$.ajax({
 						type:'POST',
 						url:'/get_ship_slots',
 						data:{user1:user},
 						success: function(result){
-							console.log(result);
-							console.log(result[0].empty_ship_slots);
+							// console.log(result);
+							// console.log(result[0].empty_ship_slots);
 							var len = result[0].empty_ship_slots;
 							for(i=0;i<len;i++){
 								var func1 = "buy_ship()";
@@ -89,8 +83,7 @@
 <div class="data" id="nav">
 <a href="#" rel="ships-info.html">
 	<div class="horizontal-scroll-wrapper squares" id="ship_list">
-	<div></div>
-	 
+		<div></div>
 	</div>
 </a>
 

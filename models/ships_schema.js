@@ -18,3 +18,11 @@ var shipSchema = new mongoose.Schema({
 
 var shipSchema = mongoose.model('ships', shipSchema);
 module.exports = shipSchema;
+
+
+// Model Buying_Cost Speed Capacity
+// S       5000        3       800
+// A       3000        2       500
+// B       1500        2       250
+// C       1500        1       500
+// D       800         1       200         

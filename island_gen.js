@@ -23,7 +23,7 @@ var user;
                             data: {username:user, island:resp.name, reply:'true', old:x},
                             success: function(data){
                                 console.log("Assign island successfull");
-                                window.island_menu.location.reload();
+                                // window.island_menu.location.reload(); // not required. gives error when new player joins
                             }
                         });
     
@@ -48,33 +48,50 @@ var user;
                 data: {user:user},
                 dataType : 'json',
                 success: function(resp){
-
-                    console.log(resp[0])
-                    
-                    localStorage.setItem("i_name", resp[0].name);
-                    localStorage.setItem("user_click",0);
-                    parent.window.change_iframe_src('islands-info.html');
+                    if (resp[0]) 
+                    {
+                         console.log(resp[0])
+                        localStorage.setItem("i_name", resp[0].name);
+                        localStorage.setItem("user_click",0);
+                        parent.window.change_iframe_src('islands-info.html');
+                    }
+                    else
+                    {
+                        oldNew();
+                    }
+                   
 
                 }
             
             });
         }
 
+         function oldNew()
+                {
+
+                    var rand = Math.floor(Math.random()*2);
+
+                    console.log("rand="+rand);
+
+                    if(rand==0)
+                        assign_island(1);
+
+                    else{
+                        old_island();
+                    }
+                }
+
 		$("#dice_btn").click(function(){
 
-            var rand = Math.floor(Math.random()*2);
+            oldNew();
 
-            console.log("rand="+rand);
-
-            if(rand==0)
-                assign_island(1);
-
-            else{
-                old_island();
-            }
+          
+            
             
         });
         
+     
+
         function check_player(){
             $.ajax({
                 type: 'POST',

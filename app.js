@@ -162,10 +162,10 @@ var islands;
   var rare = [
     {name:"oil",base_cost:20},  //9
     {name:"uranium",base_cost:20},  //10
-    {name:"diamond",base_cost:25},  //11
-    {name:"emerald",base_cost:25},  //12
-    {name:"coconut",base_cost:30},  //13
-    {name:"salt",base_cost:30} //14
+    {name:"diamond",base_cost:22},  //11
+    {name:"emerald",base_cost:22},  //12
+    {name:"coconut",base_cost:24},  //13
+    {name:"salt",base_cost:24} //14
   ];
   
 app.post('/create_island', function(req, res) {
@@ -336,6 +336,10 @@ app.post('/create_island', function(req, res) {
                   if (this_res>0) 
                   {
                       production_factor = production_factor*(sum/this_res);
+                  }
+                  else
+                  {
+                      production_factor = production_factor*(sum); // so first island's price wont be too low
                   }
               }
               
@@ -598,14 +602,10 @@ function assign_ship(uname, is_name){
 }
 
 app.post('/buy_ship',function(req,res){
-
   var uname = req.body.user;
   var is_name = req.body.island;
-
   assign_ship(uname, is_name);
-
-
-  return res.send("Done");
+  return res.send("send");
 });
 
 
@@ -1128,4 +1128,5 @@ MongoClient.connect(url, function(err, db) {
   });
 
 }
+
 
