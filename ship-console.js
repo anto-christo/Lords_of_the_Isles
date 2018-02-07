@@ -64,7 +64,7 @@ $(document).ready(function(){
         data:{ship:ship},
         success: function(result){
             // console.log("Ship details");
-            console.log(result);
+            // console.log(result);
                 var eta = result[0].eta;
                 // console.log("eta "+eta);
 

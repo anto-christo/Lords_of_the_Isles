@@ -13,6 +13,8 @@ var shipSchema = new mongoose.Schema({
     ],
     value: {type: Number, default: 0},
     class: {type: String, default: "D"},
+    speed: {type: Number, default: 0},
+    capacity: {type: Number, default: 0},
     eta: {type: Number, default: 0}, // expected tick of arrival. (landing tick)
 });
 

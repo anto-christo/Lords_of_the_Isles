@@ -533,7 +533,6 @@ app.post('/assign_island', function(req, res) {
             explored();
             return res.send({"message":"success"});
           }
-  
           else{
             return res.send({"message":"failure"});
           }
@@ -604,8 +603,39 @@ function assign_ship(uname, is_name){
 app.post('/buy_ship',function(req,res){
   var uname = req.body.user;
   var is_name = req.body.island;
-  assign_ship(uname, is_name);
-  return res.send("send");
+  var model = req.body.model;
+  console.log("model "+ model);
+  MongoClient.connect(url, function(err, db) {
+        db.collection("players").find({name:uname}).toArray(function(err,result){
+            
+            var ship_buying_cost;
+
+            if (model=='S') 
+              ship_buying_cost = 5000;
+            else if (model=='A')
+              ship_buying_cost = 3000;
+            else if (model=='B')
+              ship_buying_cost = 1500;
+            else if (model=='C')
+              ship_buying_cost = 1500;
+            else 
+              ship_buying_cost = 800;
+
+            if (result[0].gold >= ship_buying_cost ) 
+            {
+              db.collection("players").update({name:uname},{$inc:{gold:-ship_buying_cost}},function(){
+                db.close();
+                res.send({"message":"success"});
+              });
+              assign_ship(uname, is_name);
+            }
+            else
+            {
+              res.send({"message":"failure"});
+            }
+
+        });
+  });
 });
 
 
@@ -919,7 +949,7 @@ var m,min;
       min = min - (t*dur);
       temp = sum / duration;
       current_tick = parseInt(temp) - adjust ;
-      console.log("timer: "+min + ":" + sec);
+      // console.log("timer: "+min + ":" + sec);
       
       if (s == "02") 
       {
@@ -959,9 +989,9 @@ MongoClient.connect(url, function(err, db) {
       var name = data.name;
 
       db.collection("islands").aggregate([{$match:{owner_name:name}},{$group:{_id:null,total:{$sum:"$value"},total_pop:{$sum:"$current_population"}}}]).toArray(function(err,res){
-      	console.log("name "+name);
-      	console.log("res[0].total "+res[0].total);
-      	console.log("res[0].total_pop "+res[0].total_pop);
+      	// console.log("name "+name);
+      	// console.log("res[0].total "+res[0].total);
+      	// console.log("res[0].total_pop "+res[0].total_pop);
       	var is_wealth_total = res[0].total;
       	var inc_gold = Math.floor(res[0].total_pop/25);
       	db.collection("players").update({name:name},{$set:{island_wealth:is_wealth_total}});

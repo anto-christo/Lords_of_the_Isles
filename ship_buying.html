@@ -5,30 +5,75 @@
         </title>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+          <script type="text/javascript">
+              $(document).ready(function(){
+                  $('[data-toggle="popover"]').popover({
+                      placement : 'bottom',
+                      trigger : 'hover'
+                  });
+              });
+            </script>
     </head>
+    <style type="text/css">
+        .popover-body {
+            font-size: 20px;
+        }
+    </style>
     <body>
         
     </body>
 
     <div>
-        Select Model
+        Select Model<br>
         <br>
-        <button onclick="buyShip()">click me</button>
+
+        <button onclick="buyShip('S')" data-container="body" data-toggle="popover" data-html="true" data-placement="bottom" data-content="The best and the most expensive in the lot 🤑
+        <br><br>
+        Speed: 3<br>
+        Capacity: 800<br><br>
+        Cost: 5000 ">S</button>
+
+        <button onclick="buyShip('A')" data-container="body" data-toggle="popover" data-html="true" data-placement="bottom" data-content="Second only to the model S. Model A ship is a great combination of speed and capacity to match your budget 😎<br><br>
+        Speed:2<br>
+        Capacity:500 <br><br>
+        Cost: 3000">A</button>
+
+        <button onclick="buyShip('B')" data-container="body" data-toggle="popover" data-html="true" data-placement="bottom" data-content="Faster than Model C. The Capacity of the vessel is compromised for its speed 🤔<br><br>
+        Speed:2<br>
+        Capacity:250 <br><br>
+        Cost: 1500">B</button>
+
+        <button onclick="buyShip('C')" data-container="body" data-toggle="popover" data-html="true" data-placement="bottom" data-content="A large ship. Can carry more goods than model D 😮<br><br>
+        Speed:1<br>
+        Capacity:500 <br><br>
+        Cost: 1500">C</button>
+
+        <button onclick="buyShip('D')" data-container="body" data-toggle="popover" data-html="true" data-placement="bottom" data-content="The lowest ranked amongst all. Well something is better than nothing 😉<br><br>
+        Speed:1<br>
+        Capacity:200 <br><br>
+        Cost: 800">D</button>
     </div>
 
     <script type="text/javascript">
-        function buyShip(){
+        function buyShip(model){
+            console.log("model "+model);
             $.ajax({
                 type: 'POST',
                 url: '/buy_ship',
-                data:{user:localStorage.getItem("user"), island:localStorage.getItem("i_name")},
+                data:{user:localStorage.getItem("user"), island:localStorage.getItem("i_name"), model:model},
                 success: function(data){
-                  parent.window.ship_menu.location.reload();
-                  // location.href = "ship-console.html";
+                    parent.window.ship_menu.location.reload();
+                    // location.href = "ship-console.html";
                     parent.window.change_iframe_src('ship-console.html');
-
-                  alert("Your new ship is anchored at "+localStorage.getItem("i_name"));
+                    if (data.message=="success") 
+                    {
+                        alert("Your new ship is anchored at "+localStorage.getItem("i_name"));
+                    }
+                    else
+                    {
+                        alert("Not Enough Gold!!");
+                    }
                 }
               });
         }

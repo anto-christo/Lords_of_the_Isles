@@ -22,7 +22,14 @@ var user;
                             url: '/assign_island',
                             data: {username:user, island:resp.name, reply:'true', old:x},
                             success: function(data){
-                                console.log("Assign island successfull");
+                                if (data.message=="success") 
+                                {
+                                    console.log("Assign island successfull");   
+                                }
+                                else
+                                {
+                                    alert("Not Enough Gold!!");
+                                }
                                 // window.island_menu.location.reload(); // not required. gives error when new player joins
                             }
                         });

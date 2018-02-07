@@ -101,15 +101,20 @@
                         url: '/assign_island',
                         data: {username:user, island:name, reply:reply, old:old},
                         success: function(data){
-                            console.log(data);
+                            // console.log(data);
                             if (data.message=="success") 
                             {
+                              console.log("success");
                                 parent.window.island_menu.location.reload();
                                 parent.window.ship_menu.location.reload();
                                 parent.window.change_iframe_src('islands-info.html');
+                                localStorage.setItem("user_click",1);
+                                
                             }
                             else
                             {
+                              console.log("failed");
+                                localStorage.setItem("user_click",1);
                                 parent.window.island_menu.location.reload();
                                 parent.window.ship_menu.location.reload();
                             }
@@ -135,10 +140,7 @@
                     data:{island:name},
                     success: function(result){
 
-                        // console.log("island "+result);
-
                         var owner = result[0].owner_name;
-
                         a = result[0].current_population;
 
                         $('#pop').text("Population:"+result[0].current_population);
