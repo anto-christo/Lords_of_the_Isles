@@ -373,12 +373,12 @@ app.post('/create_island', function(req, res) {
                         if (k < 9) 
                         {
                           resource_name = common[k].name;
-                          db.collection("islands").update({name:island_name},{$push:{res_present:{name:resource_name,quantity:0}}});
+                          db.collection("islands").update({name:island_name},{$push:{res_present:{name:resource_name,quantity:0,sell:0}}});
                         }
                         else
                         {
                           resource_name = rare[k-9].name;
-                          db.collection("islands").update({name:island_name},{$push:{res_present:{name:resource_name,quantity:0}}});
+                          db.collection("islands").update({name:island_name},{$push:{res_present:{name:resource_name,quantity:0,sell:0}}});
                         }
                       }
 
@@ -901,7 +901,43 @@ app.post('/send_ship',function(req,res){
 });
 
 
+app.post('/set_sell',function(req,res){
 
+  var names = req.body.names;
+  var qtys = req.body.qtys;
+  var island = req.body.island;
+
+  var doc = [];
+
+    for(i=0;i<names.length;i++){
+
+      var num = Number(qtys[i]);
+
+        if(qtys[i]!=0)
+        {
+          var obj = {name: names[i], quantity:num};
+          doc.push(obj);
+        }
+    }
+
+  // console.log(doc);
+
+  MongoClient.connect(url, function(err, db) {
+
+
+    //loading on ship
+    for (item in doc) {
+      var temp_name = doc[item].name;
+      var temp_qty = doc[item].quantity;
+      // console.log("temp_qty "+temp_qty );
+      db.collection('islands').update({$and:[ {name:src},{'res_present.name':temp_name} ]}, {$inc:{'res_present.$.sell':-temp_qty}});
+    }
+
+    return res.send("Done");
+    db.close();
+
+  });
+});
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -19,163 +19,70 @@
 </head>
 <body>
 
+	
+	<script>
+		
+		var name = localStorage.getItem("i_name");
+		
+		$.ajax({
+			type:'POST',
+			url:'/get_island_info',
+			data:{island:name},
+			success: function(result){
+				
+				for(i=0;i<result[0].res_present.length;i++){
+					if(result[0].res_present[i].quantity){
+					$('#goods').append(
+						
+						'<div class="box">'+
+						'<p>'+result[0].res_present[i].name+'</p>'+
+						'<input type="text" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" width="10px">'+
+						'</div>'
+					);
+					}
+					
+				}
+
+				$('#goods').append(	
+					'<div class="box"></div>'+
+					'<div class="box"></div>'+
+					'<div class="box"></div>'+
+					'<div class="box">'+
+					'<button onclick="update_sell()">Update</button>'+
+					'</div>'
+				);
+			}
+		});	
+
+		function update_sell(){
+			var res_qtys = $("input[name='res_input[]']").map(function(){return $(this).val();}).get();
+			var res_names = $("input[name='res_input[]']").map(function(){return $(this).attr('id');}).get();
+			
+				$.ajax({
+					type:'POST',
+					url:'/set_sell',
+					data:{names:res_names, qtys:res_qtys, island:name},
+					success: function(data){
+						alert("Resource available for trade updated !!");
+            	}
+        	});
+		}
+
+		</script>
+
 <div class="data">
-
-	<div class="horizontal-scroll-wrapper squares">
-
-	  	<div class="box"></div>
-	  	<div class="box"></div>
-
-	  	<div class="box">
-	  		<img src="assets/buttons/up.png" style="margin-left: 10px;" width="30px" height="30px">
-			<br>
-			<p class="good-quantity">2000</p>
-	  		<img src="assets/resources/wood.png" width="50px" height="50px">
-	  		<br>
-	  		<img src="assets/buttons/down.png" style="margin-left: 10px;" width="30px" height="30px">
-	  	</div>
-
-	  	<div class="box">
-	  		<img src="assets/buttons/up.png" style="margin-left: 10px;" width="30px" height="30px">
-			<br>
-			<p class="good-quantity">2000</p>
-	  		<img src="assets/resources/stone.png" width="50px" height="50px">
-	  		<br>
-	  		<img src="assets/buttons/down.png" style="margin-left: 10px;" width="30px" height="30px">
-	  	</div>
-
-	  	<div class="box">
-	  		<img src="assets/buttons/up.png" style="margin-left: 10px;" width="30px" height="30px">
-			<br>
-			<p class="good-quantity">2000</p>
-	  		<img src="assets/resources/iron.png" width="50px" height="50px">
-	  		<br>
-	  		<img src="assets/buttons/down.png" style="margin-left: 10px;" width="30px" height="30px">
-	  	</div>
-
-	  	<div class="box">
-	  		<img src="assets/buttons/up.png" style="margin-left: 10px;" width="30px" height="30px">
-			<br>
-			<p class="good-quantity">2000</p>
-	  		<img src="assets/resources/salt.png" width="50px" height="50px">
-	  		<br>
-	  		<img src="assets/buttons/down.png" style="margin-left: 10px;" width="30px" height="30px">
-	  	</div>
-
-	  	<div class="box">
-	  		<img src="assets/buttons/up.png" style="margin-left: 10px;" width="30px" height="30px">
-			<br>
-			<p class="good-quantity">2000</p>
-	  		<img src="assets/resources/leather_jacket.png" width="50px" height="50px">
-	  		<br>
-	  		<img src="assets/buttons/down.png" style="margin-left: 10px;" width="30px" height="30px">
-	  	</div>
-
-	  	<div class="box">
-	  		<img src="assets/buttons/up.png" style="margin-left: 10px;" width="30px" height="30px">
-			<br>
-			<p class="good-quantity">2000</p>
-	  		<img src="assets/resources/meat.png" width="50px" height="50px">
-	  		<br>
-	  		<img src="assets/buttons/down.png" style="margin-left: 10px;" width="30px" height="30px">
-	  	</div>
-
-	  	<div class="box">
-	  		<img src="assets/buttons/up.png" style="margin-left: 10px;" width="30px" height="30px">
-			<br>
-			<p class="good-quantity">2000</p>
-	  		<img src="assets/resources/bread.png" width="50px" height="50px">
-	  		<br>
-	  		<img src="assets/buttons/down.png" style="margin-left: 10px;" width="30px" height="30px">
-	  	</div>
-
-
-	  	<div class="box">
-	  		<img src="assets/buttons/up.png" style="margin-left: 10px;" width="30px" height="30px">
-			<br>
-			<p class="good-quantity">2000</p>
-	  		<img src="assets/resources/cheese.png" width="50px" height="50px">
-	  		<br>
-	  		<img src="assets/buttons/down.png" style="margin-left: 10px;" width="30px" height="30px">
-	  	</div>
-
-
-	  	<div class="box">
-	  		<img src="assets/buttons/up.png" style="margin-left: 10px;" width="30px" height="30px">
-			<br>
-			<p class="good-quantity">2000</p>
-	  		<img src="assets/resources/apple.png" width="50px" height="50px">
-	  		<br>
-	  		<img src="assets/buttons/down.png" style="margin-left: 10px;" width="30px" height="30px">
-	  	</div>
-
-	  	<div class="box">
-	  		<img src="assets/buttons/up.png" style="margin-left: 10px;" width="30px" height="30px">
-			<br>
-			<p class="good-quantity">2000</p>
-	  		<img src="assets/resources/hops.png" width="50px" height="50px">
-	  		<br>
-	  		<img src="assets/buttons/down.png" style="margin-left: 10px;" width="30px" height="30px">
-	  	</div>
-
-	  	<div class="box">
-	  		<img src="assets/buttons/up.png" style="margin-left: 10px;" width="30px" height="30px">
-			<br>
-			<p class="good-quantity">2000</p>
-	  		<img src="assets/resources/pots.png" width="50px" height="50px">
-	  		<br>
-	  		<img src="assets/buttons/down.png" style="margin-left: 10px;" width="30px" height="30px">
-	  	</div>
-
-	  	<div class="box">
-	  		<img src="assets/buttons/up.png" style="margin-left: 10px;" width="30px" height="30px">
-			<br>
-			<p class="good-quantity">2000</p>
-	  		<img src="assets/resources/ale.png" width="50px" height="50px">
-	  		<br>
-	  		<img src="assets/buttons/down.png" style="margin-left: 10px;" width="30px" height="30px">
-	  	</div>
-
-	  	<div class="box">
-	  		<img src="assets/buttons/up.png" style="margin-left: 10px;" width="30px" height="30px">
-			<br>
-			<p class="good-quantity">2000</p>
-	  		<img src="assets/resources/wheat.png" width="50px" height="50px">
-	  		<br>
-	  		<img src="assets/buttons/down.png" style="margin-left: 10px;" width="30px" height="30px">
-	  	</div>
-
-	  	<div class="box">
-	  		<img src="assets/buttons/up.png" style="margin-left: 10px;" width="30px" height="30px">
-			<br>
-			<p class="good-quantity">2000</p>
-	  		<img src="assets/resources/sword.png" width="50px" height="50px">
-	  		<br>
-	  		<img src="assets/buttons/down.png" style="margin-left: 10px;" width="30px" height="30px">
-	  	</div>
-
-	  	<div class="box">
-	  		<img src="assets/buttons/up.png" style="margin-left: 10px;" width="30px" height="30px">
-			<br>
-			<p class="good-quantity">2000</p>
-	  		<img src="assets/resources/armor.png" width="50px" height="50px">
-	  		<br>
-	  		<img src="assets/buttons/down.png" style="margin-left: 10px;" width="30px" height="30px">
-	  	</div>
-
-
-	  	<div class="box"></div>
-	  	<div class="box"></div>
-	  	<div class="box"></div>
-
+	<div class="horizontal-scroll-wrapper squares" id="goods">
+		<div class="box"></div>
+		<div class="box"></div>
+		<div class="box"></div>
+		
 	</div>
-	</div>
-
 </div>
 
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
 </body>
 </html>
