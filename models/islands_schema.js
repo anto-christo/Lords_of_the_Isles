@@ -14,6 +14,7 @@ var islandSchema = new mongoose.Schema({
     	{ 
     		name: { type: String, default: null },  
     		//quantity: { type: Number, default: 0 },
+    		//sell: { type: Number, default: 0 },
     		// value: { type: Number, default: 0 }
     	},
     ],
