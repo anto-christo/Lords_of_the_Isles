@@ -2,7 +2,8 @@ var user = localStorage.getItem("user");
 var ship = localStorage.getItem("s_id");
 var produced = null;
 var source = null;
-
+var limit = [];
+var ship_cap;
 // console.log("Ship="+ship);
 
 function rename(){
@@ -36,22 +37,41 @@ function send_ship(){
         var res_qtys = $("input[name='res_input[]']").map(function(){return $(this).val();}).get();
 
         var res_names = $("input[name='res_input[]']").map(function(){return $(this).attr('id');}).get();
+        var valid = 1;
+        var add = 0;
+         for (var i = 0; i < res_names.length; i++) 
+         {
+                if (Number(res_qtys[i])>limit[i]) 
+                {
+                    valid = 0;
+                }
+                add = add + Number(res_qtys[i]);
+         }
         
-        // console.log("res_name "+res_names);
-        // console.log("res_qtys "+res_qtys);
-
-        $.ajax({
-            type:'POST',
-            url:'/send_ship',
-            data:{ship:ship, names:res_names, qtys:res_qtys, src:source,dest:dest},
-            success: function(data){
-                alert("Ship has set sail successfully !!");
-                
+        if (valid==1) 
+        {
+            if (add<=ship_cap) 
+            {
+                $.ajax({
+                    type:'POST',
+                    url:'/send_ship',
+                    data:{ship:ship, names:res_names, qtys:res_qtys, src:source,dest:dest},
+                    success: function(data){
+                        alert("Ship has set sail successfully !!");
+                        
+                    }
+                });
             }
-        });
-        // $("#anchored").children().hide(); 
-        // $("#sailing").children().show(); 
-
+            else
+            {
+                alert("Cannot load more than ship's capacity!!");
+            }
+           
+        }
+        else
+        {
+            alert("Enter valid no. of goods to export!!");
+        }
         location.reload();
     }
 }
@@ -63,19 +83,14 @@ $(document).ready(function(){
         url:'/get_ship_info',
         data:{ship:ship},
         success: function(result){
-            // console.log("Ship details");
-            // console.log(result);
                 var eta = result[0].eta;
-                // console.log("eta "+eta);
-
+                ship_cap = result[0].capacity;
                     $.ajax({
                         type:'POST',
                         url:'/get_island',
                         data:{user:user},
                         success: function(result){
 
-                            // console.log(result);
-                            
                             for(i=0;i<result[0].owned_islands_name.length;i++){
                                 $('#dest_islands').append('<option>'+result[0].owned_islands_name[i].island_name+'</option>');
                             }
@@ -109,10 +124,12 @@ $(document).ready(function(){
                                     '<th>Export Quantity</th>'+
                                 '</tr>'
                             );
-
+                            j = 0;
                             for(i=0;i<result[0].res_present.length;i++){
                                 
                                 if(result[0].res_present[i].quantity>0){
+                                    limit[j++] = result[0].res_present[i].quantity;
+                                    // console.log(limit);
                                     $('#res_table').append(
                                         '<tr>'+
                                             '<td>'+result[0].res_present[i].name+'</td>'+
