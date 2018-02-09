@@ -23,6 +23,8 @@
 	<script>
 		
 		var name = localStorage.getItem("i_name");
+
+		console.log("i_name="+name);
 		
 		$.ajax({
 			type:'POST',
@@ -55,6 +57,7 @@
 		});	
 
 		function update_sell(){
+			console.log("inside update sell");
 			var res_qtys = $("input[name='res_input[]']").map(function(){return $(this).val();}).get();
 			var res_names = $("input[name='res_input[]']").map(function(){return $(this).attr('id');}).get();
 			

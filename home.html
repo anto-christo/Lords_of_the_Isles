@@ -25,6 +25,10 @@
          var change_iframe_src = function(new_src) {
              $("#info-screen").attr('src', new_src);
          }
+
+         var change_goods = function(new_src) {
+             $("#goods_menu").attr('src', new_src);
+         }
     </script>
   <script src = "/socket.io/socket.io.js"></script>
 
@@ -156,7 +160,7 @@
     
     		<div class="col-md-6" style="border: 1px solid grey">
     			<center>
-					<iframe height="118" width="100%" src="goods-menu.html" frameborder="0" allowfullscreen></iframe>
+					<iframe height="118" id="goods_menu" width="100%" src="goods-menu.html" frameborder="0" allowfullscreen></iframe>
       			</center>   
       		</div>    	
       	</div>

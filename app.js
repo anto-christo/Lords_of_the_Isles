@@ -944,6 +944,9 @@ app.post('/set_sell',function(req,res){
   var qtys = req.body.qtys;
   var island = req.body.island;
 
+  console.log(names);
+  console.log(qtys);
+
   var doc = [];
 
     for(i=0;i<names.length;i++){
@@ -957,7 +960,7 @@ app.post('/set_sell',function(req,res){
         }
     }
 
-  // console.log(doc);
+   console.log(doc);
 
   MongoClient.connect(url, function(err, db) {
 
@@ -966,8 +969,8 @@ app.post('/set_sell',function(req,res){
     for (item in doc) {
       var temp_name = doc[item].name;
       var temp_qty = doc[item].quantity;
-      // console.log("temp_qty "+temp_qty );
-      db.collection('islands').update({$and:[ {name:src},{'res_present.name':temp_name} ]}, {$inc:{'res_present.$.sell':-temp_qty}});
+      console.log("temp_qty "+temp_qty );
+      db.collection('islands').update({$and:[ {name:island},{'res_present.name':temp_name} ]}, {$inc:{'res_present.$.sell':temp_qty}});
     }
 
     return res.send("Done");
