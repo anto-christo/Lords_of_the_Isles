@@ -347,7 +347,7 @@ app.post('/create_island', function(req, res) {
 
               // console.log("production_factor :"+production_factor); // if commented, island value becomes NAN ???
           
-                var population_factor  = current_pop*5;
+                var population_factor  = current_pop*5; // should we change to 3 ??
                 island_value = production_factor + population_factor;
                 if (big<1) 
                 {
