@@ -568,12 +568,43 @@ app.post('/assign_island', function(req, res) {
 
 
 
-function assign_ship(uname, is_name){
+function assign_ship(uname, is_name, model){
 
   var s = new ship();
   s.owner_name = uname;
   s.source = is_name;
   s.eta = 0;
+
+  if (model=='S')
+  {
+    s.capacity = 800;
+    s.speed = 3;
+    s.class = 'S';
+  }
+  else if (model=='A')
+  {
+    s.capacity = 500;
+    s.speed = 2;
+    s.class = 'A';
+  }
+  else if (model=='B')
+  {
+    s.capacity = 250;
+    s.speed = 2;
+    s.class = 'B';
+  }
+  else if (model=='C')
+  {
+    s.capacity = 500;
+    s.speed = 1;
+    s.class = 'C';
+  }
+  else 
+  {
+    s.capacity = 200;
+    s.speed = 1;
+    s.class = 'D';
+  }
 
   MongoClient.connect(url, function(err, db) {
 
@@ -604,7 +635,7 @@ app.post('/buy_ship',function(req,res){
   var uname = req.body.user;
   var is_name = req.body.island;
   var model = req.body.model;
-  console.log("model "+ model);
+  // console.log("model "+ model);
   MongoClient.connect(url, function(err, db) {
         db.collection("players").find({name:uname}).toArray(function(err,result){
             
@@ -627,7 +658,7 @@ app.post('/buy_ship',function(req,res){
                 db.close();
                 res.send({"message":"success"});
               });
-              assign_ship(uname, is_name);
+              assign_ship(uname, is_name, model);
             }
             else
             {
@@ -867,7 +898,6 @@ app.post('/send_ship',function(req,res){
 
   MongoClient.connect(url, function(err, db) {
 
-
     //calculate eta
     db.collection('islands').find({name:src}).toArray(function(err,result){
         var x1 = result[0].x_cord;
@@ -880,7 +910,14 @@ app.post('/send_ship',function(req,res){
             eta = Math.sqrt(xt*xt+yt*yt);
             eta = Math.ceil(eta/200);
             // console.log("eta "+eta);
-            db.collection('ships').update({_id:ObjectId},{$set:{eta:eta,destination:dest}});
+            db.collection('ships').find({_id:ObjectId}).toArray(function(err,result){
+                eta = Math.floor(eta/result[0].speed)+1;
+                if (eta>9) 
+                {
+                  eta = 9;
+                }
+                db.collection('ships').update({_id:ObjectId},{$set:{eta:eta,destination:dest}});
+            });
         });
     });
 
@@ -1056,10 +1093,14 @@ MongoClient.connect(url, function(err, db) {
         
         for (k in data.res_present) {
           if (data.res_present[k].quantity>0) {
-            db.collection('islands').update({
-              $and:[ {name:data.destination},{'res_present.name':data.res_present[k].name} ]},
-              {$inc:{'res_present.$.quantity':data.res_present[k].quantity}
-            });
+            db.collection('islands').find({name:data.destination}).toArray(function(res,result){
+                // result[0].accepting[k].quantity
+                db.collection('islands').update({
+                  $and:[ {name:data.destination},{'res_present.name':data.res_present[k].name} ]},
+                  {$inc:{'res_present.$.quantity':data.res_present[k].quantity}
+                });
+            })
+            
             db.collection('ships').update({
               _id:data._id,"res_present.name":data.res_present[k].name},
               {$inc:{'res_present.$.quantity':-data.res_present[k].quantity}
@@ -1175,13 +1216,20 @@ MongoClient.connect(url, function(err, db) {
         for (var i3 = 0; i3 < 15; i3++) {
             if (sum>0) 
             {
-              if (ct_arr[i3]>0) 
+              if (ct_arr[i3]>=0) 
               {
               	if (data.res_present[i3].quantity>0) 
               	{
               		multiply++;
               	}
-                res_pres_factor =  res_pres_factor + Math.floor((data.res_present[i3].quantity/10)*(sum/ct_arr[i3]));
+                if (ct_arr[i3]!=0) 
+                {
+                  res_pres_factor =  res_pres_factor + Math.floor((data.res_present[i3].quantity/10)*(sum/ct_arr[i3]));
+                }
+                else
+                {
+                  res_pres_factor =  res_pres_factor + Math.floor((data.res_present[i3].quantity/10)*(sum));
+                }
               }
             }
         }
