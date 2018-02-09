@@ -1093,13 +1093,13 @@ MongoClient.connect(url, function(err, db) {
         
         for (k in data.res_present) {
           if (data.res_present[k].quantity>0) {
-            db.collection('islands').find({name:data.destination}).toArray(function(res,result){
+            // db.collection('islands').find({name:data.destination}).toArray(function(res,result){
                 // result[0].accepting[k].quantity
                 db.collection('islands').update({
                   $and:[ {name:data.destination},{'res_present.name':data.res_present[k].name} ]},
                   {$inc:{'res_present.$.quantity':data.res_present[k].quantity}
                 });
-            })
+            // })
             
             db.collection('ships').update({
               _id:data._id,"res_present.name":data.res_present[k].name},
