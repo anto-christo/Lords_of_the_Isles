@@ -53,7 +53,7 @@ io.on('connection', function(socket) {
     setInterval(function(){ 
       updateLeaderboard();
       socket.emit('getLeaderboard', rankings);
-    }, 2000);
+    }, 5000);
 
 	socket.on('add-user', function(data){
 	    clients[data.username] = {
@@ -63,7 +63,9 @@ io.on('connection', function(socket) {
       MongoClient.connect(url, function(err, db) {
        assert.equal(null, err);
           db.collection('players').find({name:data.username}).toArray(function(err, results){
+            setTimeout(function(){
               io.sockets.connected[clients[data.username].socket].emit("setLocalStorage", results[0].owned_islands_name[0].island_name);
+            },500)
           });
           db.close(); 
       });
@@ -112,8 +114,8 @@ function updateLeaderboard(){
                         // console.log("obj" + obj);
                         j++;
                       }
+                    db.close(); 
                 });
-                db.close(); 
       });
 }
 
@@ -148,24 +150,24 @@ var islands;
 //   ];
 
   var common = [
-    {name:"copper",base_cost:5}, //0
-    {name:"iron",base_cost:5},  //1
-    {name:"bronze",base_cost:5},  //2
+    {name:"bread",base_cost:5}, //0
+    {name:"fruits",base_cost:5},  //1
+    {name:"cheese",base_cost:5},  //2
     {name:"wood",base_cost:6},  //3
-    {name:"coal",base_cost:6}, //4
-    {name:"lead",base_cost:8},  //5
-    {name:"rice",base_cost:8},  //6
-    {name:"wheat",base_cost:10},  //7
-    {name:"aluminium",base_cost:10}  //8
+    {name:"stone",base_cost:6}, //4
+    {name:"wheat",base_cost:8},  //5
+    {name:"bamboo",base_cost:8},  //6
+    {name:"ale",base_cost:10},  //7
+    {name:"cotton",base_cost:10}  //8
   ];
 
   var rare = [
-    {name:"oil",base_cost:20},  //9
-    {name:"uranium",base_cost:20},  //10
-    {name:"diamond",base_cost:22},  //11
-    {name:"emerald",base_cost:22},  //12
-    {name:"coconut",base_cost:24},  //13
-    {name:"salt",base_cost:24} //14
+    {name:"silk",base_cost:20},  //9
+    {name:"honey",base_cost:20},  //10
+    {name:"fur",base_cost:22},  //11
+    {name:"gems",base_cost:22},  //12
+    {name:"chocolate",base_cost:24},  //13
+    {name:"spices",base_cost:24} //14
   ];
   
 app.post('/create_island', function(req, res) {
@@ -432,6 +434,7 @@ app.post('/assign_island', function(req, res) {
           if(result>0){
             exists = 1;
           } 
+          db.close();
         }); 
       });
 
@@ -489,7 +492,6 @@ app.post('/assign_island', function(req, res) {
                       
                             if(old==0)
                               assign_ship(uname,is_name);
-
                           });
                         });
                         // console.log("INSIDE BUYED");
@@ -506,11 +508,13 @@ app.post('/assign_island', function(req, res) {
                   
                             if(result==0){
                               explored();
-                              return res.send({"message":"success"});
+                              return res.send({"message":"poor"});
+                              db.close();
                             }
                     
                             else{
                               return res.send({"message":"failure"});
+                              db.close();
                             }
                   
                           });
@@ -532,9 +536,11 @@ app.post('/assign_island', function(req, res) {
           if(result==0){
             explored();
             return res.send({"message":"success"});
+            db.close();
           }
           else{
             return res.send({"message":"failure"});
+            db.close();
           }
 
         });
@@ -919,20 +925,23 @@ app.post('/send_ship',function(req,res){
                 db.collection('ships').update({_id:ObjectId},{$set:{eta:eta,destination:dest}});
             });
         });
+
+        //loading on ship
+        for (item in doc) {
+          var temp_name = doc[item].name;
+          var temp_qty = doc[item].quantity;
+          // console.log("temp_qty "+temp_qty );
+          db.collection('ships').update({_id:ObjectId,"res_present.name":temp_name},{$inc:{'res_present.$.quantity':temp_qty}})
+          db.collection('islands').update({$and:[ {name:src},{'res_present.name':temp_name} ]}, {$inc:{'res_present.$.quantity':-temp_qty}},function(){
+              
+          });
+        }
+
+
     });
 
 
-    //loading on ship
-    for (item in doc) {
-      var temp_name = doc[item].name;
-      var temp_qty = doc[item].quantity;
-      // console.log("temp_qty "+temp_qty );
-      db.collection('ships').update({_id:ObjectId,"res_present.name":temp_name},{$inc:{'res_present.$.quantity':temp_qty}})
-      db.collection('islands').update({$and:[ {name:src},{'res_present.name':temp_name} ]}, {$inc:{'res_present.$.quantity':-temp_qty}});
-    }
-
     return res.send("Done");
-    db.close();
 
   });
 });
@@ -970,11 +979,12 @@ app.post('/set_sell',function(req,res){
       var temp_name = doc[item].name;
       var temp_qty = doc[item].quantity;
       console.log("temp_qty "+temp_qty );
-      db.collection('islands').update({$and:[ {name:island},{'res_present.name':temp_name} ]}, {$inc:{'res_present.$.sell':temp_qty}});
+      db.collection('islands').update({$and:[ {name:island},{'res_present.name':temp_name} ]}, {$inc:{'res_present.$.sell':temp_qty}},function(){
+        db.close();
+      });
     }
 
     return res.send("Done");
-    db.close();
 
   });
 });
@@ -1237,7 +1247,9 @@ MongoClient.connect(url, function(err, db) {
         // console.log("res_pres_factor "+res_pres_factor);
         value = Math.floor(value + res_pres_factor);
         // console.log("value "+value);
-        db.collection("islands").update({name:data.name},{$set:{value:value}})
+        db.collection("islands").update({name:data.name},{$set:{value:value}},function(){
+          db.close();
+        })
 
 
     });

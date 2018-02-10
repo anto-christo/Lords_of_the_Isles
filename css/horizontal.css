@@ -38,7 +38,59 @@ div{
 
 }
 
+@keyframes responsive_s_menu {
+  0% {
+    width: 80px;
+    height: 80px;
+    font-size: 20px;
+    margin: 20px;
+    padding: 5px;
+  }
+  50% {
+    width: 85px;
+    height: 85px;
+    font-size: 20.5px;
+    margin: 15px;
+    padding: 5px;
+  }
+  100%{
+    width: 90px;
+    height: 90px;
+    font-size: 21px;
+    margin: 10px;
+    padding: 5px;
+  }
+}
+
+@keyframes ease-in-out {
+  0% {
+    width: 90px;
+    height: 90px;
+    font-size: 21px;
+    margin: 10px;
+  }
+  50% {
+    width: 85px;
+    height: 85px;
+    font-size: 20.5px;
+    margin: 15px;
+  }
+  100%{
+    width: 80px;
+    height: 80px;
+    font-size: 20px;
+    margin: 20px;
+  }
+}
+
 .cardc {
+  -webkit-animation-fill-mode:forwards; 
+   -moz-animation-fill-mode:forwards; 
+   -o-animation-fill-mode:forwards;
+   -ms-animation-fill-mode:forwards; 
+   animation-fill-mode:forwards;
+   animation-name: ease-in-out;
+  animation-duration: 0.14s;
   background-image: url("../assets/bg/s5.jpg");
   width: 100px;
   height: 100px;
@@ -47,6 +99,26 @@ div{
     -o-background-size: cover;
     background-size: cover;
     margin: 15px;
+    font-size: 20px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 10px;
+}
+
+.cardc:hover {
+   -webkit-animation-fill-mode:forwards; /*Chrome 16+, Safari 4+*/
+   -moz-animation-fill-mode:forwards; /*FF 5+*/
+   -o-animation-fill-mode:forwards; /*Not implemented yet*/
+   -ms-animation-fill-mode:forwards; /*IE 10+*/
+   animation-fill-mode:forwards;
+   animation-name: responsive_s_menu;
+  animation-duration: 0.1s;
+  background-image: url("../assets/bg/s5.jpg");
+  -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    /*margin: 15px;*/
     font-size: 20px;
   border-style: solid;
   border-width: 1px;

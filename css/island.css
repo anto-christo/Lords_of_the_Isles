@@ -4,23 +4,61 @@
 	position: fixed;
 	bottom: 0;
 	z-index: 1;
-	height: 154px;
-	width: 158px;
+	height: 225px;
+	width: 225px;
 	margin-top: 37.5%;
-
+	margin-left: 25px;
 }
 
 .help {
 	z-index: 2;
 	position: absolute;
-	margin-left: 93%;
-	margin-top: 47%;
+	margin-left: 1%;
+	margin-top: 1%;
 }
 
-.name{
+.name1{
 	z-index: 1;
 	position: absolute;
 	font-family: Algerian;
 	font-weight: bold;
 	font-size: 30px;	
+}
+
+.name{
+	z-index: 2;
+	position: absolute;
+	/*font-family: Algerian;*/
+	font-weight: bold;
+	font-size: 22px;
+	margin-left: 40px;
+	margin-top: 37%;
+	transform: rotate(-8deg);
+	word-wrap: break-word;
+	font-family: ZillaSlab-SemiBold;
+    src: url("assets/fonts/ZillaSlab-SemiBold.otf") format("opentype");
+}
+
+.resources{
+	right: 1.5%;
+	z-index: 3;
+	font-size: 17px;
+	font-weight: bold;
+	position: absolute;
+	/*border-style: solid;*/
+  	/*border-width: 1px;*/
+}
+
+.buying{
+	z-index: 4;
+	position: absolute;
+	margin-left: 40%;
+	margin-top: 40%;
+}
+
+.btn{
+	border-style: solid;
+    border-width: 3px;
+    border-color: grey;
+    border-radius: 10px;
 }

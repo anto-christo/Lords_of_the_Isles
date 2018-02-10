@@ -14,8 +14,60 @@ body {
 	height: 60px;
 
 }
+@keyframes responsive_i_menu {
+  0% {
+    width: 150px;
+	height: 125px;
+    font-size: 20px;
+  }
+  25% {
+    width: 158.33px;
+	height: 132px;
+    font-size: 20.5px;
+  }
+  75% {
+    width: 166.66px;
+	height: 139px;
+    font-size: 21px;
+  }
+  100%{
+  	width: 175px;
+	height: 146px;
+    font-size: 22px;
+
+  }
+}
+@keyframes ease-in-out {
+  0% {
+	width: 175px;
+	height: 146px;
+    font-size: 22px;
+  }
+  25% {
+    width: 166.66px;
+	height: 139px;
+    font-size: 21px;
+  }
+  75% {
+
+    idth: 158.33px;
+	height: 132px;
+    font-size: 20.5px;
+  }
+  100%{
+    width: 150px;
+	height: 125px;
+    font-size: 20px;
+
+  }
+}
 
 .cardc {
+	-webkit-animation-fill-mode:forwards; /*Chrome 16+, Safari 4+*/
+   -moz-animation-fill-mode:forwards; /*FF 5+*/
+   -o-animation-fill-mode:forwards; /*Not implemented yet*/
+   -ms-animation-fill-mode:forwards; /*IE 10+*/
+   animation-fill-mode:forwards;
 	background-image: url("../assets/bg/c3.jpg");
 	width: 150px;
 	height: 125px;
@@ -25,7 +77,27 @@ body {
     background-size: cover;
     margin: 15px;
     font-size: 20px;
+    animation-name: ease-in-out;
+    animation-duration: 0.18s;
 
+}
+.cardc:hover {
+	 -webkit-animation-fill-mode:forwards; /*Chrome 16+, Safari 4+*/
+   -moz-animation-fill-mode:forwards; /*FF 5+*/
+   -o-animation-fill-mode:forwards; /*Not implemented yet*/
+   -ms-animation-fill-mode:forwards; /*IE 10+*/
+   animation-fill-mode:forwards;
+	background-image: url("../assets/bg/c3.jpg");
+	/*width: 150px;*/
+	/*height: 125px;*/
+	animation-name: responsive_i_menu;
+    animation-duration: 0.12s;
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin: 15px;
+    font-size: 20px;
 }
 
 .carde {
