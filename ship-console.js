@@ -37,6 +37,7 @@ function send_ship(){
         var res_qtys = $("input[name='res_input[]']").map(function(){return $(this).val();}).get();
 
         var res_names = $("input[name='res_input[]']").map(function(){return $(this).attr('id');}).get();
+        console.log(res_names);
         var valid = 1;
         var add = 0;
          for (var i = 0; i < res_names.length; i++) 
@@ -117,26 +118,59 @@ $(document).ready(function(){
 
                             $('#res_table').empty();
 
-                            $('#res_table').append(
-                                '<tr>'+
-                                    '<th>Resource</th>'+
-                                    '<th>Quantity</th>'+
-                                    '<th>Export Quantity</th>'+
-                                '</tr>'
-                            );
+                            if(result[0].owner_name != user){
+                                $('#res_table').append(
+                                    '<tr>'+
+                                        '<th>Resource</th>'+
+                                        '<th>For purchase</th>'+
+                                        '<th>Buy</th>'+
+                                    '</tr>'
+                                );
+                            }
+
+                            else{
+                                $('#res_table').append(
+                                    '<tr>'+
+                                        '<th>Resource</th>'+
+                                        '<th>Quantity</th>'+
+                                        '<th>Export Quantity</th>'+
+                                    '</tr>'
+                                );
+                            }
+
                             j = 0;
-                            for(i=0;i<result[0].res_present.length;i++){
+                            
+                            if(result[0].owner_name != user){
+                                for(i=0;i<result[0].res_present.length;i++){
                                 
-                                if(result[0].res_present[i].quantity>0){
-                                    limit[j++] = result[0].res_present[i].quantity;
-                                    // console.log(limit);
-                                    $('#res_table').append(
-                                        '<tr>'+
-                                            '<td>'+result[0].res_present[i].name+'</td>'+
-                                            '<td>'+result[0].res_present[i].quantity+'</td>'+
-                                            '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+result[0].res_present[i].quantity+'"></td>'+
-                                        '</tr>'
-                                    );
+                                    if(result[0].res_present[i].sell>0){
+                                        limit[j++] = result[0].res_present[i].sell;
+                                        // console.log(limit);
+                                        $('#res_table').append(
+                                            '<tr>'+
+                                                '<td>'+result[0].res_present[i].name+'</td>'+
+                                                '<td>'+result[0].res_present[i].sell+'</td>'+
+                                                '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+result[0].res_present[i].sell+'"></td>'+
+                                            '</tr>'
+                                        );
+                                    }
+                                }
+                            }
+
+                            else{
+                                for(i=0;i<result[0].res_present.length;i++){
+                                
+                                    if(result[0].res_present[i].quantity>0){
+                                        limit[j++] = result[0].res_present[i].quantity;
+                                        // console.log(limit);
+                                        $('#res_table').append(
+                                            '<tr>'+
+                                                '<td>'+result[0].res_present[i].name+'</td>'+
+                                                '<td>'+result[0].res_present[i].quantity+'</td>'+
+                                                '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+result[0].res_present[i].quantity+'"></td>'+
+                                            '</tr>'
+                                        );
+                                    }
                                 }
                             }
 

@@ -54,6 +54,119 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="avail" tabindex="-1" role="dialog" aria-labelledby="avail" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="avail">Available</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="mod"> 
+
+        <center>
+
+          <table border="1px" id="res">
+              <tr>
+                  <th>Resource</th>
+                  <th>Quantity</th>
+                  <th>Export Quantity</th>
+              </tr>
+          </table><br><br>
+
+          <button class="btn btn-success" onclick="update_sell()">Update</button>
+
+        </center>
+        
+        <script>
+
+        function update_sell(){
+              console.log("inside update sell");
+              var res_qtys = $("input[name='res_input[]']").map(function(){return $(this).val();}).get();
+              var res_names = $("input[name='res_input[]']").map(function(){return $(this).attr('id');}).get();
+              
+                $.ajax({
+                  type:'POST',
+                  url:'/set_sell',
+                  data:{names:res_names, qtys:res_qtys, island:name},
+                  success: function(data){
+                    alert("Resource available for trade updated !!");
+                      }
+                  });
+            }
+
+           $.ajax({
+              type:'POST',
+              url:'/get_island_info',
+              data:{island:localStorage.getItem("i_name")},
+              success: function(result){
+
+                  // console.log(result);
+
+                  produced = result[0].res_produced.res_name;
+                  // console.log("Produced="+produced);
+
+                  $('#res').empty();
+
+                  $('#res').append(
+                      '<tr>'+
+                          '<th>Resource</th>'+
+                          '<th>Quantity</th>'+
+                          '<th>For Sale</th>'+
+                      '</tr>'
+                  );
+                  for(i=0;i<result[0].res_present.length;i++){
+                      
+                      if(result[0].res_present[i].quantity>0){
+                          $('#res').append(
+                              '<tr>'+
+                                  '<td>'+result[0].res_present[i].name+'</td>'+
+                                  '<td>'+result[0].res_present[i].quantity+'</td>'+
+                                  '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+result[0].res_present[i].quantity+'"></td>'+
+                              '</tr>'
+                          );
+                      }
+                  }
+
+
+              }
+
+          });  
+
+
+                    
+        </script>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="request" tabindex="-1" role="dialog" aria-labelledby="request" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="request">Request</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="mod"> 
+        
+          <br><br><button class="btn btn-primary" onclick="rename()">Rename</button>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- 
 <div class="row" >
 		<div class="col-md-5">
@@ -217,6 +330,10 @@
 <div class="resources" align="right" style="height: 70%; width: 15%">
   <table border="0" id="res_table">
   </table><br><br>
+
+  <button class="btn btn-primary" data-toggle="modal" data-target="#avail" style="float:right">Available</button>
+  <button class="btn btn-primary" data-toggle="modal" data-target="#request" style="float:right">Request</button>
+
 </div>
 
   <div id="info_div" class="buying">
