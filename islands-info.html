@@ -55,78 +55,75 @@
   </div>
 </div>
 
-<div class="modal fade" id="avail" tabindex="-1" role="dialog" aria-labelledby="avail" aria-hidden="true">
+<div class="modal fade " id="avail" tabindex="-1" role="dialog" aria-labelledby="avail" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="avail">Available</h5>
+        <h5 class="modal-title" id="avail">Trading</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" id="mod"> 
+      <div class="modal-body trading_modal" id="mod"> 
 
         <center>
-
-          <table border="1px" id="res">
-              <tr>
-                  <th>Resource</th>
-                  <th>Quantity</th>
-                  <th>Export Quantity</th>
-              </tr>
-          </table><br><br>
-
-          <button class="btn btn-success" onclick="update_sell()">Update</button>
-
+          <div id="res"></div><br><br>
         </center>
         
         <script>
 
-        function update_sell(){
-              console.log("inside update sell");
-              var res_qtys = $("input[name='res_input[]']").map(function(){return $(this).val();}).get();
-              var res_names = $("input[name='res_input[]']").map(function(){return $(this).attr('id');}).get();
-              
+        function update_sell(id,qty,choice){
                 $.ajax({
                   type:'POST',
                   url:'/set_sell',
-                  data:{names:res_names, qtys:res_qtys, island:name},
+                  data:{id:id, qty:qty, island:name,choice:choice},
                   success: function(data){
-                    alert("Resource available for trade updated !!");
-                      }
+                      alert("Resource available for trade updated !!");
+                      window.location.reload();
+                    }
                   });
             }
 
+            function func(id){
+              var slider = document.getElementById("s"+id);
+              var output = document.getElementById("d"+id);
+              output.innerHTML = slider.value;
+              slider.oninput = function() {
+                  output.innerHTML = this.value;
+              }
+            }
+            function updating(id,choice){
+              var output = document.getElementById("d"+id);
+              update_sell(id,output.innerHTML,choice);
+            }
            $.ajax({
               type:'POST',
               url:'/get_island_info',
               data:{island:localStorage.getItem("i_name")},
               success: function(result){
 
-                  // console.log(result);
-
                   produced = result[0].res_produced.res_name;
-                  // console.log("Produced="+produced);
-
                   $('#res').empty();
-
-                  $('#res').append(
-                      '<tr>'+
-                          '<th>Resource</th>'+
-                          '<th>Quantity</th>'+
-                          '<th>For Sale</th>'+
-                      '</tr>'
-                  );
+                  
                   for(i=0;i<result[0].res_present.length;i++){
-                      
                       if(result[0].res_present[i].quantity>0){
                           $('#res').append(
-                              '<tr>'+
-                                  '<td>'+result[0].res_present[i].name+'</td>'+
-                                  '<td>'+result[0].res_present[i].quantity+'</td>'+
-                                  '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+result[0].res_present[i].quantity+'"></td>'+
-                              '</tr>'
+                            '<div class="row">'+
+                              '<div class="col-md-2" style="margin-top:20px">'+ result[0].res_present[i].name+'</div>'+
+                              '<div class="col-md-6 slidecontainer">'+
+                                '<div id="d'+i+'" ></div>'+
+                                  '<input type="range" min="0" max="100" value="0" class="slider" id="s'+i+'" oninput="func('+i+')"">'+
+                              '</div>'+
+                              '<div "col-md-2"><button class="btn btn-success" style="margin-top:15px" onclick="updating('+i+',0)">Buy</button></div>'+
+                              '<div "col-md-2"><button class="btn btn-danger" style="margin-left:15px;margin-top:15px" onclick="updating('+i+',1)">Sell</button></div>'+
+                            '</div>'
                           );
+
+                        var slider = document.getElementById("s"+i);
+                        var output = document.getElementById("d"+i);
+                        slider.max = result[0].res_present[i].quantity;
+                        output.innerHTML = slider.value; // Display the default slider value
+
                       }
                   }
 
@@ -135,8 +132,6 @@
 
           });  
 
-
-                    
         </script>
 
       </div>
@@ -147,44 +142,9 @@
   </div>
 </div>
 
-<div class="modal fade" id="request" tabindex="-1" role="dialog" aria-labelledby="request" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="request">Request</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="mod"> 
-        
-          <br><br><button class="btn btn-primary" onclick="rename()">Rename</button>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- 
-<div class="row" >
-		<div class="col-md-5">
-			
-		</div>
-		<div class="col-md-2">
-			<div class="name">
-				
-			</div>
-		</div>
-		<div class="col-md-5">
-			
-		</div>
-	
-</div>
- -->
-
-
+<center id="trading_button">
+  <button class="btn btn-primary trading" data-toggle="modal" data-target="#avail">Trading</button>
+</center>
 <div class="col-md-4" style="color: green;margin-left: -15px;">
       <center>     
         <div class="name1" id="owner" style=" width: 300%; ">
@@ -224,7 +184,7 @@
                                 localStorage.setItem("user_click",1);
                                 
                             }
-                            else if (data.message=="failed")
+                            else if (data.message=="failure")
                             {
                               console.log("failed");
                                 localStorage.setItem("user_click",1);
@@ -247,6 +207,7 @@
               document.write(name);
 
               $(document).ready(function(){
+                $('#trading_button').hide();
 
 
                 $.ajax({
@@ -257,11 +218,18 @@
 
                         var owner = result[0].owner_name;
                         a = result[0].current_population;
-
                         $('#pop').text(result[0].current_population);
-
+                        if (owner!=user) 
+                        {
+                          $('#trading_button').hide();
+                        }
+                        else
+                        {
+                          $('#trading_button').show();
+                        }
                         if(owner=='AI'){
                           $('#owner').text("Owner: Not Owned");
+
 
                           // console.log(localStorage.getItem("user_click"));
                           
@@ -276,9 +244,9 @@
                             $('#info_div').append('<p id="timer" style="margin-left:20px; font-size:20px"></p>');
                           }
                         }
-
                         else{
                           $('#owner').text("Owner:"+owner);
+                          
                         }
 
                         $('#res_table').empty();
@@ -288,7 +256,8 @@
                           if(result[0].res_present[i].quantity){
                             $('#res_table').append(
                               '<tr>'+
-                                  '<td>'+result[0].res_present[i].quantity+'</td>'+
+                                  '<td>'+result[0].res_present[i].quantity+'&nbsp; /&nbsp; </td>'+
+                                  '<td>'+result[0].res_present[i].sell+'</td>'+
                                   '<td><img src="resources/'+result[0].res_present[i].name+'.png" width="34px" height="34px" style="margin-left:10px" data-container="body" data-toggle="popover" data-placement="right" data-content="'+result[0].res_present[i].name+'"></td>'+
                               '</tr>'
                             );
@@ -331,8 +300,8 @@
   <table border="0" id="res_table">
   </table><br><br>
 
-  <button class="btn btn-primary" data-toggle="modal" data-target="#avail" style="float:right">Available</button>
-  <button class="btn btn-primary" data-toggle="modal" data-target="#request" style="float:right">Request</button>
+
+  <!-- <button class="btn btn-primary" data-toggle="modal" data-target="#request" style="float:right">Request</button> -->
 
 </div>
 

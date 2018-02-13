@@ -12,11 +12,10 @@ var user;
                 dataType: 'json'}).
                 done(function(resp){
 
-                    console.log(resp.name);
+                    // console.log(resp.name);
                     localStorage.setItem("i_name", resp.name);
 
                     if(x==0){
-                        
                         $.ajax({
                             type: 'POST',
                             url: '/assign_island',

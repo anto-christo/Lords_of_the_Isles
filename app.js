@@ -131,24 +131,6 @@ function updateLeaderboard(){
 
 var islands;
 
-// var resources = [
-//   "copper",
-//   "iron",
-//   "bronze",
-//   "wood",
-//   "oil",
-//   "coal",
-//   "uranium",
-//   "lead",
-//   "aluminium",
-//   "diamond",
-//   "emerald",
-//   "coconut",
-//   "salt",
-//   "rice",
-//   "wheat"
-//   ];
-
   var common = [
     {name:"bread",base_cost:5}, //0
     {name:"fruits",base_cost:5},  //1
@@ -174,7 +156,6 @@ app.post('/create_island', function(req, res) {
 
   var island_name;
   var uname = req.body.username;
-
   fs.readFile('names.txt', function (err, data) {
     if (err) {
        return console.error(err);
@@ -197,8 +178,6 @@ app.post('/create_island', function(req, res) {
       islands.splice(ind,1);
     }
 
-    // for(i=0;i<islands.length;i++)
-    // console.log(islands[i]);
 
     var new_list = islands.join("\n");
 
@@ -207,7 +186,6 @@ app.post('/create_island', function(req, res) {
          return console.error(err);
       }
       
-      // console.log("Data written successfully!");     
    });
 
    var x,y,px,py;
@@ -244,7 +222,6 @@ app.post('/create_island', function(req, res) {
       var common_flag = 0;
       
       db.collection("players").find({name:uname}).toArray(function(err, result) {
-          // console.log("player gold: " + result[0].gold);
 
           if (result[0].gold<3500) // very poor
           {
@@ -304,9 +281,6 @@ app.post('/create_island', function(req, res) {
          
           db.collection("res").update({index:index},{$inc:{ct:1}});
 
-           // var res_qty = Math.floor(Math.random()*200) + 30;
-          // var res_val = Math.floor(Math.random()*1000) + 100;
-          // Math.floor(Math.random() * (max - min + 1)) + min; // gives between min and max both inclusive
           var big = Math.random() * (2 - 0 + 1) + 0; 
           if (big<1) 
           {
@@ -321,17 +295,11 @@ app.post('/create_island', function(req, res) {
 
           var current_pop = Math.floor(Math.random() * (200 - 100 + 1)) + 100;              
 
-          // console.log("name="+island_name);
-
           db.collection("res").find({}).toArray(function(err, result1) {
-              // console.log("\n\nCOUNT : "+ result1[index].ct);
               var sum = 0; // sum is the total no. of islands on map
               var this_res = result1[index].ct;
               for (var j =0; j < 15; j++) {
                   sum = sum + result1[j].ct;
-                  // console.log("sum :"+sum);
-                  // console.log("result1[j].ct :"+result1[j].ct);
-
               }
               if (sum > 0) 
               {
@@ -345,10 +313,6 @@ app.post('/create_island', function(req, res) {
                   }
               }
               
-              // console.log("sum :"+sum);
-
-              // console.log("production_factor :"+production_factor); // if commented, island value becomes NAN ???
-          
                 var population_factor  = current_pop*5; // should we change to 3 ??
                 island_value = production_factor + population_factor;
                 if (big<1) 
@@ -368,29 +332,17 @@ app.post('/create_island', function(req, res) {
                 i.max_population = cap;
                 i.value = island_value;
                 console.log(i);
-                
+
                 db.collection("islands").insert(i,function(err,result){
                       var resource_name;
-                       for (var k = 0; k < 15; k++) {
-                        if (k < 9) 
-                        {
-                          resource_name = common[k].name;
-                          db.collection("islands").update({name:island_name},{$push:{res_present:{name:resource_name,quantity:0,sell:0}}});
-                        }
-                        else
-                        {
-                          resource_name = rare[k-9].name;
-                          db.collection("islands").update({name:island_name},{$push:{res_present:{name:resource_name,quantity:0,sell:0}}});
-                        }
-                      }
-
+                      db.collection("islands").update({name:island_name},{$push:{res_present:{$each:[{name:"bread",quantity:0,sell:0},{name:"fruits",quantity:0,sell:0},{name:"cheese",quantity:0,sell:0},{name:"wood",quantity:0,sell:0},{name:"stone",quantity:0,sell:0},{name:"wheat",quantity:0,sell:0},{name:"bamboo",quantity:0,sell:0},{name:"ale",quantity:0,sell:0},{name:"cotton",quantity:0,sell:0},{name:"silk",quantity:0,sell:0},{name:"honey",quantity:0,sell:0},{name:"fur",quantity:0,sell:0},{name:"gems",quantity:0,sell:0},{name:"chocolate",quantity:0,sell:0},{name:"spices",quantity:0,sell:0}]}}})
                       setTimeout(function(){
                         db.collection('islands').update({$and:[ {name:island_name},{'res_present.name':resource} ]}, {$set:{'res_present.$.quantity':200}},function(err,result){
-                          // console.log("array updation done");
+                          console.log("array updation done");
                           res.send(JSON.stringify({"name":island_name}));
                           db.close();
                         });
-                      },100);
+                      },150);
     
                 });
 
@@ -949,40 +901,35 @@ app.post('/send_ship',function(req,res){
 
 app.post('/set_sell',function(req,res){
 
-  var names = req.body.names;
-  var qtys = req.body.qtys;
+  var id = req.body.id;
+  var qty = req.body.qty;
   var island = req.body.island;
+  var choice = req.body.choice;
 
-  console.log(names);
-  console.log(qtys);
-
-  var doc = [];
-
-    for(i=0;i<names.length;i++){
-
-      var num = Number(qtys[i]);
-
-        if(qtys[i]!=0)
-        {
-          var obj = {name: names[i], quantity:num};
-          doc.push(obj);
-        }
-    }
-
-   console.log(doc);
-
+  console.log(id);
+  console.log(qty);
+  console.log(island);
+  console.log(choice); // 0 buy ,1 sell
+  if (choice==1) 
+  {
+    qty = qty*(-1);
+  }
+  // quantity positive if buying or accepting. (goods comming on island)
+  // quantity negative if selling (goods going out of island)
+  if (id>8) 
+  {
+    var res_name = rare[id].name;
+  }
+  else
+  {
+    var res_name = common[id].name;
+  }
   MongoClient.connect(url, function(err, db) {
+      // update sell
 
-
-    //loading on ship
-    for (item in doc) {
-      var temp_name = doc[item].name;
-      var temp_qty = doc[item].quantity;
-      console.log("temp_qty "+temp_qty );
-      db.collection('islands').update({$and:[ {name:island},{'res_present.name':temp_name} ]}, {$inc:{'res_present.$.sell':temp_qty}},function(){
+      db.collection('islands').update({$and:[ {name:island},{'res_present.name':res_name} ]}, {$set:{'res_present.$.sell':qty}},function(){
         db.close();
       });
-    }
 
     return res.send("Done");
 
