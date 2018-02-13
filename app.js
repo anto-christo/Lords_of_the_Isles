@@ -46,8 +46,6 @@ server.listen(process.env.PORT || 3000,function(){
 
 io.on('connection', function(socket) {
     
-
-
     updateLeaderboard();
     socket.emit('getLeaderboard', rankings);
     setInterval(function(){ 
@@ -63,11 +61,11 @@ io.on('connection', function(socket) {
       MongoClient.connect(url, function(err, db) {
        assert.equal(null, err);
           db.collection('players').find({name:data.username}).toArray(function(err, results){
-            setTimeout(function(){
+            // setTimeout(function(){
               io.sockets.connected[clients[data.username].socket].emit("setLocalStorage", results[0].owned_islands_name[0].island_name);
-            },500)
+            // },500)
+            db.close(); 
           });
-          db.close(); 
       });
 
     });
@@ -77,11 +75,10 @@ io.on('connection', function(socket) {
       if (clients[data.username]){
       MongoClient.connect(url, function(err, db) {
        assert.equal(null, err);
-
-                db.collection('players').find({name:data.username}).toArray(function(err, results){
-                    io.sockets.connected[clients[data.username].socket].emit("responseGold", results[0].gold);
-                });
-                db.close(); 
+          db.collection('players').find({name:data.username}).toArray(function(err, results){
+              io.sockets.connected[clients[data.username].socket].emit("responseGold", results[0].gold);
+              db.close(); 
+          });
       });
       }
       else {
@@ -97,6 +94,7 @@ io.on('connection', function(socket) {
         break;
       }
     } 
+    socket.conn.close ();
   })
 
 });
@@ -106,16 +104,16 @@ function updateLeaderboard(){
   // console.log("\nINSIDE UPDATE LEADERBOARD\n");
     MongoClient.connect(url, function(err, db) {
        assert.equal(null, err);
-                db.collection('players').find().sort({total_wealth:-1}).limit(5).toArray(function(err, results){
-                      var j=0;
-                      while(j<1){
-                        var obj = {name: results[j].name,total_wealth: results[j].total_wealth}
-                        rankings[j] = obj;
-                        // console.log("obj" + obj);
-                        j++;
-                      }
-                    db.close(); 
-                });
+          db.collection('players').find().sort({total_wealth:-1}).limit(5).toArray(function(err, results){
+                var j=0;
+                while(j<1){
+                  var obj = {name: results[j].name,total_wealth: results[j].total_wealth}
+                  rankings[j] = obj;
+                  // console.log("obj" + obj);
+                  j++;
+                }
+              db.close(); 
+          });
       });
 }
 
@@ -453,8 +451,6 @@ app.post('/assign_island', function(req, res) {
                       }
                       else  // cannot buy
                       {
-                        MongoClient.connect(url, function(err, db) {
-
                           db.collection('players').find( { $and:[ {name:uname},{explored_islands_name:{$elemMatch:{island_name:is_name}}} ] }).count(function(err,result){
                             // console.log("-------------------------result="+result);
                   
@@ -470,8 +466,6 @@ app.post('/assign_island', function(req, res) {
                             }
                   
                           });
-                          
-                        });
                       }
                   });
               });
@@ -569,17 +563,17 @@ function assign_ship(uname, is_name, model){
     db.collection("ships").insert(s,function(err,result){
       var id = result.insertedIds[0];
       for (var k = 0; k < 15; k++) {
-       if (k < 9) 
-      {
-        resource_name = common[k].name;
-        db.collection("ships").update({_id:id},{$push:{res_present:{name:resource_name,quantity:0}}});
-      }
-       else
-      {
-         resource_name = rare[k-9].name;
-        db.collection("ships").update({_id:id},{$push:{res_present:{name:resource_name,quantity:0}}});
-      }
-     }
+           if (k < 9) 
+          {
+            resource_name = common[k].name;
+            db.collection("ships").update({_id:id},{$push:{res_present:{name:resource_name,quantity:0}}});
+          }
+           else
+          {
+             resource_name = rare[k-9].name;
+            db.collection("ships").update({_id:id},{$push:{res_present:{name:resource_name,quantity:0}}});
+          }
+       }
       db.collection("players").update({name:uname},{$push:{owned_ships_id:{id:id}},$inc:{empty_ship_slots:-1}}, function(err, r) {
         assert.equal(null, err);
         db.close(); 
@@ -620,6 +614,7 @@ app.post('/buy_ship',function(req,res){
             }
             else
             {
+              db.close();
               res.send({"message":"failure"});
             }
 
@@ -662,11 +657,11 @@ app.post('/player_name', function(req, res) {
       }
 
       db.close();
+      return res.send("Done");
   });
 
   });
 
-  return res.send("Done");
   
 });
 
@@ -681,6 +676,7 @@ app.post('/check_player', function(req, res) {
     
     db.collection('players').find( { name:p.name } ).count(function(err,results){
       count = results;
+      db.close();
       if (count>0) 
       {
           res.send(JSON.stringify({"player":"old"}));
@@ -690,7 +686,6 @@ app.post('/check_player', function(req, res) {
         res.send(JSON.stringify({"player":"new"}));
       }
 
-      db.close();
   });
 
   });
@@ -703,18 +698,11 @@ app.post('/old_island', function(req, res) {
 
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
-    
-    // db.collection("islands").aggregate(
-    //   { $sample: { size: 1 } }, function(err,result){
-    //     return res.send(result);
-    //     db.close();
-    //   }
-    // );
 
     db.collection('islands').aggregate([{$match:{ owner_name:{$ne:user} }}, {$sample:{size:1}} ], function(err,result){
       // console.log(result);
+      db.close();
       return res.send(result);
-        db.close();
     });
 
   });
@@ -741,8 +729,8 @@ app.post('/get_island',function(req,res){
   MongoClient.connect(url, function(err, db) {
 
     db.collection("players").find({name:user}).toArray(function(err, result) {
-        return res.send(result);
         db.close();
+        return res.send(result);
     });
 
   });
@@ -755,8 +743,8 @@ app.post('/get_ship',function(req,res){
   MongoClient.connect(url, function(err, db) {
 
     db.collection("ships").find({owner_name:user}).toArray(function(err, result) {
-        return res.send(result);
         db.close();
+        return res.send(result);
     });
 
   });
@@ -768,8 +756,8 @@ app.post('/get_ship_slots',function(req,res){
   var user = req.body.user1;
   MongoClient.connect(url, function(err, db) {
     db.collection("players").find({name:user}).toArray(function(err, result) {
-        return res.send(result);
         db.close();
+        return res.send(result);
     });
 
   });
@@ -787,8 +775,8 @@ app.post('/get_ship_info',function(req,res){
 
     db.collection("ships").find({_id:ObjectId}).toArray(function(err, result) {
         // console.log(result);
-        return res.send(result);
         db.close();
+        return res.send(result);
     });
 
   });
@@ -806,8 +794,8 @@ app.post('/rename_ship',function(req,res){
     var ObjectId = new mongoose.Types.ObjectId(ship);
 
     db.collection("ships").update({_id:ObjectId},{$set:{name:name}},function(err, result) {
-        return res.send("Done");
         db.close();
+        return res.send("Done");
     });
 
   });
@@ -821,8 +809,8 @@ app.post('/get_island_info',function(req,res){
 
     db.collection("islands").find({name:island}).toArray(function(err, result) {
         // console.log("get_island_info: "+result);
-        return res.send(result);
         db.close();
+        return res.send(result);
     });
 
   });
@@ -888,10 +876,8 @@ app.post('/send_ship',function(req,res){
               
           });
         }
-
-
     });
-
+    // how to close this ?
 
     return res.send("Done");
 
@@ -929,9 +915,9 @@ app.post('/set_sell',function(req,res){
 
       db.collection('islands').update({$and:[ {name:island},{'res_present.name':res_name} ]}, {$set:{'res_present.$.sell':qty}},function(){
         db.close();
+        return res.send("Done");
       });
 
-    return res.send("Done");
 
   });
 });
@@ -1197,7 +1183,6 @@ MongoClient.connect(url, function(err, db) {
         db.collection("islands").update({name:data.name},{$set:{value:value}},function(){
           db.close();
         })
-
 
     });
 
