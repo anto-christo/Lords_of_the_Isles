@@ -106,7 +106,7 @@ function updateLeaderboard(){
        assert.equal(null, err);
           db.collection('players').find().sort({total_wealth:-1}).limit(5).toArray(function(err, results){
                 var j=0;
-                while(j<1){
+                while(j<results.length){
                   var obj = {name: results[j].name,total_wealth: results[j].total_wealth}
                   rankings[j] = obj;
                   // console.log("obj" + obj);
@@ -1177,11 +1177,11 @@ MongoClient.connect(url, function(err, db) {
             }
         }
         res_pres_factor = res_pres_factor*multiply;
-        // console.log("res_pres_factor "+res_pres_factor);
         value = Math.floor(value + res_pres_factor);
-        // console.log("value "+value);
         db.collection("islands").update({name:data.name},{$set:{value:value}},function(){
-          db.close();
+          setTimeout(function(){
+              db.close();
+            },500)
         })
 
     });

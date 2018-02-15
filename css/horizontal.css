@@ -47,33 +47,33 @@ div{
     padding: 5px;
   }
   50% {
+    width: 82.5px;
+    height: 82.5px;
+    font-size: 20.25px;
+    margin: 17.5px;
+    padding: 5px;
+  }
+  100%{
     width: 85px;
     height: 85px;
     font-size: 20.5px;
     margin: 15px;
-    padding: 5px;
-  }
-  100%{
-    width: 90px;
-    height: 90px;
-    font-size: 21px;
-    margin: 10px;
     padding: 5px;
   }
 }
 
 @keyframes ease-in-out {
   0% {
-    width: 90px;
-    height: 90px;
-    font-size: 21px;
-    margin: 10px;
-  }
-  50% {
     width: 85px;
     height: 85px;
     font-size: 20.5px;
     margin: 15px;
+  }
+  50% {
+    width: 82.5px;
+    height: 82.5px;
+    font-size: 20.25px;
+    margin: 17.5px;
   }
   100%{
     width: 80px;

@@ -5,7 +5,7 @@
 	<!-- <link rel="stylesheet" type="text/css" href="css/vertical.css"> -->
 	<link rel="stylesheet" type="text/css" href="css/rankings.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	
 	<style type="text/css">
 		.element, .outer-container {
@@ -33,6 +33,10 @@
 			.row {
 				display: inline;
 			}
+
+			body{
+				background-color: #111111;
+			}
 	</style>
 
 	<script src = "/socket.io/socket.io.js"></script>
@@ -42,7 +46,7 @@
       socket.on('getLeaderboard', function(data){
       	var i = 0;
       	// console.log("UPDATING LEADERBOARD WITH" + data);
-      	while(i<1){
+      	while(i<data.length){
 				var nid = "n"+i;
 				var wid = "w"+i;
 				nid = nid.toString();
@@ -67,28 +71,28 @@
 	<div class="outer" style="margin-bottom: 125px;">
 					<center>
 						<div class="row">
-							<div class="row" id="n0">Rank 1</div>
-							<div class="row" id="w0"></div>
+							<div class="row r0 n0 col-md-8" id="n0">Rank 1</div>
+							<div class="row r0 w0 col-md-4" id="w0">0</div>
 						</div>
 						<br>
 						<div class="row">
-							<div class="row" id="n1">Rank 2</div>
-							<div class="row" id="w1"></div>
+							<div class="row r1 n1 col-md-8" id="n1">Rank 2</div>
+							<div class="row r1 w1 col-md-4" id="w1">0</div>
 						</div>
 						<br>
 						<div class="row">
-							<div class="row" id="n2">Rank 3</div>
-							<div class="row" id="w2"></div>
+							<div class="row r2 n2 col-md-8" id="n2">Rank 3</div>
+							<div class="row r2 w2 col-md-4" id="w2">0</div>
 						</div>
 						<br>
 						<div class="row">
-							<div class="row" id="n3">Rank 4</div>
-							<div class="row" id="w3"></div>
+							<div class="row r3 n3 col-md-8" id="n3">Rank 4</div>
+							<div class="row r3 w3 col-md-4" id="w3">0</div>
 						</div>
 						<br>
 						<div class="row">
-							<div class="row" id="n4">Rank 5</div>
-							<div class="row" id="w4"></div>
+							<div class="row r4 n4 col-md-8" id="n4">Rank 5</div>
+							<div class="row r4 w4 col-md-4" id="w4">0</div>
 						</div>
 
 					</center>

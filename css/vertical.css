@@ -21,37 +21,36 @@ body {
     font-size: 20px;
   }
   25% {
-    width: 158.33px;
-	height: 132px;
+    width: 153.33px;
+	height: 127.77px;
     font-size: 20.5px;
   }
   75% {
-    width: 166.66px;
-	height: 139px;
+    width: 156.66px;
+	height: 130.55px;
     font-size: 21px;
   }
   100%{
-  	width: 175px;
-	height: 146px;
+  	width: 160px;
+	height: 133.33px;
     font-size: 22px;
 
   }
 }
 @keyframes ease-in-out {
   0% {
-	width: 175px;
-	height: 146px;
+	width: 160px;
+	height: 133.33px;
     font-size: 22px;
   }
   25% {
-    width: 166.66px;
-	height: 139px;
+    width: 156.66px;
+	height: 130.55px;
     font-size: 21px;
   }
   75% {
-
-    idth: 158.33px;
-	height: 132px;
+	width: 153.33px;
+	height: 127.77px;
     font-size: 20.5px;
   }
   100%{
