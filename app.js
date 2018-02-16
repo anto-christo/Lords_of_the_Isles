@@ -87,6 +87,36 @@ io.on('connection', function(socket) {
     	
     });
 
+    socket.on('myRank', function(data){
+      var results;
+      var rank = {
+          rank:0,
+          wealth: 0
+      }
+      var counter = 0;
+      if (clients[data.username]){
+      MongoClient.connect(url, function(err, db) {
+       assert.equal(null, err);
+          db.collection('players').find().toArray(function(err, results){
+                results.sort(function(a, b){
+                  return b.total_wealth - a.total_wealth;
+                });
+                while(results[counter].name!=data.username){
+                    counter++;
+                }
+                rank.rank = counter+1;
+                rank.wealth = results[counter].total_wealth;
+                io.sockets.connected[clients[data.username].socket].emit("responseRank", rank);
+                db.close(); 
+          });
+      });
+      }
+      else {
+        console.log("User does not exist: " + data.username); 
+      }
+      
+    });
+
     socket.on('disconnect', function() {
     for(var name in clients) {
       if(clients[name].socket === socket.id) {
@@ -716,9 +746,30 @@ app.post('/old_island', function(req, res) {
 /////////////////////////////////////////////     MISCELLANEOUS       ///////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+app.post('/get_dice_status',function(req,res){
+  var user = req.body.username;
+  // console.log("here "+ user);
+  MongoClient.connect(url, function(err, db) {
+    db.collection("players").find({name:user}).toArray(function(err, result) {
+        // console.log(result[0]);
+        db.close();
+        return res.send(result);
+    });
+  });
+});
 
-
-
+app.post('/update_dice_status',function(req,res){
+  var user = req.body.username;
+  // console.log("here "+ user);
+    MongoClient.connect(url, function(err, db) {
+      db.collection("players").update({name:user},{$set:{random_event_used:1}},function(err, result) {
+        return res.send("Done");
+        // setTimeout(function(){
+          db.close();
+        // },500)
+    });
+  });
+});
 
 app.post('/get_island',function(req,res){
 
@@ -1020,6 +1071,7 @@ MongoClient.connect(url, function(err, db) {
 
       var total_wealth = Math.floor(data.island_wealth + (data.gold/5));
       db.collection("players").update({name:name},{$set:{total_wealth:total_wealth}});
+      db.collection("players").update({name:name},{$set:{random_event_used:0}}); // resetting random event
 
     });
 

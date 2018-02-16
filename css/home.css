@@ -47,3 +47,13 @@
 	border-radius: 0px;
 	/*padding: 10px;*/
 }
+
+#myRank {
+	color: white;
+	font-size: 20px;
+}
+
+#myWealth{
+	color: white;
+	font-size: 20px;
+}

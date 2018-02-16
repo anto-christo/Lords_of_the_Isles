@@ -86,17 +86,69 @@ var user;
                         old_island();
                     }
                 }
+ $('[data-toggle="popover"]').popover({
+    placement : 'bottom',
+    trigger : 'hover'
+});
+var text;
+var random_event=1;
+$('[data-toggle="dice"]').popover({
+    placement : 'bottom',
+    trigger : 'hover',
+    html : true,
+    content : text
+});
+        get_dice_status(0);
 
-		$("#dice_btn").click(function(){
+        function get_dice_status(t)
+        {
+            $.ajax({
+                type: 'POST',
+                url: 'get_dice_status',
+                data: { username:user },
+                dataType: 'json',
+                success: function(data){
+                    random_event = data[0].random_event_used;  
+                    if (random_event==0) // not used random event yet
+                    {
+                        text =  "Click to trigger random event";
+                    }
+                    else
+                    {
+                        text =  "Already used random event for this tick";
+                    }
+                   
+                }
+            });
+            console.log("t "+ t);
+            if (t==1) 
+            {
+                if (random_event==0) 
+                {
+                    console.log("went in");
+                    $.ajax({
+                        type: 'POST',
+                        url: 'update_dice_status',
+                        data: { username:user },
+                        dataType: 'json',
+                        success: function(data){
+                            console.log("here in");
+                        }
+                    });
+                    oldNew();
+                    get_dice_status(0);
+                }
+                else
+                {
+                    alert("This can be used only once per tick. Try again next tick!");
+                }
+            }
+        }
+        $("#dice_btn").click(function(){
+            console.log("status: "+ random_event);
+            get_dice_status(1);
 
-            oldNew();
-
-          
-            
-            
         });
-        
-     
 
         function check_player(){
             $.ajax({

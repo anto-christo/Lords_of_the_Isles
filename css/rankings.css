@@ -37,8 +37,14 @@ body{
   to { -webkit-mask-position: -50%; }
 }
 
+.legends {
+	font-size: 20px;
+	color: white;
+	font-family: 'algerian';
+}
+
 .r0{
-	font-size: 22px;
+	font-size: 18px;
 	color: gold;
 	font-weight: bold;
 	-webkit-mask-image: linear-gradient(-75deg, rgba(0,0,0,.6) 50%, #000 50%, rgba(0,0,0,.6) 70%);
@@ -46,25 +52,25 @@ body{
 	  animation: shine 3s linear infinite;
 }
 .r1{
-	font-size: 20px;
+	font-size: 18px;
 	color: silver;
 	-webkit-mask-image: linear-gradient(-75deg, rgba(0,0,0,.6) 50%, #000 50%, rgba(0,0,0,.6) 70%);
 	  -webkit-mask-size: 200%;
 	  animation: shine 3s linear infinite;
 }
 .r2{
-	font-size: 19px;
+	font-size:18px;
 	color: #CD7F32;
 	-webkit-mask-image: linear-gradient(-75deg, rgba(0,0,0,.6) 50%, #000 50%, rgba(0,0,0,.6) 70%);
 	  -webkit-mask-size: 200%;
 	  animation: shine 3s linear infinite;
 }
 .r3{
-	font-size: 17px;
+	font-size:18px;
 	color: cyan;
 }
 .r4{
-	font-size: 15px;
+	font-size:18px;
 	color: cyan;
 }
 
@@ -74,82 +80,30 @@ div.n0 {
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis;
-    width: 160px;
+    width: 150px;
 }
-
-div.n1 {
-	float: left;
-	display: inline-block;
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis;
-    width: 160px;
-}
-
-div.n2 {
-	float: left;
-	display: inline-block;
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis;
-    width: 160px;
-}
-
-div.n3 {
-	float: left;
-	display: inline-block;
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis;
-    width: 160px;
-}
-
-div.n4 {
-	float: left;
-	display: inline-block;
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis;
-    width: 160px;
-}
-
 div.n0:hover {
     white-space: pre-wrap; 
 	float: left;
 	display: inline-block;
     word-wrap: break-word;
-    overflow: initial; 
-    width: 160px;
+    overflow: inherit; 
+    width: 150px;
+    /*margin-top: -15px;*/
 }
-div.n1:hover {
-    white-space: pre-wrap; 
-	float: left;
-	display: inline-block;
-    word-wrap: break-word;
-    overflow: initial; 
-    width: 160px;
+
+div.arank {
+	margin-top:-10px;
+	margin-bottom:-10px;
+	width: 100%;
+	/*display:table-cell;*/
 }
-div.n2:hover {
-    white-space: pre-wrap; 
-	float: left;
-	display: inline-block;
-    word-wrap: break-word;
-    overflow: initial; 
-    width: 160px;
+
+div.arank:hover {
+	padding-top: 15px;
+    padding-bottom: 15px;
+    border-top: 0.001em solid red;
+    border-bottom: 0.001em solid red;
+	display:table-cell;
 }
-div.n3:hover {
-    white-space: pre-wrap; 
-	float: left;
-	display: inline-block;
-    word-wrap: break-word;
-    overflow: initial; 
-    width: 160px;
-}
-div.n4:hover {
-    white-space: pre-wrap; 
-	float: left;
-	display: inline-block;
-    word-wrap: break-word;
-    overflow: initial; 
-    width: 160px;
-}
+

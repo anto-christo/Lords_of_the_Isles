@@ -1,27 +1,5 @@
 $(document).ready(function(){
-    $('[data-toggle="popover"]').popover({
-        placement : 'bottom',
-        trigger : 'hover'
-    });
-
-    var x = 1;  // value to be taken from database
-var text;
-if (x==1) 
-{
-text =  "Already used random event for this tick";
-}
-else
-{
-text =  "Click to trigger random event";
-}
-$(document).ready(function(){
-    $('[data-toggle="dice"]').popover({
-        placement : 'bottom',
-        trigger : 'hover',
-        html : true,
-        content : text
-    });
-});
+    
 
 
     // var change_iframe_src = function(new_src) {

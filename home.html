@@ -62,8 +62,16 @@
                     <div id="gold"></div>
                 </div> 
             </div>
-            <div class="col-md-4" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Go to Bank">
+            <!-- <div class="col-md-4" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Go to Bank">
                 <img height="45" src="assets/bg/bank.png">
+            </div> -->
+            <div class="col-md-4" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Click to view Bonuses">
+            <script type="text/javascript">
+              function showBonus(){
+                window.change_iframe_src('bonus.html');
+              }
+            </script>
+                <img height="40" style="margin-top: 5px;" src="assets/bg/gift.png" onclick="showBonus()">
             </div>
           </div>
           
@@ -124,7 +132,7 @@
           </center>
     			<br>
               <center >
-                <iframe name="island_menu" height="425 " width="225" src="islands-menu.html" frameborder="0" allowfullscreen ></iframe>
+                <iframe name="island_menu" height="425 " width="215" src="islands-menu.html" frameborder="0" allowfullscreen ></iframe>
               </center> 
       	</div>
     
@@ -140,8 +148,23 @@
     			<h5 style="margin-left: 25%; margin-top: 15% ; color:white"> Leaderboard</h5>
     			<br>
     			<center>
-					<iframe height="425" width="225" style="margin-left: 15px" src="rankings.html" frameborder="0" allowfullscreen ></iframe>
-      			</center>   
+					<iframe height="305" width="210" style="margin-left: 10px" src="rankings.html" frameborder="0" allowfullscreen ></iframe>
+            <div id="myRank"></div>
+            <div id="myWealth"></div>
+            <!-- <div id="myRank"></div> -->
+                <script type="text/javascript">
+                    setInterval(function(){ 
+                      // console.log("updating rank");
+                      var person = localStorage.getItem("user");
+                      socket.emit('myRank', {"username": person});
+                    },5000);
+                    socket.on("responseRank",function(data){
+                      // console.log("my rank updated"+ data.rank);
+                        document.getElementById('myRank').innerHTML = "Your Rank: "+ data.rank;
+                        document.getElementById('myWealth').innerHTML = "Your Wealth: "+ data.wealth;
+                    });
+                </script>
+            </center>   
       		</div>
     	</div>
 	</div>
