@@ -244,9 +244,9 @@
                             $('#info_div').append('<p id="timer" style="margin-left:20px; font-size:20px"></p>');
                           }
                         }
-                        else{
+                        else if(owner!=user){
                           $('#owner').text("Owner:"+owner);
-                          
+                          buy_island('false');
                         }
 
                         $('#res_table').empty();
