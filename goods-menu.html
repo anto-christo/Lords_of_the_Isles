@@ -19,68 +19,71 @@
 </head>
 <body>
 
-	
 	<script>
-		
-		var name = localStorage.getItem("i_name");
 
-		// console.log("i_name="+name);
-		
-		$.ajax({
-			type:'POST',
-			url:'/get_island_info',
-			data:{island:name},
-			success: function(result){
-				
-				for(i=0;i<result[0].res_present.length;i++){
-					if(result[0].res_present[i].quantity){
-					$('#goods').append(
-						
-						'<div class="box">'+
-						'<p>'+result[0].res_present[i].name+'</p>'+
-						'<input type="text" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" width="10px">'+
-						'</div>'
-					);
-					}
-					
-				}
+		var user = localStorage.getItem('user');
 
-				$('#goods').append(	
-					'<div class="box"></div>'+
-					'<div class="box"></div>'+
-					'<div class="box"></div>'+
-					'<div class="box">'+
-					'<button onclick="update_sell()">Update</button>'+
-					'</div>'
-				);
-			}
-		});	
-
-		function update_sell(){
-			console.log("inside update sell");
-			var res_qtys = $("input[name='res_input[]']").map(function(){return $(this).val();}).get();
-			var res_names = $("input[name='res_input[]']").map(function(){return $(this).attr('id');}).get();
-			
+		function delete_log(id){
+			console.log("delete clicked");
 				$.ajax({
-					type:'POST',
-					url:'/set_sell',
-					data:{names:res_names, qtys:res_qtys, island:name},
-					success: function(data){
-						alert("Resource available for trade updated !!");
-            	}
-        	});
+				type: 'POST',
+				url: '/delete_log',
+				data:{id:id},
+				success: function(result){
+					if(result=="done")
+						location.reload();
+				}
+			});
 		}
 
-		</script>
+		$.ajax({
+			type: 'POST',
+			url: '/get_log',
+			data:{user:user},
+			success: function(result){
 
-<div class="data">
-	<div class="horizontal-scroll-wrapper squares" id="goods">
-		<div class="box"></div>
-		<div class="box"></div>
-		<div class="box"></div>
-		
-	</div>
-</div>
+				if(result.length == 0){
+					$('#log_table').append(
+						'<tr><td colspan="3">Nothing to show</td></tr>'
+					);
+				}
+
+				for(i=0;i<result.length;i++){
+					var id = "delete_log('" + result[i]._id + "')";
+
+					$('#log_table').append(
+						'<tr><td>'+result[i].tick+'</td>'+
+						'<td>'+result[i].event+'</td>'+
+						'<td><button class="btn btn-success" onclick="'+id+'">Mark as Read</button></td></tr>'
+					);
+				}
+			}
+		});
+
+	</script>
+
+	<div class="outer-container">
+			<div class="inner-container">
+			<div class="element">
+	   
+		   <div class="outer" style="margin-bottom: 125px;padding-top: 10px;">
+						   <center>
+							   
+								<table border="1px" id="log_table">
+										<tr>
+											<th>Tick</th>
+											<th>Event</th>
+											<th>Action</th>
+										</tr>
+									</table>
+	   
+						   </center>
+	   
+		   </div>
+	   
+			</div>
+			</div>
+			</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->

@@ -86,6 +86,7 @@ var user;
                         old_island();
                     }
                 }
+
  $('[data-toggle="popover"]').popover({
     placement : 'bottom',
     trigger : 'hover'
@@ -147,6 +148,7 @@ $('[data-toggle="dice"]').popover({
         $("#dice_btn").click(function(){
             console.log("status: "+ random_event);
             get_dice_status(1);
+            //oldNew();
 
         });
 
