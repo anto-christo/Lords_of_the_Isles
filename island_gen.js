@@ -120,7 +120,7 @@ $('[data-toggle="dice"]').popover({
                    
                 }
             });
-            console.log("t "+ t);
+            // console.log("t "+ t);
             if (t==1) 
             {
                 if (random_event==0) 

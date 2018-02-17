@@ -22,3 +22,6 @@ db.islands.update({name:island_name},{$push:{res_present:{$each:[{name:"bread",q
 > var status = db.serverStatus()
 > status.connections
 { "current" : 9, "available" : 999991, "totalCreated" : 567 }
+
+
+db.bonuses.update({player_name:"test11",'wacky_keyboard.level1':0},{$set:{'wacky_keyboard.$.level1':10}})

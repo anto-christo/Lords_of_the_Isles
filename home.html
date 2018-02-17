@@ -51,6 +51,9 @@
                         socket.on("setLocalStorage",function(data){
                             localStorage.setItem("i_name", data);
                         });
+                        socket.on("wacky_bonus",function(data){
+                            console.log("data "+data);
+                        });
                         setInterval(function(){ 
                             socket.emit('getGold', {"username": person});
                         }, 3000);

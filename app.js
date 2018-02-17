@@ -3,6 +3,7 @@ var player = require('./models/players_schema');
 var island = require('./models/islands_schema');
 var ship = require('./models/ships_schema');
 var bank = require('./models/bank_schema');
+var bonus = require('./models/bonuses_schema');
 
 var express = require('express');
 var fs = require("fs");
@@ -13,12 +14,12 @@ var io = require('socket.io').listen(server);
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://127.0.0.1:27017/LOI';
-//23 close 19 open 
+var wacky = 'mongodb://127.0.0.1:27017/wacky';
 var assert = require('assert');
 
 var rankings= [];
 var clients = {};
-var gold = 0;
+// var gold = 0;
 
 app.use(express.static(__dirname));
 app.use(bodyParser.urlencoded({ extended: true })); 
@@ -33,6 +34,40 @@ server.listen(process.env.PORT || 3000,function(){
     console.log('Listening on '+server.address().port);
 });
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////     BONUSES       /////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function update_wacky(name,l){
+MongoClient.connect(url, function(err, db) {
+     assert.equal(null, err);
+        db.collection('bonuses').find({player_name:name}).toArray(function(err, results1){
+          if (results1.length>0) 
+          {
+            // console.log("results1[0].wacky_keyboard[0].level3" + results1[0].wacky_keyboard[0].level3);
+            if (results1[0].wacky_keyboard[2].level3==0&&l>2) 
+            {
+              db.collection("players").update({name:name},{$inc:{gold:5000}});
+              db.collection("bonuses").update({player_name:name,'wacky_keyboard.level3':0},{$set:{'wacky_keyboard.$.level3':1}});
+            }
+            if (results1[0].wacky_keyboard[1].level2==0&&l>1) 
+            {
+              db.collection("players").update({name:name},{$inc:{empty_ship_slots:1}});
+              db.collection("bonuses").update({player_name:name,'wacky_keyboard.level2':0},{$set:{'wacky_keyboard.$.level2':1}});
+            }
+            if (results1[0].wacky_keyboard[0].level1==0) 
+            {
+              db.collection("players").update({name:name},{$inc:{gold:1000}});
+              db.collection("bonuses").update({player_name:name,'wacky_keyboard.level1':0},{$set:{'wacky_keyboard.$.level1':1}});
+            }
+          }
+          setTimeout(function(){
+              db.close(); 
+          },1000)
+          
+        });
+    });
+}
 
 
 
@@ -64,6 +99,30 @@ io.on('connection', function(socket) {
             // setTimeout(function(){
               io.sockets.connected[clients[data.username].socket].emit("setLocalStorage", results[0].owned_islands_name[0].island_name);
             // },500)
+            db.close(); 
+          });
+      });
+
+      MongoClient.connect(wacky, function(err, db) {
+       assert.equal(null, err);
+          db.collection('scores').find({user:data.username}).toArray(function(err, results){
+            if (results.length>0) 
+            {
+              console.log("wacky score: "+results[0].score);
+              if (results[0].score >= 100 && results[0].score < 150) 
+              {
+                 update_wacky(data.username,1);
+              }
+              if (results[0].score >= 150 && results[0].score < 250) 
+              {
+                 update_wacky(data.username,2);
+              }
+              if (results[0].score >= 250) 
+              {
+                 update_wacky(data.username,3);
+              }
+              io.sockets.connected[clients[data.username].socket].emit("wacky_bonus", results[0].score);
+            }
             db.close(); 
           });
       });
@@ -359,7 +418,7 @@ app.post('/create_island', function(req, res) {
                 i.current_population = current_pop;
                 i.max_population = cap;
                 i.value = island_value;
-                console.log(i);
+                // console.log(i);
 
                 db.collection("islands").insert(i,function(err,result){
                       var resource_name;
@@ -658,10 +717,11 @@ app.post('/buy_ship',function(req,res){
 /////////////////////////////////////////////////     PLAYER       //////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function insert_player(p){
+function insert_player(p,b){
   // console.log("new player");
   MongoClient.connect(url, function(err, db) {
         db.collection("players").insert(p);
+        db.collection("bonuses").insert(b);
         db.close();
   });
 }
@@ -669,9 +729,15 @@ function insert_player(p){
 app.post('/player_name', function(req, res) {
 
   var p = new player();
+  var b = new bonus();
   // console.log("\n\nIN PLAYER NAME\n");
   p.name = req.body.username;
-
+  b.player_name = p.name;
+  b.wacky_keyboard = [
+    {level1 : 0},
+    {level2 : 0},
+    {level3 : 0}
+  ]
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
     
@@ -683,7 +749,8 @@ app.post('/player_name', function(req, res) {
       }
       else
       { 
-        insert_player(p);
+        insert_player(p,b);
+
       }
 
       db.close();

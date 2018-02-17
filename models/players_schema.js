@@ -11,14 +11,11 @@ var playerSchema = new mongoose.Schema({
     	{	island_name: {type: String, default: null}},
     ],
     explored_islands_name: [
-    	{	island_name: {type: String, default: null}},
+        {   island_name: {type: String, default: null}},
     ],
     owned_ships_id: [
-		{	id: {type: String, default: null}},
+        {   id: {type: String, default: null}},
     ],
-
-
-
 });
 
 var playerSchema = mongoose.model('players', playerSchema);
