@@ -15,20 +15,44 @@
     <center >
         <button class="btn btn-primary" data-toggle="modal" data-target="#ques" style="float:right">Rename Ship</button>
 
-        <h4 id="_id"></h4><br><br>
-        <h4 id="source"></h4><br><br>
+        <h5 id="_id"></h5><br><br>
+        <div class="row">
+            <div class="col-md-6">
+                <h5 id="source"></h5>
+                <table border="1px" id="res_table">
+                    <tr>
+                        <th>Resource</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Export Quantity</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <h5 id="destination"></h5>
+                <table border="1px" id="dest_res_table">
+                    <tr>
+                        <!-- <th>Resource</th> -->
+                        <!-- <th>Quantity</th> -->
+                        <!-- <th>Accepting</th> -->
+                        <th>Price</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
-        <table border="1px" id="res_table">
-            <tr>
-                <th>Resource</th>
-                <th>Quantity</th>
-                <th>Export Quantity</th>
-            </tr>
-        </table><br><br>
+        <div class="row">
+            <div class="col-md-4" id="class"></div>
+            <div class="col-md-4" id="speed"></div>
+            <div class="col-md-4" id="capacity"></div>
+        </div>
+
+        
 
         <select id="dest_islands"><option>Select Destination</option></select><br><br><br>
 
-        <button class="btn btn-success" onclick="send_ship()">Send Ship</button><br><br><br>
+        <button id="send_button"  class="btn btn-success" onclick="send_ship()">Send Ship</button><br><br><br>
+        <button id="view_button"  class="btn btn-success" onclick="view_market()">View Market</button><br><br><br>
       
         <div class="modal fade" id="ques" tabindex="-1" role="dialog" aria-labelledby="ques" aria-hidden="true">
         <div class="modal-dialog" role="document">

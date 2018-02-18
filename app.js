@@ -812,16 +812,18 @@ app.post('/old_island', function(req, res) {
 
     db.collection('islands').aggregate([{$match:{ owner_name:{$ne:user} }}, {$sample:{size:1}} ], function(err,result){
       // console.log(result);
-
-      if(result[0].owner_name != 'AI'){
-
-        var event = user+" visited your island "+result[0].name;
-        db.collection('log').insert({tick:current_tick,name:result[0].owner_name, event:event},function(err,res){
-          console.log("user landing updated");
-        });
+      if (result) 
+      {
+      	if(result[0].owner_name != 'AI'){
+	        var event = user+" visited your island "+result[0].name;
+	        db.collection('log').insert({tick:current_tick,name:result[0].owner_name, event:event},function(err,res){
+	      	    console.log("user landing updated");
+	      		db.close();
+	        });
+	    }
       }
+      
 
-      db.close();
       return res.send(result);
     });
 
@@ -945,14 +947,62 @@ app.post('/rename_ship',function(req,res){
 app.post('/get_island_info',function(req,res){
 
   var island = req.body.island;
-
+  var prices = [];
+  var base_cost;
+  var sum = 0;
+  var ct_arr = [];
+  console.log("island: "+ island)
   MongoClient.connect(url, function(err, db) {
+  	db.collection("res").find({}).toArray(function(err, result1) {
 
-    db.collection("islands").find({name:island}).toArray(function(err, result) {
-        // console.log("get_island_info: "+result);
-        db.close();
-        return res.send(result);
-    });
+	      for (var j =0; j < 15; j++) {
+	          ct_arr[j] = result1[j].ct;
+	          sum = sum + result1[j].ct;
+	      }
+
+	      db.collection("islands").find({name:island}).toArray(function(err, result) {
+		        // console.log("get_island_info: "+result);
+		        db.close();
+		        if (result.max_population >700) 
+		        {
+		        	res_cap = 3000;
+		        }
+		        else
+		        {
+		        	res_cap = 2000;
+		        }
+		        for (var j = 0; j < 15; j++) {
+		        	if (j < 9) 
+		        	{
+		        		base_cost = common[j].base_cost;
+		        	}
+		        	else
+		        	{
+		        		base_cost = rare[j-9].base_cost;
+		        	}
+		        	prices[j] = base_cost * sum;
+		        	if (ct_arr[j]>0) 
+		        	{
+		        		prices[j] = prices[j]/ct_arr[j]; 
+		        	}
+		        	if (result[0].res_present[j].quantity > 0) 
+		        	{
+		        		prices[j] = prices[j]*(1-(result[0].res_present[j].quantity/res_cap));
+		        	}
+		        	prices[j] = prices[j]/20;
+		        	prices[j] = Math.floor(prices[j])+1;
+			    }
+			    for (var j =0; j < 15; j++) {
+			    	console.log(prices[j] + " ");
+			    }
+		        var object = {
+		        	result: result,
+		        	prices: prices
+		        }
+		        return res.send(object);
+		    });
+	  });	
+    
 
   });
 });
@@ -1107,7 +1157,7 @@ var m,min;
   }
   
 
-  var dur = 1; // 10 mins i.e. 6 ticks per hour
+  var dur = 3; // 10 mins i.e. 6 ticks per hour
   var duration = dur* 60; 
   var adjust;
   function myFunction() {
@@ -1155,11 +1205,11 @@ MongoClient.connect(url, function(err, db) {
   var res_cap;
 
   db.collection("res").find({}).toArray(function(err, result1) {
-              for (var j =0; j < 15; j++) {
-                  ct_arr[j] = result1[j].ct;
-                  sum = sum + result1[j].ct;
-              }
-      });
+          for (var j =0; j < 15; j++) {
+              ct_arr[j] = result1[j].ct;
+              sum = sum + result1[j].ct;
+          }
+      });	
 
 
   db.collection("players").find().forEach(function(data){
@@ -1193,24 +1243,63 @@ MongoClient.connect(url, function(err, db) {
       else if (data.eta==1) // ship lands
       {
         db.collection("ships").update({_id:data._id},{$inc:{eta:-1}}) // eta becomes 0 in db indicating ship is at halt.
-        
-        for (k in data.res_present) {
-          if (data.res_present[k].quantity>0) {
-            // db.collection('islands').find({name:data.destination}).toArray(function(res,result){
-                // result[0].accepting[k].quantity
-                db.collection('islands').update({
-                  $and:[ {name:data.destination},{'res_present.name':data.res_present[k].name} ]},
-                  {$inc:{'res_present.$.quantity':data.res_present[k].quantity}
-                });
-            // })
-            
-            db.collection('ships').update({
-              _id:data._id,"res_present.name":data.res_present[k].name},
-              {$inc:{'res_present.$.quantity':-data.res_present[k].quantity}
-            });
-          }
-        }
-        
+         var total_on_ship = 0;
+         var present = 0;
+         for (k in data.res_present) {
+         	if (data.res_present[k].quantity > 0) 
+         	{
+				total_on_ship = total_on_ship + data.res_present[k].quantity;
+         		present++;
+         	}
+         }
+
+         var space_on_island = 0;
+         var res_cap=0;
+         var sum = 0;
+         var diff = 0;
+         db.collection("islands").find({name:data.destination}).toArray(function(err, result1) {
+              if(result1[0].max_population > 700)
+              {
+              		res_cap = 3000;
+              }
+              else
+              {
+              		res_cap = 2000;
+              }
+              for (var i = 0; i < 15; i++) 
+              {
+              		sum = sum + result1[0].res_present[i].quantity;
+              		if (result1[0].res_present[i].sell > 0) 
+              		{
+              			sum = sum + result1[0].res_present[i].sell;
+              		}
+              }
+              space_on_island = res_cap - sum;
+              if (space_on_island < total_on_ship) 
+              {
+              	diff = total_on_ship - space_on_island;
+              	diff = Math.floor(diff/present);
+              }
+              for (k in data.res_present) {
+	          if (data.res_present[k].quantity>0) {
+	            // db.collection('islands').find({name:data.destination}).toArray(function(res,result){
+	                // result[0].accepting[k].quantity
+	                db.collection('islands').update({ //put on dest island
+	                  $and:[ {name:data.destination},{'res_present.name':data.res_present[k].name} ]},
+	                  {$inc:{'res_present.$.quantity':data.res_present[k].quantity-diff}
+	                });
+	            // })
+	            
+	            db.collection('ships').update({ // unload from ship
+	              _id:data._id,"res_present.name":data.res_present[k].name},
+	              {$inc:{'res_present.$.quantity':-data.res_present[k].quantity}
+	            });
+	          }
+	        }
+
+
+      	});
+
         db.collection('ships').update({_id:data._id},{$set:{source:data.destination,destination:null}})
 
       }
@@ -1419,10 +1508,22 @@ MongoClient.connect(url, function(err, db) {
         // }
         for (var i6 = 0; i6 < 15; i6++) {
 			// console.log("reduce "+reduce);
-			if (data.res_present[i6].sell > 0) 
+			if (reduce <= 0) // decrease accepting
 			{
-        		db.collection("islands").update({name:data.name,'res_present.name':data.res_present[i6].name},{$inc:{"res_present.$.sell":reduce}})
+				if (data.res_present[i6].sell > 0) 
+				{
+	        		db.collection("islands").update({name:data.name,'res_present.name':data.res_present[i6].name},{$inc:{"res_present.$.sell":reduce}})
+				}
 			}
+			else if (reduce > 0)  // increase accepting
+			{
+				if (data.res_present[i6].sell < 100) 
+				{
+	        		db.collection("islands").update({name:data.name,'res_present.name':data.res_present[i6].name},{$inc:{"res_present.$.sell":reduce}})
+				}
+			}
+
+			
         }
 
 
@@ -1465,6 +1566,10 @@ MongoClient.connect(url, function(err, db) {
   });
 
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////     LOGS      /////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 app.post('/get_log',function(req,res){
 

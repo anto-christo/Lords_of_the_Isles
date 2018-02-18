@@ -3,8 +3,12 @@ var ship = localStorage.getItem("s_id");
 var produced = null;
 var source = null;
 var limit = [];
+var index;
+var acc_res = [];
 var ship_cap;
 // console.log("Ship="+ship);
+var dest;
+var price;
 
 function rename(){
 
@@ -24,7 +28,7 @@ function rename(){
 
 function send_ship(){
 
-    var dest = $('#dest_islands option:selected').text();
+    dest = $('#dest_islands option:selected').text();
 
     if(dest == 'Select Destination')
         alert("Please select a destination");
@@ -77,44 +81,91 @@ function send_ship(){
     }
 }
 
-
-$(document).ready(function(){
+function view_market()
+{
+    dest = $('#dest_islands option:selected').text();
+    console.log("in view")
     $.ajax({
         type:'POST',
-        url:'/get_ship_info',
-        data:{ship:ship},
-        success: function(result){
-                var eta = result[0].eta;
-                ship_cap = result[0].capacity;
-                    $.ajax({
-                        type:'POST',
-                        url:'/get_island',
-                        data:{user:user},
-                        success: function(result){
+        url:'/get_island_info',
+        data:{island:dest},
+        success: function(object){
+            dest_result = object.result;
+        console.log("dest_result[0]. "+ dest_result[0].res_produced.res_name);
 
-                            for(i=0;i<result[0].owned_islands_name.length;i++){
-                                $('#dest_islands').append('<option>'+result[0].owned_islands_name[i].island_name+'</option>');
-                            }
+            $('#dest_res_table').empty();
+            $('#dest_res_table').append(
+                '<tr>'+
+                    // '<th>Resource</th>'+
+                    // '<th>For purchase</th>'+
+                    '<th>Price</th>'+
+                    // '<th>Buy</th>'+
+                '</tr>'
+            );
+            index = 0;
 
-                            for(i=0;i<result[0].explored_islands_name.length;i++){
-                                $('#dest_islands').append('<option>'+result[0].explored_islands_name[i].island_name+'</option>');
-                            }
-                        }
-                    });
-                    $('#_id').text("Registration No. : "+result[0]._id);
-                    $('#source').text("Anchored at : "+result[0].source);
-                    source = result[0].source;
-                    $('#mod').prepend('<input id="ship_name" type="text" value='+result[0].name+'>');
+
+            for(i=0;i<dest_result[0].res_present.length;i++){
+                price = 0; //calculate actual price here
+                if(dest_result[0].res_present[i].sell>0){
+                    // limit[j++] = dest_result[0].res_present[i].sell;
+                    // console.log(limit);
+                    acc_res[index++] = i;
+                    $('#dest_res_table').append(
+                        '<tr>'+
+                            // '<td>'+dest_result[0].res_present[i].name+'</td>'+
+                            // '<td>'+dest_result[0].res_present[i].sell+'</td>'+
+                            '<td>'+price+'</td>'+
+                            // '<td><input type="number" name="res_input[]" id="'+dest_result[0].res_present[i].name+'" value="0" min="0" max="'+dest_result[0].res_present[i].sell+'"></td>'+
+                        '</tr>'
+                    );
+                }
+            }
+            console.log("\n")
+              console.log(acc_res.length)
+                for (var i = 0; i < acc_res.length; i++) {
+                    console.log(i)
+                    console.log(acc_res[i])
+                }
+            console.log("\n")
+            get_island_info();
+        }
+    });
+
+
+    $('#send_button').show();
+    $('#view_button').hide();
+    $('#res_table').show();
+    $('#dest_islands').hide();
+    $('#destination').show();
+    $('#dest_res_table').show();
+
+    $('#class').hide();
+    $('#speed').hide();
+    $('#capacity').hide();
+
+    $('#destination').text("Destination: "+dest);
+    console.log("dest: "+dest);
+
+}
+
+
+function get_island_info()
+{
+    console.log("source : "+source);
+                    var prices=[];
                     $.ajax({
                         type:'POST',
                         url:'/get_island_info',
-                        data:{island:result[0].source},
-                        success: function(result){
-
-                            // console.log(result);
-
-                            produced = result[0].res_produced.res_name;
-                            // console.log("Produced="+produced);
+                        data:{island:source},
+                        success: function(object){
+                            result = object.result;
+                            prices = object.prices;
+                            for (var i = 0; i < 15; i++) {
+                               console.log(prices[i]);
+                            }
+                            // produced = result[0].res_produced.res_name;
+                            // console.log("result="+result);
 
                             $('#res_table').empty();
 
@@ -123,6 +174,7 @@ $(document).ready(function(){
                                     '<tr>'+
                                         '<th>Resource</th>'+
                                         '<th>For purchase</th>'+
+                                        '<th>Price</th>'+
                                         '<th>Buy</th>'+
                                     '</tr>'
                                 );
@@ -133,48 +185,113 @@ $(document).ready(function(){
                                     '<tr>'+
                                         '<th>Resource</th>'+
                                         '<th>Quantity</th>'+
+                                        // '<th>Price</th>'+
                                         '<th>Export Quantity</th>'+
                                     '</tr>'
                                 );
                             }
 
+                            console.log(acc_res.length)
+                            for (var i = 0; i < acc_res.length; i++) {
+                                console.log(i)
+                                console.log(acc_res[i])
+                            }
+
                             j = 0;
                             
                             if(result[0].owner_name != user){
+
                                 for(i=0;i<result[0].res_present.length;i++){
-                                
+                                    price = 0; //calculate actual price here
                                     if(result[0].res_present[i].sell>0){
-                                        limit[j++] = result[0].res_present[i].sell;
-                                        // console.log(limit);
-                                        $('#res_table').append(
-                                            '<tr>'+
-                                                '<td>'+result[0].res_present[i].name+'</td>'+
-                                                '<td>'+result[0].res_present[i].sell+'</td>'+
-                                                '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+result[0].res_present[i].sell+'"></td>'+
-                                            '</tr>'
-                                        );
+                                        if(acc_res.indexOf(i)!=-1) // dest accepting, source selling confirmed.
+                                        {
+                                            limit[j++] = result[0].res_present[i].sell;
+                                            // console.log(limit);
+                                            $('#res_table').append(
+                                                '<tr>'+
+                                                    '<td>'+result[0].res_present[i].name+'</td>'+
+                                                    '<td>'+result[0].res_present[i].sell+'</td>'+
+                                                    '<td>'+price+'</td>'+
+                                                    '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+result[0].res_present[i].sell+'"></td>'+
+                                                '</tr>'
+                                            );
+                                        }
                                     }
                                 }
                             }
 
                             else{
                                 for(i=0;i<result[0].res_present.length;i++){
-                                
+                                    price = 0; //calculate actual price here
                                     if(result[0].res_present[i].quantity>0){
-                                        limit[j++] = result[0].res_present[i].quantity;
-                                        // console.log(limit);
-                                        $('#res_table').append(
-                                            '<tr>'+
-                                                '<td>'+result[0].res_present[i].name+'</td>'+
-                                                '<td>'+result[0].res_present[i].quantity+'</td>'+
-                                                '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+result[0].res_present[i].quantity+'"></td>'+
-                                            '</tr>'
-                                        );
+                                        console.log("index: "+acc_res.indexOf(i));
+                                        if(acc_res.indexOf(i)!=-1) // dest accepting, source selling confirmed.
+                                        {
+                                            limit[j++] = result[0].res_present[i].quantity;
+                                            // console.log(limit);
+                                            $('#res_table').append(
+                                                '<tr>'+
+                                                    '<td>'+result[0].res_present[i].name+'</td>'+
+                                                    '<td>'+result[0].res_present[i].quantity+'</td>'+
+                                                    // '<td>'+price+'</td>'+
+                                                    '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+result[0].res_present[i].quantity+'"></td>'+
+                                                '</tr>'
+                                            );
+                                        }
                                     }
                                 }
                             }
+                          }
+                        });
+}
 
+$(document).ready(function(){
+    $('#res_table').hide();
+    $('#send_button').hide();
+    $('#destination').hide();
+    $('#dest_res_table').hide();
 
+    $.ajax({
+        type:'POST',
+        url:'/get_ship_info',
+        data:{ship:ship},
+        success: function(result){
+                var eta = result[0].eta;
+                ship_cap = result[0].capacity;
+                $('#class').text("Class: "+result[0].class);
+                $('#speed').text("Speed: "+result[0].speed);
+                $('#capacity').text("Capacity: "+result[0].capacity);
+                source = result[0].source;
+                    console.log("here source : "+source);
+
+                    $.ajax({
+                        type:'POST',
+                        url:'/get_island',
+                        data:{user:user},
+                        success: function(result){
+                           console.log("outer result: "+result[0].owned_islands_name.length)
+                            for(i=0;i<result[0].owned_islands_name.length;i++){
+                                if (result[0].owned_islands_name[i].island_name!=source) 
+                                {
+                                    $('#dest_islands').append('<option>'+result[0].owned_islands_name[i].island_name+'</option>');
+                                }
+                            }
+
+                            for(i=0;i<result[0].explored_islands_name.length;i++){
+                                if (result[0].explored_islands_name[i].island_name!=source) 
+                                {
+                                    $('#dest_islands').append('<option>'+result[0].explored_islands_name[i].island_name+'</option>');
+                                }
+                            }
+
+                    $('#_id').text("Registration No. : "+result[0]._id);
+                    $('#source').text("Anchored at : "+source);
+                    // source = result[0].source;
+                    $('#mod').prepend('<input id="ship_name" type="text" value='+result[0].name+'>');
+                    
+
+                        
                         }
 
                     });

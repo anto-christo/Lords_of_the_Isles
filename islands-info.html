@@ -113,8 +113,9 @@
               type:'POST',
               url:'/get_island_info',
               data:{island:localStorage.getItem("i_name")},
-              success: function(result){
+              success: function(object){
                    var res_cap;
+                   result = object.result;
                     if (result[0].max_population>700) 
                     {
                       res_cap = 3000;
@@ -179,8 +180,8 @@
                         // {
                         //   slider.value = result[0].res_present[i].sell;
                         // }
-                        console.log("res_cap "+res_cap)
-                        console.log("sum_res "+sum_res)
+                        // console.log("res_cap "+res_cap)
+                        // console.log("sum_res "+sum_res)
                         slider.max = res_cap - sum_res;
                         output.innerHTML = slider.value; // Display the default slider value
 
@@ -273,8 +274,8 @@
                     type:'POST',
                     url:'/get_island_info',
                     data:{island:name},
-                    success: function(result){
-                       
+                    success: function(object){
+                       result = object.result;
                         var owner = result[0].owner_name;
                         a = result[0].current_population;
                         $('#pop').text(result[0].current_population);
