@@ -1095,7 +1095,7 @@ var m,min;
   var sum = m*60+h*3600+n*86400; // in secs
     d = new Date();
     n = d.getUTCDate();
-    n1 = 20;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
+    n1 = 6;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
       adjust = n1*24*(60/dur);
 
       h = addZero(d.getUTCHours(), 2);
@@ -1348,13 +1348,20 @@ app.post('/delete_log',function(req,res){
   var id = req.body.id;
 
   MongoClient.connect(url, function(err, db) {
-
-    var ObjectId = new mongoose.Types.ObjectId(id);
     
-    db.collection('log').remove({_id:ObjectId},function(err, results){
-      console.log("log deleted");
-      return res.send("done");
-    });
+    for(var i in id){
+
+      console.log("id="+id[i]);
+
+      var ObjectId = new mongoose.Types.ObjectId(id[i]);
+
+      db.collection('log').remove({_id:ObjectId},function(err, results){
+        console.log("log deleted");
+      });
+    }
+
+    return res.send("done");
+    db.close();
   });
 });
 

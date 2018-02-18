@@ -24,14 +24,35 @@
 		var user = localStorage.getItem('user');
 
 		function delete_log(id){
+
+			var id_arr = [id];
+
 			console.log("delete clicked");
 				$.ajax({
 				type: 'POST',
 				url: '/delete_log',
-				data:{id:id},
+				data:{id:id_arr},
 				success: function(result){
 					if(result=="done")
 						location.reload();
+				}
+			});
+		}
+
+		var id_list = [];
+
+		function delete_all(id){
+
+			console.log("delete clicked");
+				$.ajax({
+				type: 'POST',
+				url: '/delete_log',
+				data:{id:id_list},
+				success: function(result){
+					if(result=="done"){
+						location.reload();
+						id_list = [];
+					}
 				}
 			});
 		}
@@ -44,17 +65,19 @@
 
 				if(result.length == 0){
 					$('#log_table').append(
-						'<tr><td colspan="3">Nothing to show</td></tr>'
+						'<tr><td colspan="3"><center>Nothing to show</center></td></tr>'
 					);
 				}
 
 				for(i=0;i<result.length;i++){
 					var id = "delete_log('" + result[i]._id + "')";
 
+					id_list.push(result[i]._id);
+
 					$('#log_table').append(
-						'<tr><td>'+result[i].tick+'</td>'+
-						'<td>'+result[i].event+'</td>'+
-						'<td><button class="btn btn-success" onclick="'+id+'">Mark as Read</button></td></tr>'
+						'<tr><td><center>'+result[i].tick+'</center></td>'+
+						'<td><center>'+result[i].event+'</center></td>'+
+						'<td><center><button class="btn btn-success" onclick="'+id+'">Delete</button></center></td></tr>'
 					);
 				}
 			}
@@ -66,18 +89,18 @@
 			<div class="inner-container">
 			<div class="element">
 	   
-		   <div class="outer" style="margin-bottom: 125px;padding-top: 10px;">
-						   <center>
-							   
-								<table border="1px" id="log_table">
-										<tr>
-											<th>Tick</th>
-											<th>Event</th>
-											<th>Action</th>
-										</tr>
-									</table>
-	   
-						   </center>
+		   <div class="outer">
+				<center>
+					
+					<table border="1px" id="log_table" width="100%">
+							<tr>
+								<th><center>Tick</center></th>
+								<th><center>Event</center></th>
+								<th><center><button class="btn btn-danger" onclick="delete_all()">Delete All</button></center></th>
+							</tr>
+						</table>
+
+				</center>
 	   
 		   </div>
 	   
