@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en"><!DOCTYPE html>
 <html>
@@ -65,12 +64,26 @@
         </button>
       </div>
       <div class="modal-body trading_modal" id="mod"> 
-
         <center>
-          <div id="res"></div><br><br>
+          <button onclick="openImports()">Imports</button>
+          <button onclick="openExports()">Exports</button>
+        </center>
+        <center>
+          <div id="res_buy"></div><br><br>
+          <div id="res_sell"></div><br><br>
         </center>
         
         <script>
+        $('#res_buy').hide();
+        $('#res_sell').hide();
+        function openImports(){
+          $('#res_buy').show();
+          $('#res_sell').hide();
+        }
+        function openExports(){
+          $('#res_buy').hide();
+          $('#res_sell').show();
+        }
 
         function update_sell(id,qty,choice){
                 $.ajax({
@@ -101,30 +114,76 @@
               url:'/get_island_info',
               data:{island:localStorage.getItem("i_name")},
               success: function(result){
-
+                   var res_cap;
+                    if (result[0].max_population>700) 
+                    {
+                      res_cap = 3000;
+                    }
+                    else
+                    {
+                      res_cap = 2000;
+                    }
+                    // console.log("testing on island "+result)
                   produced = result[0].res_produced.res_name;
                   $('#res').empty();
-                  
+                  var sum_res = 0;
+                  for(j=0;j<result[0].res_present.length;j++){
+                    // console.log("in for");
+                      sum_res = sum_res +result[0].res_present[j].quantity;
+                      if (result[0].res_present[j].sell > 0) 
+                      {
+                        sum_res = sum_res + result[0].res_present[j].sell;
+                      }
+                  }
                   for(i=0;i<result[0].res_present.length;i++){
+                      var tp = i + 15; // to keep sliders unique
                       if(result[0].res_present[i].quantity>0){
-                          $('#res').append(
+                          $('#res_sell').append(
                             '<div class="row">'+
-                              '<div class="col-md-2" style="margin-top:20px">'+ result[0].res_present[i].name+'</div>'+
+                              '<div class="col-md-1" style="margin-top:20px">'+ result[0].res_present[i].name+'</div>'+
+                              '<div class="col-md-6 slidecontainer">'+
+                                '<div id="d'+tp+'" ></div>'+
+                                  '<input type="range" min="0" max="100" value="0" class="slider" id="s'+tp+'" oninput="func('+tp+')"">'+
+                              '</div>'+
+                              '<div "col-md-5"><button class="btn btn-danger" style="margin-left:15px;margin-top:15px" onclick="updating('+tp+',1)">Put for sale</button></div>'+
+                            '</div>'
+                          ); //exports
+
+                        var slider = document.getElementById("s"+tp);
+                        var output = document.getElementById("d"+tp);
+                        slider.max = result[0].res_present[i].quantity;
+                        if (result[0].res_present[i].sell < 0) 
+                        {
+                          slider.value = (result[0].res_present[i].sell)*(-1);
+                        }
+                        output.innerHTML = slider.value; // Display the default slider value
+                      }
+                      var atp = result[0].res_present[i].sell;
+                      if (atp < 0) 
+                      {
+                        atp = 0; // to not show negative value in accepting modal.
+                      }
+                       $('#res_buy').append(
+                            '<div class="row">'+
+                              '<div class="col-md-1" style="margin-top:20px">'+ result[0].res_present[i].name+'</div>'+
                               '<div class="col-md-6 slidecontainer">'+
                                 '<div id="d'+i+'" ></div>'+
                                   '<input type="range" min="0" max="100" value="0" class="slider" id="s'+i+'" oninput="func('+i+')"">'+
                               '</div>'+
-                              '<div "col-md-2"><button class="btn btn-success" style="margin-top:15px" onclick="updating('+i+',0)">Buy</button></div>'+
-                              '<div "col-md-2"><button class="btn btn-danger" style="margin-left:15px;margin-top:15px" onclick="updating('+i+',1)">Sell</button></div>'+
+                              '<div "col-md-5"><button class="btn btn-success" style="margin-left:15px;margin-top:15px" onclick="updating('+i+',0)">Accepting ('+atp+')</button></div>'+
                             '</div>'
-                          );
-
+                          ); // imports
                         var slider = document.getElementById("s"+i);
                         var output = document.getElementById("d"+i);
-                        slider.max = result[0].res_present[i].quantity;
+                        // if (result[0].res_present[i].sell) 
+                        // {
+                        //   slider.value = result[0].res_present[i].sell;
+                        // }
+                        console.log("res_cap "+res_cap)
+                        console.log("sum_res "+sum_res)
+                        slider.max = res_cap - sum_res;
                         output.innerHTML = slider.value; // Display the default slider value
 
-                      }
                   }
 
 
@@ -215,7 +274,7 @@
                     url:'/get_island_info',
                     data:{island:name},
                     success: function(result){
-
+                       
                         var owner = result[0].owner_name;
                         a = result[0].current_population;
                         $('#pop').text(result[0].current_population);
@@ -250,17 +309,26 @@
                         }
 
                         $('#res_table').empty();
-
+                        var temp_trade;
                         for(i=0;i<result[0].res_present.length;i++){
 
                           if(result[0].res_present[i].quantity){
+                            temp_trade = result[0].res_present[i].sell;
+                            if (result[0].res_present[i].sell < 0) 
+                            {
+                              temp_trade = result[0].res_present[i].sell*(-1);
+                            }
                             $('#res_table').append(
                               '<tr>'+
-                                  '<td>'+result[0].res_present[i].quantity+'&nbsp; /&nbsp; </td>'+
-                                  '<td>'+result[0].res_present[i].sell+'</td>'+
+                                  '<td width="50px">'+result[0].res_present[i].quantity+'&nbsp;/&nbsp;</td>'+
+                                  '<td id="trade'+i+'" style="color:green">'+temp_trade+'</td>'+
                                   '<td><img src="resources/'+result[0].res_present[i].name+'.png" width="34px" height="34px" style="margin-left:10px" data-container="body" data-toggle="popover" data-placement="right" data-content="'+result[0].res_present[i].name+'"></td>'+
                               '</tr>'
                             );
+                          }
+                          if (result[0].res_present[i].sell < 0) 
+                          {
+                            $('#trade'+i).css({"color":"red"});
                           }
 
                         }

@@ -1,9 +1,10 @@
 var user;
 
 	$(document).ready(function(){
+        get_dice_status(0);
 
         user = localStorage.getItem("user");
-
+        // console.log("here user: "+user);
         function assign_island(x){
             $.ajax({
                 type: 'POST',
@@ -86,28 +87,19 @@ var user;
                         old_island();
                     }
                 }
- $('[data-toggle="popover"]').popover({
-    placement : 'bottom',
-    trigger : 'hover'
-});
-var text;
-var random_event=1;
-$('[data-toggle="dice"]').popover({
-    placement : 'bottom',
-    trigger : 'hover',
-    html : true,
-    content : text
-});
-        get_dice_status(0);
+
 
         function get_dice_status(t)
         {
+            user = localStorage.getItem("user");
+            // console.log("user: "+ user);
             $.ajax({
                 type: 'POST',
                 url: 'get_dice_status',
                 data: { username:user },
                 dataType: 'json',
                 success: function(data){
+                    // console.log("data: "+data);
                     random_event = data[0].random_event_used;  
                     if (random_event==0) // not used random event yet
                     {
@@ -125,7 +117,6 @@ $('[data-toggle="dice"]').popover({
             {
                 if (random_event==0) 
                 {
-                    console.log("went in");
                     $.ajax({
                         type: 'POST',
                         url: 'update_dice_status',
@@ -145,7 +136,6 @@ $('[data-toggle="dice"]').popover({
             }
         }
         $("#dice_btn").click(function(){
-            console.log("status: "+ random_event);
             get_dice_status(1);
 
         });
@@ -158,11 +148,9 @@ $('[data-toggle="dice"]').popover({
                 dataType: 'json',
                 success: function(x){
                     if(x.player=="new"){
-                        console.log("new player");
                         assign_island(0);
                         localStorage.setItem("old",0);
                     }
-
                     else
                         localStorage.setItem("old",1);
                 }

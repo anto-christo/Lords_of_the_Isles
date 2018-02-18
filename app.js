@@ -19,7 +19,6 @@ var assert = require('assert');
 
 var rankings= [];
 var clients = {};
-// var gold = 0;
 
 app.use(express.static(__dirname));
 app.use(bodyParser.urlencoded({ extended: true })); 
@@ -108,7 +107,7 @@ io.on('connection', function(socket) {
           db.collection('scores').find({user:data.username}).toArray(function(err, results){
             if (results.length>0) 
             {
-              console.log("wacky score: "+results[0].score);
+              // console.log("wacky score: "+results[0].score);	
               if (results[0].score >= 100 && results[0].score < 150) 
               {
                  update_wacky(data.username,1);
@@ -419,12 +418,20 @@ app.post('/create_island', function(req, res) {
                 i.max_population = cap;
                 i.value = island_value;
                 // console.log(i);
-
+                var put;
+                if (cap>700) 
+                {
+                	put = 200;
+                }
+                else
+                {
+					put = 128;
+                }
                 db.collection("islands").insert(i,function(err,result){
                       var resource_name;
-                      db.collection("islands").update({name:island_name},{$push:{res_present:{$each:[{name:"bread",quantity:0,sell:0},{name:"fruits",quantity:0,sell:0},{name:"cheese",quantity:0,sell:0},{name:"wood",quantity:0,sell:0},{name:"stone",quantity:0,sell:0},{name:"wheat",quantity:0,sell:0},{name:"bamboo",quantity:0,sell:0},{name:"ale",quantity:0,sell:0},{name:"cotton",quantity:0,sell:0},{name:"silk",quantity:0,sell:0},{name:"honey",quantity:0,sell:0},{name:"fur",quantity:0,sell:0},{name:"gems",quantity:0,sell:0},{name:"chocolate",quantity:0,sell:0},{name:"spices",quantity:0,sell:0}]}}})
+                      db.collection("islands").update({name:island_name},{$push:{res_present:{$each:[{name:"bread",quantity:0,sell:put},{name:"fruits",quantity:0,sell:put},{name:"cheese",quantity:0,sell:put},{name:"wood",quantity:0,sell:put},{name:"stone",quantity:0,sell:put},{name:"wheat",quantity:0,sell:put},{name:"bamboo",quantity:0,sell:put},{name:"ale",quantity:0,sell:put},{name:"cotton",quantity:0,sell:put},{name:"silk",quantity:0,sell:put},{name:"honey",quantity:0,sell:put},{name:"fur",quantity:0,sell:put},{name:"gems",quantity:0,sell:put},{name:"chocolate",quantity:0,sell:put},{name:"spices",quantity:0,sell:put}]}}})
                       setTimeout(function(){
-                        db.collection('islands').update({$and:[ {name:island_name},{'res_present.name':resource} ]}, {$set:{'res_present.$.quantity':200}},function(err,result){
+                        db.collection('islands').update({$and:[ {name:island_name},{'res_present.name':resource} ]}, {$set:{'res_present.$.quantity':200,'res_present.$.sell':-200}},function(err,result){
                           console.log("array updation done");
                           res.send(JSON.stringify({"name":island_name}));
                           db.close();
@@ -481,8 +488,23 @@ app.post('/assign_island', function(req, res) {
         MongoClient.connect(url, function(err, db) {
               
               db.collection("islands").find({name:is_name}).toArray(function(err, result) {
-                  // console.log("result[0].value "+result[0].value);
+              	for (var i = 0; i < 15; i++)
+              	{
+              		var t_res_name = result[0].res_present[i].name;
+              		db.collection("islands").update({name:is_name,'res_present.name':t_res_name},{$set:{'res_present.$.sell':0}});
+              	}
+                  // console.log("result[0].res_present "+result[0].res_present);
                   var island_cost = result[0].value;
+                  // var res_produced = result[0].res_produced.res_name;
+                  // var max_pop = result[0].max_population;
+                  // if (max_pop>700) 
+                  // {
+                  // 	var res_cap = 3000;
+                  // }
+                  // else
+                  // {
+                  // 	var res_cap = 2000;
+                  // }
                   db.collection("players").find({name:uname}).toArray(function(err,result){
                       var player_gold = result[0].gold;
                       // console.log("player_gold: "+ player_gold);
@@ -540,7 +562,8 @@ app.post('/assign_island', function(req, res) {
                       }
                       else  // cannot buy
                       {
-                          db.collection('players').find( { $and:[ {name:uname},{explored_islands_name:{$elemMatch:{island_name:is_name}}} ] }).count(function(err,result){
+
+                         db.collection('players').find( { $and:[ {name:uname},{explored_islands_name:{$elemMatch:{island_name:is_name}}} ] }).count(function(err,result){
                             // console.log("-------------------------result="+result);
                   
                             if(result==0){
@@ -563,6 +586,7 @@ app.post('/assign_island', function(req, res) {
 
       else{
         // console.log("INSIDE NOT BUYED");
+
         MongoClient.connect(url, function(err, db) {
 
         db.collection('players').find( { $and:[ {name:uname},{explored_islands_name:{$elemMatch:{island_name:is_name}}} ] }).count(function(err,result){
@@ -648,25 +672,15 @@ function assign_ship(uname, is_name, model){
   }
 
   MongoClient.connect(url, function(err, db) {
-
     db.collection("ships").insert(s,function(err,result){
       var id = result.insertedIds[0];
-      for (var k = 0; k < 15; k++) {
-           if (k < 9) 
-          {
-            resource_name = common[k].name;
-            db.collection("ships").update({_id:id},{$push:{res_present:{name:resource_name,quantity:0}}});
-          }
-           else
-          {
-             resource_name = rare[k-9].name;
-            db.collection("ships").update({_id:id},{$push:{res_present:{name:resource_name,quantity:0}}});
-          }
-       }
-      db.collection("players").update({name:uname},{$push:{owned_ships_id:{id:id}},$inc:{empty_ship_slots:-1}}, function(err, r) {
-        assert.equal(null, err);
-        db.close(); 
-      });
+      db.collection("ships").update({_id:id},{$push:{res_present:{$each:[{name:"bread",quantity:0},{name:"fruits",quantity:0},{name:"cheese",quantity:0},{name:"wood",quantity:0},{name:"stone",quantity:0},{name:"wheat",quantity:0},{name:"bamboo",quantity:0},{name:"ale",quantity:0},{name:"cotton",quantity:0},{name:"silk",quantity:0},{name:"honey",quantity:0},{name:"fur",quantity:0},{name:"gems",quantity:0},{name:"chocolate",quantity:0},{name:"spices",quantity:0}]}}})
+      setTimeout(function(){
+	      db.collection("players").update({name:uname},{$push:{owned_ships_id:{id:id}},$inc:{empty_ship_slots:-1}}, function(err, r) {
+	        assert.equal(null, err);
+	        db.close(); 
+	      });
+      },150);
     });
   });
 
@@ -1009,7 +1023,10 @@ app.post('/set_sell',function(req,res){
   var qty = req.body.qty;
   var island = req.body.island;
   var choice = req.body.choice;
-
+  if (id > 14) 
+  {
+  	id = id - 15;
+  }
   console.log(id);
   console.log(qty);
   console.log(island);
@@ -1018,6 +1035,7 @@ app.post('/set_sell',function(req,res){
   {
     qty = qty*(-1);
   }
+  qty = Number(qty);
   // quantity positive if buying or accepting. (goods comming on island)
   // quantity negative if selling (goods going out of island)
   if (id>8) 
@@ -1030,6 +1048,7 @@ app.post('/set_sell',function(req,res){
   }
   MongoClient.connect(url, function(err, db) {
       // update sell
+        	console.log("qty "+qty);
 
       db.collection('islands').update({$and:[ {name:island},{'res_present.name':res_name} ]}, {$set:{'res_present.$.sell':qty}},function(){
         db.close();
@@ -1073,7 +1092,7 @@ var m,min;
   var sum = m*60+h*3600+n*86400; // in secs
     d = new Date();
     n = d.getUTCDate();
-    n1 = 20;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
+    n1 = 6;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
       adjust = n1*24*(60/dur);
 
       h = addZero(d.getUTCHours(), 2);
@@ -1087,7 +1106,7 @@ var m,min;
       temp = sum / duration;
       current_tick = parseInt(temp) - adjust ;
       // console.log("timer: "+min + ":" + sec);
-      
+      // console.log("current_tick "+ current_tick);
       if (s == "02") 
       {
           console.log("\nSERVER SIDE TICK CHANGED\n");
@@ -1170,7 +1189,6 @@ MongoClient.connect(url, function(err, db) {
           }
         }
         
-
         db.collection('ships').update({_id:data._id},{$set:{source:data.destination,destination:null}})
 
       }
@@ -1180,18 +1198,43 @@ MongoClient.connect(url, function(err, db) {
     db.collection("islands").find().forEach(function(data){
         // console.log("island_name:" + data.name);
         // console.log("current_population:" + data.current_population);
-        if (data.max_population>700) 
+      	
+      	if(data.max_population > 700)
+      	{
+      		res_cap = 3000;
+      	}
+      	else
+      	{
+      		res_cap = 2000;
+      	}
+
+      	// update sell values
+        if (data.owner_name=='AI') 
         {
-          res_cap = 3000;
-        }
-        else
-        {
-          res_cap = 2000;
+        	for (var i7 = 0; i7 < 15; i7++) {
+        		if (data.res_present[i7].quantity > 0) // if res present increases, then increase sell magnitude
+        		{
+        			var temp_qt = data.res_present[i7].quantity;
+        			temp_qt = Number(temp_qt*(-1));
+        			db.collection("islands").update({name:data.name,"res_present.name":data.res_present[i7].name},{$set:{"res_present.$.sell":temp_qt}});
+        		}
+        	}
         }
         // consumption and updation of res
         consume = Math.floor(data.current_population / 25); // 25 ppl consume 1 unit of each res
+        var availale_space;
+        var occupied = 0;
+        for (var i8 = 0; i8 < 15; i8++) {
+        	occupied = occupied + data.res_present[i8].quantity;
+        	if (data.res_present[i8].sell > 0) 
+        	{
+        		occupied = occupied + data.res_present[i8].sell;
+        	}
+        }
+
         for (var i2 = 0; i2 < 15; i2++) {
-            produced = 0
+            produced = 0;
+            var put = 0;
             present = data.res_present[i2].quantity;
             // console.log("checking "+data.res_produced.res_name);
             // console.log("checking "+data.res_present[i2].name);
@@ -1201,17 +1244,28 @@ MongoClient.connect(url, function(err, db) {
               // console.log("produced: "+produced);
               // present = present + produced;
             }
-
             if (present > consume) 
             {
-                var put = produced - consume;
-                if (present+produced>res_cap) 
-                {
-                  // console.log("in");
-                  put = res_cap - present;
-                }
-
-                // console.log("put "+put);
+            	if (res_cap > occupied) 
+            	{
+            		put = produced - consume;
+	                if (put > res_cap - occupied) 
+	                {
+	                	put = res_cap  - occupied;
+	                }
+            	}
+            	else
+            	{
+            		put = res_cap - occupied;
+            	}
+                
+                // if (present+produced>res_cap) 
+                // {
+                //   // console.log("in"); // instead of res cap, availale space;
+                //   put = res_cap - present;
+                // }
+                put = Number(put);
+                console.log("put "+put);
                 db.collection("islands").update({name:data.name,"res_present.name":data.res_present[i2].name},{$inc:{"res_present.$.quantity":put}});
             }
             else
@@ -1224,7 +1278,8 @@ MongoClient.connect(url, function(err, db) {
                 {
                   put = -present;
                 }
-                // console.log("consuming present "+present);
+                put = Number(put);
+                // console.log("put here "+put);
                 db.collection("islands").update(
                 {name:data.name,"res_present.name":data.res_present[i2].name},
                 {$inc:{"res_present.$.quantity":put}});
@@ -1268,6 +1323,86 @@ MongoClient.connect(url, function(err, db) {
         }
         // console.log("inc_pop "+inc_pop);
         db.collection("islands").update({name:data.name},{$inc:{current_population:inc_pop}});
+
+        // sell value updation 
+  		if (data.max_population>700) 
+        {
+          res_cap = 3000;
+        }
+        else
+        {
+          res_cap = 2000;
+        }
+        var temp_qt;
+        var temp_name;
+        var sum_res=0;
+        var count_exceed = 0;
+        for (var i5 = 0; i5 < 15; i5++) {
+        	temp_qt = data.res_present[i5].quantity;
+        	temp_name = data.res_present[i5].name;
+        	if (data.res_present[i5].sell < 0) // player has set for selling
+        	{
+        		if(temp_qt < (data.res_present[i5].sell)*(-1)) // pres less than selling. make sell = pres
+        		{
+        			temp_qt = Number(temp_qt*(-1));
+        			console.log("temp_qt "+temp_qt);
+
+        			db.collection("islands").update({name:data.name,'res_present.name':temp_name},{$set:{"res_present.$.sell":temp_qt}})
+        		}
+        		sum_res = sum_res + data.res_present[i5].quantity;
+        	}
+        	else if (data.res_present[i5].sell > 0) // player has set for accepting
+        	{
+        		count_exceed++;
+        		sum_res = sum_res + data.res_present[i5].quantity + data.res_present[i5].sell;
+        	}
+        	else
+        	{
+        		sum_res = sum_res + data.res_present[i5].quantity;
+        	}
+        }
+        var reduce=0;
+    	// console.log("sum_res "+sum_res);
+    	// console.log("res_cap "+res_cap);
+
+        // if (sum_res > res_cap) 
+        // {
+        	var diff = sum_res - res_cap;
+        	if (diff > 0) 
+        	{
+        		if (data.owner_name=='AI') 
+		        {
+	        		if (count_exceed>0) 
+	        		{
+		        		reduce = Math.floor((diff/count_exceed)) + 1;
+			        	reduce = Number(reduce * (-1));
+			        	// console.log("reduce "+reduce);
+		        	}
+		        }
+        	}
+        	else  // diff negative. meaning, increase accepting since space present.
+        	{
+        		if (data.owner_name=='AI') 
+		        {
+		        	if (count_exceed>0) 
+	        		{
+	        			diff = Number(diff*(-1));
+		        		reduce = Math.floor((diff/count_exceed)) + 1;
+			        	// reduce = Number(reduce * (-1));
+			        	// console.log("reduce "+reduce);
+		        	}
+		        }
+        	}
+        	
+        // }
+        for (var i6 = 0; i6 < 15; i6++) {
+			// console.log("reduce "+reduce);
+			if (data.res_present[i6].sell > 0) 
+			{
+        		db.collection("islands").update({name:data.name,'res_present.name':data.res_present[i6].name},{$inc:{"res_present.$.sell":reduce}})
+			}
+        }
+
 
         // updating island wealth based on res present and pop
         // console.log("ct_arr "+ct_arr);

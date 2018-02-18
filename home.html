@@ -18,6 +18,14 @@
               placement : 'bottom',
               trigger : 'hover'
           });
+          var text;
+          var random_event=1;
+          $('[data-toggle="dice"]').popover({
+              placement : 'bottom',
+              trigger : 'hover',
+              html : true,
+              content : text
+          });
       });
     </script>
 
@@ -52,7 +60,9 @@
                             localStorage.setItem("i_name", data);
                         });
                         socket.on("wacky_bonus",function(data){
-                            console.log("data "+data);
+                            // console.log("data "+data);
+                            // LOG CODE HERE
+
                         });
                         setInterval(function(){ 
                             socket.emit('getGold', {"username": person});
@@ -82,7 +92,7 @@
         <div class="col-md-1" style="border: 1px solid grey;">
           <div class="row" style="height: 50px">
             <div class="col-md-6 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Wiki">
-              <a href="ship-console.html"><button type="button" class="btn btn-light linksb">W</button></a>
+              <button type="button" class="btn btn-light linksb">W</button>
             </div>
             <div class="col-md-6 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Forums">
               <button type="button" class="btn btn-light linksb">F</button>
@@ -104,7 +114,7 @@
         </div>
         <div class="col-md-2" style="border: 1px solid grey">
             <div class="row">
-              <div class="col-md-4 dice" style="border: 1px solid grey; height: 50px" data-container="body" data-toggle="dice" data-placement="bottom">
+              <div class="col-md-4 dice" style="border: 1px solid grey; height: 50px" data-container="body" data-toggle="dice" data-placement="bottom" data-content="">
                     <img height="50" src="assets/buttons/dice.png" style="margin-left: -15px; padding: 5px" id="dice_btn">
               </div>
               <div class="col-md-4" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Time left before next tick">

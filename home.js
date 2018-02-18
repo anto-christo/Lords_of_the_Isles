@@ -61,7 +61,7 @@ $(document).ready(function(){
       min = min - (t*dur);
       temp = sum / duration;
       current_tick = parseInt(temp) - adjust ;
-
+      // console.log("current_tick "+ current_tick);
       y.innerHTML = current_tick;
       z.innerHTML =min + ":" + sec;
     
