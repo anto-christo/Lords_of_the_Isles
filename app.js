@@ -812,6 +812,15 @@ app.post('/old_island', function(req, res) {
 
     db.collection('islands').aggregate([{$match:{ owner_name:{$ne:user} }}, {$sample:{size:1}} ], function(err,result){
       // console.log(result);
+
+      if(result[0].owner_name != 'AI'){
+
+        var event = user+" visited your island "+result[0].name;
+        db.collection('log').insert({tick:current_tick,name:result[0].owner_name, event:event},function(err,res){
+          console.log("user landing updated");
+        });
+      }
+
       db.close();
       return res.send(result);
     });
@@ -950,12 +959,14 @@ app.post('/get_island_info',function(req,res){
 
 app.post('/send_ship',function(req,res){
 
+  var sender = req.body.user;
   var ship = req.body.ship;
   var names = req.body.names;
   var qtys = req.body.qtys;
   var dest = req.body.dest;
   var src = req.body.src;
   var eta;
+  var receiver;
 
   var doc = [];
 
@@ -976,6 +987,8 @@ app.post('/send_ship',function(req,res){
 
   MongoClient.connect(url, function(err, db) {
 
+
+
     //calculate eta
     db.collection('islands').find({name:src}).toArray(function(err,result){
         var x1 = result[0].x_cord;
@@ -985,9 +998,11 @@ app.post('/send_ship',function(req,res){
             var y2 = result[0].y_cord;
             var xt= x2-x1;
             var yt= y2-y1;
+            receiver = result[0].owner_name;
             eta = Math.sqrt(xt*xt+yt*yt);
             eta = Math.ceil(eta/200);
-            // console.log("eta "+eta);
+            //console.log("eta "+eta);
+
             db.collection('ships').find({_id:ObjectId}).toArray(function(err,result){
                 eta = Math.floor(eta/result[0].speed)+1;
                 if (eta>9) 
@@ -995,6 +1010,13 @@ app.post('/send_ship',function(req,res){
                   eta = 9;
                 }
                 db.collection('ships').update({_id:ObjectId},{$set:{eta:eta,destination:dest}});
+
+                if(receiver != 'AI'){
+                  var event = "Ship from "+dest+" to "+src+" (ETA: "+eta+")"; 
+                  db.collection("log").insert({tick:current_tick, name:receiver, event:event},function(err,res){
+                    console.log("Ship log updated");
+                  });
+                }
             });
         });
 
@@ -1265,7 +1287,7 @@ MongoClient.connect(url, function(err, db) {
                 //   put = res_cap - present;
                 // }
                 put = Number(put);
-                console.log("put "+put);
+                // console.log("put "+put);
                 db.collection("islands").update({name:data.name,"res_present.name":data.res_present[i2].name},{$inc:{"res_present.$.quantity":put}});
             }
             else
@@ -1345,7 +1367,7 @@ MongoClient.connect(url, function(err, db) {
         		if(temp_qt < (data.res_present[i5].sell)*(-1)) // pres less than selling. make sell = pres
         		{
         			temp_qt = Number(temp_qt*(-1));
-        			console.log("temp_qt "+temp_qt);
+        			// console.log("temp_qt "+temp_qt);
 
         			db.collection("islands").update({name:data.name,'res_present.name':temp_name},{$set:{"res_present.$.sell":temp_qt}})
         		}
@@ -1443,5 +1465,39 @@ MongoClient.connect(url, function(err, db) {
   });
 
 }
+
+app.post('/get_log',function(req,res){
+
+  var user = req.body.user;
+
+  MongoClient.connect(url, function(err, db) {
+    
+    db.collection('log').find({name:user}).sort({tick:1}).toArray(function(err, results){
+      return res.send(results)
+    });
+  });
+});
+
+app.post('/delete_log',function(req,res){
+
+  var id = req.body.id;
+
+  MongoClient.connect(url, function(err, db) {
+    
+    for(var i in id){
+
+      console.log("id="+id[i]);
+
+      var ObjectId = new mongoose.Types.ObjectId(id[i]);
+
+      db.collection('log').remove({_id:ObjectId},function(err, results){
+        console.log("log deleted");
+      });
+    }
+
+    return res.send("done");
+    db.close();
+  });
+});
 
 

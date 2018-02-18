@@ -56,7 +56,7 @@ function send_ship(){
                 $.ajax({
                     type:'POST',
                     url:'/send_ship',
-                    data:{ship:ship, names:res_names, qtys:res_qtys, src:source,dest:dest},
+                    data:{user:user, ship:ship, names:res_names, qtys:res_qtys, src:source,dest:dest},
                     success: function(data){
                         alert("Ship has set sail successfully !!");
                         

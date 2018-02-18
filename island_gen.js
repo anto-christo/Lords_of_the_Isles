@@ -89,6 +89,20 @@ var user;
                 }
 
 
+ $('[data-toggle="popover"]').popover({
+    placement : 'bottom',
+    trigger : 'hover'
+});
+var text;
+var random_event=1;
+$('[data-toggle="dice"]').popover({
+    placement : 'bottom',
+    trigger : 'hover',
+    html : true,
+    content : text
+});
+        get_dice_status(0);
+
         function get_dice_status(t)
         {
             user = localStorage.getItem("user");
@@ -137,6 +151,7 @@ var user;
         }
         $("#dice_btn").click(function(){
             get_dice_status(1);
+            //oldNew();
 
         });
 
