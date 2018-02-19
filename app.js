@@ -963,7 +963,7 @@ app.post('/get_island_info',function(req,res){
 	      db.collection("islands").find({name:island}).toArray(function(err, result) {
 		        // console.log("get_island_info: "+result);
 		        db.close();
-		        if (result.max_population >700) 
+		        if (result[0].max_population >700) 
 		        {
 		        	res_cap = 3000;
 		        }
@@ -1220,11 +1220,13 @@ MongoClient.connect(url, function(err, db) {
       	// console.log("name "+name);
       	// console.log("res[0].total "+res[0].total);
       	// console.log("res[0].total_pop "+res[0].total_pop);
-      	var is_wealth_total = res[0].total;
-      	var inc_gold = Math.floor(res[0].total_pop/25);
-      	db.collection("players").update({name:name},{$set:{island_wealth:is_wealth_total}});
-      	db.collection("players").update({name:name},{$inc:{gold:inc_gold}});
-
+      	if (res) 
+      	{
+      		var is_wealth_total = res[0].total;
+	      	var inc_gold = Math.floor(res[0].total_pop/25);
+	      	db.collection("players").update({name:name},{$set:{island_wealth:is_wealth_total}});
+	      	db.collection("players").update({name:name},{$inc:{gold:inc_gold}});
+      	}	
       })
 
       var total_wealth = Math.floor(data.island_wealth + (data.gold/5));
