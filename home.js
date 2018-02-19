@@ -28,7 +28,7 @@ $(document).ready(function(){
   }
   
 
-  var dur = 3; // 10 mins i.e. 6 ticks per hour
+  var dur = 1; // 10 mins i.e. 6 ticks per hour
   var duration = dur* 60; 
   var adjust;
   function myFunction() {

@@ -5,11 +5,31 @@ var source = null;
 var limit = [];
 var index;
 var acc_res = [];
+var prices_s = [];
+var prices_d = [];
 var ship_cap;
 // console.log("Ship="+ship);
 var dest;
 var price;
-
+ var res_names_arr = [
+    "bread", //0
+    "fruits",  //1
+    "cheese",  //2
+    "wood",//3
+    "stone", //4
+    "wheat",  //5
+    "bamboo",  //6
+    "ale", //7
+    "cotton",  //8
+    "silk", //9
+    "honey",  //10
+    "fur",//11
+    "gems", //12
+    "chocolate",  //13
+    "spices", //14
+  ];
+var res_names=[];
+var res_qtys=[];
 function rename(){
 
     var name = $('#ship_name').val();
@@ -26,46 +46,88 @@ function rename(){
     });
 }
 
+
 function send_ship(){
-
     dest = $('#dest_islands option:selected').text();
-
     if(dest == 'Select Destination')
         alert("Please select a destination");
-
     else if(source == dest)
         alert("Destination cannot be same as Source !!");
-
     else{
 
-        var res_qtys = $("input[name='res_input[]']").map(function(){return $(this).val();}).get();
+        res_qtys = $("input[name='res_input[]']").map(function(){return $(this).val();}).get();
 
-        var res_names = $("input[name='res_input[]']").map(function(){return $(this).attr('id');}).get();
+        res_names = $("input[name='res_input[]']").map(function(){return $(this).attr('id');}).get();
         console.log(res_names);
+
         var valid = 1;
         var add = 0;
+        var cost_buying = 0;
+        var cost_selling = 0;
+        var index;
+        
+        console.log("res_names.length "+res_names.length);
+        console.log("prices_s "+prices_s);
+        console.log("prices_d "+prices_d);
          for (var i = 0; i < res_names.length; i++) 
          {
+                index = res_names_arr.indexOf(res_names[i]);
+                console.log("index: "+ index);
                 if (Number(res_qtys[i])>limit[i]) 
                 {
                     valid = 0;
                 }
                 add = add + Number(res_qtys[i]);
+                console.log("prices_s[i] "+prices_s[index]);
+                console.log("prices_d[i] "+prices_d[index]);
+                cost_buying = cost_buying + prices_s[index]*Number(res_qtys[i]);
+                cost_selling = cost_selling + prices_d[index]*Number(res_qtys[i]);
          }
+         console.log("cost_buying "+ cost_buying);
+         console.log("cost_selling "+ cost_selling);
         
         if (valid==1) 
         {
+            console.log("in data res_names: "+res_names);
+            // res_names = res_names;
             if (add<=ship_cap) 
             {
-                $.ajax({
-                    type:'POST',
-                    url:'/send_ship',
-                    data:{user:user, ship:ship, names:res_names, qtys:res_qtys, src:source,dest:dest},
-                    success: function(data){
-                        alert("Ship has set sail successfully !!");
-                        
-                    }
-                });
+                // check if trade is possible ( has enough gold )
+                    $.ajax({
+                        type:'POST',
+                        url:'/check_feasible',
+                        data:{user:user,src:source,dest:dest,cb:cost_buying,cs:cost_selling},
+                        success: function(data){
+                            console.log("data: "+data);
+                            if (data=="status0") 
+                            {
+                                console.log("in data res_names: "+res_names);
+                                if (res_names=="") 
+                                {
+                                    console.log("in not");
+                                    res_names=["bread"];
+                                    res_qtys=["0"];
+                                }
+                                console.log("in data res_names: "+res_names);
+                                $.ajax({
+                                    type:'POST',
+                                    url:'/send_ship',
+                                    data:{user:user, ship:ship, names:res_names, qtys:res_qtys, src:source,dest:dest},
+                                    success: function(data){
+                                        alert("Ship has set sail successfully !!");
+                                    }
+                                }); 
+                            }
+                            else if (data=="status1") 
+                            {
+                                alert("Destination doesnt have enough gold to pay you. You decided not to send goods");
+                            }
+                            else if (data=="status2") 
+                            {
+                                alert("Your dont have enough gold to buy these goods!!");
+                            }
+                        }
+                    })
             }
             else
             {
@@ -88,50 +150,55 @@ function view_market()
         alert("Please select a destination");
     else
     {
-        console.log("in view")
+        // console.log("in view")
+        prices_d=[];
         $.ajax({
             type:'POST',
             url:'/get_island_info',
             data:{island:dest},
             success: function(object){
                 dest_result = object.result;
-            console.log("dest_result[0]. "+ dest_result[0].res_produced.res_name);
+                prices_d = object.prices;
+                
+
+            // console.log("dest_result[0]. "+ dest_result[0].res_produced.res_name);
 
                 $('#dest_res_table').empty();
                 $('#dest_res_table').append(
                     '<tr>'+
                         '<th>Resource</th>'+
-                        // '<th>For purchase</th>'+
+                        '<th>Accepting</th>'+
                         '<th>Price</th>'+
                         // '<th>Buy</th>'+
                     '</tr>'
                 );
                 index = 0;
+                    
 
-
+                j = 0;
                 for(i=0;i<dest_result[0].res_present.length;i++){
                     price = 0; //calculate actual price here
                     if(dest_result[0].res_present[i].sell>0){
-                        // limit[j++] = dest_result[0].res_present[i].sell;
+                        limit[j++] = Math.abs(dest_result[0].res_present[i].sell);
                         // console.log(limit);
                         acc_res[index++] = i;
                         $('#dest_res_table').append(
                             '<tr>'+
                                 '<td>'+dest_result[0].res_present[i].name+'</td>'+
-                                // '<td>'+dest_result[0].res_present[i].sell+'</td>'+
-                                '<td>'+price+'</td>'+
+                                '<td>'+dest_result[0].res_present[i].sell+'</td>'+
+                                '<td>'+prices_d[i]+'</td>'+
                                 // '<td><input type="number" name="res_input[]" id="'+dest_result[0].res_present[i].name+'" value="0" min="0" max="'+dest_result[0].res_present[i].sell+'"></td>'+
                             '</tr>'
                         );
                     }
                 }
-                console.log("\n")
-                  console.log(acc_res.length)
-                    for (var i = 0; i < acc_res.length; i++) {
-                        console.log(i)
-                        console.log(acc_res[i])
-                    }
-                console.log("\n")
+                // console.log("\n")
+                //   console.log(acc_res.length)
+                //     for (var i = 0; i < acc_res.length; i++) {
+                //         console.log(i)
+                //         console.log(acc_res[i])
+                //     }
+                // console.log("\n")
                 get_island_info();
             }
         });
@@ -149,25 +216,25 @@ function view_market()
         $('#capacity').hide();
 
         $('#destination').text("Destination: "+dest);
-        console.log("dest: "+dest);
+        // console.log("dest: "+dest);
     }
 }
 
 
 function get_island_info()
 {
-    console.log("source : "+source);
-                    var prices=[];
+    // console.log("source : "+source);
+                    prices_s=[];
                     $.ajax({
                         type:'POST',
                         url:'/get_island_info',
                         data:{island:source},
                         success: function(object){
                             result = object.result;
-                            prices = object.prices;
-                            for (var i = 0; i < 15; i++) {
-                               console.log(prices[i]);
-                            }
+                            prices_s = object.prices;
+                            // for (var i = 0; i < 15; i++) {
+                            //    console.log(prices_s[i]);
+                            // }
                             // produced = result[0].res_produced.res_name;
                             // console.log("result="+result);
 
@@ -195,11 +262,11 @@ function get_island_info()
                                 );
                             }
 
-                            console.log(acc_res.length)
-                            for (var i = 0; i < acc_res.length; i++) {
-                                console.log(i)
-                                console.log(acc_res[i])
-                            }
+                            // console.log(acc_res.length)
+                            // for (var i = 0; i < acc_res.length; i++) {
+                            //     console.log(i)
+                            //     console.log(acc_res[i])
+                            // }
 
                             j = 0;
                             
@@ -207,17 +274,17 @@ function get_island_info()
 
                                 for(i=0;i<result[0].res_present.length;i++){
                                     price = 0; //calculate actual price here
-                                    if(result[0].res_present[i].sell>0){
+                                    if(result[0].res_present[i].sell<0){
                                         if(acc_res.indexOf(i)!=-1) // dest accepting, source selling confirmed.
                                         {
-                                            limit[j++] = result[0].res_present[i].sell;
+                                            // limit[j++] = Math.abs(result[0].res_present[i].sell);
                                             // console.log(limit);
                                             $('#res_table').append(
                                                 '<tr>'+
                                                     '<td>'+result[0].res_present[i].name+'</td>'+
-                                                    '<td>'+result[0].res_present[i].sell+'</td>'+
-                                                    '<td>'+price+'</td>'+
-                                                    '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+result[0].res_present[i].sell+'"></td>'+
+                                                    '<td>'+Math.abs(result[0].res_present[i].sell)+'</td>'+
+                                                    '<td>'+prices_s[i]+'</td>'+
+                                                    '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+Math.abs(result[0].res_present[i].sell)+'"></td>'+
                                                 '</tr>'
                                             );
                                         }
@@ -229,10 +296,10 @@ function get_island_info()
                                 for(i=0;i<result[0].res_present.length;i++){
                                     price = 0; //calculate actual price here
                                     if(result[0].res_present[i].quantity>0){
-                                        console.log("index: "+acc_res.indexOf(i));
+                                        // console.log("index: "+acc_res.indexOf(i));
                                         if(acc_res.indexOf(i)!=-1) // dest accepting, source selling confirmed.
                                         {
-                                            limit[j++] = result[0].res_present[i].quantity;
+                                            // limit[j++] = result[0].res_present[i].quantity;
                                             // console.log(limit);
                                             $('#res_table').append(
                                                 '<tr>'+
@@ -267,14 +334,14 @@ $(document).ready(function(){
                 $('#speed').text("Speed: "+result[0].speed);
                 $('#capacity').text("Capacity: "+result[0].capacity);
                 source = result[0].source;
-                    console.log("here source : "+source);
+                    // console.log("here source : "+source);
 
                     $.ajax({
                         type:'POST',
                         url:'/get_island',
                         data:{user:user},
                         success: function(result){
-                           console.log("outer result: "+result[0].owned_islands_name.length)
+                           // console.log("outer result: "+result[0].owned_islands_name.length)
                             for(i=0;i<result[0].owned_islands_name.length;i++){
                                 if (result[0].owned_islands_name[i].island_name!=source) 
                                 {

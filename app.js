@@ -20,6 +20,75 @@ var assert = require('assert');
 var rankings= [];
 var clients = {};
 
+const environment = "development";  ///change it to "production" when the game is deployed on the teknack servers
+
+const sessions = require("client-sessions");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+const sessionMiddleware = sessions({
+    cookieName: 'sess',
+    secret: 'dws9iu3r42mx1zvh6k5m',
+    duration: 2 * 60 * 60 * 1000,
+    activeDuration: 1000 * 60 * 60
+})
+
+app.use(sessionMiddleware);
+
+app.post("/setSession", function (req, res) {
+    req.sess.username = req.body.username;    // username is stored in sess variable
+    // req.sess.username = 'Akash';    // username is stored in sess variable
+    // console.log(req.sess.username + " logged in");  // username can be accessed using req.sess.username
+    res.sendStatus(200);
+    
+});
+
+app.get("/unsetSession", function (req, res) {
+    if (environment == "development") {
+        req.sess.username = null;
+        res.sendStatus(200);
+    } else if (environment == "production") {
+        res.sendStatus(400);
+    }
+});
+
+
+app.use(function (req, res, next) {
+    if (!req.sess.username) {
+        let login = `<script>
+        var username = prompt("Enter username");
+        if (username) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    window.location = "/";
+                }
+            };
+            xhttp.open("POST", "/setSession", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("username=" + username);
+    
+        }
+    </script>`;
+        if (environment == "development") {
+            res.send(login);
+        } else if (environment == "production") {
+            res.redirect('https://teknack.in');
+        }
+    } else {
+        next();
+    }
+});
+
+app.post('/get_username', function(req, res) {
+  var person = req.sess.username;
+  console.log("in get username "+person);
+  var player = {
+        name:person
+    } 
+    return res.send(player);
+});
+
 app.use(express.static(__dirname));
 app.use(bodyParser.urlencoded({ extended: true })); 
 
@@ -242,6 +311,7 @@ app.post('/create_island', function(req, res) {
 
   var island_name;
   var uname = req.body.username;
+  console.log("user:" + uname);
   fs.readFile('names.txt', function (err, data) {
     if (err) {
        return console.error(err);
@@ -812,7 +882,7 @@ app.post('/old_island', function(req, res) {
 
     db.collection('islands').aggregate([{$match:{ owner_name:{$ne:user} }}, {$sample:{size:1}} ], function(err,result){
       // console.log(result);
-      if (result) 
+      if (result.length!=0) 
       {
       	if(result[0].owner_name != 'AI'){
 	        var event = user+" visited your island "+result[0].name;
@@ -951,7 +1021,7 @@ app.post('/get_island_info',function(req,res){
   var base_cost;
   var sum = 0;
   var ct_arr = [];
-  console.log("island: "+ island)
+  // console.log("island: "+ island)
   MongoClient.connect(url, function(err, db) {
   	db.collection("res").find({}).toArray(function(err, result1) {
 
@@ -992,9 +1062,9 @@ app.post('/get_island_info',function(req,res){
 		        	prices[j] = prices[j]/20;
 		        	prices[j] = Math.floor(prices[j])+1;
 			    }
-			    for (var j =0; j < 15; j++) {
-			    	console.log(prices[j] + " ");
-			    }
+			    // for (var j =0; j < 15; j++) {
+			    // 	console.log(prices[j] + " ");
+			    // }
 		        var object = {
 		        	result: result,
 		        	prices: prices
@@ -1006,6 +1076,117 @@ app.post('/get_island_info',function(req,res){
 
   });
 });
+
+
+
+app.post('/check_feasible',function(req,res){
+  var sender = req.body.user;
+  var dest = req.body.dest;
+  var src = req.body.src;
+  var cb = req.body.cb;
+  var cs = req.body.cs;
+  var possible_at_source = 1;
+  var possible_at_dest = 1;
+  var receiver;
+  if (cb==0) 
+  {
+  	if (cs==0) 
+  	{
+  		return res.send("status0");
+  	}
+  }
+  MongoClient.connect(url, function(err, db) {
+  	console.log("check_feasible");
+      db.collection('islands').find({name:src}).toArray(function(req,src_result){
+      	if (src_result[0].owner_name!=sender) 
+      	{
+      		// check if sender has gold >= buying
+      		db.collection('players').find({name:sender}).toArray(function(req,sender){
+      			if (sender[0].gold < cb) 
+  				{
+  					possible_at_source=0;
+  				} 
+      		});
+      		
+      	}
+      	db.collection('islands').find({name:dest}).toArray(function(req,dest_result){
+      		if (dest_result[0].owner_name!=sender) 
+      		{
+      			receiver = dest_result[0].owner_name;
+      			if (dest_result[0].owner_name!='AI') 
+      			{
+	      			db.collection('players').find({name:receiver}).toArray(function(req,receiver){
+	      			if (receiver[0].gold < cs) 
+		  				{
+		  					possible_at_dest=0;
+		  				} 
+		      		});
+      			}
+      		}
+      		console.log("src_result[0].owner_name "+ src_result[0].owner_name);
+      		console.log("dest_result[0].owner_name "+ dest_result[0].owner_name);
+	      	if (possible_at_source==1) 
+	      	{
+	      		if (possible_at_dest==1) 
+		      	{
+		      		if (src_result[0].owner_name!=sender) 
+	      			{
+	      				// reduce buying from sender
+	      				console.log(" reduce buying from sender ");
+	      				cb = Number(cb*(-1));
+	      				db.collection('players').update({name:sender},{$inc:{gold:cb}});
+	      			}
+		      		if (src_result[0].owner_name!=sender&&src_result[0].owner_name!=sender!='AI') 
+			      	{
+			      		// pay buying to the other player
+			      		console.log(" in pay buying to the other player ");
+			      		if (receiver!="AI") 
+	      				{
+	      					cb = Number(cb);
+			      			db.collection('players').update({name:receiver},{$inc:{gold:cb}});
+			      		}
+			      	}
+			      	if (dest_result[0].owner_name!=sender) 
+	      			{
+	      				//give selling to sender
+	      				console.log(" in give selling to sender ");
+	      				cs = Number(cs);
+	      				db.collection('players').update({name:sender},{$inc:{gold:cs}});
+	      				//reduce selling from receiver
+	      				if (receiver!="AI") 
+	      				{
+	      					cs = Number(cs*(-1));
+		      				db.collection('players').update({name:receiver},{$inc:{gold:cs}});
+	      				}
+	      			}
+		          	setTimeout(function(){
+	      				return res.send("status0");
+		            },1000)
+
+		      	}
+		      	else
+		      	{
+		      		// return res.send("Destination doesnt have enough gold to pay you. You decided not to send goods");
+		      		return res.send("status1");
+		      	}
+	      	}
+	      	else
+	      	{
+	      		// return res.send("Your dont have enough gold to buy these goods!!");
+	      		return res.send("status2");
+	      	}
+      	});
+      	setTimeout(function(){
+			db.close();
+        },1000)
+        // how to close this ?
+      });
+
+
+  });
+
+});
+
 
 app.post('/send_ship',function(req,res){
 
@@ -1036,7 +1217,13 @@ app.post('/send_ship',function(req,res){
   var ObjectId = new mongoose.Types.ObjectId(ship);
 
   MongoClient.connect(url, function(err, db) {
-
+  	for (item in doc) {
+  		var temp_name = doc[item].name;
+        var temp_qty = doc[item].quantity;
+  		db.collection('islands').update({$and:[ {name:dest},{'res_present.name':temp_name} ]}, {$inc:{'res_present.$.sell':-temp_qty}},function(){
+              
+          });
+  	}
 
 
     //calculate eta
@@ -1157,7 +1344,7 @@ var m,min;
   }
   
 
-  var dur = 3; // 10 mins i.e. 6 ticks per hour
+  var dur = 1; // 10 mins i.e. 6 ticks per hour
   var duration = dur* 60; 
   var adjust;
   function myFunction() {
@@ -1220,7 +1407,7 @@ MongoClient.connect(url, function(err, db) {
       	// console.log("name "+name);
       	// console.log("res[0].total "+res[0].total);
       	// console.log("res[0].total_pop "+res[0].total_pop);
-      	if (res) 
+      	if (res.length!=0) 
       	{
       		var is_wealth_total = res[0].total;
 	      	var inc_gold = Math.floor(res[0].total_pop/25);

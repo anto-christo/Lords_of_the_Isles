@@ -1,10 +1,10 @@
-var user;
 
 	$(document).ready(function(){
         get_dice_status(0);
-
+        var user;
         user = localStorage.getItem("user");
-        // console.log("here user: "+user);
+        console.log("here user: "+user);
+        console.log(localStorage.getItem("user"));
         function assign_island(x){
             $.ajax({
                 type: 'POST',
@@ -16,6 +16,7 @@ var user;
                     // console.log(resp.name);
                     localStorage.setItem("i_name", resp.name);
 
+                    console.log("inside user: "+user);
                     if(x==0){
                         $.ajax({
                             type: 'POST',
@@ -89,18 +90,18 @@ var user;
                 }
 
 
- $('[data-toggle="popover"]').popover({
-    placement : 'bottom',
-    trigger : 'hover'
-});
-var text;
-var random_event=1;
-$('[data-toggle="dice"]').popover({
-    placement : 'bottom',
-    trigger : 'hover',
-    html : true,
-    content : text
-});
+         $('[data-toggle="popover"]').popover({
+            placement : 'bottom',
+            trigger : 'hover'
+        });
+        var text;
+        var random_event=1;
+        $('[data-toggle="dice"]').popover({
+            placement : 'bottom',
+            trigger : 'hover',
+            html : true,
+            content : text
+        });
         get_dice_status(0);
 
         function get_dice_status(t)
