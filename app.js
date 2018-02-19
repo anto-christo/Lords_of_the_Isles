@@ -85,7 +85,11 @@ app.post('/get_username', function(req, res) {
   console.log("in get username "+person);
   var player = {
         name:person
-    } 
+    }
+    for (var i = 0; i < clients.length; i++) {
+    	console.log("clients"+clients[i]);
+    	
+    }
     return res.send(player);
 });
 
@@ -156,20 +160,31 @@ io.on('connection', function(socket) {
       socket.emit('getLeaderboard', rankings);
     }, 5000);
 
+
+    socket.on('get_first_island', function(data){
+    	MongoClient.connect(url, function(err, db) {
+	       assert.equal(null, err);
+	       console.log(" get_first_island data.username "+data.username);
+	          db.collection('players').find({name:data.username}).toArray(function(err, results){
+	            // setTimeout(function(){
+	              io.sockets.connected[clients[data.username].socket].emit("setLocalStorage", results[0].owned_islands_name[0].island_name);
+	            // },500)
+	            db.close(); 
+	          });
+	      });
+    });
+
+
 	socket.on('add-user', function(data){
+		console.log("in add-user data.username "+data.username);
 	    clients[data.username] = {
 	      "socket": socket.id
 	    };
 
-      MongoClient.connect(url, function(err, db) {
-       assert.equal(null, err);
-          db.collection('players').find({name:data.username}).toArray(function(err, results){
-            // setTimeout(function(){
-              io.sockets.connected[clients[data.username].socket].emit("setLocalStorage", results[0].owned_islands_name[0].island_name);
-            // },500)
-            db.close(); 
-          });
-      });
+	    for (var j in clients) 
+	     {
+	      console.log(j);
+	     }
 
       MongoClient.connect(wacky, function(err, db) {
        assert.equal(null, err);
@@ -189,7 +204,7 @@ io.on('connection', function(socket) {
               {
                  update_wacky(data.username,3);
               }
-              io.sockets.connected[clients[data.username].socket].emit("wacky_bonus", results[0].score);
+              // io.sockets.connected[clients[data.username].socket].emit("wacky_bonus", results[0].score);
             }
             db.close(); 
           });
@@ -199,6 +214,8 @@ io.on('connection', function(socket) {
 
     socket.on('getGold', function(data){
       var my_gold;
+      // console.log("get gold:" + data.username)
+      // console.log(clients[data.username]);
       if (clients[data.username]){
       MongoClient.connect(url, function(err, db) {
        assert.equal(null, err);
@@ -502,7 +519,7 @@ app.post('/create_island', function(req, res) {
                       db.collection("islands").update({name:island_name},{$push:{res_present:{$each:[{name:"bread",quantity:0,sell:put},{name:"fruits",quantity:0,sell:put},{name:"cheese",quantity:0,sell:put},{name:"wood",quantity:0,sell:put},{name:"stone",quantity:0,sell:put},{name:"wheat",quantity:0,sell:put},{name:"bamboo",quantity:0,sell:put},{name:"ale",quantity:0,sell:put},{name:"cotton",quantity:0,sell:put},{name:"silk",quantity:0,sell:put},{name:"honey",quantity:0,sell:put},{name:"fur",quantity:0,sell:put},{name:"gems",quantity:0,sell:put},{name:"chocolate",quantity:0,sell:put},{name:"spices",quantity:0,sell:put}]}}})
                       setTimeout(function(){
                         db.collection('islands').update({$and:[ {name:island_name},{'res_present.name':resource} ]}, {$set:{'res_present.$.quantity':200,'res_present.$.sell':-200}},function(err,result){
-                          console.log("array updation done");
+                          console.log("array updation done\n\n");
                           res.send(JSON.stringify({"name":island_name}));
                           db.close();
                         });
@@ -851,14 +868,28 @@ app.post('/check_player', function(req, res) {
   var p = new player();
   
   p.name = req.body.username;
-
+  console.log("checking player" + p.name);
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
     
-    db.collection('players').find( { name:p.name } ).count(function(err,results){
-      count = results;
+  //   db.collection('players').find( { name:p.name } ).count(function(err,results){
+  //     count = results;
+  //     db.close();
+  //     console.log("count: "+count);
+  //     if (count>0) 
+  //     {
+  //         res.send(JSON.stringify({"player":"old"}));
+  //     }
+  //     else
+  //     { 
+  //       res.send(JSON.stringify({"player":"new"}));
+  //     }
+
+  // });
+   db.collection('players').find( { name:p.name } ).toArray(function(err,results){
       db.close();
-      if (count>0) 
+      console.log("results[0].owned_islands_name.length: "+results[0].owned_islands_name.length);
+      if (results[0].owned_islands_name.length>0) 
       {
           res.send(JSON.stringify({"player":"old"}));
       }
@@ -919,7 +950,7 @@ app.post('/old_island', function(req, res) {
 
 app.post('/get_dice_status',function(req,res){
   var user = req.body.username;
-  // console.log("here "+ user);
+  console.log("in get dice status "+ user);
   MongoClient.connect(url, function(err, db) {
     db.collection("players").find({name:user}).toArray(function(err, result) {
         // console.log(result[0]);
@@ -931,7 +962,7 @@ app.post('/get_dice_status',function(req,res){
 
 app.post('/update_dice_status',function(req,res){
   var user = req.body.username;
-  // console.log("here "+ user);
+  console.log("update_dice_status "+ user);
     MongoClient.connect(url, function(err, db) {
       db.collection("players").update({name:user},{$set:{random_event_used:1}},function(err, result) {
         return res.send("Done");

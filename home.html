@@ -57,14 +57,16 @@
                         var person = localStorage.getItem("user");
                         console.log("person:" + person);
                         socket.emit("add-user", {"username": person}); // LATER THIS SHOULD BE FROM INDEX.HTML
+                        socket.emit("get_first_island", {"username": person});
                         socket.on("setLocalStorage",function(data){
                             localStorage.setItem("i_name", data);
                         });
-                        socket.on("wacky_bonus",function(data){
-                            // console.log("data "+data);
-                            // LOG CODE HERE
 
-                        });
+                        // socket.on("wacky_bonus",function(data){
+                        //     // console.log("data "+data);
+                        //     // LOG CODE HERE
+
+                        // });
                         setInterval(function(){ 
                             socket.emit('getGold', {"username": person});
                         }, 3000);

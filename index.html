@@ -67,13 +67,18 @@
       </a>
     </div>
   </div>
+  <script src = "/socket.io/socket.io.js"></script>
 
   <script type="text/javascript">
     $(document).ready(function(){
+      var person = localStorage.getItem("user");
+      var socket = io();
             $("button").hide();
             $("wiki").hide();
             $("help").hide();
+            
         setTimeout(function(){ 
+            
             $("button").show();
             $("wiki").show();
             $("help").show();

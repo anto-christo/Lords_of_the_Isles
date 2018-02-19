@@ -4,7 +4,6 @@ $(document).ready(function(){
         placement : 'left',
         trigger : 'hover'
     });
-
     $.ajax({
         type: 'POST',
         url: '/get_username',
@@ -17,6 +16,7 @@ $(document).ready(function(){
             localStorage.setItem("user", person);
             console.log(localStorage.getItem("user"));
             send_player_name(person);
+            
         }
         });
 
@@ -33,10 +33,4 @@ $(document).ready(function(){
             });
         }
     
-
-    // var person = prompt("Enter your name:");
-
-    // localStorage.setItem("user", person);
-    
-    // send_player_name(person);
 });
