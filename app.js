@@ -487,7 +487,7 @@ app.post('/create_island', function(req, res) {
                 i.current_population = current_pop;
                 i.max_population = cap;
                 i.value = island_value;
-                // console.log(i);
+                console.log(i);
                 var put;
                 if (cap>700) 
                 {

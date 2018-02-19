@@ -67,8 +67,6 @@
                     {
                         assign_island();
                     }
-                   
-
                 }
             
             });
