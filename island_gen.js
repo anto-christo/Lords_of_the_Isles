@@ -10,6 +10,7 @@
                 type: 'POST',
                 url: '/create_island',
                 data: {username:user},
+                async: false,
                 dataType: 'json'}).
                 done(function(resp){
 
@@ -55,6 +56,7 @@
                 url: '/old_island',
                 data: {user:user},
                 dataType : 'json',
+                async: false,
                 success: function(resp){
                     if (resp.length!=0) 
                     {
@@ -111,6 +113,7 @@
                 url: 'get_dice_status',
                 data: { username:user },
                 dataType: 'json',
+                async: false,
                 success: function(data){
                     // console.log("data: "+data);
                     random_event = data[0].random_event_used;  
@@ -158,6 +161,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/check_player',
+                async: false,
                 data: { username:user },
                 dataType: 'json',
                 success: function(x){
