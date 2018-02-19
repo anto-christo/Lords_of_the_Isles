@@ -1353,15 +1353,15 @@ var m,min;
   }
   
 
-  var dur = 1; // 10 mins i.e. 6 ticks per hour
+  var dur = 5; // 10 mins i.e. 6 ticks per hour
   var duration = dur* 60; 
   var adjust;
   function myFunction() {
   var sum = m*60+h*3600+n*86400; // in secs
     d = new Date();
     n = d.getUTCDate();
-    n1 = 6;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
-      adjust = n1*24*(60/dur);
+    n1 = 19;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
+      adjust = n1*24*(60/dur)+125;
 
       h = addZero(d.getUTCHours(), 2);
       m = addZero(d.getUTCMinutes(), 2);  
