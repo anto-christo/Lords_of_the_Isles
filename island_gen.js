@@ -55,7 +55,7 @@ var user;
                 data: {user:user},
                 dataType : 'json',
                 success: function(resp){
-                    if (resp[0]) 
+                    if (resp.length!=0) 
                     {
                          console.log(resp[0])
                         localStorage.setItem("i_name", resp[0].name);
@@ -64,7 +64,7 @@ var user;
                     }
                     else
                     {
-                        oldNew();
+                        assign_island();
                     }
                    
 
@@ -150,8 +150,8 @@ $('[data-toggle="dice"]').popover({
             }
         }
         $("#dice_btn").click(function(){
-            get_dice_status(1);
-            //oldNew();
+            //get_dice_status(1);
+            oldNew();
 
         });
 
