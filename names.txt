@@ -5725,7 +5725,6 @@ Sd Slim
 Shirbn
 Shibn al Qanir
 Shibn al Kawm
-Samannd
 Saml
 Rosetta
 Ras Gharib
@@ -11518,7 +11517,6 @@ Savigliano
 Sava
 Sassuolo
 Sassari
-Sarzana
 Saronno
 Sarno
 San Vito dei Normanni
