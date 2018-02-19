@@ -56,7 +56,7 @@
                 data: {user:user},
                 dataType : 'json',
                 success: function(resp){
-                    if (resp[0]) 
+                    if (resp.length!=0) 
                     {
                          console.log(resp[0])
                         localStorage.setItem("i_name", resp[0].name);
@@ -65,7 +65,7 @@
                     }
                     else
                     {
-                        oldNew();
+                        assign_island();
                     }
                    
 
@@ -151,8 +151,8 @@
             }
         }
         $("#dice_btn").click(function(){
-            get_dice_status(1);
-            //oldNew();
+            //get_dice_status(1);
+            oldNew();
 
         });
 

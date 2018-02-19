@@ -881,20 +881,29 @@ app.post('/old_island', function(req, res) {
   assert.equal(null, err);
 
     db.collection('islands').aggregate([{$match:{ owner_name:{$ne:user} }}, {$sample:{size:1}} ], function(err,result){
-      // console.log(result);
+
+
       if (result.length!=0) 
       {
       	if(result[0].owner_name != 'AI'){
 	        var event = user+" visited your island "+result[0].name;
 	        db.collection('log').insert({tick:current_tick,name:result[0].owner_name, event:event},function(err,res){
 	      	    console.log("user landing updated");
-	      		db.close();
-	        });
+            db.close();
+          });
+          
+          db.collection("players").update({name:user},{$inc:{gold:-Math.floor(result[0].value/100)}},function(err,res){
+            console.log("visitor gold reduced:"+result[0].value/100);
+          });
+
+          db.collection("players").update({name:result[0].owner_name},{$inc:{gold:Math.floor(result[0].value/100)}},function(err,res){
+            console.log("owner gold increased:"+result[0].value/100);
+          });
 	    }
       }
-      
 
       return res.send(result);
+
     });
 
   });
