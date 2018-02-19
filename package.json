@@ -17,15 +17,16 @@
   },
   "homepage": "https://gitlab.com/AkashG6/Lords_Of_The_Isles#README",
   "dependencies": {
-    "express": "^4.16.2",
-    "mongodb": "^2.2.33",
-    "mongoose": "^4.13.7",
-    "socket.io": "^2.0.4",
     "client-sessions": "^0.8.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
+    "express": "^4.16.2",
+    "fs": "0.0.1-security",
     "jade": "~1.11.0",
+    "mongodb": "^2.2.33",
+    "mongoose": "^4.13.7",
     "morgan": "~1.9.0",
-    "serve-favicon": "~2.4.5"
+    "serve-favicon": "~2.4.5",
+    "socket.io": "^2.0.4"
   }
 }
