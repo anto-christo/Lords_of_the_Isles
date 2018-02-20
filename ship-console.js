@@ -67,6 +67,7 @@ function send_ship(){
         var index;
         
         console.log("res_names.length "+res_names.length);
+        console.log("res_qtys.length "+res_qtys.length);
         console.log("prices_s "+prices_s);
         console.log("prices_d "+prices_d);
          for (var i = 0; i < res_names.length; i++) 
@@ -88,41 +89,58 @@ function send_ship(){
         
         if (valid==1) 
         {
-            console.log("in data res_names: "+res_names);
+                console.log("in valid res_names.length "+res_names.length);
+                console.log("in valid res_qtys.length "+res_qtys.length);
+
             // res_names = res_names;
             if (add<=ship_cap) 
             {
-                // check if trade is possible ( has enough gold )
+                    console.log("in add < ship_cap: ");
+                
                     $.ajax({
                         type:'POST',
                         url:'/check_feasible',
+                        dataType: "json",
+                        async:false,
                         data:{user:user,src:source,dest:dest,cb:cost_buying,cs:cost_selling},
+                        error: function(data){
+                            console.log("in check feasible error")
+                            console.table(data);
+                        },
                         success: function(data){
-                            console.log("data: "+data);
-                            if (data=="status0") 
+                            console.log("data.message: "+data.message);
+                            if (data.message=="status0") 
                             {
-                                console.log("in data res_names: "+res_names);
-                                if (res_names=="") 
-                                {
-                                    console.log("in not");
-                                    res_names=["bread"];
-                                    res_qtys=["0"];
-                                }
-                                console.log("in data res_names: "+res_names);
+                                // if (res_names=="") 
+                                // {
+                                //     console.log("in not");
+                                //     res_names=["bread"];
+                                //     res_qtys=["0"];
+                                console.log("in check feasible success res_names.length "+res_names.length);
+                                console.log("in check feasible success res_qtys.length "+res_qtys.length);
+                                // }
+                                console.log("before send_ship")
+                                console.log("res_names:"+res_names)
+                                console.log("res_qtys:"+res_qtys)
                                 $.ajax({
                                     type:'POST',
                                     url:'/send_ship',
+                                    dataType: "json",
                                     data:{user:user, ship:ship, names:res_names, qtys:res_qtys, src:source,dest:dest},
+                                    error: function(data){
+                                        console.log("in send ship error")
+                                        console.table(data);
+                                    },
                                     success: function(data){
                                         alert("Ship has set sail successfully !!");
                                     }
                                 }); 
                             }
-                            else if (data=="status1") 
+                            else if (data.message=="status1") 
                             {
                                 alert("Destination doesnt have enough gold to pay you. You decided not to send goods");
                             }
-                            else if (data=="status2") 
+                            else if (data.message=="status2") 
                             {
                                 alert("Your dont have enough gold to buy these goods!!");
                             }

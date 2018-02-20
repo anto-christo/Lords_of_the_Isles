@@ -1126,7 +1126,7 @@ app.post('/get_island_info',function(req,res){
 
 
 
-app.post('/check_feasible',function(req,res){
+app.post('/check_feasible',function(req,response){
   var sender = req.body.user;
   var dest = req.body.dest;
   var src = req.body.src;
@@ -1135,13 +1135,14 @@ app.post('/check_feasible',function(req,res){
   var possible_at_source = 1;
   var possible_at_dest = 1;
   var receiver;
-  if (cb==0) 
-  {
-  	if (cs==0) 
-  	{
-  		return res.send("status0");
-  	}
-  }
+  // if (cb==0) 
+  // {
+  // 	if (cs==0) 
+  // 	{
+  // 		return res.send("status4");
+  // 	}
+  // }
+  console.log("inside check_feasible");
   MongoClient.connect(url, function(err, db) {
   	// console.log("check_feasible");
       db.collection('islands').find({name:src}).toArray(function(req,src_result){
@@ -1166,6 +1167,7 @@ app.post('/check_feasible',function(req,res){
 	      			if (receiver[0].gold < cs) 
 		  				{
 		  					possible_at_dest=0;
+                return response.send({message:"status5"});
 		  				} 
 		      		});
       			}
@@ -1207,23 +1209,23 @@ app.post('/check_feasible',function(req,res){
 	      				}
 	      			}
                 console.log("returning status0");
-                setTimeout(function(){
-                return res.send("status0");
-                },1000)
+                // setTimeout(function(){
+                return response.send({message:"status0"});
+                // },1000)
 
             }
             else
             {
               console.log("returning status1");
               // return res.send("Destination doesnt have enough gold to pay you. You decided not to send goods");
-              return res.send("status1");
+              return response.send({message:"status1"});
             }
           }
           else
           {
             console.log("returning status2");
 	      		// return res.send("Your dont have enough gold to buy these goods!!");
-	      		return res.send("status2");
+	      		return response.send({message:"status2"});
 	      	}
       	});
    //    	setTimeout(function(){
@@ -1250,7 +1252,13 @@ app.post('/send_ship',function(req,res){
   var receiver;
 
   var doc = [];
-
+  console.log("sender: "+sender);
+  console.log("ship: "+ship);
+  console.log("names: "+names);
+  console.log("qtys: "+qtys);
+  console.log("dest: "+dest);
+  console.log("src: "+src);
+  
     for(i=0;i<names.length;i++){
 
       var num = Number(qtys[i]);
