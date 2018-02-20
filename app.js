@@ -20,6 +20,8 @@ var assert = require('assert');
 var rankings= [];
 var clients = {};
 
+
+
 const environment = "development";  ///change it to "production" when the game is deployed on the teknack servers
 
 const sessions = require("client-sessions");
@@ -149,9 +151,9 @@ MongoClient.connect(url, function(err, db) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
 io.on('connection', function(socket) {
+
+     
     
     updateLeaderboard();
     socket.emit('getLeaderboard', rankings);
@@ -181,10 +183,10 @@ io.on('connection', function(socket) {
 	      "socket": socket.id
 	    };
 
-	    for (var j in clients) 
-	     {
-	      console.log(j);
-	     }
+	    // for (var j in clients) 
+	    //  {
+	    //   console.log(j);
+	    //  }
 
       MongoClient.connect(wacky, function(err, db) {
        assert.equal(null, err);
@@ -328,7 +330,7 @@ app.post('/create_island', function(req, res) {
 
   var island_name;
   var uname = req.body.username;
-  console.log("user:" + uname);
+  // console.log("user:" + uname);
   fs.readFile('names.txt', function (err, data) {
     if (err) {
        return console.error(err);
@@ -501,7 +503,7 @@ app.post('/create_island', function(req, res) {
                 // i.res_produced.res_quantity = res_qty;
                 // i.res_produced.res_value = res_val;
                 i.name = island_name;
-                console.log("Name "+i.name);``
+                // console.log("Name "+i.name);
                 i.current_population = current_pop;
                 i.max_population = cap;
                 i.value = island_value;
@@ -1371,14 +1373,15 @@ app.post('/set_sell',function(req,res){
 /////////////////////////////////////////////     TICK CHANGED       ////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
 var m,min;
-    var s,sec;
-    var h,ms;
-    var d;
-    var sum,n,n1;
-    var temp;
-    var t;
-    var current_tick = 0;
+var s,sec;
+var h,ms;
+var d;
+var sum,n,n1;
+var temp;
+var t;
+var current_tick = 0;
 
     setInterval(function(){ 
       myFunction()
@@ -1419,6 +1422,8 @@ var m,min;
           console.log("\nSERVER SIDE TICK CHANGED\n");
           // console.log(clients);
           newTick();
+          // console.log("resetting dice status");
+          io.emit('reset_dice_status',true);
       }
       
   }
@@ -1426,6 +1431,8 @@ var m,min;
 
 function newTick(){
 // CAN COMBINE SOME FEATURES HERE
+
+
 MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
 
@@ -1555,12 +1562,12 @@ MongoClient.connect(url, function(err, db) {
       	{
       		res_cap = 2000;
       	}
-        console.log(data.owner_name);
+        // console.log(data.owner_name);
       	// update sell values
         if (data.owner_name=='AI') 
         {
         	for (var i7 = 0; i7 < 15; i7++) {
-            console.log(data.res_present);
+            // console.log(data.res_present);
         		if (data.res_present[i7].quantity > 0) // if res present increases, then increase sell magnitude
         		{
         			var temp_qt = data.res_present[i7].quantity;

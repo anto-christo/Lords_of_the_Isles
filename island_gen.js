@@ -1,9 +1,15 @@
 	$(document).ready(function(){
         var user;
-        var socket = io();
         user = localStorage.getItem("user");
         // console.log("here user: "+user);
         // console.log(localStorage.getItem("user"));
+        var random_event = 0;
+        var socket = io();
+        socket.on('reset_dice_status',function(data){
+            random_event = 0;
+            // console.log("\nreset done\n");
+        })
+
             get_dice_status(0);
 
         function assign_island(x){
@@ -97,7 +103,6 @@
                 trigger : 'hover'
             });
         var text;
-        var random_event=1;
         $('[data-toggle="dice"]').popover({
                 placement : 'bottom',
                 trigger : 'hover',
@@ -107,6 +112,8 @@
 
         function get_dice_status(t)
         {
+            // console.log("inside get dice status");
+            // console.log("random_event: "+random_event);
             user = localStorage.getItem("user");
             // console.log("user: "+ user);
             $.ajax({
@@ -161,7 +168,7 @@
         });
 
         function check_player(){
-            console.log("in check player function");
+            // console.log("in check player function");
             $.ajax({
                 type: 'POST',
                 url: '/check_player',
@@ -169,15 +176,14 @@
                 data: { username:user },
                 dataType: 'json',
                 success: function(x){
-                    console.log("check player success");
-                    console.log("x.player:" + x.player);
+                    // console.log("check player success");
+                    // console.log("x.player:" + x.player);
                     if(x.player=="new"){
                         assign_island(0);
                         localStorage.setItem("old",0);
                     }
                     else
                     {
-                         get_dice_status(0);
                         localStorage.setItem("old",1);
                         get_dice_status(0);
 
