@@ -27,8 +27,9 @@
 
 
   <div class="wiki" id="wiki">
+    <a href="wiki.html">
     <button type="button" class="sideb btn btn-dark" data-container="body" data-toggle="popover" data-placement="left" data-content="Go to Lords of the Isles Wiki">W</button>
-    <br> 
+    <br> </a>
     <button style="margin-top: 9px" type="button" class="sideb btn btn-dark" data-container="body" data-toggle="popover" data-placement="left" data-content="Visit the forums">&nbsp;F&nbsp;</button>
   </div>
 
@@ -46,7 +47,7 @@
         </button>
       </div>
       <div class="modal-body">
-        // game description here
+        Explore the world, buy islands, trade resources using your ships and increase you wealth to become the ultimate ‘Lord of the Isles’.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -66,13 +67,18 @@
       </a>
     </div>
   </div>
+  <script src = "/socket.io/socket.io.js"></script>
 
   <script type="text/javascript">
     $(document).ready(function(){
+      var person = localStorage.getItem("user");
+      var socket = io();
             $("button").hide();
             $("wiki").hide();
             $("help").hide();
+            
         setTimeout(function(){ 
+            
             $("button").show();
             $("wiki").show();
             $("help").show();

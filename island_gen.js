@@ -1,21 +1,24 @@
-var user;
-
 	$(document).ready(function(){
-        get_dice_status(0);
-
+        var user;
+        var socket = io();
         user = localStorage.getItem("user");
-        // console.log("here user: "+user);
+        console.log("here user: "+user);
+        console.log(localStorage.getItem("user"));
+            get_dice_status(0);
+
         function assign_island(x){
+            console.log("INSIDE ASSIGN ISLAND");
             $.ajax({
                 type: 'POST',
                 url: '/create_island',
                 data: {username:user},
+                // async: false,
                 dataType: 'json'}).
                 done(function(resp){
 
-                    // console.log(resp.name);
                     localStorage.setItem("i_name", resp.name);
 
+                    console.log("inside user: "+user);
                     if(x==0){
                         $.ajax({
                             type: 'POST',
@@ -24,7 +27,8 @@ var user;
                             success: function(data){
                                 if (data.message=="success") 
                                 {
-                                    console.log("Assign island successfull");   
+                                    console.log("Assign island successfull");
+                                    
                                 }
                                 else
                                 {
@@ -48,12 +52,14 @@ var user;
             }
         
 
-        function old_island(){
+        function old_island()
+        {
             $.ajax({
                 type: 'POST',
                 url: '/old_island',
                 data: {user:user},
                 dataType : 'json',
+                // async: false,
                 success: function(resp){
                     if (resp.length!=0) 
                     {
@@ -66,42 +72,37 @@ var user;
                     {
                         assign_island();
                     }
-                   
-
                 }
             
             });
         }
 
-         function oldNew()
-                {
+        function oldNew()
+        {
 
-                    var rand = Math.floor(Math.random()*2);
+            var rand = Math.floor(Math.random()*2);
 
-                    console.log("rand="+rand);
+            console.log("rand="+rand);
 
-                    if(rand==0)
-                        assign_island(1);
+            if(rand==0)
+                assign_island(1);
 
-                    else{
-                        old_island();
-                    }
-                }
-
-
- $('[data-toggle="popover"]').popover({
-    placement : 'bottom',
-    trigger : 'hover'
-});
-var text;
-var random_event=1;
-$('[data-toggle="dice"]').popover({
-    placement : 'bottom',
-    trigger : 'hover',
-    html : true,
-    content : text
-});
-        get_dice_status(0);
+            else{
+                old_island();
+            }
+        }
+         $('[data-toggle="popover"]').popover({
+                placement : 'bottom',
+                trigger : 'hover'
+            });
+        var text;
+        var random_event=1;
+        $('[data-toggle="dice"]').popover({
+                placement : 'bottom',
+                trigger : 'hover',
+                html : true,
+                content : text
+            });
 
         function get_dice_status(t)
         {
@@ -112,6 +113,7 @@ $('[data-toggle="dice"]').popover({
                 url: 'get_dice_status',
                 data: { username:user },
                 dataType: 'json',
+                // async: false,
                 success: function(data){
                     // console.log("data: "+data);
                     random_event = data[0].random_event_used;  
@@ -142,6 +144,7 @@ $('[data-toggle="dice"]').popover({
                     });
                     oldNew();
                     get_dice_status(0);
+                    
                 }
                 else
                 {
@@ -151,23 +154,33 @@ $('[data-toggle="dice"]').popover({
         }
         $("#dice_btn").click(function(){
             //get_dice_status(1);
-            oldNew();
+            // oldNew();
+            get_dice_status(1);
 
         });
 
         function check_player(){
+            console.log("in check player function");
             $.ajax({
                 type: 'POST',
                 url: '/check_player',
+                // async: false,
                 data: { username:user },
                 dataType: 'json',
                 success: function(x){
+                    console.log("check player success");
+                    console.log("x.player:" + x.player);
                     if(x.player=="new"){
                         assign_island(0);
                         localStorage.setItem("old",0);
                     }
                     else
+                    {
+                         get_dice_status(0);
                         localStorage.setItem("old",1);
+                        get_dice_status(0);
+
+                    }
                 }
             });
         }

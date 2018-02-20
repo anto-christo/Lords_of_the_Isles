@@ -55,15 +55,18 @@
                         var socket = io();
 
                         var person = localStorage.getItem("user");
+                        console.log("person:" + person);
                         socket.emit("add-user", {"username": person}); // LATER THIS SHOULD BE FROM INDEX.HTML
+                        socket.emit("get_first_island", {"username": person});
                         socket.on("setLocalStorage",function(data){
                             localStorage.setItem("i_name", data);
                         });
-                        socket.on("wacky_bonus",function(data){
-                            // console.log("data "+data);
-                            // LOG CODE HERE
 
-                        });
+                        // socket.on("wacky_bonus",function(data){
+                        //     // console.log("data "+data);
+                        //     // LOG CODE HERE
+
+                        // });
                         setInterval(function(){ 
                             socket.emit('getGold', {"username": person});
                         }, 3000);
@@ -91,8 +94,9 @@
         </div>
         <div class="col-md-1" style="border: 1px solid grey;">
           <div class="row" style="height: 50px">
+            
             <div class="col-md-6 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Wiki">
-              <button type="button" class="btn btn-light linksb">W</button>
+              <a href="wiki.html"><button type="button" class="btn btn-light linksb">W</button></a>
             </div>
             <div class="col-md-6 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Forums">
               <button type="button" class="btn btn-light linksb">F</button>

@@ -56,7 +56,6 @@ Bmyn
 Balkh
 Baghln
 rt Khwjah
-smr
 Asadbd
 Andkhy
 Bzrak
@@ -73,7 +72,6 @@ Vlor
 Tirana
 Shkodr
 Patos Fshat
-Lushnj
 Lezh
 La
 Kuov
@@ -111,7 +109,6 @@ Mbanza Congo
 Malanje
 Luanda
 Caxito
-Cabinda
 Sumbe
 Namibe
 Menongue
@@ -137,11 +134,9 @@ Tandil
 San Vicente
 Santo Tom
 Santa Elena
-San Pedro
 San Luis del Palmar
 San Lorenzo
 San Javier
-San Isidro
 Saladas
 Retiro
 Resistencia
@@ -192,7 +187,6 @@ Azul
 Avellaneda
 Aristbulo del Valle
 Zapala
-Yerba Buena
 Villa Regina
 Villa Paula de Sarmiento
 Villa Nueva
@@ -200,7 +194,6 @@ Villa Mara
 Villa Dolores
 Villa Constitucin
 Villa Carlos Paz
-Villa ngela
 Villa Allende
 Viedma
 Victoria
@@ -286,7 +279,6 @@ Firmat
 Famaill
 Esquel
 Esperanza
-Embarcacin
 Embalse
 El Bolsn
 Diamante
@@ -465,7 +457,6 @@ Hobart
 Hawthorn South
 Hampton Park
 Griffith
-Greensborough
 Granville
 Goulburn
 Gold Coast
@@ -536,10 +527,8 @@ Umina
 Palmerston
 Bracken Ridge
 North Ryde
-Hoppers Crossing
 Logan City
 Carindale
-Paramatta
 Ferntree Gully
 City of Parramatta
 Adelaide Hills
@@ -745,7 +734,6 @@ Mdrpur
 Sherpur
 Kishorganj
 Manikchari
-Bhndria
 Fatikchari
 Saidpur
 Azimpur
@@ -824,7 +812,6 @@ Namur
 Mouscron
 Mortsel
 Morlanwelz-Mariemont
-Mons
 Mol
 Middelkerke
 Merelbeke
@@ -849,7 +836,6 @@ Lessines
 Lede
 Lebbeke
 Lanaken
-La Louvire
 Kortrijk
 Kortenberg
 Kontich
@@ -912,7 +898,6 @@ Brussels
 Brugge
 Brecht
 Brasschaat
-Braine-le-Comte
 Braine-l Alleud
 Boussu
 Bornem
@@ -1139,7 +1124,6 @@ Sobral
 Sirinham
 Sertnia
 Serra Talhada
-Senador Pompeu
 Satuba
 So Raimundo Nonato
 So Miguel dos Campos
@@ -1169,7 +1153,6 @@ Santa Cruz do Capibaribe
 Santa Cruz
 Salinpolis
 Salgueiro
-Russas
 Rio Largo
 Rio Formoso
 Ribeiro
@@ -1290,7 +1273,6 @@ Eusbio
 Extremoz
 Estreito
 Esperantina
-Esperana
 Escada
 Dom Pedro
 Demerval Lobo
@@ -1301,7 +1283,6 @@ Currais Novos
 Cupira
 Crato
 Crates
-Coroat
 Condado
 Conceio do Araguaia
 Colinas
@@ -1340,7 +1321,6 @@ Buque
 Breves
 Brejo Santo
 Brejo da Madre de Deus
-Bragana
 Bom Conselho
 Boa Viagem
 Bezerros
@@ -1353,7 +1333,6 @@ Bayeux
 Baturit
 Barreiros
 Barreirinhas
-Barras
 Barra do Corda
 Barcarena
 Barbalha
@@ -1379,13 +1358,11 @@ Alenquer
 Alagoa Grande
 guas Belas
 gua Preta
-Afogados da Ingazeira
 Au
 Acopiara
 Acara
 Abreu e Lima
 Abaetetuba
-Xique Xique
 Xanxer
 Votuporanga
 Votorantim
@@ -1404,7 +1381,6 @@ Vespasiano
 Veranpolis
 Vera Cruz
 Wenceslau Braz
-Venncio Aires
 Vazante
 Vassouras
 Vrzea Paulista
@@ -1577,10 +1553,8 @@ Santa Gertrudes
 Santa F do Sul
 Santa Cruz do Sul
 Santa Cruz do Rio Pardo
-Santa Cruz das Palmeiras
 Santa Cruz Cabrlia
 Santa Ceclia
-Santa Brbara d Oeste
 Salvador
 Salto de Pirapora
 Salto
@@ -1638,7 +1612,6 @@ Porto Seguro
 Porto Ferreira
 Porto Feliz
 Porto Alegre
-Porto
 Porangatu
 Pontes e Lacerda
 Ponte Nova
@@ -1725,7 +1698,6 @@ Osvaldo Cruz
 Osrio
 Osasco
 Orleans
-Orlndia
 Oliveira
 Olmpia
 Novo Horizonte
@@ -1749,7 +1721,6 @@ Nilpolis
 Nerpolis
 Nepomuceno
 Nazar
-Navira
 Navegantes
 Nanuque
 Muzambinho
@@ -1858,7 +1829,6 @@ Japeri
 Januria
 Jandira
 Jandaia do Sul
-Janaba
 Jales
 Jaguarina
 Jaguariava
@@ -1925,7 +1895,6 @@ Iracempolis
 Ipor
 Ipir
 Ipia
-Iper
 Ipatinga
 Ipameri
 Ipaba
@@ -2083,7 +2052,6 @@ Catu
 Catanduva
 Catalo
 Cataguases
-Castro
 Castelo
 Cassilndia
 Casimiro de Abreu
@@ -2137,12 +2105,10 @@ Cajati
 Cajamar
 Caieiras
 Caetit
-Caet
 Cachoeiro de Itapemirim
 Cachoeirinha
 Cachoeiras de Macacu
 Cachoeira do Sul
-Cachoeira
 Caapava do Sul
 Caapava
 Caador
@@ -2195,7 +2161,6 @@ Barra dos Coqueiros
 Barra do Pira
 Barra do Garas
 Barra do Bugres
-Barra de So Francisco
 Barra Bonita
 Barra
 Bariri
@@ -2252,7 +2217,6 @@ lvares Machado
 Almirante Tamandar
 Almenara
 Alfenas
-Alm Paraba
 Alegrete
 Alegre
 Alagoinhas
@@ -2322,7 +2286,6 @@ Mochudi
 Maun
 Mahalapye
 Lobatse
-Letlhakane
 Kanye
 Janeng
 Gaborone
@@ -2330,12 +2293,10 @@ Francistown
 Horad Zhodzina
 Zhlobin
 Vitebsk
-Vilyeyka
 Vawkavysk
 Svyetlahorsk
 Stowbtsy
 Smarhon
-Slutsk
 Slonim
 Shchuchin
 Salihorsk
@@ -2356,7 +2317,6 @@ Masty
 Marina Horka
 Maladzyechna
 Mahilyow
-Lyepyel
 Luninyets
 Lida
 Krychaw
@@ -2397,7 +2357,6 @@ Boisbriand
 Boucherville
 Bradford West Gwillimbury
 Brampton
-Brandon
 Brant
 Brantford
 Brockville
@@ -2410,7 +2369,6 @@ Campbell River
 Camrose
 Candiac
 Chambly
-Charlottetown
 Chteauguay
 Chilliwack
 Clarence-Rockland
@@ -2467,14 +2425,12 @@ London
 Longueuil
 Magog
 Maple Ridge
-Markham
 Mascouche
 Medicine Hat
 Midland
 Milton
 Mirabel
 Miramichi
-Mississauga
 Moncton
 Montral
 Mont-Royal
@@ -2550,7 +2506,6 @@ Spruce Grove
 St. Albert
 St. Catharines
 Stratford
-St. Thomas
 Surrey
 Terrace
 Terrebonne
@@ -2692,7 +2647,6 @@ Bangui
 Sibiti
 Pointe-Noire
 Owando
-Ousso
 Mossendjo
 Madingou
 Dolisie
@@ -2783,7 +2737,6 @@ Zrich (Kreis 2)
 Zrich (Kreis 8)
 Zrich (Kreis 7)
 Zrich (Kreis 6)
-Lancy
 Zunoula
 Yamoussoukro
 Vavoua
@@ -2834,11 +2787,9 @@ Akoup
 Agnibilkrou
 Agboville
 Adzop
-Adiak
 Aboisso
 Abobo
 Abidjan
-Abengourou
 Sgula
 Soubr
 Avarua
@@ -2891,7 +2842,6 @@ Molina
 Melipilla
 Machal
 Lota
-Los ngeles
 Los Andes
 Loncoche
 Llaillay
@@ -2921,7 +2871,6 @@ Concepcin
 Collipulli
 Coihaique
 Chimbarongo
-Chilln
 Chiguayante
 Chicureo Abajo
 Cauquenes
@@ -2940,7 +2889,6 @@ Las Animas
 La Pintana
 Lo Prado
 Yaound
-Yagoua
 Wum
 Tonga
 Tiko
@@ -3064,7 +3012,6 @@ Zaoyang
 Yuyao
 Yingchuan
 Yuxia
-Kunshan
 Yunyang
 Yunmeng Chengguanzhen
 Jinghong
@@ -3162,7 +3109,6 @@ Xiangtan
 Xiangyang
 Xiangcheng Chengguanzhen
 Xian
-Xiamen
 Wuzhou
 Wuyang
 Wuxue
@@ -3355,7 +3301,6 @@ Linhai
 Lingcheng
 Lincheng
 Linfen
-Xishan
 Lichuan
 Licheng
 Liaocheng
@@ -3389,7 +3334,6 @@ Juegang
 Jiujiang
 Jishui
 Qianzhou
-Jinzhou
 Jinxiang
 Jinshi
 Jinsha
@@ -3462,7 +3406,6 @@ Hebi
 Hanzhong
 Chengyang
 Hanting
-Hangzhou
 Hangu
 Handan
 Hanchuan
@@ -3541,7 +3484,6 @@ Daliang
 Dalian
 Dali
 Chuzhou
-Yangchun
 Yiwu
 Chongqing
 Chonglong
@@ -3560,7 +3502,6 @@ Changqing
 Changli
 Changleng
 Caohe
-Weining
 Cangzhou
 Caidian
 Buhe
@@ -3568,11 +3509,9 @@ Bozhou
 Botou
 Boshan
 Baise City
-Binzhou
 Luxu
 Bijie
 Bianzhuang
-Bengbu
 Beijing
 Beihai
 Beidao
@@ -3631,7 +3570,6 @@ Xifeng
 Xiaoshi
 Wuchang
 Wangqing
-Hepingjie
 Wangkui
 Ulanhot
 Tumen
@@ -3664,7 +3602,6 @@ Fendou
 Taihe
 Qiqihar
 Qinggang
-Qianguo
 Pingzhuang
 Panshi
 Panshan
@@ -3849,7 +3786,6 @@ San Martn
 San Marcos
 San Juan Nepomuceno
 San Juan del Cesar
-San Jacinto
 San Gil
 San Carlos
 San Carlos
@@ -3955,7 +3891,6 @@ El Cerrito
 El Carmen de Bolvar
 El Banco
 El Bagre
-Duitama
 Dos Quebradas
 Curuman
 Ccuta
@@ -3999,7 +3934,6 @@ Barrancabermeja
 Barbosa
 Barbosa
 Baranoa
-Ayapel
 Armenia
 Arjona
 Ariguan
@@ -4096,7 +4030,6 @@ Primero de Enero
 Placetas
 Pinar del Ro
 Perico
-Pedro Betancourt
 Palmira
 Palma Soriano
 Nuevitas
@@ -4211,7 +4144,6 @@ Vykov
 Vsetn
 Varnsdorf
 Valask Mezi
-st nad Orlic
 st nad Labem
 Uhersk Brod
 Uhersk Hradit
@@ -4258,7 +4190,6 @@ Liberec
 Libe
 Letany
 Kutn Hora
-Krom
 Krnov
 Kralupy nad Vltavou
 Kopivnice
@@ -4553,7 +4484,6 @@ Rottenburg
 Roth
 Rotenburg
 Rostock
-Rsrath
 Rosenheim
 Ronnenberg
 Rinteln
@@ -4566,7 +4496,6 @@ Rheine
 Rheinberg
 Rheinbach
 Rhede
-Rheda-Wiedenbrck
 Reutlingen
 Renningen
 Rendsburg
@@ -4641,7 +4570,6 @@ Oer-Erkenschwick
 Oelde
 Odenthal
 Ochtrup
-Oberursel
 Obertshausen
 Oberschneweide
 Ober-Ramstadt
@@ -4858,7 +4786,6 @@ Kelheim
 Kehl
 Kaulsdorf
 Kaufbeuren
-Kassel
 Karow
 Karlstadt
 Karlsruhe
@@ -5067,7 +4994,6 @@ Finsterwalde
 Finnentrop
 Stuttgart Feuerbach
 Fellbach
-Falkensee
 Eutin
 Euskirchen
 Ettlingen
@@ -5123,7 +5049,6 @@ Dortmund
 Dorsten
 Dormagen
 Donauwrth
-Donaueschingen
 Dbeln
 Ditzingen
 Dinslaken
@@ -5178,7 +5103,6 @@ Buchholz in der Nordheide
 Franzsisch Buchholz
 Buchen
 Brhl
-Brggen
 Bruckmhl
 Bruchsal
 Bruchkbel
@@ -5388,7 +5312,6 @@ Kolding
 Kalundborg
 Ishj
 Hvidovre
-Horsens
 Hrsholm
 Holstebro
 Holbk
@@ -5488,7 +5411,6 @@ Tamalous
 Tadmat
 Sour el Ghozlane
 Souma
-Lardjem
 Souk Ahras
 Sougueur
 Skikda
@@ -5672,7 +5594,6 @@ Azazga
 Arris
 Arhribs
 Arbatache
-Aoulef
 Annaba
 Ammi Moussa
 Amizour
@@ -5730,7 +5651,6 @@ Puerto Francisco de Orellana
 Portoviejo
 Playas
 Pias
-Pelileo
 Pedro Carbo
 Pasaje
 Otavalo
@@ -5793,7 +5713,6 @@ Sd Slim
 Shirbn
 Shibn al Qanir
 Shibn al Kawm
-Samannd
 Saml
 Rosetta
 Ras Gharib
@@ -5815,7 +5734,6 @@ Kawm Umb
 Kawm amdah
 Kafr aqr
 Kafr az Zayyt
-Kafr ash Shaykh
 Kafr ad Dawwr
 Juhaynah
 Jirj
@@ -5918,7 +5836,6 @@ Vila-real
 Villanueva de la Serena
 Villajoyosa
 Vcar
-Vlez-Mlaga
 Valencia
 Valdepeas
 Utrera
@@ -5985,7 +5902,6 @@ La Pobla de Vallbona
 Priego de Crdoba
 Pozoblanco
 Pollena
-Pilar de la Horadada
 Picassent
 Paterna
 Palma
@@ -6056,7 +5972,6 @@ La Oliva
 la Nucia
 La Lnea de la Concepcin
 L Eliana
-La Carolina
 Jumilla
 Jerez de la Frontera
 Javea
@@ -6086,7 +6001,6 @@ El Viso del Alcor
 El Puerto de Santa Mara
 El Ejido
 Elda
-Elche
 El Arahal
 cija
 Dos Hermanas
@@ -6142,7 +6056,6 @@ Baeza
 Baena
 Badajoz
 Ayamonte
-Atarfe
 Atamara
 Aspe
 Arucas
@@ -6409,7 +6322,6 @@ Blanes
 Bilbao
 Bermeo
 Berga
-Benicssim
 Benicarl
 Benavente
 Bjar
@@ -6440,7 +6352,6 @@ Nou Barris
 Pinar de Chamartn
 Playa del Ingles
 Puerto del Carmen
-Ceuta
 Moncloa-Aravaca
 Eixample
 les Corts
@@ -6587,7 +6498,6 @@ Mntsl
 Lovisa
 Lohja
 Lieto
-Lempl
 Laukaa
 Lappeenranta
 Lahti
@@ -6712,7 +6622,6 @@ Soissons
 Six-Fours-les-Plages
 Sin-le-Noble
 Seynod
-Svres
 Sevran
 Ste
 Sens
@@ -6874,7 +6783,6 @@ Mont-de-Marsan
 Montceau-les-Mines
 Montbrison
 Montbliard
-Montauban
 Montargis
 Mons-en-Barul
 Moissy-Cramayel
@@ -6971,13 +6879,11 @@ La Rochelle
 Laon
 Lannion
 Lanester
-Landerneau
 Lambersart
 La Madeleine
 Lagny-sur-Marne
 La Garenne-Colombes
 La Garde
-La Flche
 La Crau
 La Courneuve
 La Ciotat
@@ -7146,7 +7052,6 @@ Carcassonne
 Canteleu
 Cannes
 Cambrai
-Caluire-et-Cuire
 Calais
 Cahors
 Cagnes-sur-Mer
@@ -7215,7 +7120,6 @@ Athis-Mons
 Asnires-sur-Seine
 Arras
 Armentires
-Arles
 Argenteuil
 Argentan
 Arcueil
@@ -7229,13 +7133,11 @@ Angoulme
 Anglet
 Angers
 Amiens
-Allauch
 Alfortville
 Als
 Alenon
 Albi
 Albertville
-Ajaccio
 Aix-les-Bains
 Aix-en-Provence
 Agen
@@ -7265,7 +7167,6 @@ La Defense
 Saint-Quentin-en-Yvelines
 Cergy-Pontoise
 Tchibanga
-Port-Gentil
 Oyem
 Mouila
 Moanda
@@ -7449,7 +7350,6 @@ Perth
 Penzance
 Penicuik
 Penarth
-Paisley
 Paignton
 Oxford
 Oswestry
@@ -7554,7 +7454,6 @@ Larkhall
 Lancaster
 Kirkintilloch
 Kirkcaldy
-Kirkby in Ashfield
 Kirkby
 Kingswood
 Kingswinford
@@ -7582,7 +7481,6 @@ Coatbridge
 Coalville
 Clydebank
 Clydach
-Clitheroe
 Clevedon
 Cleethorpes
 Cleckheaton
@@ -7625,7 +7523,6 @@ Buxton
 Bushey
 Bury St Edmunds
 Bury
-Burton upon Trent
 Burntwood
 Burnley
 Burnham-on-Sea
@@ -7670,7 +7567,6 @@ Birmingham
 Birkenhead
 Bingley
 Billingham
-Billericay
 Biggleswade
 Bideford
 Biddulph
@@ -7726,12 +7622,10 @@ Alton
 Alloa
 Alfreton
 Aldridge
-Aldershot
 Airdrie
 Acton
 Acocks Green
 Accrington
-Abingdon
 Aberystwyth
 Abergele
 Aberdeen
@@ -7770,7 +7664,6 @@ Chapel Allerton
 Blackheath
 Kempston Hardwick
 Mendip
-Lower Earley
 Bartley Green
 Earlsfield
 Letchworth Garden City
@@ -7801,7 +7694,6 @@ Poti
 Ozurgeti
 Ochamchire
 Marneuli
-Kutaisi
 Kobuleti
 Khashuri
 Gori
@@ -7860,7 +7752,6 @@ Dunkwa
 Dome
 Cape Coast
 Bolgatanga
-Bibiani
 Berekum
 Begoro
 Bawku
@@ -7880,7 +7771,6 @@ Lamin
 Farafenni
 Brikama
 Banjul
-Bakau
 Tougu
 Tliml
 Siguiri
@@ -7916,7 +7806,6 @@ Vola
 Vlos
 Vronas
 Vri
-Trpoli
 Trkala
 Thvai
 Sprti
@@ -7989,7 +7878,6 @@ Agrnio
 Rdos
 Giannits
 Xnthi
-Vroia
 Thessalonki
 Sykis
 Srres
@@ -8199,9 +8087,7 @@ Carrefour
 Okap
 Ti Port-de-Paix
 Trkszentmikls
-Tiszajvros
 Szolnok
-Szentes
 Szeged
 Szarvas
 Storaljajhely
@@ -8582,7 +8468,6 @@ Gongdanglegi Kulon
 Gombong
 Godean
 Genteng
-Gedangan
 Gebog
 Gampengrejo
 Gambiran Satu
@@ -8598,7 +8483,6 @@ Depok
 Denpasar
 Demak
 Delanggu
-Dampit
 Curup
 Curug
 Comal
@@ -8630,7 +8514,6 @@ Bojonegoro
 Bogor
 Blora
 Blitar
-Bitung
 Bima
 Besuki
 Bengkulu
@@ -8654,7 +8537,6 @@ Bambanglipuro
 Balung
 Balikpapan
 Balapulang
-Balaipungut
 Baki
 Baekrajan
 Babat
@@ -8716,7 +8598,6 @@ Athlone
 Sandyford
 Donaghmede
 Jerusalem
-Safed
 Yehud
 Yavn
 Yafo
@@ -8726,7 +8607,6 @@ Tiberias
 Tel Aviv
 maalot Tarshh
 Tamra
-Sederot
 Sakhnn
 Rosh HaAyin
 Rishon Leiyyon
@@ -8790,7 +8670,6 @@ Ariel
 Douglas
 Pnch
 Keelakarai
-Zunheboto
 Zamnia
 Zaidpur
 Zahirbd
@@ -8836,14 +8715,12 @@ Virr
 Vinukonda
 Villupuram
 Vikrbd
-Vijayawada
 Vijpur
 Vidisha
 Vettr
 Vettaikkaranpudur
 Vetaplem
 Verval
-Vepagunta
 Venkatagiri
 Vemalwda
 Velur
@@ -8861,8 +8738,6 @@ Varangaon
 Varanasi
 Vaniyambadi
 Vandavsi
-Valsd
-Valparai
 Vallabh Vidyanagar
 Valabhpur
 Vaikam
@@ -8917,9 +8792,7 @@ Turaiyr
 Tura
 Tuni
 Tndla
-Tumsar
 Tumkr
-Tulspur
 Tuljpur
 Tufnganj
 Tuensang
@@ -8968,7 +8841,6 @@ Thnesar
 Thne
 Thna Bhawan
 Thn
-Thkurganj
 Thakurdwara
 Tezpur
 Terdl
@@ -9081,7 +8953,6 @@ Siruguppa
 Sirsilla
 Sirsi
 Sirsi
-Sirsganj
 Sirsa
 Sironj
 Sirohi
@@ -9141,7 +9012,6 @@ Sherghti
 Sheopur
 Sheohar
 Sheoganj
-Shegaon
 Shntipur
 Shamsbd
 Shamsbd
@@ -9204,7 +9074,6 @@ Sangrr
 Sngola
 Sangod
 Sngli
-Sangari
 Sangreddi
 Sangamner
 Sandr
@@ -9222,7 +9091,6 @@ Smbhar
 Sambhal
 Sambalpur
 Smba
-Samstipur
 Smalkot
 Samlkha
 Slr
@@ -9303,7 +9171,6 @@ Rangia
 Rangpra
 Ranchi
 Rnvv
-Rnght
 Rmtek
 Rampur Hat
 Rmpura
@@ -9322,7 +9189,6 @@ Rameswaram
 Rmpuram
 Ramanathapuram
 Rmanagaram
-Rmachandrapuram
 Rjra
 Rjula
 Rjsamand
@@ -9351,7 +9217,6 @@ Ripur
 Raipur
 Raipur
 Rikot
-Raigarh
 Riganj
 Richr
 Rhuri
@@ -9369,12 +9234,10 @@ Qdin
 Puttr
 Puttr
 Pushkar
-Pusad
 Purw
 Puruliya
 Purnia
 Prna
-Puri
 Pranpur
 Pupri
 Punjai Puliyampatti
@@ -9435,7 +9298,6 @@ Phaltan
 Phalodi
 Phalauda
 Phagwra
-Petld
 Perundurai
 Perumpvr
 Periyanayakkanpalaiyam
@@ -9615,7 +9477,6 @@ Naraura
 Narauli
 Narasaraopet
 Narasapur
-Narasannapeta
 Naraini
 Naraina
 Napsar
@@ -9719,7 +9580,6 @@ Mon
 Mokokchng
 Mokameh
 Moirng
-Moga
 Modsa
 Misrikh
 Mirzpur
@@ -9815,7 +9675,6 @@ Malpe
 Mallasamudram
 Malkpur
 Malakanagiri
-Malhbd
 Mler Kotla
 Mlegaon
 Malavalli
@@ -9880,7 +9739,6 @@ Lohrdaga
 Lingsugr
 Limbdi
 Leteri
-Leh
 Lwar Khs
 Laungowl
 Latur
@@ -9916,7 +9774,6 @@ Kurduvdi
 Kurandvd
 Kuppam
 Kunnamkulam
-Kunnamangalam
 Kunigal
 Kundla
 Kundgol
@@ -9951,7 +9808,6 @@ Kovilpatti
 Kottru
 Kottayam
 Kottagdem
-Kotputli
 Kotma
 Kotdwra
 Kotaprh
@@ -10039,7 +9895,6 @@ Khandela
 Khnpur
 Khammam
 Khmgaon
-Khambht
 Khambhliya
 Khamaria
 Khallbd
@@ -10068,7 +9923,6 @@ Kvali
 Kattivkkam
 Kattanam
 Ktrs
-Ktpdi
 Ktoya
 Ktol
 Katihar
@@ -10223,7 +10077,6 @@ Jasdan
 Jarwal
 Jaor
 Jnsath
-Jnjgr
 Jangipur
 Jangaon
 Jandila
@@ -10402,7 +10255,6 @@ Goplganj
 Gondi
 Gondal
 Gond City
-Gomoh
 Gola Gokarannth
 Golght
 Gokarna
@@ -10434,7 +10286,6 @@ Gauripur
 Goribidnr
 Guwahati
 Garhwa
-Garui
 Gariadhar
 Garhshankar
 Garhmuktesar
@@ -10457,12 +10308,10 @@ Gndarbal
 Gajraula
 Gajendragarh
 Gadwl
-Gadhinglaj
 Gadhada
 Gdarwra
 Gadag
 Fort Gloster
-Forbesganj
 Frozpur Jhirka
 Ferozepore
 Frozbd
@@ -10528,7 +10377,6 @@ Dnnagar
 Dimpur
 Digras
 Dglr
-Dighwra
 Digboi
 Dg
 Ddwna
@@ -10597,7 +10445,6 @@ Dehri
 Dehra Dn
 Dausa
 Daund
-Daudnagar
 Dattpur
 Datia
 Dtganj
@@ -10642,7 +10489,6 @@ Churchndpur
 Chunr
 Chotila
 Chopda
-Chodavaram
 Rampachodavaram
 Chittr
 Chittaurgarh
@@ -10693,7 +10539,6 @@ Chs
 Charthwal
 Charkhi Ddri
 Charkhri
-Chpar
 Channaryapatna
 Channapatna
 Channagiri
@@ -10732,11 +10577,9 @@ Burla
 Burhar
 Burhnpur
 Bndu
-Bndi
 Buldna
 Bulandshahr
 Budhlda
-Budhna
 Budaun
 Brjarjnagar
 Brahmapur
@@ -10747,12 +10590,10 @@ Bongaigaon
 Mumbai
 Bolpur
 Bokro
-Bokajn
 Boisar
 Bodinyakkanr
 Buddh Gaya
 Bodhan
-Bobbili
 Biswn
 Bissu
 Bishnupur
@@ -10773,7 +10614,6 @@ Bilgrm
 Bilgi
 Blspur
 Bilspur
-Bilsipra
 Bilri
 Bilra
 Bikramganj
@@ -10857,7 +10697,6 @@ Betamcherla
 Beri Khs
 Berasia
 Beohri
-Bemetra
 Belr
 Belsand
 Belonia
@@ -10900,7 +10739,6 @@ Brmer
 Barki Saria
 Barka Kna
 Barjala
-Bari Sdri
 Bri
 Barhiya
 Brh
@@ -10953,7 +10791,6 @@ Balrmpur
 Blotra
 Baloda Bzr
 Balod
-Bli
 Balllpur
 Bli
 Balasore
@@ -10966,7 +10803,6 @@ Bakhtiyrpur
 Baj Baj
 Bairgnia
 Byndoor
-Bail-Hongal
 Baihar
 Baidyabti
 Bahraigh
@@ -11037,7 +10873,6 @@ Arkalgd
 Ariyalr
 Arcot
 Arria
-Arantngi
 rani
 rangaon
 Arang
@@ -11084,7 +10919,6 @@ Ambur
 Ambikpur
 Ambattr
 Ambasamudram
-Ambla
 Ambjogi
 Ambh
 Ambad
@@ -11110,7 +10944,6 @@ langyam
 Alandur
 Alandi
 Aland
-Akot
 Akola
 Aklera
 Akivdu
@@ -11199,7 +11032,6 @@ Kyathampalle
 Gajuwaka
 Manuguru
 Kalyandurg
-Ponnur
 Quthbullapur
 Ramanayyapeta
 Palwancha
@@ -11247,7 +11079,6 @@ Koysinceq
 Kifr
 Kirkuk
 Karbala
-Erbil
 Ht
 alabjah
 adthah
@@ -11332,7 +11163,6 @@ Shahr-e Bbak
 Shdegn
 Semnn
 Semrom
-Sveh
 Sari
 Saqqez
 Sanandaj
@@ -11353,7 +11183,6 @@ Qeshm
 Qazvin
 Qarah  od Dn
 Farrokh Shahr
-Qen
 Sarpol-e Zahb
 Pshv
 Piranshahr
@@ -11361,7 +11190,6 @@ Pveh
 Prsbd
 Oshnavyeh
 Ormyeh
-Omdyeh
 Nrbd
 Nowshahr
 Nshbr
@@ -11431,7 +11259,6 @@ Chls
 Bandar-e Bshehr
 Bkn
 Borjerd
-Borjen
 Borzjn
 Bojnrd
 Brjand
@@ -11480,11 +11307,9 @@ Najafbd
 Khomeyn Shahr
 Kelshd va Sdarjn
 Falvarjn
-Isfahan
 Dowlatbd
 Dorcheh Pz
 Zbol
-Zahedan
 Torbat-e Jm
 Tybd
 Sarakhs
@@ -11494,7 +11319,6 @@ rnshahr
 Chabahar
 Mahdishahr
 Pasragad Branch
-Akureyri
 Reykjavk
 Kpavogur
 Hafnarfjrur
@@ -11517,7 +11341,6 @@ San Cataldo
 Rossano Stazione
 Rosolini
 Ribera
-Reggio Calabria
 Ragusa
 Quattromiglia
 Quartu Sant Elena
@@ -11535,7 +11358,6 @@ Oristano
 Noto
 Niscemi
 Nicastro-Sambiase
-Monserrato
 Monreale
 Modica
 Misterbianco
@@ -11545,7 +11367,6 @@ Messina
 Mazara del Vallo
 Mascalucia
 Marsala
-Licata
 Lentini
 Iglesias
 Gioia Tauro
@@ -11611,7 +11432,6 @@ Udine
 Triggiano
 Trieste
 Trezzano sul Naviglio
-Treviso
 Treviglio
 Trentola-Ducenta
 Trento
@@ -11659,7 +11479,6 @@ Savigliano
 Sava
 Sassuolo
 Sassari
-Sarzana
 Saronno
 Sarno
 San Vito dei Normanni
@@ -12018,7 +11837,6 @@ Ariccia
 Arezzo
 Arese
 Ardea
-Arcore
 Aprilia
 Aosta
 Anzio
@@ -12101,7 +11919,6 @@ Anjarah
 Amman
 Al Quwaysimah
 Mafraq
-Qr Mov
 Al Jubayhah
 Aqaba
 Ajln
@@ -12109,7 +11926,6 @@ Karak City
 Russeifa
 Shing
 Atsugi
-Akashi
 Zushi
 Zama
 Yuza
@@ -12180,7 +11996,6 @@ Toyama
 Tottori
 Tosu
 Tonosh
-Tondabayashich
 Tomioka
 Tomigusuku
 Tokyo
@@ -12202,7 +12017,6 @@ Tatsunoch-tominaga
 Tateyama
 Tatebayashi
 Tarumizu
-Tarui
 Tanushimarumachi-toyoki
 Tanuma
 Nishi-Tokyo-shi
@@ -12336,7 +12150,6 @@ Numata
 Nonoichi
 Ngata
 Noda
-Nobeoka
 Nishiwaki
 Nishio
 Nishinoomote
@@ -12376,7 +12189,6 @@ Murakami
 Muk
 Muikamachi
 Morohong
-Moriyama
 Moriguchi
 Mori
 Mizunami
@@ -12742,7 +12554,6 @@ Katsuura
 Katsuta
 Katori-shi
 Kasama
-Karasuyama
 Kaminoyama
 Kamaishi
 Kakuda
@@ -12803,7 +12614,6 @@ Misawa
 Yoichi
 Makubetsu
 Kushiro
-Kuroishi
 Shimokizukuri
 Kitami
 Kamiiso
@@ -12826,7 +12636,6 @@ Asahikawa
 Aomorishi
 Abashiri
 Goshogawara
-Aso
 Nanto-shi
 Kawage
 Neyagawa
@@ -12875,7 +12684,6 @@ Lodwar
 Lamu
 Kitui
 Kitale
-Kisumu
 Kisii
 Kilifi
 Kiambu
@@ -13072,7 +12880,6 @@ Goseong
 Gongju
 Kyosai
 Koesan
-Koch ang
 Kimje
 Kimhae
 Gimcheon
@@ -13199,7 +13006,6 @@ Lisakovsk
 Baykonyr
 Ridder
 Lenger
-Kokshetau
 Kentau
 Esik
 Georgevka
@@ -13319,12 +13125,10 @@ Maputsoe
 Mafeteng
 Leribe
 Butha-Buthe
-Visaginas
 Vilnius
 Utena
 Ukmerge
 Telsiai
-Taurage
 Silute
 iauliai
 Rokikis
@@ -13333,7 +13137,6 @@ Plunge
 Panevys
 Palanga
 Fabijoniks
-Mazeikiai
 Marijampol
 Kretinga
 Klaipda
@@ -13374,7 +13177,6 @@ Csis
 Tobruk
 Sulq
 Darnah
-Benghazi
 Az Zuwaytnah
 At Tj
 Tkrah
@@ -13389,7 +13191,6 @@ Zliten
 Zalan
 Yafran
 Waddn
-Tarhuna
 Tripoli
 Tagiura
 Sirte
@@ -13410,7 +13211,6 @@ Ban Wald
 Az Zintn
 Az Zwyah
 Awbr
-Al Khums
 Al Jadd
 Zao
 Zagora
@@ -13437,7 +13237,6 @@ Settat
 Sefrou
 Sale
 Safi
-Rabat
 Oulad Tema
 Oujda
 Oued Zem
@@ -13561,7 +13360,6 @@ Farafangana
 Fandriana
 Betioky
 Betafo
-Beroroha
 Belo sur Tsiribihina
 Beloha
 Bealanana
@@ -13600,7 +13398,6 @@ Ambalavao
 Alarobia
 Majuro
 RMI Capitol
-
 Vinica
 Veles
 Tetovo
@@ -13798,7 +13595,6 @@ Liwonde
 Lilongwe
 Kasungu
 Dedza
-Blantyre
 Balaka
 Gustavo A. Madero
 San Fernando
@@ -13837,7 +13633,6 @@ Tlaquiltenango
 Tlapa de Comonfort
 Tlapacoyan
 Tlalpan
-Tlalnepantla
 Tlahuac
 Tizimn
 Tizayuca
@@ -13894,7 +13689,6 @@ Tuxtepec
 San Francisco Acuautla
 Sanctorum
 San Cristbal de las Casas
-San Andres Tuxtla
 Salina Cruz
 Ro Verde
 Ro Bravo
@@ -13933,7 +13727,6 @@ Naranjos
 Villa Nanchital
 Motul
 Motozintla
-Montemorelos
 Santiago Momoxpan
 Mixquiahuala de Juarez
 Misantla
@@ -14079,12 +13872,10 @@ Tlaxcala de Xicohtencatl
 Papalotla
 Vicente Guerrero
 Tonal
-Arriaga
 San Andrs Cholula
 Tampico
 Alto Lucero
 San Mateo Otzacatipan
-Santa Mara Totoltepec
 San Lorenzo Acopilco
 Benito Juarez
 Venustiano Carranza
@@ -14170,7 +13961,6 @@ Salvatierra
 Saltillo
 Salamanca
 Sahuayo de Morelos
-Sabinas Hidalgo
 Ciudad Sabinas
 Rosarito
 Romita
@@ -14213,7 +14003,6 @@ Marfil
 Maravato
 Manzanillo
 Rodolfo Snchez Taboada
-Magdalena de Kino
 San Pedro Madera
 Los Mochis
 Loreto
@@ -14238,7 +14027,6 @@ Ixtln del Ro
 Ixtapa
 Irapuato
 Huetamo de Nez
-Huatabampo
 Hidalgo del Parral
 Herica Zitcuaro
 Nogales
@@ -14355,7 +14143,6 @@ Ciudad de Huitzuco
 Casa Blanca
 La Providencia Siglo XXI
 Ampliacin San Mateo (Colonia Solidaridad)
-Fraccionamiento Ciudad Olmeca
 San Rafael Tlanalapan
 Tecmac de Felipe Villanueva
 Venceremos
@@ -14439,7 +14226,6 @@ Parit Buntar
 Tasek Glugor
 George Town
 Serendah
-Rawang
 Petaling Jaya
 Kuala Lumpur
 Sabak Bernam
@@ -14514,7 +14300,6 @@ Ilha de Moambique
 Maxixe
 Matola
 Maputo
-Manjacaze
 Lichinga
 Inhambane
 Cuamba
@@ -14561,14 +14346,12 @@ Gaya
 Dosso
 Dogondoutchi
 Diffa
-Dakoro
 Ayorou
 Alaghsas
 Agadez
 Kingston
 Zuru
 Zungeru
-Zaria
 Yola
 Yenagoa
 Wukari
@@ -14612,7 +14395,6 @@ Onitsha
 Ondo
 Olupona
 Okuta
-Okrika
 Okigwe
 Okene
 Oke Mesi
@@ -14658,7 +14440,6 @@ Kumo
 Kumagunnam
 Kukawa
 Kuje
-Kontagora
 Kiyawa
 Kisi
 Keffi
@@ -14801,7 +14582,6 @@ Ajaokuta
 Agulu
 Agbor
 Afikpo
-Ado Odo
 Ado-Ekiti
 Abuja
 Abeokuta
@@ -14930,7 +14710,6 @@ Rijswijk
 Ridderkerk
 Rhoon
 Rhenen
-Raalte
 Putten
 Purmerend
 Pijnacker
@@ -15088,7 +14867,6 @@ Asten
 Assen
 Arnhem
 Apeldoorn
-Anloo
 Amsterdam
 Amstelveen
 Amersfoort
@@ -15098,7 +14876,6 @@ Almelo
 Alkmaar
 Alblasserdam
 Aalten
-Aalsmeer
 Amsterdam-Zuidoost
 Berkel en Rodenrijs
 Ypenburg
@@ -15114,7 +14891,6 @@ Sandefjord
 Porsgrunn
 Oslo
 Moss
-Molde
 Mo i Rana
 Lillehammer
 Larvik
@@ -15134,7 +14910,6 @@ Bergen
 Arendal
 lesund
 Asky
-Ytrebygda
 Wling
 Tulspur
 Tkpur
@@ -15162,7 +14937,6 @@ Dhankut
 Dhangarhi
 Drchul
 Dailekh
-Dadeldhur
 Butwl
 Brganj
 Birtnagar
@@ -15192,12 +14966,10 @@ Manukau City
 Mangere
 Lower Hutt
 Invercargill
-Hastings
 Hamilton
 Dunedin
 Christchurch
 Auckland
-Levin
 Gisborne
 Masterton
 Tauranga
@@ -15362,7 +15134,6 @@ Caman
 Callao
 Barranca
 Ayaviri
-Ayacucho
 Arequipa
 Andahuaylas
 Abancay
@@ -15463,7 +15234,6 @@ San Narciso
 San Miguel
 San Miguel
 San Mateo
-San Mateo
 San Mariano
 San Marcelino
 San Luis
@@ -15555,7 +15325,6 @@ Nabunturan
 Nabua
 Muricay
 Murcia
-Muoz
 Morong
 Morong
 Rodriguez
@@ -15609,7 +15378,6 @@ Magsaysay
 Magarao
 Maganoy
 Magalang
-Mabalacat City
 Maasin
 Maao
 Lupon
@@ -15739,7 +15507,6 @@ Cainta
 Cagayan de Oro
 Cadiz
 Cabiao
-Cabayangan
 Cabanatuan City
 Cabagan
 Cabadbaran
@@ -15750,7 +15517,6 @@ Burgos
 Bunawan
 Buluan
 Bulaon
-Bulan
 Bulacan
 Buhi
 Bugo
@@ -15763,7 +15529,6 @@ Bongabon
 Bogo
 Bocaue
 Bislig
-Binonga
 Binmaley
 Binangonan
 Binalbagan
@@ -15951,7 +15716,6 @@ Mehar
 Mtli
 Matiri
 Mastung
-Mardan
 Mnsehra
 Mangla
 Mandi Bahuddn
@@ -16161,7 +15925,6 @@ Sulejwek
 Staszw
 Starachowice
 Stalowa Wola
-rdmiecie
 Sokow Podlaski
 Sokka
 Sochaczew
@@ -16202,7 +15965,6 @@ Nowy Dwr Mazowiecki
 Nisko
 Mrgowo
 Mokotw
-Mawa
 Misk Mazowiecki
 Milanwek
 Mielec
@@ -16230,7 +15992,6 @@ Ktrzyn
 Kabaty
 Jzefw
 Jdrzejw
-Jaso
 Jarosaw
 Hrubieszw
 Hajnwka
@@ -16285,7 +16046,6 @@ Wadowice
 Ustro
 Ustka
 Tychy
-Turek
 Trzebinia
 Trzcianka
 Toru
@@ -16357,7 +16117,6 @@ Nowy Tomyl
 Nowogard
 Nowa Sl
 Nowa Ruda
-Namysw
 Nako nad Noteci
 Myszkw
 Mysowice
@@ -16419,7 +16178,6 @@ Gorzw Wielkopolski
 Goleniw
 Gniezno
 Guchoazy
-Gowno
 Gogw
 Gliwice
 Gdynia
@@ -16444,7 +16202,6 @@ Bytw
 Bytom
 Bydgoszcz
 Brzeg
-Brodnica
 Braniewo
 Bolesawiec
 Boguszw-Gorce
@@ -16517,7 +16274,6 @@ Ar Rm wa iyat al Bard
 Jericho
 Al Ymn
 Hebron
-Al Brah
 Al Ayzaryah
 Old City
 Al Qarrah
@@ -16663,7 +16419,6 @@ Caaguaz
 Caacup
 Asuncin
 Umm all Muammad
-Ar Rayyn
 Al Wakrah
 Al Khawr
 Doha
@@ -16782,10 +16537,8 @@ Caracal
 Calafat
 Buzu
 Buhui
-Buftea
 Bucharest
 Breaza
-Braov
 Brila
 Brad
 Botoani
@@ -16841,13 +16594,11 @@ Lazarevac
 Kruevac
 Kraljevo
 Kragujevac
-Kikinda
 Jagodina
 Inija
 Gornji Milanovac
 uprija
 aak
-Bor
 Belgrade
 Beej
 Aranelovac
@@ -16873,7 +16624,6 @@ Zverevo
 Zvenigorod
 Zlatoust
 Zimovniki
-Zhulebino
 Zhukovskiy
 Zhukovka
 Zhirnovsk
@@ -16904,13 +16654,11 @@ Yelizavetinskaya
 Yelets
 Yelan
 Yelabuga
-Yegoryevsk
 Yegorlykskaya
 Yefremov
 Yasnyy
 Yasnogorsk
 Yasenevo
-Yartsevo
 Yaroslavl
 Yaransk
 Yanaul
@@ -16998,11 +16746,9 @@ Tikhoretsk
 Teykovo
 Terek
 Tyoply Stan
-Temryuk
 Tekstilshchiki
 Tbilisskaya
 Tambov
-Agidel
 Taganrog
 Taganskiy
 Syzran
@@ -17021,7 +16767,6 @@ Stupino
 Strunino
 Stroitel
 Strogino
-Sterlitamak
 Stavropol
 Staryy Oskol
 Staroshcherbinovskaya
@@ -17056,7 +16801,6 @@ Skopin
 Skhodnya
 Sim
 Sibay
-Shuya
 Shushary
 Shumerlya
 Mikhaylovsk
@@ -17152,7 +16896,6 @@ Pokhvistnevo
 Podporozhye
 Podolsk
 Pochep
-Ryazanskiy
 Plavsk
 Pikalvo
 Petushki
@@ -17258,7 +17001,6 @@ Navashino
 Nar yan-Mar
 Nartkala
 Naro-Fominsk
-Nalchik
 Nakhabino
 Naberezhnyye Chelny
 Mytishchi
@@ -17282,7 +17024,6 @@ Mikhalkovo
 Michurinsk
 Metallostroy
 Menzelinsk
-Mendeleyevsk
 Meleuz
 Melenki
 Medvezhyegorsk
@@ -17642,7 +17383,6 @@ Aleksandrovskoye
 Aleksandrovsk
 Aleksandrov
 Alatyr
-Levoberezhnyy
 Aksay
 Akhtyrskiy
 Akhtubinsk
@@ -17841,7 +17581,6 @@ Achinsk
 Abaza
 Abakan
 Snezhinsk
-Ozersk
 Zheleznogorsk
 Novouralsk
 Seversk
@@ -17946,7 +17685,6 @@ Chernaya Rechka
 Untolovo
 Petrogradka
 Vasyl evsky Ostrov
-Parnas
 Kalininskiy
 Krasnogvargeisky
 Admiralteisky
@@ -17971,7 +17709,6 @@ Butare
 Yanbu
 Umm Lajj
 urayf
-Turabah
 Trt
 Tabuk
 ubarjal
@@ -18017,7 +17754,6 @@ Al Khafj
 Al Jumm
 Al Jubayl
 Al Huff
-Al Bukayryah
 Al Balyah
 Al Bah
 Aff
@@ -18127,7 +17863,6 @@ Malm
 Lund
 Linkping
 Lidkping
-Liding
 Lerum
 Landskrona
 Kungsbacka
@@ -18257,7 +17992,6 @@ Pourham
 Pikine
 Nioro du Rip
 Ngukhokh
-Ndibne Dahra
 Mkh
 Mbak
 Matam
@@ -18480,7 +18214,6 @@ Thoen
 Thap Than
 Tha Muang
 Tha Maka
-Tak
 Surat Thani
 Sukhothai
 Si Satchanalai
@@ -18511,11 +18244,9 @@ Krabi
 Khao Yoi
 Khanu Woralaksaburi
 Kathu
-Kanchanaburi
 Kamphaeng Phet
 Huai Yot
 Hua Hin
-Hang Dong
 Dok Kham Tai
 Damnoen Saduak
 Chumphon
@@ -18538,7 +18269,6 @@ Ban Huai Thalaeng
 Ban Khlong Bang Sao Thong
 Na Klang
 Yasothon
-Yaring
 Yala
 Wiset Chaichan
 Wichian Buri
@@ -18599,7 +18329,6 @@ Phan Thong
 Phanom Sarakham
 Phanat Nikhom
 Phak Hai
-Pattani
 Pathum Thani
 Pak Phanang
 Pak Kret
@@ -18620,7 +18349,6 @@ Nakhon Phanom
 Nakhon Pathom
 Nakhon Nayok
 Nakhon Luang
-Mukdahan
 Maha Sarakham
 Lop Buri
 Lom Sak
@@ -18702,7 +18430,6 @@ Vahdat
 Norak
 Klob
 Kolkhozobod
-Khorugh
 Ishqoshim
 Hisor
 Dushanbe
@@ -18713,7 +18440,6 @@ Proletar
 Khjand
 Konibodom
 Isfara
-Chkalov
 Moskovskiy
 Suai
 Maubara
@@ -18761,7 +18487,6 @@ Sousse
 Siliana
 Sidi Bouzid
 Skanes
-Sfax
 La Sebala du Mornag
 Rads
 Ksour Essaf
@@ -18829,7 +18554,6 @@ Erzin
 Yerky
 Didim
 Yataan
-Yalva
 Yahyal
 Viranehir
 Varto
@@ -18852,7 +18576,6 @@ Susurluk
 Suru
 Sorgun
 Soma
-Solhan
 Ske
 Siverek
 Sivas
@@ -18897,7 +18620,6 @@ Milas
 Midyat
 Mercin
 Menemen
-Marmaris
 Mardin
 Manisa
 Manavgat
@@ -18915,7 +18637,6 @@ Kula
 Kozluk
 Kozan
 Kovanclar
-Korkuteli
 Konya
 Kzltepe
 Serinhisar
@@ -18964,7 +18685,6 @@ Ermenek
 Ergani
 Ereli
 Erdemli
-Erci
 Emirda
 Emet
 Elmal
@@ -19007,7 +18727,6 @@ Bor
 Bolvadin
 Bodrum
 Bitlis
-Bismil
 Birecik
 Bingl
 Bigadi
@@ -19022,7 +18741,6 @@ Baskil
 Banaz
 Balkesir
 Bahe
-Ayvalk
 Aydn
 Akale
 Antalya
@@ -19177,7 +18895,6 @@ Baclar
 Bafra
 Babaeski
 Artvin
-Arsin
 Arhavi
 Ardeen
 Ardahan
@@ -19193,7 +18910,6 @@ Espiye
 merter keresteciler
 gngren merter
 Turgutreis
-Sarigerme
 Ataehir
 Baakehir
 Beylikdz
@@ -19205,9 +18921,7 @@ Sultanbeyli
 Sancaktepe
 Karabalar
 Muratpaa
-Tunapuna
 Scarborough
-Sangre Grande
 San Fernando
 Rio Claro
 Port of Spain
@@ -19239,9 +18953,7 @@ Jincheng
 Keelung
 Taoyuan City
 Taitung City
-Zhongxing New Village
 Zanzibar
-Wete
 Vwawa
 Vikindu
 Uyovu
@@ -19334,7 +19046,6 @@ Mafinga
 Mabama
 Lushoto
 Lugoba
-Liwale
 Lembeni
 Lalago
 Laela
@@ -19350,7 +19061,6 @@ Kilosa
 Kigoma
 Kidodi
 Kidatu
-Kibondo
 Kibiti
 Kibara
 Kibakwe
@@ -19364,7 +19074,6 @@ Kiratu
 Kamachumu
 Kakonko
 Kahama
-Kabanga
 Izazi
 Itigi
 Isaka
@@ -19459,7 +19168,6 @@ Vasylkiv
 Uzhhorod
 Uman
 Tulchyn
-Tsyurupynsk
 Truskavets
 Torez
 Tokmak
@@ -19473,7 +19181,6 @@ Svalyava
 Sumy
 Stryi
 Stebnyk
-Starokostyantyniv
 Starobilsk
 Stakhanov
 Sokal
@@ -19687,7 +19394,6 @@ Wobulenzi
 Wakiso
 Tororo
 Soroti
-Pallisa
 Paidha
 Nyachera
 Ntungamo
@@ -19800,7 +19506,6 @@ Newark
 Wilmington
 Allapattah
 Altamonte Springs
-Apopka
 Aventura
 Bartow
 Bayonet Point
@@ -19927,7 +19632,6 @@ North Port
 Oak Ridge
 Oakland Park
 Ocala
-Ocoee
 Ojus
 Opa-locka
 Orlando
@@ -19970,7 +19674,6 @@ Ruskin
 Safety Harbor
 Saint Cloud
 Saint Petersburg
-San Carlos Park
 Sanford
 Sarasota
 Sebastian
@@ -20051,7 +19754,6 @@ La Grange
 Lawrenceville
 Lithia Springs
 Mableton
-Macon
 Marietta
 Martinez
 McDonough
@@ -20114,7 +19816,6 @@ Greenfield
 Greenwood
 Indianapolis
 Jasper
-Jeffersonville
 Lawrence
 New Albany
 New Castle
@@ -20239,7 +19940,6 @@ Dundalk
 East Riverdale
 Easton
 Edgewood
-Eldersburg
 Elkton
 Elkridge
 Ellicott City
@@ -20255,7 +19955,6 @@ Glen Burnie
 Green Haven
 Greenbelt
 Hagerstown
-Hanover
 Hillcrest Heights
 Hunt Valley
 Hyattsville
@@ -20277,7 +19976,6 @@ Olney
 Owings Mills
 Oxon Hill
 Parkville
-Parole
 Pasadena
 Perry Hall
 Pikesville
@@ -20288,7 +19986,6 @@ Reisterstown
 Rockville
 Rosedale
 Rossville
-Saint Charles
 Salisbury
 Seabrook
 Severn
@@ -20318,7 +20015,6 @@ Columbia
 Concord
 Creve Coeur
 East Independence
-Farmington
 Ferguson
 Florissant
 Gladstone
@@ -20518,7 +20214,6 @@ Midwest City
 Moore
 Muskogee
 Mustang
-Norman
 Oklahoma City
 Owasso
 Ponca City
@@ -20564,7 +20259,6 @@ Socastee
 Spartanburg
 Summerville
 Sumter
-Taylors
 Wade Hampton
 Bartlett
 Brentwood
@@ -20598,7 +20292,6 @@ Memphis
 Morristown
 Mount Juliet
 Murfreesboro
-Nashville
 New South Memphis
 Oak Ridge
 Shelbyville
@@ -20716,7 +20409,6 @@ Muscatine
 Newton
 Ottumwa
 Sioux City
-Urbandale
 Waterloo
 West Des Moines
 Addison
@@ -20752,7 +20444,6 @@ Country Club Hills
 Crest Hill
 Crystal Lake
 Danville
-Darien
 DeKalb
 Deerfield
 Des Plaines
@@ -20784,7 +20475,6 @@ Hinsdale
 Hoffman Estates
 Homer Glen
 Homewood
-Huntley
 Joliet
 Kankakee
 La Grange
@@ -20828,7 +20518,6 @@ Ottawa
 Palatine
 Palos Hills
 Park Forest
-Park Ridge
 Pekin
 Peoria
 Plainfield
@@ -20958,9 +20647,7 @@ Malden
 Mansfield
 Marblehead
 Marlborough
-Medford
 Melrose
-Methuen
 Milford
 Milton
 Natick
@@ -21028,7 +20715,6 @@ Allendale
 Ann Arbor
 Auburn Hills
 Battle Creek
-Bay City
 Birmingham
 Burton
 Canton
@@ -21078,7 +20764,6 @@ Redford
 Rochester Hills
 Romulus
 Roseville
-Royal Oak
 Saginaw
 Shelby
 Southfield
@@ -21099,14 +20784,12 @@ Wyoming
 Ypsilanti
 Albert Lea
 Andover
-Anoka
 Apple Valley
 Austin
 Blaine
 Bloomington
 Brooklyn Center
 Brooklyn Park
-Buffalo
 Burnsville
 Champlin
 Chanhassen
@@ -21167,7 +20850,6 @@ West Saint Paul
 White Bear Lake
 Willmar
 Winona
-Woodbury
 Kirksville
 Fargo
 Grand Forks
@@ -21191,7 +20873,6 @@ Derry Village
 Dover
 East Concord
 Keene
-Laconia
 Manchester
 Merrimack
 Nashua
@@ -21242,7 +20923,6 @@ Madison
 Mahwah
 Maplewood
 Marlboro
-Montclair
 Morristown
 New Brunswick
 New Milford
@@ -21410,7 +21090,6 @@ Sayville
 Scarsdale
 Schenectady
 Seaford
-Selden
 Shirley
 Smithtown
 Spring Valley
@@ -21479,7 +21158,6 @@ Marysville
 Massillon
 Mayfield Heights
 Medina
-Mentor
 Middleburg Heights
 Mount Vernon
 New Philadelphia
@@ -21712,7 +21390,6 @@ Antioch
 Apple Valley
 Arcadia
 Arroyo Grande
-Artesia
 Arvin
 Ashland
 Atascadero
@@ -21767,7 +21444,6 @@ Chula Vista
 Citrus Heights
 Claremont
 Clearlake
-Clovis
 Coachella
 Colton
 Compton
@@ -21778,7 +21454,6 @@ Coronado
 Costa Mesa
 Covina
 Cudahy
-Culver City
 Cupertino
 Cypress
 Daly City
@@ -21820,7 +21495,6 @@ Fresno
 Fullerton
 Galt
 Garden Grove
-Gardena
 Gilroy
 Glen Avon
 Glendale
@@ -21885,7 +21559,6 @@ Napa
 National City
 Newark
 Newport Beach
-Nipomo
 Norco
 North Glendale
 North Highlands
@@ -21917,7 +21590,6 @@ Paramount
 Pasadena
 Paso Robles
 Patterson
-Perris
 Petaluma
 Pico Rivera
 Pinole
@@ -22011,7 +21683,6 @@ Stanton
 Stockton
 Suisun
 Sun City
-Sunnyvale
 Temecula
 Temple City
 Thousand Oaks
@@ -22093,7 +21764,6 @@ Farmington
 Gallup
 Hobbs
 Las Cruces
-Rio Rancho
 Roswell
 Santa Fe
 South Valley
@@ -22461,7 +22131,6 @@ Canelones
 Artigas
 Nukus
 Khjayli
-Oltinkol
 Zomin
 Urgut
 Tirmiz
@@ -22552,7 +22221,6 @@ Bektemir
 Bekobod
 Angren
 Andijon
-Oltiariq
 Quva
 Navoiy
 Vatican City
@@ -22613,7 +22281,6 @@ Los Teques
 Los Rastrojos
 Los Dos Caminos
 La Victoria
-Las Tejeras
 Lagunillas
 La Guaira
 Juan Griego
@@ -22694,7 +22361,6 @@ Sng Cu
 Sc Trng
 Sa P
 Sadek
-Rch Gi
 Qui Nhon
 Qung Ngi
 Pleiku
