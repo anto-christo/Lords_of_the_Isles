@@ -1546,7 +1546,7 @@ MongoClient.connect(url, function(err, db) {
     db.collection("islands").find().forEach(function(data){
         // console.log("island_name:" + data.name);
         // console.log("current_population:" + data.current_population);
-      	
+      	console.log(data);
       	if(data.max_population > 700)
       	{
       		res_cap = 3000;
