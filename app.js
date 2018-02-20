@@ -1560,7 +1560,7 @@ MongoClient.connect(url, function(err, db) {
         if (data.owner_name=='AI') 
         {
         	for (var i7 = 0; i7 < 15; i7++) {
-            console.log(data.res_present[i7]);
+            console.log(data.res_present);
         		if (data.res_present[i7].quantity > 0) // if res present increases, then increase sell magnitude
         		{
         			var temp_qt = data.res_present[i7].quantity;
