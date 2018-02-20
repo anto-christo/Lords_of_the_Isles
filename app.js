@@ -334,7 +334,7 @@ app.post('/create_island', function(req, res) {
        return console.error(err);
     }
 
-    islands = data.toString().split("\n");
+    islands = data.toString().split("\r\n");
 
     // for(k=0;k<islands.length;k++)
     // console.log(islands[k]);
@@ -352,7 +352,7 @@ app.post('/create_island', function(req, res) {
     }
 
 
-    var new_list = islands.join("\n");
+    var new_list = islands.join("\r\n");
 
     fs.writeFile('names.txt',new_list,  function(err) {
       if (err) {
@@ -1388,7 +1388,7 @@ var m,min;
   }
   
 
-  var dur = 5; // 10 mins i.e. 6 ticks per hour
+  var dur = 1; // 10 mins i.e. 6 ticks per hour
   var duration = dur* 60; 
   var adjust;
   function myFunction() {
