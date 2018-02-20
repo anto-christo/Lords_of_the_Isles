@@ -484,6 +484,7 @@ app.post('/create_island', function(req, res) {
                 // i.res_produced.res_quantity = res_qty;
                 // i.res_produced.res_value = res_val;
                 i.name = island_name;
+                console.log("Name "+i.name);
                 i.current_population = current_pop;
                 i.max_population = cap;
                 i.value = island_value;
