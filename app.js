@@ -334,7 +334,7 @@ app.post('/create_island', function(req, res) {
        return console.error(err);
     }
 
-    islands = data.toString().split("\r\n");
+    islands = data.toString().split("\n");
 
     // for(k=0;k<islands.length;k++)
     // console.log(islands[k]);
@@ -352,7 +352,7 @@ app.post('/create_island', function(req, res) {
     }
 
 
-    var new_list = islands.join("\r\n");
+    var new_list = islands.join("\n");
 
     fs.writeFile('names.txt',new_list,  function(err) {
       if (err) {
@@ -501,7 +501,7 @@ app.post('/create_island', function(req, res) {
                 // i.res_produced.res_quantity = res_qty;
                 // i.res_produced.res_value = res_val;
                 i.name = island_name;
-                console.log("Name "+i.name);
+                console.log("Name "+i.name);``
                 i.current_population = current_pop;
                 i.max_population = cap;
                 i.value = island_value;
