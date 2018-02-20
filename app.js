@@ -1555,7 +1555,7 @@ MongoClient.connect(url, function(err, db) {
       	{
       		res_cap = 2000;
       	}
-
+        console.log(data.owner_name);
       	// update sell values
         if (data.owner_name=='AI') 
         {

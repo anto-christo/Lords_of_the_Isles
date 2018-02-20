@@ -12,7 +12,7 @@
                 type: 'POST',
                 url: '/create_island',
                 data: {username:user},
-                // async: false,
+                async: false,
                 dataType: 'json'}).
                 done(function(resp){
 
@@ -23,6 +23,7 @@
                         $.ajax({
                             type: 'POST',
                             url: '/assign_island',
+                            async: false,
                             data: {username:user, island:resp.name, reply:'true', old:x},
                             success: function(data){
                                 if (data.message=="success") 
