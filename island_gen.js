@@ -2,12 +2,12 @@
         var user;
         var socket = io();
         user = localStorage.getItem("user");
-        console.log("here user: "+user);
-        console.log(localStorage.getItem("user"));
+        // console.log("here user: "+user);
+        // console.log(localStorage.getItem("user"));
             get_dice_status(0);
 
         function assign_island(x){
-            console.log("INSIDE ASSIGN ISLAND");
+            // console.log("INSIDE ASSIGN ISLAND");
             $.ajax({
                 type: 'POST',
                 url: '/create_island',
@@ -18,7 +18,7 @@
 
                     localStorage.setItem("i_name", resp.name);
 
-                    console.log("inside user: "+user);
+                    // console.log("inside user: "+user);
                     if(x==0){
                         $.ajax({
                             type: 'POST',
@@ -27,7 +27,7 @@
                             success: function(data){
                                 if (data.message=="success") 
                                 {
-                                    console.log("Assign island successfull");
+                                    // console.log("Assign island successfull");
                                     
                                 }
                                 else
@@ -63,7 +63,7 @@
                 success: function(resp){
                     if (resp.length!=0) 
                     {
-                         console.log(resp[0])
+                         // console.log(resp[0])
                         localStorage.setItem("i_name", resp[0].name);
                         localStorage.setItem("user_click",0);
                         parent.window.change_iframe_src('islands-info.html');
@@ -82,7 +82,7 @@
 
             var rand = Math.floor(Math.random()*2);
 
-            console.log("rand="+rand);
+            // console.log("rand="+rand);
 
             if(rand==0)
                 assign_island(1);
