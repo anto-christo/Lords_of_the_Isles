@@ -1258,16 +1258,23 @@ app.post('/send_ship',function(req,res){
   console.log("qtys: "+qtys);
   console.log("dest: "+dest);
   console.log("src: "+src);
+
+  var name = JSON.parse(names);
+  var qty = JSON.parse(qtys);
+
+  console.log(name);
+  console.log(qty);
   
     for(i=0;i<names.length;i++){
 
-      var num = Number(qtys[i]);
+      var num = Number(qty[i]);
 
         if(qtys[i]!=0)
         {
-          var obj = {name: names[i], quantity:num};
+          var obj = {name: name[i], quantity:num};
           doc.push(obj);
         }
+        //console.log(doc)
     }
 
   // console.log(doc);

@@ -37,6 +37,9 @@ $(document).ready(function(){
         console.log("refreshing");
         var ifr = document.getElementById('info-screen');  
         ifr.src = ifr.src;
+
+        var iframe = document.getElementById('event-log');  
+        iframe.src = iframe.src;
       }
 
   var sum = m*60+h*3600+n*86400; // in secs

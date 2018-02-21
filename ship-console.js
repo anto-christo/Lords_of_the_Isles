@@ -126,7 +126,8 @@ function send_ship(){
                                     type:'POST',
                                     url:'/send_ship',
                                     dataType: "json",
-                                    data:{user:user, ship:ship, names:res_names, qtys:res_qtys, src:source,dest:dest},
+                                    async:false,
+                                    data:{user:user, ship:ship, names:JSON.stringify( res_names), qtys:JSON.stringify( res_qtys), src:source,dest:dest},
                                     error: function(data){
                                         console.log("in send ship error")
                                         console.table(data);

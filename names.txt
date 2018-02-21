@@ -2897,7 +2897,6 @@ Linares
 Limache
 Lebu
 Lautaro
-La Unin
 La Serena
 Lampa
 La Ligua
@@ -3393,7 +3392,6 @@ Jinshi
 Jinsha
 Jinjiang
 Jinji
-Jining
 Jinhua
 Jingzhou
 Tianchang
@@ -5650,7 +5648,6 @@ Bir el Ater
 Besbes
 Berrouaghia
 Berriane
-Berrahal
 Bensekrane
 Ben Mehidi
 Beni Saf
@@ -7561,7 +7558,6 @@ Kidsgrove
 Kidlington
 Kidderminster
 Keynsham
-Kettering
 Kenilworth
 Kendal
 Kempston
@@ -8054,7 +8050,6 @@ Petapa
 Patzn
 Patzica
 Panzs
-Paln
 Palencia
 Ostuncalco
 Nuevo San Carlos
@@ -9167,7 +9162,6 @@ Seondha
 Seohra
 Sendhwa
 Sehore
-Secunderabad
 Syla
 Sawi Mdhopur
 Svda
@@ -11903,7 +11897,6 @@ Cusano Milanino
 Cuneo
 Cremona
 Crema
-Corsico
 Correggio
 Cornaredo
 Cormano
@@ -13510,7 +13503,6 @@ Marigot
 Toamasina
 Vondrozo
 Vohipaho
-Vohibinany
 Vavatenina
 Vangaindrano
 Tsiroanomandidy
@@ -15963,7 +15955,6 @@ Lakki Marwat
 Lahore
 Ladhewla Warich
 Lchi
-Kunri
 Kunjh
 Kundin
 Kulchi
@@ -17575,7 +17566,6 @@ Bogoroditsk
 Bobrov
 Blagoveshchensk
 Blagodarnyy
-Biryulvo
 Birsk
 Bibirevo
 Bezhetsk
@@ -18953,7 +18943,6 @@ Erzincan
 Ermenek
 Ergani
 Ereli
-Erdemli
 Erci
 Emirda
 Emet
@@ -20129,7 +20118,6 @@ Lenexa
 Manhattan
 Newton
 Olathe
-Overland Park
 Pittsburg
 Prairie Village
 Salina
