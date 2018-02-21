@@ -1144,7 +1144,7 @@ app.post('/check_feasible',function(req,response){
   // }
   console.log("inside check_feasible");
   MongoClient.connect(url, function(err, db) {
-  	// console.log("check_feasible");
+  	console.log("check_feasible");
       db.collection('islands').find({name:src}).toArray(function(req,src_result){
       	if (src_result[0].owner_name!=sender) 
       	{
