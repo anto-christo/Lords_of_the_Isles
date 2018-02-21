@@ -171,6 +171,7 @@ function view_market()
     {
         // console.log("in view")
         prices_d=[];
+        console.log("dest: "+dest);
         $.ajax({
             type:'POST',
             url:'/get_island_info',

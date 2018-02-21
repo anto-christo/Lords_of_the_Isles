@@ -28,6 +28,10 @@
 			    // console.log("s_id " + localStorage.getItem("s_id"));
 			}
 
+			if (typeof(Storage) !== "undefined") {
+			    localStorage.setItem("s_id", s_id);
+			}
+
 			parent.window.change_iframe_src('ship-console.html');
 		}
 

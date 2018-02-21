@@ -102,8 +102,9 @@ div.arank {
 div.arank:hover {
 	padding-top: 15px;
     padding-bottom: 15px;
-    border-top: 0.001em solid red;
-    border-bottom: 0.001em solid red;
-	display:table-cell;
+    text-shadow: 1px 1px 2px #DAA520;
+    /*border-top: 0.001em solid red;*/
+    /*border-bottom: 0.001em solid red;*/
+	/*display:table-cell;*/
 }
 

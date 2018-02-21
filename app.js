@@ -336,7 +336,7 @@ app.post('/create_island', function(req, res) {
        return console.error(err);
     }
 
-    islands = data.toString().split("\n");
+    islands = data.toString().split("\r\n");
 
     // for(k=0;k<islands.length;k++)
     // console.log(islands[k]);
@@ -354,7 +354,7 @@ app.post('/create_island', function(req, res) {
     }
 
 
-    var new_list = islands.join("\n");
+    var new_list = islands.join("\r\n");
 
     fs.writeFile('names.txt',new_list,  function(err) {
       if (err) {
@@ -764,6 +764,7 @@ function assign_ship(uname, is_name, model){
   MongoClient.connect(url, function(err, db) {
     db.collection("ships").insert(s,function(err,result){
       var id = result.insertedIds[0];
+      io.emit("set_ship_id",id);
       db.collection("ships").update({_id:id},{$push:{res_present:{$each:[{name:"bread",quantity:0},{name:"fruits",quantity:0},{name:"cheese",quantity:0},{name:"wood",quantity:0},{name:"stone",quantity:0},{name:"wheat",quantity:0},{name:"bamboo",quantity:0},{name:"ale",quantity:0},{name:"cotton",quantity:0},{name:"silk",quantity:0},{name:"honey",quantity:0},{name:"fur",quantity:0},{name:"gems",quantity:0},{name:"chocolate",quantity:0},{name:"spices",quantity:0}]}}})
       setTimeout(function(){
 	      db.collection("players").update({name:uname},{$push:{owned_ships_id:{id:id}},$inc:{empty_ship_slots:-1}}, function(err, r) {
@@ -1068,7 +1069,7 @@ app.post('/get_island_info',function(req,res){
   var base_cost;
   var sum = 0;
   var ct_arr = [];
-  // console.log("island: "+ island)
+  console.log("island: "+ island)
   MongoClient.connect(url, function(err, db) {
   	db.collection("res").find({}).toArray(function(err, result1) {
 
@@ -1470,8 +1471,8 @@ MongoClient.connect(url, function(err, db) {
 
 
   db.collection("players").find().forEach(function(data){
-
       var name = data.name;
+      db.collection("players").update({name:name},{$set:{random_event_used:0}})
 
       db.collection("islands").aggregate([{$match:{owner_name:name}},{$group:{_id:null,total:{$sum:"$value"},total_pop:{$sum:"$current_population"}}}]).toArray(function(err,res){
       	// console.log("name "+name);
