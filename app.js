@@ -336,7 +336,7 @@ app.post('/create_island', function(req, res) {
        return console.error(err);
     }
 
-    islands = data.toString().split("\r\n");
+    islands = data.toString().split("\n");
 
     // for(k=0;k<islands.length;k++)
     // console.log(islands[k]);
@@ -354,7 +354,7 @@ app.post('/create_island', function(req, res) {
     }
 
 
-    var new_list = islands.join("\r\n");
+    var new_list = islands.join("\n");
 
     fs.writeFile('names.txt',new_list,  function(err) {
       if (err) {
@@ -1069,7 +1069,7 @@ app.post('/get_island_info',function(req,res){
   var base_cost;
   var sum = 0;
   var ct_arr = [];
-  console.log("island: "+ island)
+  // console.log("island: "+ island)
   MongoClient.connect(url, function(err, db) {
   	db.collection("res").find({}).toArray(function(err, result1) {
 
@@ -1313,6 +1313,9 @@ app.post('/send_ship',function(req,res){
                   eta = 9;
                 }
                 db.collection('ships').update({_id:ObjectId},{$set:{eta:eta,destination:dest}});
+                var operating_cost = eta*15;
+                var owner_name = result[0].owner_name;
+                db.collection('players').update({name:owner_name},{$inc:{gold:-operating_cost}});
 
                 if(receiver != 'AI'){
                   var event = "Ship from "+dest+" to "+src+" (ETA: "+eta+")"; 
@@ -1486,8 +1489,9 @@ MongoClient.connect(url, function(err, db) {
 	      	db.collection("players").update({name:name},{$inc:{gold:inc_gold}});
       	}	
       })
-
-      var total_wealth = Math.floor(data.island_wealth + (data.gold/5));
+      var no_of_explored = data.explored_islands_name.length;
+      console.log("no_of_explored: "+ no_of_explored)
+      var total_wealth = Math.floor(data.island_wealth + (data.gold/5))+no_of_explored*50;
       db.collection("players").update({name:name},{$set:{total_wealth:total_wealth}});
       db.collection("players").update({name:name},{$set:{random_event_used:0}}); // resetting random event
 
