@@ -20,6 +20,8 @@ var assert = require('assert');
 var rankings= [];
 var clients = {};
 
+
+
 const environment = "development";  ///change it to "production" when the game is deployed on the teknack servers
 
 const sessions = require("client-sessions");
@@ -82,14 +84,14 @@ app.use(function (req, res, next) {
 
 app.post('/get_username', function(req, res) {
   var person = req.sess.username;
-  console.log("in get username "+person);
+  // console.log("in get username "+person);
   var player = {
         name:person
     }
-    for (var i = 0; i < clients.length; i++) {
-    	console.log("clients"+clients[i]);
+    // for (var i = 0; i < clients.length; i++) {
+    // 	console.log("clients"+clients[i]);
     	
-    }
+    // }
     return res.send(player);
 });
 
@@ -102,7 +104,7 @@ app.get('/',function(req,res){
 
 });
 
-server.listen(process.env.PORT || 3003,function(){
+server.listen(process.env.PORT || 3008,function(){
     console.log('Listening on '+server.address().port);
 });
 
@@ -149,9 +151,9 @@ MongoClient.connect(url, function(err, db) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
 io.on('connection', function(socket) {
+
+     
     
     updateLeaderboard();
     socket.emit('getLeaderboard', rankings);
@@ -164,7 +166,7 @@ io.on('connection', function(socket) {
     socket.on('get_first_island', function(data){
     	MongoClient.connect(url, function(err, db) {
 	       assert.equal(null, err);
-	       console.log(" get_first_island data.username "+data.username);
+	       // console.log(" get_first_island data.username "+data.username);
 	          db.collection('players').find({name:data.username}).toArray(function(err, results){
 	            // setTimeout(function(){
 	              io.sockets.connected[clients[data.username].socket].emit("setLocalStorage", results[0].owned_islands_name[0].island_name);
@@ -176,15 +178,15 @@ io.on('connection', function(socket) {
 
 
 	socket.on('add-user', function(data){
-		console.log("in add-user data.username "+data.username);
+		// console.log("in add-user data.username "+data.username);
 	    clients[data.username] = {
 	      "socket": socket.id
 	    };
 
-	    for (var j in clients) 
-	     {
-	      console.log(j);
-	     }
+	    // for (var j in clients) 
+	    //  {
+	    //   console.log(j);
+	    //  }
 
       MongoClient.connect(wacky, function(err, db) {
        assert.equal(null, err);
@@ -328,7 +330,7 @@ app.post('/create_island', function(req, res) {
 
   var island_name;
   var uname = req.body.username;
-  console.log("user:" + uname);
+  // console.log("user:" + uname);
   fs.readFile('names.txt', function (err, data) {
     if (err) {
        return console.error(err);
@@ -494,17 +496,18 @@ app.post('/create_island', function(req, res) {
                 }
                 island_value =  Math.floor(island_value);
 
-                console.log("island value : " + island_value);
+                // console.log("island value : " + island_value);
                 i.x_cord = x;
                 i.y_cord = y;
                 i.res_produced.res_name = resource;
                 // i.res_produced.res_quantity = res_qty;
                 // i.res_produced.res_value = res_val;
                 i.name = island_name;
+                // console.log("Name "+i.name);
                 i.current_population = current_pop;
                 i.max_population = cap;
                 i.value = island_value;
-                console.log(i);
+                // console.log(i);
                 var put;
                 if (cap>700) 
                 {
@@ -519,7 +522,7 @@ app.post('/create_island', function(req, res) {
                       db.collection("islands").update({name:island_name},{$push:{res_present:{$each:[{name:"bread",quantity:0,sell:put},{name:"fruits",quantity:0,sell:put},{name:"cheese",quantity:0,sell:put},{name:"wood",quantity:0,sell:put},{name:"stone",quantity:0,sell:put},{name:"wheat",quantity:0,sell:put},{name:"bamboo",quantity:0,sell:put},{name:"ale",quantity:0,sell:put},{name:"cotton",quantity:0,sell:put},{name:"silk",quantity:0,sell:put},{name:"honey",quantity:0,sell:put},{name:"fur",quantity:0,sell:put},{name:"gems",quantity:0,sell:put},{name:"chocolate",quantity:0,sell:put},{name:"spices",quantity:0,sell:put}]}}})
                       setTimeout(function(){
                         db.collection('islands').update({$and:[ {name:island_name},{'res_present.name':resource} ]}, {$set:{'res_present.$.quantity':200,'res_present.$.sell':-200}},function(err,result){
-                          console.log("array updation done\n\n");
+                          // console.log("array updation done\n\n");
                           res.send(JSON.stringify({"name":island_name}));
                           db.close();
                         });
@@ -868,7 +871,7 @@ app.post('/check_player', function(req, res) {
   var p = new player();
   
   p.name = req.body.username;
-  console.log("checking player" + p.name);
+  // console.log("checking player" + p.name);
   MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
     
@@ -923,16 +926,16 @@ app.post('/old_island', function(req, res) {
       	if(result[0].owner_name != 'AI'){
 	        var event = user+" visited your island "+result[0].name;
 	        db.collection('log').insert({tick:current_tick,name:result[0].owner_name, event:event},function(err,res){
-	      	    console.log("user landing updated");
+	      	    // console.log("user landing updated");
             db.close();
           });
           
           db.collection("players").update({name:user},{$inc:{gold:-Math.floor(result[0].value/100)}},function(err,res){
-            console.log("visitor gold reduced:"+result[0].value/100);
+            // console.log("visitor gold reduced:"+result[0].value/100);
           });
 
           db.collection("players").update({name:result[0].owner_name},{$inc:{gold:Math.floor(result[0].value/100)}},function(err,res){
-            console.log("owner gold increased:"+result[0].value/100);
+            // console.log("owner gold increased:"+result[0].value/100);
           });
 	    }
       }
@@ -954,7 +957,7 @@ app.post('/old_island', function(req, res) {
 
 app.post('/get_dice_status',function(req,res){
   var user = req.body.username;
-  console.log("in get dice status "+ user);
+  // console.log("in get dice status "+ user);
   MongoClient.connect(url, function(err, db) {
     db.collection("players").find({name:user}).toArray(function(err, result) {
         // console.log(result[0]);
@@ -966,7 +969,7 @@ app.post('/get_dice_status',function(req,res){
 
 app.post('/update_dice_status',function(req,res){
   var user = req.body.username;
-  console.log("update_dice_status "+ user);
+  // console.log("update_dice_status "+ user);
     MongoClient.connect(url, function(err, db) {
       db.collection("players").update({name:user},{$set:{random_event_used:1}},function(err, result) {
         return res.send("Done");
@@ -1123,7 +1126,7 @@ app.post('/get_island_info',function(req,res){
 
 
 
-app.post('/check_feasible',function(req,res){
+app.post('/check_feasible',function(req,response){
   var sender = req.body.user;
   var dest = req.body.dest;
   var src = req.body.src;
@@ -1132,15 +1135,16 @@ app.post('/check_feasible',function(req,res){
   var possible_at_source = 1;
   var possible_at_dest = 1;
   var receiver;
-  if (cb==0) 
-  {
-  	if (cs==0) 
-  	{
-  		return res.send("status0");
-  	}
-  }
+  // if (cb==0) 
+  // {
+  // 	if (cs==0) 
+  // 	{
+  // 		return res.send("status4");
+  // 	}
+  // }
+  console.log("inside check_feasible");
   MongoClient.connect(url, function(err, db) {
-  	console.log("check_feasible");
+  	// console.log("check_feasible");
       db.collection('islands').find({name:src}).toArray(function(req,src_result){
       	if (src_result[0].owner_name!=sender) 
       	{
@@ -1163,6 +1167,7 @@ app.post('/check_feasible',function(req,res){
 	      			if (receiver[0].gold < cs) 
 		  				{
 		  					possible_at_dest=0;
+                return response.send({message:"status5"});
 		  				} 
 		      		});
       			}
@@ -1203,26 +1208,29 @@ app.post('/check_feasible',function(req,res){
 		      				db.collection('players').update({name:receiver},{$inc:{gold:cs}});
 	      				}
 	      			}
-		          	setTimeout(function(){
-	      				return res.send("status0");
-		            },1000)
+                console.log("returning status0");
+                // setTimeout(function(){
+                return response.send({message:"status0"});
+                // },1000)
 
-		      	}
-		      	else
-		      	{
-		      		// return res.send("Destination doesnt have enough gold to pay you. You decided not to send goods");
-		      		return res.send("status1");
-		      	}
-	      	}
-	      	else
-	      	{
+            }
+            else
+            {
+              console.log("returning status1");
+              // return res.send("Destination doesnt have enough gold to pay you. You decided not to send goods");
+              return response.send({message:"status1"});
+            }
+          }
+          else
+          {
+            console.log("returning status2");
 	      		// return res.send("Your dont have enough gold to buy these goods!!");
-	      		return res.send("status2");
+	      		return response.send({message:"status2"});
 	      	}
       	});
-      	setTimeout(function(){
-			db.close();
-        },1000)
+   //    	setTimeout(function(){
+			// db.close();
+   //      },1000)
         // how to close this ?
       });
 
@@ -1233,7 +1241,7 @@ app.post('/check_feasible',function(req,res){
 
 
 app.post('/send_ship',function(req,res){
-
+  console.log("in send ship")
   var sender = req.body.user;
   var ship = req.body.ship;
   var names = req.body.names;
@@ -1244,7 +1252,13 @@ app.post('/send_ship',function(req,res){
   var receiver;
 
   var doc = [];
-
+  console.log("sender: "+sender);
+  console.log("ship: "+ship);
+  console.log("names: "+names);
+  console.log("qtys: "+qtys);
+  console.log("dest: "+dest);
+  console.log("src: "+src);
+  
     for(i=0;i<names.length;i++){
 
       var num = Number(qtys[i]);
@@ -1264,8 +1278,8 @@ app.post('/send_ship',function(req,res){
   	for (item in doc) {
   		var temp_name = doc[item].name;
         var temp_qty = doc[item].quantity;
-  		db.collection('islands').update({$and:[ {name:dest},{'res_present.name':temp_name} ]}, {$inc:{'res_present.$.sell':-temp_qty}},function(){
-              
+  		db.collection('islands').update({$and:[ {name:dest},{'res_present.name':temp_name} ]}, {$inc:{'res_present.$.sell':-temp_qty}},function(err,result){
+              console.log("reduce res sell from dest");
           });
   	}
 
@@ -1308,7 +1322,7 @@ app.post('/send_ship',function(req,res){
           // console.log("temp_qty "+temp_qty );
           db.collection('ships').update({_id:ObjectId,"res_present.name":temp_name},{$inc:{'res_present.$.quantity':temp_qty}})
           db.collection('islands').update({$and:[ {name:src},{'res_present.name':temp_name} ]}, {$inc:{'res_present.$.quantity':-temp_qty}},function(){
-              
+              console.log("ship loading")
           });
         }
     });
@@ -1330,10 +1344,10 @@ app.post('/set_sell',function(req,res){
   {
   	id = id - 15;
   }
-  console.log(id);
-  console.log(qty);
-  console.log(island);
-  console.log(choice); // 0 buy ,1 sell
+  // console.log(id);
+  // console.log(qty);
+  // console.log(island);
+  // console.log(choice); // 0 buy ,1 sell
   if (choice==1) 
   {
     qty = qty*(-1);
@@ -1351,7 +1365,7 @@ app.post('/set_sell',function(req,res){
   }
   MongoClient.connect(url, function(err, db) {
       // update sell
-        	console.log("qty "+qty);
+        	// console.log("qty "+qty);
 
       db.collection('islands').update({$and:[ {name:island},{'res_present.name':res_name} ]}, {$set:{'res_present.$.sell':qty}},function(){
         db.close();
@@ -1367,14 +1381,15 @@ app.post('/set_sell',function(req,res){
 /////////////////////////////////////////////     TICK CHANGED       ////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
 var m,min;
-    var s,sec;
-    var h,ms;
-    var d;
-    var sum,n,n1;
-    var temp;
-    var t;
-    var current_tick = 0;
+var s,sec;
+var h,ms;
+var d;
+var sum,n,n1;
+var temp;
+var t;
+var current_tick = 0;
 
     setInterval(function(){ 
       myFunction()
@@ -1388,7 +1403,7 @@ var m,min;
   }
   
 
-  var dur = 5; // 10 mins i.e. 6 ticks per hour
+  var dur = 1; // 10 mins i.e. 6 ticks per hour
   var duration = dur* 60; 
   var adjust;
   function myFunction() {
@@ -1415,6 +1430,8 @@ var m,min;
           console.log("\nSERVER SIDE TICK CHANGED\n");
           // console.log(clients);
           newTick();
+          // console.log("resetting dice status");
+          io.emit('reset_dice_status',true);
       }
       
   }
@@ -1422,6 +1439,8 @@ var m,min;
 
 function newTick(){
 // CAN COMBINE SOME FEATURES HERE
+
+
 MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
 
@@ -1542,7 +1561,7 @@ MongoClient.connect(url, function(err, db) {
     db.collection("islands").find().forEach(function(data){
         // console.log("island_name:" + data.name);
         // console.log("current_population:" + data.current_population);
-      	
+      //	console.log(data);
       	if(data.max_population > 700)
       	{
       		res_cap = 3000;
@@ -1551,11 +1570,12 @@ MongoClient.connect(url, function(err, db) {
       	{
       		res_cap = 2000;
       	}
-
+        // console.log(data.owner_name);
       	// update sell values
         if (data.owner_name=='AI') 
         {
         	for (var i7 = 0; i7 < 15; i7++) {
+            // console.log(data.res_present);
         		if (data.res_present[i7].quantity > 0) // if res present increases, then increase sell magnitude
         		{
         			var temp_qt = data.res_present[i7].quantity;
@@ -1824,12 +1844,12 @@ app.post('/delete_log',function(req,res){
     
     for(var i in id){
 
-      console.log("id="+id[i]);
+      // console.log("id="+id[i]);
 
       var ObjectId = new mongoose.Types.ObjectId(id[i]);
 
       db.collection('log').remove({_id:ObjectId},function(err, results){
-        console.log("log deleted");
+        // console.log("log deleted");
       });
     }
 

@@ -1260,7 +1260,6 @@ Itapipoca
 Itapecuru Mirim
 Itapag
 Itaituba
-Itaitinga
 Itabaiana
 Ipueiras
 Ipubi
@@ -1729,7 +1728,6 @@ Orlndia
 Oliveira
 Olmpia
 Novo Horizonte
-Novo Hamburgo
 Nova Viosa
 Nova Vencia
 Nova Prata
@@ -6083,7 +6081,6 @@ Fuengirola
 Felanitx
 Estepona
 El Viso del Alcor
-El Puerto de Santa Mara
 El Ejido
 Elda
 Elche
@@ -7252,7 +7249,6 @@ Marseille 04
 Marseille 05
 Marseille 06
 Marseille 07
-Marseille 08
 Marseille 10
 Marseille 09
 Marseille 11
@@ -11434,7 +11430,6 @@ Borzjn
 Bojnrd
 Brjand
 Bjr
-Bonb
 Behshahr
 Behbahn
 Bneh
@@ -14217,7 +14212,6 @@ Los Mochis
 Loreto
 Len
 Las Pintas de Arriba
-La Piedad Cavadas
 La Paz
 La Orilla
 Lagos de Moreno
@@ -16658,7 +16652,6 @@ Ciudad del Este
 Capiat
 Caazap
 Caaguaz
-Caacup
 Asuncin
 Umm all Muammad
 Ar Rayyn
@@ -17002,7 +16995,6 @@ Tbilisskaya
 Tambov
 Agidel
 Taganrog
-Taganskiy
 Syzran
 Syktyvkar
 Svobody
@@ -21070,7 +21062,6 @@ Oak Park
 Okemos
 Owosso
 Pontiac
-Port Huron
 Portage
 Redford
 Rochester Hills
