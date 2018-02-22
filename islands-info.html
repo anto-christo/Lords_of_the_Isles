@@ -264,7 +264,7 @@
                     });
               }
 
-              document.write(name);
+              //document.write(name);
 
               $(document).ready(function(){
                 $('#trading_button').hide();
@@ -307,6 +307,10 @@
                         else if(owner!=user){
                           $('#owner').text("Owner:"+owner);
                           buy_island('false');
+                        }
+
+                        else{
+                          $('#owner').text("Owner:"+owner);
                         }
 
                         $('#res_table').empty();
