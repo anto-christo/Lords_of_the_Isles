@@ -1139,16 +1139,11 @@ app.post('/check_feasible',function(req,response){
   var src = req.body.src;
   var cb = req.body.cb;
   var cs = req.body.cs;
+  var oc = req.body.oc;
   var possible_at_source = 1;
   var possible_at_dest = 1;
   var receiver;
-  // if (cb==0) 
-  // {
-  // 	if (cs==0) 
-  // 	{
-  // 		return res.send("status4");
-  // 	}
-  // }
+
   console.log("inside check_feasible");
   MongoClient.connect(url, function(err, db) {
   	console.log("check_feasible");
@@ -1157,13 +1152,22 @@ app.post('/check_feasible',function(req,response){
       	{
       		// check if sender has gold >= buying
       		db.collection('players').find({name:sender}).toArray(function(req,sender){
-      			if (sender[0].gold < cb) 
-  				{
-  					possible_at_source=0;
-  				} 
+      			if (sender[0].gold < cb+oc) 
+    				{
+    					possible_at_source=0;
+    				} 
       		});
       		
       	}
+        else
+        {
+            db.collection('players').find({name:sender}).toArray(function(req,sender){
+              if (sender[0].gold < oc) 
+              {
+                possible_at_source=0;
+              } 
+            });
+        }
       	db.collection('islands').find({name:dest}).toArray(function(req,dest_result){
       		if (dest_result[0].owner_name!=sender) 
       		{
@@ -1179,8 +1183,8 @@ app.post('/check_feasible',function(req,response){
 		      		});
       			}
       		}
-      		console.log("src_result[0].owner_name "+ src_result[0].owner_name);
-      		console.log("dest_result[0].owner_name "+ dest_result[0].owner_name);
+
+
 	      	if (possible_at_source==1) 
 	      	{
 	      		if (possible_at_dest==1) 
@@ -1215,7 +1219,7 @@ app.post('/check_feasible',function(req,response){
 		      				db.collection('players').update({name:receiver},{$inc:{gold:cs}});
 	      				}
 	      			}
-                console.log("returning status0");
+                // console.log("returning status0");
                 // setTimeout(function(){
                 return response.send({message:"status0"});
                 // },1000)
@@ -1223,21 +1227,21 @@ app.post('/check_feasible',function(req,response){
             }
             else
             {
-              console.log("returning status1");
+              // console.log("returning status1");
               // return res.send("Destination doesnt have enough gold to pay you. You decided not to send goods");
               return response.send({message:"status1"});
             }
           }
           else
           {
-            console.log("returning status2");
+            // console.log("returning status2");
 	      		// return res.send("Your dont have enough gold to buy these goods!!");
 	      		return response.send({message:"status2"});
 	      	}
       	});
-   //    	setTimeout(function(){
-			// db.close();
-   //      },1000)
+        //    	setTimeout(function(){
+  			// db.close();
+        //      },1000)
         // how to close this ?
       });
 
@@ -1496,7 +1500,7 @@ MongoClient.connect(url, function(err, db) {
       	}	
       })
       var no_of_explored = data.explored_islands_name.length;
-      console.log("no_of_explored: "+ no_of_explored)
+      // console.log("no_of_explored: "+ no_of_explored)
       var total_wealth = Math.floor(data.island_wealth + (data.gold/5))+no_of_explored*50;
       db.collection("players").update({name:name},{$set:{total_wealth:total_wealth}});
       db.collection("players").update({name:name},{$set:{random_event_used:0}}); // resetting random event

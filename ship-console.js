@@ -40,7 +40,9 @@ var y2;
 var xt;
 var yt;
 var speed = 0;
-
+var profit = 0;
+var values = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var dest_owner;
 function rename(){
 
     var name = $('#ship_name').val();
@@ -113,27 +115,15 @@ function send_ship(){
                         url:'/check_feasible',
                         dataType: "json",
                         async:false,
-                        data:{user:user,src:source,dest:dest,cb:cost_buying,cs:cost_selling},
+                        data:{user:user,src:source,dest:dest,cb:cost_buying,cs:cost_selling,oc:operating_cost},
                         error: function(data){
                             console.log("in check feasible error")
-                            console.table(data);
                         },
                         success: function(data){
 
                             console.log("data.message: "+data.message);
                             if (data.message=="status0") 
                             {
-                                // if (res_names=="") 
-                                // {
-                                //     console.log("in not");
-                                //     res_names=["bread"];
-                                //     res_qtys=["0"];
-                                console.log("in check feasible success res_names.length "+res_names.length);
-                                console.log("in check feasible success res_qtys.length "+res_qtys.length);
-                                // }
-                                console.log("before send_ship")
-                                console.log("res_names:"+res_names)
-                                console.log("res_qtys:"+res_qtys)
                                 $.ajax({
                                     type:'POST',
                                     url:'/send_ship',
@@ -142,7 +132,6 @@ function send_ship(){
                                     data:{user:user, ship:ship, names:JSON.stringify( res_names), qtys:JSON.stringify( res_qtys), src:source,dest:dest},
                                     error: function(data){
                                         console.log("in send ship error")
-                                        console.table(data);
                                     },
                                     success: function(data){
                                         alert("Ship has set sail successfully !!");
@@ -191,50 +180,75 @@ function view_market()
             success: function(object){
                 dest_result = object.result;
                 prices_d = object.prices;
-                
+                dest_owner = dest_result[0].owner_name;
                 x2 = dest_result[0].x_cord;
                 y2 = dest_result[0].y_cord;
                
               
 
+                if(dest_result[0].owner_name == user){
+                    $('#dest_res_table').empty();
+                    $('#dest_res_table').append(
+                        '<tr>'+
+                            '<th>Resource | </th>'+
+                            '<th>Accepting</th>'+
+                        '</tr>'
+                    );
+                    index = 0;
+                    j = 0;
+                    for(i=0;i<dest_result[0].res_present.length;i++){
+                        price = 0; //calculate actual price here
+                        if(dest_result[0].res_present[i].sell>0){
+                            limit[j++] = Math.abs(dest_result[0].res_present[i].sell);
+                            // console.log(limit);
+                            acc_res[index++] = i;
 
-            // console.log("dest_result[0]. "+ dest_result[0].res_produced.res_name);
+                            $('#dest_res_table').append(
+                                '<tr>'+
+                                    '<td>'+dest_result[0].res_present[i].name+'</td>'+
+                                    '<td>'+dest_result[0].res_present[i].sell+'</td>'+
+                                '</tr>'
+                            );
+                        }
+                    }
 
-                $('#dest_res_table').empty();
-                $('#dest_res_table').append(
-                    '<tr>'+
-                        '<th>Resource</th>'+
-                        '<th>Accepting</th>'+
-                        '<th>Price</th>'+
-                        // '<th>Buy</th>'+
-                    '</tr>'
-                );
-                index = 0;
-                    
+                }
+                else
+                {
+                    $('#dest_res_table').empty();
+                    $('#dest_res_table').append(
+                        '<tr>'+
+                            '<th>Resource | </th>'+
+                            '<th>Accepting | </th>'+
+                            '<th>Price</th>'+
+                            // '<th>Buy</th>'+
+                        '</tr>'
+                    );
+                    index = 0;
 
-                j = 0;
-                for(i=0;i<dest_result[0].res_present.length;i++){
-                    price = 0; //calculate actual price here
-                    if(dest_result[0].res_present[i].sell>0){
-                        limit[j++] = Math.abs(dest_result[0].res_present[i].sell);
-                        // console.log(limit);
-                        acc_res[index++] = i;
-                        $('#dest_res_table').append(
-                            '<tr>'+
-                                '<td>'+dest_result[0].res_present[i].name+'</td>'+
-                                '<td>'+dest_result[0].res_present[i].sell+'</td>'+
-                                '<td>'+prices_d[i]+'</td>'+
-                                // '<td><input type="number" name="res_input[]" id="'+dest_result[0].res_present[i].name+'" value="0" min="0" max="'+dest_result[0].res_present[i].sell+'"></td>'+
-                            '</tr>'
-                        );
+                    j = 0;
+                    for(i=0;i<dest_result[0].res_present.length;i++){
+                        price = 0; //calculate actual price here
+                        if(dest_result[0].res_present[i].sell>0){
+                            limit[j++] = Math.abs(dest_result[0].res_present[i].sell);
+                            // console.log(limit);
+                            acc_res[index++] = i;
+
+                            $('#dest_res_table').append(
+                                '<tr>'+
+                                    '<td>'+dest_result[0].res_present[i].name+'</td>'+
+                                    '<td>'+dest_result[0].res_present[i].sell+'</td>'+
+                                    '<td>'+prices_d[i]+'</td>'+
+                                '</tr>'
+                            );
+                        }
                     }
                 }
-
-                get_island_info();
-                
+                    get_island_info();
 
             }
         });
+
 
 
         $('#send_button').show();
@@ -250,10 +264,15 @@ function view_market()
 
         $('#ship_eta').show();
         $('#ship_operating_cost').show();
+        $('#profit').show();
          
         $('#destination').text("Destination: "+dest);
         // console.log("dest: "+dest);
     }
+}
+
+function getSum(total, num) {
+    return total + num;
 }
 
 
@@ -290,9 +309,9 @@ function get_island_info()
                             if(result[0].owner_name != user){
                                 $('#res_table').append(
                                     '<tr>'+
-                                        '<th>Resource</th>'+
-                                        '<th>For purchase</th>'+
-                                        '<th>Price</th>'+
+                                        '<th>Resource | </th>'+
+                                        '<th>For purchase | </th>'+
+                                        '<th>Price | </th>'+
                                         '<th>Buy</th>'+
                                     '</tr>'
                                 );
@@ -301,45 +320,75 @@ function get_island_info()
                             else{
                                 $('#res_table').append(
                                     '<tr>'+
-                                        '<th>Resource</th>'+
-                                        '<th>Quantity</th>'+
+                                        '<th>Resource | </th>'+
+                                        '<th>Quantity | </th>'+
                                         // '<th>Price</th>'+
                                         '<th>Export Quantity</th>'+
                                     '</tr>'
                                 );
                             }
 
-                            // console.log(acc_res.length)
-                            // for (var i = 0; i < acc_res.length; i++) {
-                            //     console.log(i)
-                            //     console.log(acc_res[i])
-                            // }
-
                             j = 0;
-                            
+                            profit = 0;
                             if(result[0].owner_name != user){
-
                                 for(i=0;i<result[0].res_present.length;i++){
                                     price = 0; //calculate actual price here
                                     if(result[0].res_present[i].sell<0){
                                         if(acc_res.indexOf(i)!=-1) // dest accepting, source selling confirmed.
                                         {
-                                            // limit[j++] = Math.abs(result[0].res_present[i].sell);
-                                            // console.log(limit);
                                             $('#res_table').append(
                                                 '<tr>'+
                                                     '<td>'+result[0].res_present[i].name+'</td>'+
                                                     '<td>'+Math.abs(result[0].res_present[i].sell)+'</td>'+
                                                     '<td>'+prices_s[i]+'</td>'+
-                                                    '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+Math.abs(result[0].res_present[i].sell)+'"></td>'+
+                                                    '<td><input type="number" name="res_input[]" id="1'+result[0].res_present[i].name+'" value="0" min="0" max="'+Math.abs(result[0].res_present[i].sell)+'"></td>'+
                                                 '</tr>'
                                             );
                                         }
+                                         var res_name = result[0].res_present[i].name;
+                                            console.log("res name: "+res_name)
+                                            $( "#1"+res_name ).keyup(function() {
+                                                profit = 0;
+                                                index = res_names_arr.indexOf(res_name);
+                                                values[index] = $('#1'+res_name).val()
+                                                if (dest_owner==user) 
+                                                {
+                                                    // source not mine, dest mine
+                                                    for (var i = 0; i < 15; i++) {
+                                                        if (values[i]!=null) 
+                                                        {
+                                                            profit = profit-values[i]*prices_s[i];
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    //both not mine
+                                                    for (var i = 0; i < 15; i++) {
+                                                        if (values[i]!=null) 
+                                                        {
+                                                            var temp_cal = values[i]*prices_d[i]-values[i]*prices_s[i];
+                                                            profit = profit+temp_cal;
+                                                        }
+                                                    }
+                                                }
+                                               
+                                                if (profit < 0) 
+                                                {
+                                                    $('#profit').text("Loss: "+profit);
+                                                    $('#profit').css({"color":"red"});
+                                                }
+                                                else
+                                                {
+                                                     $('#profit').css({"color":"green"});
+                                                }
+                                            });
                                     }
                                 }
                             }
 
-                            else{
+                            else{ // source mine
+
                                 for(i=0;i<result[0].res_present.length;i++){
                                     price = 0; //calculate actual price here
                                     if(result[0].res_present[i].quantity>0){
@@ -356,7 +405,38 @@ function get_island_info()
                                                     '<td><input type="number" name="res_input[]" id="'+result[0].res_present[i].name+'" value="0" min="0" max="'+result[0].res_present[i].quantity+'"></td>'+
                                                 '</tr>'
                                             );
+
                                         }
+                                        var res_name = result[0].res_present[i].name;
+                                            console.log("res name: "+res_name)
+                                            $( "#"+res_name ).keyup(function() {
+                                                profit = 0;
+                                                index = res_names_arr.indexOf(res_name);
+                                                values[index] = $('#'+res_name).val()
+                                                    if (dest_owner==user) 
+                                                    {
+                                                        profit = 0;
+                                                    }
+                                                    else
+                                                    {
+                                                        for (var i = 0; i < 15; i++) {
+                                                            console.log("in 1")
+                                                            profit = profit+values[i]*prices_d[i];
+                                                        }
+                                                        
+                                                    }
+
+                                                
+                                                if (profit < 0) 
+                                                {
+                                                    $('#profit').text("Loss: "+profit);
+                                                    $('#profit').css({"color":"red"});
+                                                }
+                                                else
+                                                {
+                                                     $('#profit').css({"color":"green"});
+                                                }
+                                            });
                                     }
                                 }
                             }
@@ -371,6 +451,7 @@ $(document).ready(function(){
     $('#dest_res_table').hide();
     $('#ship_eta').hide();
     $('#ship_operating_cost').hide();
+    $('#profit').hide();
 
     $.ajax({
         type:'POST',

@@ -17,28 +17,29 @@
 
         <h5 id="_id"></h5><br><br>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <h5 id="source"></h5>
-                <table border="1px" id="res_table">
+                <table border="0" id="res_table">
                     <tr>
-                        <th>Resource</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
+                        <th>Resource |</th>
+                        <th>Quantity |</th>
+                        <th>Price |</th>
                         <th>Export Quantity</th>
                     </tr>
                 </table>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
             <strong>
                 <div id="ship_eta"></div>
                 <div id="ship_operating_cost"></div>
+                <div id="profit"></div>
             </strong>
             </div>
             <div class="col-md-4">
                 <h5 id="destination"></h5>
-                <table border="1px" id="dest_res_table">
+                <table border="0" id="dest_res_table">
                     <tr>
-                        <!-- <th>Resource</th> -->
+                        <th>Resource | </th>
                         <!-- <th>Quantity</th> -->
                         <!-- <th>Accepting</th> -->
                         <th>Price</th>
@@ -54,7 +55,7 @@
         </div>
 
         
-
+        <br>
         <select id="dest_islands"><option>Select Destination</option></select><br><br><br>
 
         <button id="send_button"  class="btn btn-success" onclick="send_ship()">Send Ship</button><br><br><br>
@@ -90,7 +91,7 @@
     <div id="s_destination"></div>
     <div id="s_eta"></div>
     <br>
-     <table border="1px" id="s_res_table">
+     <table border="0" id="s_res_table">
             <tr>
                 <th>Resource</th>
                 <th>Quantity</th>
