@@ -336,7 +336,7 @@ app.post('/create_island', function(req, res) {
        return console.error(err);
     }
 
-    islands = data.toString().split("\n");
+    islands = data.toString().split("\r\n");
 
     // for(k=0;k<islands.length;k++)
     // console.log(islands[k]);
@@ -354,7 +354,7 @@ app.post('/create_island', function(req, res) {
     }
 
 
-    var new_list = islands.join("\n");
+    var new_list = islands.join("\r\n");
 
     fs.writeFile('names.txt',new_list,  function(err) {
       if (err) {
@@ -927,16 +927,22 @@ app.post('/old_island', function(req, res) {
 	        var event = user+" visited your island "+result[0].name;
 	        db.collection('log').insert({tick:current_tick,name:result[0].owner_name, event:event},function(err,res){
 	      	    // console.log("user landing updated");
-            db.close();
           });
           
           db.collection("players").update({name:user},{$inc:{gold:-Math.floor(result[0].value/100)}},function(err,res){
             // console.log("visitor gold reduced:"+result[0].value/100);
+            var event1 = "You paid "+Math.floor(result[0].value/100)+" for visiting "+result[0].name;
+
+            db.collection('log').insert({tick:current_tick,name:user, event:event1},function(err,res){
+	      	     console.log("gold log updated");
+            });
+
           });
 
           db.collection("players").update({name:result[0].owner_name},{$inc:{gold:Math.floor(result[0].value/100)}},function(err,res){
             // console.log("owner gold increased:"+result[0].value/100);
           });
+          db.close();
 	    }
       }
 
