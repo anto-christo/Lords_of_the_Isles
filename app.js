@@ -515,7 +515,7 @@ app.post('/create_island', function(req, res) {
                 }
                 else
                 {
-					put = 128;
+					       put = 128;
                 }
                 db.collection("islands").insert(i,function(err,result){
                       var resource_name;

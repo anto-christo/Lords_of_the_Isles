@@ -98,8 +98,13 @@
             <div class="col-md-6 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Wiki">
               <a href="wiki.html"><button type="button" class="btn btn-light linksb">W</button></a>
             </div>
-            <div class="col-md-6 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Forums">
-              <button type="button" class="btn btn-light linksb">F</button>
+            <div class="col-md-6 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Our Sponsors">
+              <script type="text/javascript">
+                function showSponsors(){
+                  window.change_iframe_src('sponsors.html');
+                }
+              </script>
+              <button type="button" class="btn btn-light linksb" onclick="showSponsors()">S</button>
             </div>
           </div>
         </div>
@@ -157,7 +162,7 @@
     		<div class="col-md-8 col-md-8c" style="border: 1px solid grey; ">
       			<center>
       				<div class="embed-responsive embed-responsive-16by9">
-					   <iframe class="embed-responsive-item" id="info-screen" src="islands-info.html" allowfullscreen></iframe>
+					   <iframe class="embed-responsive-item" id="info-screen" height="450" width="500" src="islands-info.html" allowfullscreen></iframe>
 					</div>
       			</center>
     		</div>

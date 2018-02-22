@@ -2,6 +2,13 @@ body{
 	background-color: #BBB;
 }
 
+.logo{
+	z-index: 3;
+	position: absolute;
+	right: 0;
+	margin: 30px; 
+}
+
 .outer{
 	overflow-y: hidden;
 }
@@ -82,7 +89,7 @@ body{
 	padding: 5px 10px;
 	border-radius: 5px;
 	bottom: 60px;
-	left: 25%;
+	left: 35%;
 	position: absolute;
 	text-shadow: 0.1em 0.1em 0.05em #333;
 

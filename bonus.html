@@ -3,12 +3,14 @@
 <head>
 	<title></title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/bonus.css">
 	<style type="text/css">
 		.element, .outer-container {
-			 width: 100%;
-			 height: 500px;
+			 width: 900px;
+			 height: 449px;
 			}
 			 
 			.outer-container {
@@ -16,7 +18,7 @@
 			 position: relative;
 			 overflow: hidden;
 			}
-			 
+
 			.inner-container {
 			 position: absolute;
 			 left: 0;
@@ -28,17 +30,23 @@
 			 display: none;
 			}
 	</style>
+	<script type="text/javascript">
+		 $('[data-toggle="popover"]').popover({
+              placement : 'bottom',
+              trigger : 'hover'
+          });
+	</script>
 </head>
 <body>
 <div class="outer-container">
  <div class="inner-container">
  <div class="element">
        <div class="row">
-       		<div class="col-md-4">
+       		<div class="col-md-4" >
        			<div class="flip-container" ontouchstart="this.classList.toggle('hover');">
 				  <div class="flipper">
 				    <div class="front">
-				      <span class="name">Wacky Board</span>
+				      <!-- <span class="name">Wacky Board</span> -->
 				    </div>
 				    <div class="back">
 				      <div class="back-logo"></div>
@@ -48,11 +56,11 @@
 				  </div>
 				</div>
        		</div>
-       		<div class="col-md-4">
+       		<div class="col-md-4" style="margin-left: -125px;">
        			<div class="flip-container" ontouchstart="this.classList.toggle('hover');">
 				  <div class="flipper">
 				    <div class="front">
-				      <span class="name">Wacky Board</span>
+				      <!-- <span class="name">Wacky Board</span> -->
 				    </div>
 				    <div class="back">
 				      <div class="back-logo"></div>
@@ -62,11 +70,11 @@
 				  </div>
 				</div>
        		</div>
-       		<div class="col-md-4">
+       		<div class="col-md-4" style="margin-left: -125px;">
        			<div class="flip-container" ontouchstart="this.classList.toggle('hover');">
 				  <div class="flipper">
 				    <div class="front">
-				      <span class="name">Wacky Board</span>
+				      <!-- <span class="name">Wacky Board</span> -->
 				    </div>
 				    <div class="back">
 				      <div class="back-logo"></div>
@@ -76,6 +84,13 @@
 				  </div>
 				</div>
        		</div>
+       		<div class="logo" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Got some cool typing skills ? Why not try this insane typing game with a twist">
+       			<img src="assets/gamelogos/WackyBoardLogo.jpg" width="250" height="250" style="margin-top: 8px;" >
+       		</div>
+       	</div>
+
+
+       	<div class="row">
        		<div class="col-md-4">
        			<div class="flip-container" ontouchstart="this.classList.toggle('hover');">
 				  <div class="flipper">
@@ -90,6 +105,37 @@
 				  </div>
 				</div>
        		</div>
+       		<div class="col-md-4" style="margin-left: -125px;">
+       			<div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+				  <div class="flipper">
+				    <div class="front">
+				      <span class="name">Comming Soon</span>
+				    </div>
+				    <div class="back">
+				      <div class="back-logo"></div>
+				      <div class="back-title">Level 1</div>
+				      <p>Achieve a score of 100<br><br>Prize: 1 Extra ship slot</p>
+				    </div>
+				  </div>
+				</div>
+       		</div>
+       		<div class="col-md-4" style="margin-left: -125px;">
+       			<div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+				  <div class="flipper">
+				    <div class="front">
+				      <span class="name">Comming Soon</span>
+				    </div>
+				    <div class="back">
+				      <div class="back-logo"></div>
+				      <div class="back-title">Level 1</div>
+				      <p>Achieve a score of 100<br><br>Prize: 1 Extra ship slot</p>
+				    </div>
+				  </div>
+				</div>
+       		</div>
+       	</div>
+
+       	<div class="row">
        		<div class="col-md-4">
        			<div class="flip-container" ontouchstart="this.classList.toggle('hover');">
 				  <div class="flipper">
@@ -104,34 +150,9 @@
 				  </div>
 				</div>
        		</div>
-       		<div class="col-md-4">
-       			<div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-				  <div class="flipper">
-				    <div class="front">
-				      <span class="name">Comming Soon</span>
-				    </div>
-				    <div class="back">
-				      <div class="back-logo"></div>
-				      <div class="back-title">Level 1</div>
-				      <p>Achieve a score of 100<br><br>Prize: 1 Extra ship slot</p>
-				    </div>
-				  </div>
-				</div>
-       		</div>
-       		<div class="col-md-4">
-       			<div class="flip-container" ontouchstart="this.classList.toggle('hover');">
-				  <div class="flipper">
-				    <div class="front">
-				      <span class="name">Comming Soon</span>
-				    </div>
-				    <div class="back">
-				      <div class="back-logo"></div>
-				      <div class="back-title">Level 1</div>
-				      <p>Achieve a score of 100<br><br>Prize: 1 Extra ship slot</p>
-				    </div>
-				  </div>
-				</div>
-       		</div>
+       	</div>
+
+
        </div>
 
  </div>
