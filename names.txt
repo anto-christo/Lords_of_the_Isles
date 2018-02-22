@@ -2612,7 +2612,6 @@ Kisangani
 Kindu
 Kasongo
 Kananga
-Kampene
 Kamina
 Kalemie
 Kabinda
@@ -6418,7 +6417,6 @@ Algete
 Alcorcn
 Alcobendas
 Alcaiz
-Alcal de Henares
 Nou Barris
 Pinar de Chamartn
 Playa del Ingles
@@ -7470,7 +7468,6 @@ Neath
 Nailsea
 Musselburgh
 Motherwell
-Morley
 Moreton
 Morecambe
 Mitcham
@@ -9066,7 +9063,6 @@ Singnallr
 Sindhnr
 Sindgi
 Shimla
-Simdega
 Silvassa
 Sillod
 Silchar
@@ -11679,7 +11675,6 @@ Pozzuoli
 Potenza
 Porto Torres
 Porto Sant Elpidio
-Porto San Giorgio
 Portogruaro
 Civitanova Marche
 Portici
@@ -15348,7 +15343,6 @@ Toledo
 Tiwi
 Ternate
 Teresa
-Telabastagan
 Taytay
 Tayabas
 Tarlac City
@@ -17770,7 +17764,6 @@ Beloyarskiy
 Belovo
 Barnaul
 Barabinsk
-Asino
 Asbest
 Artmovskiy
 Aramil
@@ -18683,7 +18676,6 @@ Tejen
 Seydi
 Saat
 Mary
-Atamyrat
 Gowurdak
 Trkmenabat
 Bayramaly
@@ -21291,7 +21283,6 @@ Lake Ronkonkoma
 Levittown
 Lindenhurst
 Lockport
-Long Beach
 Long Island City
 Lynbrook
 Mamaroneck

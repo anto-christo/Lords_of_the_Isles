@@ -1856,18 +1856,22 @@ app.post('/get_log',function(req,res){
 
 app.post('/delete_log',function(req,res){
 
-  var id = req.body.id;
+  var id_list = req.body.id;
+
+  console.log(id);
+
+  var id = JSON.parse(id_list);
 
   MongoClient.connect(url, function(err, db) {
     
     for(var i in id){
 
-      // console.log("id="+id[i]);
+      console.log("id="+id[i]);
 
       var ObjectId = new mongoose.Types.ObjectId(id[i]);
 
       db.collection('log').remove({_id:ObjectId},function(err, results){
-        // console.log("log deleted");
+        console.log("log deleted");
       });
     }
 
