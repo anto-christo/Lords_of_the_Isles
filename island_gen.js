@@ -10,7 +10,7 @@
             // console.log("\nreset done\n");
         })
 
-            get_dice_status(0);
+            // get_dice_status(0);
 
         function assign_island(x){
             // console.log("INSIDE ASSIGN ISLAND");
@@ -191,6 +191,29 @@
                 }
             });
         }
+        var flag = 0;
+        var dice = document.getElementById('dice_btn');
+        setInterval(function(){ 
+            if (random_event==0) 
+            {
+                 if (flag == 0) 
+                {
+                    dice.style.filter = "brightness(1.2)";
+                    flag = 1;
+                }
+                else
+                {
+                    dice.style.filter = "brightness(0.7)";
+                    flag = 0;
+                }
+            }
+            else{
+                dice.style.filter = "brightness(0.7)";
+            }
+           
+         }, 900);
 
+
+       
         check_player();
 	});

@@ -764,6 +764,7 @@ function assign_ship(uname, is_name, model){
   MongoClient.connect(url, function(err, db) {
     db.collection("ships").insert(s,function(err,result){
       var id = result.insertedIds[0];
+      io.emit("set_ship_id",id);
       db.collection("ships").update({_id:id},{$push:{res_present:{$each:[{name:"bread",quantity:0},{name:"fruits",quantity:0},{name:"cheese",quantity:0},{name:"wood",quantity:0},{name:"stone",quantity:0},{name:"wheat",quantity:0},{name:"bamboo",quantity:0},{name:"ale",quantity:0},{name:"cotton",quantity:0},{name:"silk",quantity:0},{name:"honey",quantity:0},{name:"fur",quantity:0},{name:"gems",quantity:0},{name:"chocolate",quantity:0},{name:"spices",quantity:0}]}}})
       setTimeout(function(){
 	      db.collection("players").update({name:uname},{$push:{owned_ships_id:{id:id}},$inc:{empty_ship_slots:-1}}, function(err, r) {
@@ -1318,6 +1319,9 @@ app.post('/send_ship',function(req,res){
                   eta = 9;
                 }
                 db.collection('ships').update({_id:ObjectId},{$set:{eta:eta,destination:dest}});
+                var operating_cost = eta*15;
+                var owner_name = result[0].owner_name;
+                db.collection('players').update({name:owner_name},{$inc:{gold:-operating_cost}});
 
                 if(receiver != 'AI'){
                   var event = "Ship from "+dest+" to "+src+" (ETA: "+eta+")"; 
@@ -1476,8 +1480,8 @@ MongoClient.connect(url, function(err, db) {
 
 
   db.collection("players").find().forEach(function(data){
-
       var name = data.name;
+      db.collection("players").update({name:name},{$set:{random_event_used:0}})
 
       db.collection("islands").aggregate([{$match:{owner_name:name}},{$group:{_id:null,total:{$sum:"$value"},total_pop:{$sum:"$current_population"}}}]).toArray(function(err,res){
       	// console.log("name "+name);
@@ -1491,8 +1495,9 @@ MongoClient.connect(url, function(err, db) {
 	      	db.collection("players").update({name:name},{$inc:{gold:inc_gold}});
       	}	
       })
-
-      var total_wealth = Math.floor(data.island_wealth + (data.gold/5));
+      var no_of_explored = data.explored_islands_name.length;
+      console.log("no_of_explored: "+ no_of_explored)
+      var total_wealth = Math.floor(data.island_wealth + (data.gold/5))+no_of_explored*50;
       db.collection("players").update({name:name},{$set:{total_wealth:total_wealth}});
       db.collection("players").update({name:name},{$set:{random_event_used:0}}); // resetting random event
 

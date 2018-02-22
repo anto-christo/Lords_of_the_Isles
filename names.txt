@@ -495,7 +495,6 @@ Cranbourne
 Cranbourne
 Craigieburn
 Coffs Harbour
-Coburg
 Clayton
 Wollongong
 Cessnock
@@ -503,7 +502,6 @@ Castle Hill
 Carrum Downs
 Carnegie
 Carlingford
-Caringbah
 Canberra
 Camberwell
 Caloundra
@@ -929,7 +927,6 @@ Asse
 Arlon
 Antwerpen
 Ans
-Andenne
 Aarschot
 Aalter
 Aalst
@@ -1414,7 +1411,6 @@ Valparaso
 Valinhos
 Valena
 Valena
-Vacaria
 Uruguaiana
 Uruuca
 Uruau
@@ -1630,7 +1626,6 @@ Prata
 Praia Grande
 Prado
 Pouso Alegre
-Posse
 Porto Unio
 Porto Seguro
 Porto Ferreira
@@ -1811,7 +1806,6 @@ Louveira
 Lorena
 Londrina
 Loanda
-Livramento do Brumado
 Lins
 Linhares
 Limeira
@@ -2403,7 +2397,6 @@ Burlington
 Burnaby
 Calgary
 Cambridge
-Campbell River
 Camrose
 Candiac
 Chambly
@@ -2689,7 +2682,6 @@ Bangui
 Sibiti
 Pointe-Noire
 Owando
-Ousso
 Mossendjo
 Madingou
 Dolisie
@@ -3704,7 +3696,6 @@ Jining
 Jilin
 Jidong
 Minzhu
-Jiamusi
 Jalai Nur
 Jagdaqi
 Hushitai
@@ -4966,7 +4957,6 @@ Haldensleben I
 Halberstadt
 Hakenfelde
 Haiger
-Hagen
 Haar
 Haan
 Gtersloh
@@ -6486,7 +6476,6 @@ Nejo
 Nazrt
 Mojo
 Metu
-Metahra
 Mend
 Mekele
 Maychew
@@ -6938,7 +6927,6 @@ Le Puy-en-Velay
 Le Pr-Saint-Gervais
 Le Pontet
 Le Plessis-Trvise
-Le Plessis-Robinson
 Le Petit-Quevilly
 Le Perreux-sur-Marne
 Le Pecq
@@ -7107,7 +7095,6 @@ Chennevires-sur-Marne
 Chelles
 Chaville
 Chaumont
-Chatou
 Chtillon
 Chtenay-Malabry
 Chtellerault
@@ -7279,7 +7266,6 @@ Wombwell
 Wolverhampton
 Wokingham
 Woking
-Witney
 Witham
 Wishaw
 Wisbech
@@ -7571,7 +7557,6 @@ Cobham
 Coatbridge
 Coalville
 Clydebank
-Clydach
 Clitheroe
 Clevedon
 Cleethorpes
@@ -7697,7 +7682,6 @@ Bangor
 Bangor
 Banbury
 Banbridge
-Ballymena
 Baildon
 Ayr
 Aylesbury
@@ -8123,7 +8107,6 @@ Santa Brbara
 San Pedro Sula
 San Lorenzo
 Potrerillos
-Olanchito
 La Paz
 La Lima
 La Ceiba
@@ -8653,7 +8636,6 @@ Arjawinangun
 Amuntai
 Ambon
 Ambarawa
-Amahai
 Adiwerna
 Padalarang
 Ciranjang-hilir
@@ -9664,7 +9646,6 @@ Mushbani
 Murwra
 Murtajpur
 Murshidbd
-Murlganj
 Morinda
 Murbd
 Murdnagar
@@ -9701,7 +9682,6 @@ Morsi
 Morena
 Morbi
 Morr
-Moram
 Mordbd
 Mon
 Mokokchng
@@ -10492,7 +10472,6 @@ Durg
 Dngarpur
 Ganj Dundwra
 Dumraon
-Dumra
 Dumka
 Dum Duma
 Dam Dam
@@ -10967,7 +10946,6 @@ Bh
 Bagul
 Bghpat
 Bghdogra
-Bgha Purna
 Bgepalli
 Bagasra
 Bagar
@@ -11657,7 +11635,6 @@ Santa Maria Capua Vetere
 San Severo
 San Sebastiano
 San Salvo
-San Remo
 Sannicandro Garganico
 San Miniato
 San Miniato Basso
@@ -11988,7 +11965,6 @@ Battipaglia
 Bastia umbra
 Bassano del Grappa
 Barletta
-Bari
 Bareggio
 Bagnoli
 Bacoli
@@ -12817,11 +12793,9 @@ Kawage
 Neyagawa
 Hitachi-Naka
 Inashiki
-noj
 Minokamo
 Guj
 Jetsu
-Saitama
 Higashimurayama-shi
 Fujikawaguchiko
 Dazaifu
@@ -13139,7 +13113,6 @@ Karagandy
 Embi
 Balyqshy
 Atyrau
-Aqtbe
 Aktau
 Aqsay
 Zyryanovsk
@@ -13934,7 +13907,6 @@ Malinaltepec
 Magdalena Contreras
 Macuspana
 Reyes Acozac
-Los Reyes La Paz
 Linares
 Lerma de Villada
 Lerdo de Tejada
@@ -13987,7 +13959,6 @@ Coyoacn
 Cosoleacaque
 Cosamaloapan de Carpio
 Crdoba
-San Bernardino Contla
 Comitn
 Comalcalco
 Coatzintla
@@ -14174,7 +14145,6 @@ Palau
 Ojinaga
 Ocotln
 Nuevo Mxico
-Nuevo Casas Grandes
 Nueva Rosita
 Nueva Italia de Ruiz
 Nochistln
@@ -14363,7 +14333,6 @@ Mersing
 Segamat
 Tangkak
 Muar
-Bakri
 Labis
 Kuala Selangor
 Batang Berjuntai
@@ -14462,7 +14431,6 @@ Pantai Remis
 Kuang
 Klebang Besar
 Kampung Tanjung Karang
-Kampung Sungai Ara
 Kampung Simpang Renggam
 Kampong Pangkal Kalong
 Kampong Masjid Tanah
@@ -14742,7 +14710,6 @@ Doma
 Dikwa
 Deba
 Daura
-Daura
 Darazo
 Damboa
 Damaturu
@@ -14891,7 +14858,6 @@ Steenbergen
 Staphorst
 Stadskanaal
 Spijkenisse
-Someren
 Soest
 Sneek
 Sliedrecht
@@ -16004,7 +15970,6 @@ Kabrwla
 Johi
 Jwani
 Jhumra
-Jhol
 Jhelum
 Jhawrin
 Jhang Sadr
@@ -16045,7 +16010,6 @@ Garh Mahrja
 Gambat
 Fort Abbs
 Fazalpur
-Chak Two Hundred Forty-Nine TDA
 Faruka
 Faqrwli
 Faisalbd
@@ -16408,7 +16372,6 @@ Gdask
 Fordon
 Elblg
 Dzieroniw
-Dbrowa Grnicza
 Czstochowa
 Czerwionka-Leszczyny
 Czelad
@@ -18556,7 +18519,6 @@ Sakon Nakhon
 Sa Kaeo
 Sadao
 Roi Et
-Rayong
 Ranot
 Ra-ngae
 Prakhon Chai
@@ -18574,7 +18536,6 @@ Phibun Mangsahan
 Phetchabun
 Phatthalung
 Phan Thong
-Phanom Sarakham
 Phanat Nikhom
 Phak Hai
 Pattani
@@ -19438,7 +19399,6 @@ Uman
 Tulchyn
 Tsyurupynsk
 Truskavets
-Torez
 Tokmak
 Ternopil
 Talne
@@ -19922,7 +19882,6 @@ Palmetto Bay
 Panama City
 Parkland
 Pembroke Pines
-Pensacola
 Pine Hills
 Pinecrest
 Pinellas Park
@@ -20485,7 +20444,6 @@ Del City
 Duncan
 Durant
 Edmond
-El Reno
 Enid
 Jenks
 Lawton
@@ -21050,7 +21008,6 @@ Owosso
 Pontiac
 Portage
 Redford
-Rochester Hills
 Romulus
 Roseville
 Royal Oak
@@ -21389,7 +21346,6 @@ Selden
 Shirley
 Smithtown
 Spring Valley
-Staten Island
 Syosset
 Syracuse
 Tonawanda
@@ -21473,7 +21429,6 @@ Perrysburg
 Piqua
 Rocky River
 Sandusky
-Shaker Heights
 Sidney
 Solon
 South Euclid
@@ -21775,9 +21730,7 @@ East Palo Alto
 El Cajon
 El Centro
 El Cerrito
-El Dorado Hills
 El Monte
-El Segundo
 Elk Grove
 Encinitas
 Escondido
@@ -22115,7 +22068,6 @@ Apache Junction
 Avondale
 Juneau
 Arcata
-Bayside
 Eureka
 McKinleyville
 Redding
@@ -22588,7 +22540,6 @@ Los Teques
 Los Rastrojos
 Los Dos Caminos
 La Victoria
-Las Tejeras
 Lagunillas
 La Guaira
 Juan Griego
