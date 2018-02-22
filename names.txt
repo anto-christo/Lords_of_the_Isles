@@ -8835,7 +8835,6 @@ Vallabh Vidyanagar
 Valabhpur
 Vaikam
 Vaijpur
-Vadodara
 Vadnagar
 Vadlapdi
 Vdippatti
@@ -14038,7 +14037,6 @@ San Lorenzo Acopilco
 Benito Juarez
 Venustiano Carranza
 Miguel Hidalgo
-Cuauhtmoc
 Huixquilucan
 Melchor Ocampo
 Huilango

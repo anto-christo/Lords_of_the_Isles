@@ -30,6 +30,17 @@ var price;
   ];
 var res_names=[];
 var res_qtys=[];
+
+var ship_eta = 0;
+var operating_cost = 0;
+var x1;
+var y1;
+var x2;
+var y2;
+var xt;
+var yt;
+var speed = 0;
+
 function rename(){
 
     var name = $('#ship_name').val();
@@ -108,6 +119,7 @@ function send_ship(){
                             console.table(data);
                         },
                         success: function(data){
+
                             console.log("data.message: "+data.message);
                             if (data.message=="status0") 
                             {
@@ -180,6 +192,11 @@ function view_market()
                 dest_result = object.result;
                 prices_d = object.prices;
                 
+                x2 = dest_result[0].x_cord;
+                y2 = dest_result[0].y_cord;
+               
+              
+
 
             // console.log("dest_result[0]. "+ dest_result[0].res_produced.res_name);
 
@@ -212,14 +229,10 @@ function view_market()
                         );
                     }
                 }
-                // console.log("\n")
-                //   console.log(acc_res.length)
-                //     for (var i = 0; i < acc_res.length; i++) {
-                //         console.log(i)
-                //         console.log(acc_res[i])
-                //     }
-                // console.log("\n")
+
                 get_island_info();
+                
+
             }
         });
 
@@ -235,6 +248,9 @@ function view_market()
         $('#speed').hide();
         $('#capacity').hide();
 
+        $('#ship_eta').show();
+        $('#ship_operating_cost').show();
+         
         $('#destination').text("Destination: "+dest);
         // console.log("dest: "+dest);
     }
@@ -251,12 +267,23 @@ function get_island_info()
                         data:{island:source},
                         success: function(object){
                             result = object.result;
+                            x1 = result[0].x_cord;
+                            y1 = result[0].y_cord;
+                            xt= x2-x1;
+                            yt= y2-y1;
+                            ship_eta = Math.sqrt(xt*xt+yt*yt);
+                            ship_eta = Math.ceil(ship_eta/200);
+                            ship_eta = Math.floor(ship_eta/speed)+1;
+                            if (ship_eta>9) 
+                            {
+                              ship_eta = 9;
+                            }
+                            operating_cost = ship_eta*15;
+                            $('#ship_eta').text("ETA: "+ship_eta + " Ticks");
+                            $('#ship_operating_cost').text("Operating cost: "+operating_cost + " gold");
+
+                            
                             prices_s = object.prices;
-                            // for (var i = 0; i < 15; i++) {
-                            //    console.log(prices_s[i]);
-                            // }
-                            // produced = result[0].res_produced.res_name;
-                            // console.log("result="+result);
 
                             $('#res_table').empty();
 
@@ -342,12 +369,15 @@ $(document).ready(function(){
     $('#send_button').hide();
     $('#destination').hide();
     $('#dest_res_table').hide();
+    $('#ship_eta').hide();
+    $('#ship_operating_cost').hide();
 
     $.ajax({
         type:'POST',
         url:'/get_ship_info',
         data:{ship:ship},
         success: function(result){
+                speed = result[0].speed;
                 var eta = result[0].eta;
                 ship_cap = result[0].capacity;
                 $('#class').text("Class: "+result[0].class);
