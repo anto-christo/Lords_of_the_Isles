@@ -20,6 +20,17 @@ var assert = require('assert');
 var rankings= [];
 var clients = {};
 
+var sponsors = [
+  "casio",
+  "festpav",
+  "frapp",
+  "imperial",
+  "jamboree",
+  "lenskart",
+  "metro",
+  "spykar",
+  "starbucks"
+]
 
 
 const environment = "development";  ///change it to "production" when the game is deployed on the teknack servers
@@ -837,7 +848,19 @@ app.post('/player_name', function(req, res) {
   var b = new bonus();
   // console.log("\n\nIN PLAYER NAME\n");
   p.name = req.body.username;
+  p.sponsors_clicked = [
+    {name:"casio",clicked : 0},
+    {name:"festpav",clicked : 0},
+    {name:"frapp",clicked : 0},
+    {name:"imperial",clicked : 0},
+    {name:"jamboree",clicked : 0},
+    {name:"lenskart",clicked : 0},
+    {name:"metro",clicked : 0},
+    {name:"spykar",clicked : 0},
+    {name:"starbucks",clicked : 0},
+  ]
   b.player_name = p.name;
+
   b.wacky_keyboard = [
     {level1 : 0},
     {level2 : 0},
@@ -1483,8 +1506,16 @@ MongoClient.connect(url, function(err, db) {
       });	
 
 
+
   db.collection("players").find().forEach(function(data){
       var name = data.name;
+      if (current_tick%36==0) 
+      {
+        for (var i = 0; i <9; i++) {
+          db.collection('players').update({name:name,'sponsors_clicked.name':sponsors[i]},{$set:{'sponsors_clicked.$.clicked':0}})
+        }
+      }
+
       db.collection("players").update({name:name},{$set:{random_event_used:0}})
 
       db.collection("islands").aggregate([{$match:{owner_name:name}},{$group:{_id:null,total:{$sum:"$value"},total_pop:{$sum:"$current_population"}}}]).toArray(function(err,res){
@@ -1952,4 +1983,33 @@ app.post('/tut_status',function(req,res){
 
 });
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////     SPONSORS      /////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+app.post('/sponsor_click',function(req,res){
+
+  var user = req.body.user;
+  var id = req.body.id;
+  console.log("user: "+user)
+  console.log("id: "+id)
+
+  MongoClient.connect(url, function(err, db) {
+    db.collection('players').find({name:user}).toArray(function(err, results){
+      if (results.length > 0) 
+      {
+        for (var i = 0; i < 9; i++) {
+          console.log("sponsors:"+results[0].sponsors_clicked[i].name);
+          console.log("sponsors:"+results[0].sponsors_clicked[i].clicked);
+        }
+        if (results[0].sponsors_clicked[id].clicked==0) 
+        {
+          db.collection('players').update({name:user},{$inc:{gold:250}})
+          db.collection('players').update({name:user,'sponsors_clicked.name':sponsors[id]},{$set:{'sponsors_clicked.$.clicked':1}})
+        }
+      }
+      return res.send(results)
+    });
+  });
+});

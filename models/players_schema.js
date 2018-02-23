@@ -17,6 +17,9 @@ var playerSchema = new mongoose.Schema({
         {   id: {type: String, default: null}},
     ],
     tut: { type: Number, default: 1 },
+    sponsors_clicked:[
+
+    ]
 });
 
 var playerSchema = mongoose.model('players', playerSchema);
