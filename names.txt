@@ -3078,7 +3078,6 @@ Yigou
 Qingzhou
 Yichun
 Yicheng
-Yicheng
 Yichang
 Yibin
 Yatou
@@ -11828,7 +11827,6 @@ Gaeta
 Frosinone
 Frattaminore
 Frattamaggiore
-Frascati
 Francavilla Fontana
 Francavilla al Mare
 Fossano
@@ -12285,7 +12283,6 @@ Obama
 Nyzen
 Numazu
 Numata
-Nonoichi
 Ngata
 Noda
 Nobeoka
@@ -14320,7 +14317,6 @@ Kluang
 Yong Peng
 Mersing
 Segamat
-Tangkak
 Muar
 Labis
 Kuala Selangor
@@ -14515,7 +14511,6 @@ Wudil
 Warri
 Wamba
 Uyo
-Uromi
 Umuahia
 Ughelli
 Ugep
@@ -16842,7 +16837,6 @@ Yasnogorsk
 Yasenevo
 Yartsevo
 Yaroslavl
-Yaransk
 Yanaul
 Yagry
 Yablonovskiy
@@ -17200,7 +17194,6 @@ Mozdok
 Mostovskoy
 Moscow
 Morshansk
-Morozovsk
 Monino
 Monchegorsk
 Mirnyy
@@ -17364,7 +17357,6 @@ Khasavyurt
 Kharabali
 Khadyzhensk
 Kazan
-Katav-Ivanovsk
 Kastanayevo
 Kaspiysk
 Kasimov
@@ -20552,7 +20544,6 @@ Carrollton
 Cedar Hill
 Cedar Park
 Channelview
-Cibolo
 Cinco Ranch
 Cleburne
 Cloverleaf
@@ -20576,7 +20567,6 @@ Donna
 Duncanville
 Edinburg
 Ennis
-Euless
 Farmers Branch
 Flower Mound
 Fort Worth

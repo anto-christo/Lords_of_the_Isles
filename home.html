@@ -52,9 +52,10 @@
                 <img src="assets/bg/gold.png" height="50" style="padding-left: 10px;" >
                 <div class="money">
                     <script type="text/javascript">
-                        var socket = io();
 
                         var person = localStorage.getItem("user");
+
+                        var socket = io();
                         // console.log("person:" + person);
                         socket.emit("add-user", {"username": person}); // LATER THIS SHOULD BE FROM INDEX.HTML
                         socket.emit("get_first_island", {"username": person});
@@ -62,11 +63,6 @@
                             localStorage.setItem("i_name", data);
                         });
 
-                        // socket.on("wacky_bonus",function(data){
-                        //     // console.log("data "+data);
-                        //     // LOG CODE HERE
-
-                        // });
                         setInterval(function(){ 
                             socket.emit('getGold', {"username": person});
                         }, 3000);
@@ -74,6 +70,38 @@
                         socket.on('responseGold', function(data){
                             document.getElementById('gold').innerHTML = data;
                         });
+
+                        function toggle_tut(){
+                          console.log("inside toggle tut js");
+
+                          $.ajax({
+                            type:'POST',
+                            url:'/toggle_tut',
+                            dataType:'json',
+                            data:{name:person},
+                            error:function(data){
+                              console.log("in error data:"+data)
+                            },
+                            success: function(data){
+                              console.log("in success data:"+data)
+                              if(data.status=="enabled"){
+                                alert("Tutorial enabled");
+                              }
+                              else if(data.status=="disabled"){
+
+                                alert("Tutorial disabled");
+                              }
+                            }
+                          });
+                        }
+
+      
+                        // socket.on("wacky_bonus",function(data){
+                        //     // console.log("data "+data);
+                        //     // LOG CODE HERE
+
+                        // });
+                        
                     </script>
                     <div id="gold"></div>
                 </div> 
@@ -116,7 +144,7 @@
         <div class="col-md-1" style="border: 1px solid grey" >
           <div class="row" style="height: 50px">
             <div class="col-md-12 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Help">
-              <button type="button" class="btn btn-light linksb">H</button>
+              <button type="button" class="btn btn-light linksb" onclick="toggle_tut()">H</button>
             </div>
 
           </div>
@@ -162,7 +190,11 @@
     		<div class="col-md-8 col-md-8c" style="border: 1px solid grey; ">
       			<center>
       				<div class="embed-responsive embed-responsive-16by9">
+<<<<<<< HEAD
+					   <iframe class="embed-responsive-item" id="info-screen" height="450" width="475" src="islands-info.html" allowfullscreen></iframe>
+=======
 					   <iframe class="embed-responsive-item" id="info-screen" height="600" width="500" src="islands-info.html" allowfullscreen></iframe>
+>>>>>>> f904bc562c262f9eafe57219cc3144593e848c3c
 					</div>
       			</center>
     		</div>
@@ -211,10 +243,102 @@
       			</center>   
       		</div>    	
       	</div>
-	</div>
+  </div>
+  
+  <div class="modal fade" id="intro" tabindex="-1" role="dialog" aria-labelledby="ques" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ques">Introduction</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Money maketh man in the world of Isles. To grow, to prosper and to expand is the only way of survival.
+            Your mission is to explore the adventurous lands lost in the vast oceans of an unknown world. 
+            Trade and own as many Isles and open up your oceanic empire for the exchange of exotic resources.
+            Sail the seas, win the land, earn the gold and the game is yours !!</p>
+        </div>
+        <div class="modal-footer">
+          <a href="#island" data-toggle="modal" data-dismiss="modal"><button class="btn btn-success">Next</button></a>
+         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="island" tabindex="-1" role="dialog" aria-labelledby="ques" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ques">Island</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>
+            You can choose which resources to import for every island that you own. 
+            There are 15 common resources and 5 precious resources available to import or export. 
+            Each island can export one resource that it inherently owns and other resources which have been previously imported and can import as many resources you want.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <a href="#wealth" data-toggle="modal" data-dismiss="modal"><button class="btn btn-success">Next</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="wealth" tabindex="-1" role="dialog" aria-labelledby="ques" aria-hidden="true" data-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ques">Island</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>
+                Beware of importing too many resources as it decreases your wealth on buying them. 
+                The total number of islands, it's population and the amount of resources and the different types of resources (precious or common) you trade constitutes your total wealth.
+                Also, on choosing the dice if you refuse to buy the island or are unable to buy due to lack of gold , you can click ignore and island is available for trade, though you may not own it.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <a href="#ship" data-toggle="modal" data-dismiss="modal"><button class="btn btn-success">Next</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="modal fade" id="ship" tabindex="-1" role="dialog" aria-labelledby="ques" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ques">Ship</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p> 
+            Ships of different classes namely S, A ,B , C and D (in the descending order of  capacity, speed and cost) can be used by players to trade between islands.
+          </p>
+          <p> 
+            You can click on the 'H' button to toggle instructions enable/disable.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
