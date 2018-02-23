@@ -4865,7 +4865,6 @@ Isernhagen Farster Bauerschaft
 Iserlohn
 Ingolstadt
 Ilmenau
-Illingen
 Illertissen
 Idstein
 Idar-Oberstein
@@ -6600,7 +6599,6 @@ Haukipudas
 Hamina
 Hmeenlinna
 Forssa
-Espoo
 Porvoo
 Anjala
 Lnsi-Turunmaa
@@ -14049,7 +14047,6 @@ Guadalupe Victoria
 Ixtapa-Zihuatanejo
 Zapotlanejo
 Zapotiltic
-Zapopan
 Zamora
 Zacoalco de Torres
 Zacatecas
@@ -14686,7 +14683,6 @@ Enugu-Ukwu
 Enugu-Ezike
 Enugu
 Emure-Ekiti
-Elele
 Ekpoma
 Eket
 Ejigbo
@@ -20070,7 +20066,6 @@ Salina
 Shawnee
 Topeka
 Wichita
-Ashland
 Bowling Green
 Burlington
 Covington

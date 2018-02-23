@@ -3,14 +3,14 @@
 <head>
 	<title></title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
 	<link rel="stylesheet" type="text/css" href="css/bonus.css">
 	<style type="text/css">
 		.element, .outer-container {
-			 width: 900px;
-			 height: 449px;
+			 width: 100%;
+			 height: 599px;
 			}
 			 
 			.outer-container {
@@ -30,6 +30,26 @@
 			 display: none;
 			}
 	</style>
+	<script type="text/javascript">
+	var user = localStorage.getItem("user");
+		function clicked(id)
+		{
+			console.log("clicked id: "+id);
+			$.ajax({
+                        type:'POST',
+                        url:'/sponsor_click',
+                        dataType: "json",
+                        // async:false,
+                        data:{user:user,id:id},
+                        error: function(data){
+                            console.log("in sponsor_click error")
+                        },
+                        success: function(data){
+                        	console.log("data: "+data)
+                        }
+                    })
+		}
+	</script>
 	
 </head>
 <body>
@@ -39,60 +59,64 @@
  	<br>
  	<center>
  		<h1 style="font-style: italic;">Our Sponsors...</h1>
- 		<h5 style="font-style: italic;">( PS: Click on the logos to check out their websites to get some bonus gold every few hours )</h5>
+ 		<h5 style="font-style: italic;">( PS: Click on the logos to check out their websites and to get 250 bonus gold once every 6 hours )</h5>
  	</center>
  <div class="row" style="margin-left: 25px">
  	<div class="col-md-5" style="margin: 30px" style="display: inline-block;">
  		<a href="https://www.casio.com/" target="_blank">
- 			<img src="assets/sponsor/casio.jpg" width="85%">
+ 			<img src="assets/sponsor/casio.jpg" width="85%" onclick="clicked(0)">
  		</a>
  	</div>
- 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;">
+ 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;" onclick="clicked(1)">
  		<a href="http://festpav.com/" target="_blank">
  			<img src="assets/sponsor/festpav.png" width="100%">
  		</a>
  	</div>
  </div>
   <div class="row" style="margin-left: 25px">
- 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;">
+ 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;" onclick="clicked(2)">
  		<a href="https://frapp.in/" target="_blank">
  			<img src="assets/sponsor/frapp.png" width="85%">
  		</a>
  	</div>
- 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;">
+ 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;" onclick="clicked(3)">
  		<a href="https://www.jamboreeindia.com/" target="_blank">
  			<img src="assets/sponsor/jamboree.jpg" width="100%">
  		</a>
  	</div>
  </div>
  <div class="row" style="margin-left: 25px">
- 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;">
+ 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;" onclick="clicked(4)">
  		<a href="http://www.spykar.com/" target="_blank">
  			<img src="assets/sponsor/spykar.jpg" width="85%">
  		</a>
  	</div>
- 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;">
+ 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;" onclick="clicked(5)">
  		<a href="https://www.lenskart.com/" target="_blank">
  			<img src="assets/sponsor/lenskart.png" width="100%">
  		</a>
  	</div>
  </div>
  <div class="row" style="margin-left: 25px">
- 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;">
+ 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;" onclick="clicked(6)">
+ 	<center>
  		<a href="http://www.imperial-overseas.com/" target="_blank">
- 			<img src="assets/sponsor/imperial-overseas.jpg" width="100%">
+ 			<img src="assets/sponsor/imperial-overseas.jpg" width="80%">
  		</a>
+ 	</center>
  	</div>
- 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;">
- 		<a href="https://metrocouponzindia.com/" target="_blank">
- 			<img src="assets/sponsor/metro_couponz.jpg" width="100%">
+ 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;" onclick="clicked(7)">
+ 	<center>
+ 		<a href="http://www.starbucks.in/" target="_blank">
+ 			<img src="assets/sponsor/starbucks.png" width="80%">
  		</a>
+ 	</center>
  	</div>
  </div>
  <div class="row" style="margin-left: 25px">
- 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;">
- 		<a href="http://www.starbucks.in/" target="_blank">
- 			<img src="assets/sponsor/starbucks.png" width="100%">
+ 	<div class="col-md-5" style="margin: 30px" style="display: inline-block;" onclick="clicked(8)">
+ 		<a href="https://metrocouponzindia.com/" target="_blank">
+ 			<img src="assets/sponsor/metro_couponz.jpg" width="100%">
  		</a>
  	</div>
  </div>

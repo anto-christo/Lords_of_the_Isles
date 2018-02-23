@@ -16,6 +16,9 @@ var playerSchema = new mongoose.Schema({
     owned_ships_id: [
         {   id: {type: String, default: null}},
     ],
+    sponsors_clicked:[
+
+    ]
 });
 
 var playerSchema = mongoose.model('players', playerSchema);
