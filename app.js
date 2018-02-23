@@ -15,6 +15,7 @@ var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://127.0.0.1:27017/LOI';
 var wacky = 'mongodb://127.0.0.1:27017/wacky';
+var escape = 'mongodb://127.0.0.1:27017/game';
 var assert = require('assert');
 
 var rankings= [];
@@ -1506,11 +1507,10 @@ MongoClient.connect(url, function(err, db) {
       });	
 
 
-
   db.collection("players").find().forEach(function(data){
       var name = data.name;
       if (current_tick%36==0) 
-      {
+      { 
         for (var i = 0; i <9; i++) {
           db.collection('players').update({name:name,'sponsors_clicked.name':sponsors[i]},{$set:{'sponsors_clicked.$.clicked':0}})
         }
