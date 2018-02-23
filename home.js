@@ -1,6 +1,28 @@
 $(document).ready(function(){
     
+  var person = localStorage.getItem("user");
 
+  $.ajax({
+    type:'POST',
+    url:'/tut_status',
+    dataType:'json',
+    data:{name:person},
+    error:function(data){
+      console.log("error");
+      console.log(data)
+    },
+    success: function(data){
+      console.log("in success data:"+data)
+      if(data.status=="enabled"){
+        //alert("Tutorial enabled");
+        $('#intro').modal('show');
+      }
+      else if(data.status=="disabled"){
+
+        //alert("Tutorial disabled");
+      }
+    }
+  });
 
     // var change_iframe_src = function(new_src) {
     //     $("#info-screen").attr('src', new_src);

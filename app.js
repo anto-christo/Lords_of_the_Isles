@@ -1884,4 +1884,72 @@ app.post('/delete_log',function(req,res){
   });
 });
 
+app.post('/toggle_tut',function(req,res){
+
+  console.log("inside toggle tut");
+
+  var name = req.body.name;
+
+  console.log("toggle name="+name);
+
+  MongoClient.connect(url, function(err, db) {
+
+    var current;
+
+    db.collection("players").find({name:name}).toArray(function(err,result){
+      console.log(result);
+      current = result[0].tut;
+      console.log("current="+current);
+      current = 1 - current;
+      console.log("change current:"+current);
+      db.collection("players").update({name:name},{$set:{tut:current}},function(err,result){
+        console.log("change current:"+current);
+        if(current==1)
+        {
+          return res.send({status:"enabled"});
+        }
+        else
+        {
+          return res.send({status:"disabled"});
+        }
+        db.close();
+      })
+    });
+  });
+  
+
+});
+
+app.post('/tut_status',function(req,res){
+
+  console.log("inside tut status");
+
+  var name = req.body.name;
+
+  console.log("toggle name="+name);
+
+  MongoClient.connect(url, function(err, db) {
+
+    var current;
+
+    db.collection("players").find({name:name}).toArray(function(err,result){
+      console.log(result);
+      current = result[0].tut;
+      console.log("current="+current);
+  
+        if(current==1)
+        {
+          return res.send({status:"enabled"});
+        }
+        else
+        {
+          return res.send({status:"disabled"});
+        }
+        db.close();
+    });
+  });
+  
+
+});
+
 
