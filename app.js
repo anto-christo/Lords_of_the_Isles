@@ -1470,7 +1470,7 @@ var current_tick = 0;
       current_tick = parseInt(temp) - adjust ;
       // console.log("timer: "+min + ":" + sec);
       // console.log("current_tick "+ current_tick);
-      if (s == "02") 
+      if (m=='0' && s == "02") 
       {
           console.log("\nSERVER SIDE TICK CHANGED\n");
           // console.log(clients);
