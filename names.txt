@@ -1452,7 +1452,6 @@ Tefilo Otoni
 Teodoro Sampaio
 Telmaco Borba
 Taubat
-Tatu
 Taquarituba
 Taquaritinga
 Taquari
@@ -12707,7 +12706,6 @@ Higashine
 Hasaki
 Hanamaki
 Furukawa
-Funehikimachi-funehiki
 Funaishikawa
 Fukushima
 Fujishiro
@@ -15739,7 +15737,6 @@ Alicia
 Aliaga
 Alaminos
 Alabel
-Agoo
 Abuyog
 Abucay
 Bagong Pagasa
@@ -18649,7 +18646,6 @@ Boldumsaz
 Daoguz
 Yolten
 Tejen
-Seydi
 Saat
 Mary
 Gowurdak

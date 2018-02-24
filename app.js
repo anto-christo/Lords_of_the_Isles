@@ -34,7 +34,7 @@ var sponsors = [
 ]
 
 
-const environment = "development";  ///change it to "production" when the game is deployed on the teknack servers
+const environment = "production";  ///change it to "production" when the game is deployed on the teknack servers
 
 const sessions = require("client-sessions");
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -200,29 +200,29 @@ io.on('connection', function(socket) {
 	    //   console.log(j);
 	    //  }
 
-      MongoClient.connect(wacky, function(err, db) {
-       assert.equal(null, err);
-          db.collection('scores').find({user:data.username}).toArray(function(err, results){
-            if (results.length>0) 
-            {
-              // console.log("wacky score: "+results[0].score);	
-              if (results[0].score >= 100 && results[0].score < 150) 
-              {
-                 update_wacky(data.username,1);
-              }
-              if (results[0].score >= 150 && results[0].score < 250) 
-              {
-                 update_wacky(data.username,2);
-              }
-              if (results[0].score >= 250) 
-              {
-                 update_wacky(data.username,3);
-              }
-              // io.sockets.connected[clients[data.username].socket].emit("wacky_bonus", results[0].score);
-            }
-            db.close(); 
-          });
-      });
+      // MongoClient.connect(wacky, function(err, db) {
+      //  assert.equal(null, err);
+      //     db.collection('scores').find({user:data.username}).toArray(function(err, results){
+      //       if (results.length>0) 
+      //       {
+      //         // console.log("wacky score: "+results[0].score);	
+      //         if (results[0].score >= 100 && results[0].score < 150) 
+      //         {
+      //            update_wacky(data.username,1);
+      //         }
+      //         if (results[0].score >= 150 && results[0].score < 250) 
+      //         {
+      //            update_wacky(data.username,2);
+      //         }
+      //         if (results[0].score >= 250) 
+      //         {
+      //            update_wacky(data.username,3);
+      //         }
+      //         // io.sockets.connected[clients[data.username].socket].emit("wacky_bonus", results[0].score);
+      //       }
+      //       db.close(); 
+      //     });
+      // });
 
     });
 
@@ -348,7 +348,7 @@ app.post('/create_island', function(req, res) {
        return console.error(err);
     }
 
-    islands = data.toString().split("\r\n");
+    islands = data.toString().split("\n");
 
     // for(k=0;k<islands.length;k++)
     // console.log(islands[k]);
@@ -366,7 +366,7 @@ app.post('/create_island', function(req, res) {
     }
 
 
-    var new_list = islands.join("\r\n");
+    var new_list = islands.join("\n");
 
     fs.writeFile('names.txt',new_list,  function(err) {
       if (err) {
@@ -1448,15 +1448,15 @@ var current_tick = 0;
   }
   
 
-  var dur = 1; // 10 mins i.e. 6 ticks per hour
+  var dur = 10; // 10 mins i.e. 6 ticks per hour
   var duration = dur* 60; 
   var adjust;
   function myFunction() {
   var sum = m*60+h*3600+n*86400; // in secs
     d = new Date();
     n = d.getUTCDate();
-    n1 = 19;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
-      adjust = n1*24*(60/dur)+125;
+    n1 = 24;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
+      adjust = n1*24*(60/dur)-33;
 
       h = addZero(d.getUTCHours(), 2);
       m = addZero(d.getUTCMinutes(), 2);  
