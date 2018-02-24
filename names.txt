@@ -9447,7 +9447,6 @@ Parbhani
 Paravr
 Parsia
 Paramagudi
-Pardp Garh
 Pppinisshri
 Papanasam
 Ponta Shib
@@ -12646,7 +12645,6 @@ Rifu
 tsuchi
 tawara
 miya
-Omigawa
 magari
 Okunoya
 kawara
@@ -15258,7 +15256,6 @@ Moquegua
 Mollendo
 Minas de Marcona
 Mala
-Lima
 La Oroya
 Junn
 Juliaca
@@ -15980,7 +15977,6 @@ Ghauspur
 Ghro
 Garh Mahrja
 Gambat
-Fort Abbs
 Fazalpur
 Faruka
 Faqrwli
