@@ -39,13 +39,17 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ques">Your owned island</h5>
+        <h5 class="modal-title" id="ques">Island Information Screen</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        // what your can do here
+        <p>This is the Island Information Screen.</p>
+        <p>The name board at the bottom left shows the name of the island and it's population.</p>
+        <p>The right edge of the screen contains a list all the available resources. Numbers in <b style="color:green">green</b>/<b style="color:red">red</b>
+          signify quantity of that resource available for <b style="color:green">buying</b>/<b style="color:red">selling</b>.
+        </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -65,8 +69,8 @@
       </div>
       <div class="modal-body trading_modal" id="mod"> 
         <center>
-          <button onclick="openImports()">Imports</button>
-          <button onclick="openExports()">Exports</button>
+          <button class="btn btn-success" onclick="openImports()">Imports</button>
+          <button class="btn btn-success" onclick="openExports()">Exports</button><hr>
         </center>
         <center>
           <div id="res_buy"></div><br><br>

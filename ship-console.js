@@ -253,6 +253,7 @@ function view_market()
 
         $('#send_button').show();
         $('#view_button').hide();
+        $('#view_div').hide();
         $('#res_table').show();
         $('#dest_islands').hide();
         $('#destination').show();
@@ -466,6 +467,7 @@ $(document).ready(function(){
                 $('#capacity').text("Capacity: "+result[0].capacity);
                 source = result[0].source;
                     // console.log("here source : "+source);
+                    $('#ship_name').text("Ship Name : "+result[0].name);
 
                     $.ajax({
                         type:'POST',
@@ -487,17 +489,17 @@ $(document).ready(function(){
                                 }
                             }
 
-                    $('#_id').text("Registration No. : "+result[0]._id);
+                    //$('#_id').text("Registration No. : "+result[0]._id);
                     $('#source').text("Anchored at : "+source);
                     // source = result[0].source;
-                    $('#mod').prepend('<input id="ship_name" type="text" value='+result[0].name+'>');
                     
-
-                        
-                        }
-
-                    });
-
+                    
+                    
+                }
+                
+            });
+            
+            $('#mod').prepend('<input id="ship_name" type="text" value='+result[0].name+'>');
 
                 $('#s_source').text("Source: "+result[0].source);
                 $('#s_destination').text("Destination: "+result[0].destination);
