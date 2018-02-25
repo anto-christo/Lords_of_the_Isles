@@ -1,5 +1,6 @@
 <html>
     <head>
+            <META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
         <title>
             Ship Console
         </title>
@@ -22,10 +23,94 @@
         }
     </style>
     <body>
-        
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                        <div class="card" style="width: 17rem;">
+                            <img class="card-img-top" src="/assets/bg/ship4.jpg" alt="D class" width="100px" height="100px">
+                            <div class="card-block">
+                                <center><h4 class="card-title"><center>Class D</center></h4>
+                                <p class="card-text">
+                                    Speed:1 <br>
+                                    Capacity:200<br>
+                                    Cost:800<br><br>
+                                </p></center>
+                                <center><button onclick="buyShip('D')" class="btn btn-primary" style="margin:5px">Buy</button></center>
+                            </div>
+                        </div>
+                </div>
+    
+                <div class="col-md-4">
+                    <div class="card" style="width: 17rem;">
+                        <img class="card-img-top" src="/assets/bg/ship3.png" alt="C class" width="100px" height="100px">
+                        <div class="card-block">
+                            <center><h4 class="card-title"><center>Class C</center></h4>
+                            <p class="card-text">
+                                Speed:1 <br>
+                                Capacity:500<br>
+                                Cost:1500<br><br>
+                            </p></center>
+                            <center><button onclick="buyShip('C')" class="btn btn-primary" style="margin:5px">Buy</button></center>
+                        </div>
+                    </div>
+            </div>
+    
+            <div class="col-md-4">
+                <div class="card" style="width: 17rem;">
+                    <img class="card-img-top" src="/assets/bg/ship5.png" alt="D class" width="50px" height="100px">
+                    <div class="card-block">
+                        <center><h4 class="card-title"><center>Class B</center></h4>
+                        <p class="card-text">
+                            Speed:2 <br>
+                            Capacity:250<br>
+                            Cost:1500<br><br>
+                        </p></center>
+                        <center><button onclick="buyShip('B')" class="btn btn-primary" style="margin:5px">Buy</button></center>
+                    </div>
+                </div>
+        </div>
+    
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-4">
+                        <div class="card" style="width: 17rem;">
+                            <img class="card-img-top" src="/assets/bg/ship2.png" alt="A class" width="100px" height="100px">
+                            <div class="card-block">
+                                <center><h4 class="card-title"><center>Class A</center></h4>
+                                <p class="card-text">
+                                    Speed:2 <br>
+                                    Capacity:500<br>
+                                    Cost:3000<br><br>
+                                </p></center>
+                                <center><button onclick="buyShip('A')" class="btn btn-primary" style="margin:5px">Buy</button></center>
+                            </div>
+                        </div>
+                </div>
+    
+                <div class="col-md-4">
+                    <div class="card" style="width: 17rem;">
+                        <img class="card-img-top" src="/assets/bg/ship1.png" alt="S class" width="100px" height="100px">
+                        <div class="card-block">
+                            <center><h4 class="card-title"><center>Class S</center></h4>
+                            <p class="card-text">
+                                Speed:3 <br>
+                                Capacity:800<br>
+                                Cost:5000<br><br>
+                            </p></center>
+                            <center><button onclick="buyShip('S')" class="btn btn-primary" style="margin:5px">Buy</button></center>
+                        </div>
+                    </div>
+            </div>
+    
+        </div>
+    
+            </div><br><br><br>
+        </div>
     </body>
 
-    <div>
+    <!-- <div>
         Select Model<br>
         <br>
 
@@ -54,7 +139,9 @@
         Speed:1<br>
         Capacity:200 <br><br>
         Cost: 800">D</button>
-    </div>
+    </div> -->
+
+    
 
     <script type="text/javascript">
         var socket = io();

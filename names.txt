@@ -2011,7 +2011,6 @@ Embu Guau
 Embu
 Eli Mendes
 Duque de Caxias
-Dourados
 Dom Pedrito
 Dois Vizinhos
 Dois Crregos
@@ -4611,7 +4610,6 @@ Osnabrck
 Oschersleben
 Oschatz
 Oranienburg
-Opladen
 Olsberg
 Olpe
 Oldenburg
@@ -8312,7 +8310,6 @@ Yogyakarta
 Wonosobo
 Wonopringgo
 Wongsorejo
-Wiradesa
 Weru
 Weleri
 Welahan
@@ -9450,7 +9447,6 @@ Parbhani
 Paravr
 Parsia
 Paramagudi
-Pardp Garh
 Pppinisshri
 Papanasam
 Ponta Shib
@@ -9639,7 +9635,6 @@ Murtajpur
 Murshidbd
 Morinda
 Murbd
-Murdnagar
 Munnar
 Monghyr
 Mungeli
@@ -9774,7 +9769,6 @@ Malpe
 Mallasamudram
 Malkpur
 Malakanagiri
-Malhbd
 Mler Kotla
 Mlegaon
 Malavalli
@@ -12651,7 +12645,6 @@ Rifu
 tsuchi
 tawara
 miya
-Omigawa
 magari
 Okunoya
 kawara
@@ -13656,7 +13649,6 @@ Kyaikkami
 Kayan
 Kanbe
 Hinthada
-Hakha
 Chauk
 Bogale
 Bhamo
@@ -15264,7 +15256,6 @@ Moquegua
 Mollendo
 Minas de Marcona
 Mala
-Lima
 La Oroya
 Junn
 Juliaca
@@ -15502,7 +15493,6 @@ Masbate
 Masantol
 Mariveles
 Marilao
-Mariano
 Marawi City
 Maramag
 Maragondon
@@ -15987,13 +15977,11 @@ Ghauspur
 Ghro
 Garh Mahrja
 Gambat
-Fort Abbs
 Fazalpur
 Faruka
 Faqrwli
 Faisalbd
 Eminbd
-Dunypur
 Dunga Bunga
 Dullewla
 Dr
@@ -17290,7 +17278,6 @@ Krasnokamsk
 Krasnogvardeyskoye
 Krasnogorsk
 Krasnodar
-Krasnoarmeyskaya
 Krasnoarmeysk
 Krasnoarmeysk
 Presnenskiy
@@ -18283,7 +18270,6 @@ Salqn
 As Salamyah
 Satita
 Qaan
-Jsim
 Qrah
 Nubl
 Mayf
@@ -18354,7 +18340,6 @@ N Djamena
 Moussoro
 Moundou
 Mongo
-Mboursou Lr
 Massakory
 Massaguet
 Mao
@@ -20686,7 +20671,6 @@ Harvey
 Highland Park
 Hinsdale
 Hoffman Estates
-Homer Glen
 Homewood
 Huntley
 Joliet

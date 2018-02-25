@@ -1,10 +1,40 @@
 <html>
     <head>
+            <META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
         <title>
             Ship Console
         </title>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+        <style>
+                        select {
+            margin: 10px;
+            border: 1px solid #111;
+            background: transparent;
+            width: 180px;
+            padding: 5px 35px 5px 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            height: 34px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            }
+
+            /* CAUTION: IE hackery ahead */
+            select::-ms-expand { 
+                display: none; /* remove default arrow on ie10 and ie11 */
+            }
+
+            /* target Internet Explorer 9 to undo the custom arrow */
+            @media screen and (min-width:0\0) {
+                select {
+                    background:none\9;
+                    padding: 5px\9;
+                } 
+            }
+        </style>
 
     </head>
     <body>
@@ -13,18 +43,17 @@
 <div id="anchored">
     
     <center >
-        <button class="btn btn-primary" data-toggle="modal" data-target="#ques" style="float:right">Rename Ship</button>
+        <center><h6 id="ship_name" style="background-color:brown;color:white"></h6></center>
+        <center><h6 id="source" style="background-color:brown;color:white"></h6></center>
 
-        <h5 id="_id"></h5><br><br>
         <div class="row">
             <div class="col-md-5">
-                <h5 id="source"></h5>
                 <table border="0" id="res_table">
                     <tr>
                         <th>Resource |</th>
                         <th>Quantity |</th>
                         <th>Price |</th>
-                        <th>Export Quantity</th>
+                        <th>Load To Ship</th>
                     </tr>
                 </table>
             </div>
@@ -49,18 +78,26 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4" id="class"></div>
-            <div class="col-md-4" id="speed"></div>
-            <div class="col-md-4" id="capacity"></div>
+            <div class="col-md-4" id="class" style="background-color:brown;color:white"></div>
+            <div class="col-md-4" id="speed" style="background-color:brown;color:white"></div>
+            <div class="col-md-4" id="capacity" style="background-color:brown;color:white"></div>
         </div>
 
         
         <br>
-        <select id="dest_islands"><option>Select Destination</option></select><br><br><br>
+        
+        <center>
+            <div style="border:1px solid grey; border-radius:2%; width:50%; padding:2%" id="view_div">
+                <p>Choose a destination island to see trading possibilities between source and destination islands !</p>
+                <select id="dest_islands"><option>Select Destination</option></select><br><br><br>
 
+                <button id="view_button"  class="btn btn-success" onclick="view_market()">View Market</button><br><br><br>
+                <!-- <button class="btn btn-primary" data-toggle="modal" data-target="#ques">Rename Ship</button> -->
+
+            </div>
+        </center>
+        
         <button id="send_button"  class="btn btn-success" onclick="send_ship()">Send Ship</button><br><br><br>
-        <button id="view_button"  class="btn btn-success" onclick="view_market()">View Market</button><br><br><br>
-      
         <div class="modal fade" id="ques" tabindex="-1" role="dialog" aria-labelledby="ques" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -98,7 +135,6 @@
                 </tr>
         </table>
 </div>
-
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
