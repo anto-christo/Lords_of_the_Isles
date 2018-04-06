@@ -34,7 +34,7 @@ var sponsors = [
 ]
 
 
-const environment = "production";  ///change it to "production" when the game is deployed on the teknack servers
+const environment = "development";  ///change it to "production" when the game is deployed on the teknack servers
 
 const sessions = require("client-sessions");
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -107,7 +107,7 @@ app.post('/get_username', function(req, res) {
     return res.send(player);
 });
 
-app.use(express.static(__dirname));
+app.use(express.static(__dirname+'/public'));
 app.use(bodyParser.urlencoded({ extended: true })); 
 
 app.get('/',function(req,res){
@@ -1455,7 +1455,7 @@ var current_tick = 0;
   var sum = m*60+h*3600+n*86400; // in secs
     d = new Date();
     n = d.getUTCDate();
-    n1 = 24;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
+    n1 = 6;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
       adjust = n1*24*(60/dur)-33;
 
       h = addZero(d.getUTCHours(), 2);
