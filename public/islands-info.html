@@ -9,8 +9,6 @@
 	<style type="text/css">
 
       body {
-          /*background: url('assets/bg/i1.png') no-repeat fixed;*/
-          /*background: url('assets/bg/i3.jpg') no-repeat fixed;*/
           background: url('assets/bg/i5.jpg') no-repeat fixed;
           -webkit-background-size: cover;
           -moz-background-size: cover;
@@ -181,12 +179,7 @@
                           ); // imports
                         var slider = document.getElementById("s"+i);
                         var output = document.getElementById("d"+i);
-                        // if (result[0].res_present[i].sell) 
-                        // {
-                        //   slider.value = result[0].res_present[i].sell;
-                        // }
-                        // console.log("res_cap "+res_cap)
-                        // console.log("sum_res "+sum_res)
+                      
                         slider.max = res_cap - sum_res;
                         output.innerHTML = slider.value; // Display the default slider value
 
@@ -269,7 +262,6 @@
                     });
               }
 
-              //document.write(name);
 
               $(document).ready(function(){
                 $('#trading_button').hide();
@@ -294,9 +286,6 @@
                         }
                         if(owner=='AI'){
                           $('#owner').text("Owner: Not Owned");
-
-
-                          // console.log(localStorage.getItem("user_click"));
                           
                           if(localStorage.getItem("user_click") == 0){
 
@@ -379,36 +368,14 @@
   </table><br><br>
 
 
-  <!-- <button class="btn btn-primary" data-toggle="modal" data-target="#request" style="float:right">Request</button> -->
-
 </div>
 
   <div id="info_div" class="buying">
     
   </div>
 
-    <!-- <div style="margin-top:10%">
-      <center>
-
-        <div style="background-color:white" id="info_div">
-
-            <table border="1px" id="res_table">
-                <tr>
-                    <th>Resource</th>
-                    <th>Quantity</th>
-                </tr>
-            </table><br><br>
-    
-        </div>
-
-      </center>
-    </div> -->
-
-      
-    <!-- <button style="float:right" class="btn btn-success" onclick="buy_ship()">Buy Ship</button> -->
 
 <div class="man1" >
-  <!-- <img class="man" src="assets/bg/m.png" data-container="body" data-toggle="popover" data-placement="right"> -->
 	<img class="man" src="assets/bg/board2.png" >
   <div class="name" style="height: 20%; width: 20%;">
     <center>
@@ -423,7 +390,6 @@
 </div>
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 

@@ -20,13 +20,11 @@
 	<script type="text/javascript">
 
     	function pickShip(s_id) {
-			// console.log(s_id);
 			
     		if (typeof(Storage) !== "undefined") {
 			    // Store
 			    localStorage.setItem("s_id", s_id);
 			    // Retrieve
-			    // console.log("s_id " + localStorage.getItem("s_id"));
 			}
 
 			if (typeof(Storage) !== "undefined") {
@@ -37,7 +35,6 @@
 		}
 
 		function buy_ship(){
-			// console.log("inside buy_ship");
 			parent.window.change_iframe_src('ship_buying.html');
         }
 		
@@ -50,8 +47,6 @@
 				data:{user:user},
 				success: function(result){
 
-					// console.log(result);
-
 					for(i=0;i<result.length;i++){
 						var func = "pickShip('"+result[i]._id+"')";
 			   			if (i==0) 
@@ -60,15 +55,12 @@
 			   			}
 						$('#ship_list').append('<div class="cardc" onclick='+func+'>'+result[i].name+'</div>')
 					}
-					// console.log("localStorage user "+ user);
 
 					$.ajax({
 						type:'POST',
 						url:'/get_ship_slots',
 						data:{user1:user},
 						success: function(result){
-							// console.log(result);
-							// console.log(result[0].empty_ship_slots);
 							var len = result[0].empty_ship_slots;
 							for(i=0;i<len;i++){
 								var func1 = "buy_ship()";
@@ -96,7 +88,6 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 

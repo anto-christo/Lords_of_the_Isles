@@ -14,19 +14,12 @@ $(document).ready(function(){
     success: function(data){
       console.log("in success data:"+data)
       if(data.status=="enabled"){
-        //alert("Tutorial enabled");
         $('#intro').modal('show');
       }
       else if(data.status=="disabled"){
-
-        //alert("Tutorial disabled");
       }
     }
   });
-
-    // var change_iframe_src = function(new_src) {
-    //     $("#info-screen").attr('src', new_src);
-    // }
 
     var m,min;
     var s,sec;
@@ -69,16 +62,12 @@ $(document).ready(function(){
     n = d.getUTCDate();
     n1 = 6;                      //IMPORTANT : LATER MAKE N1 THE STARTING DATE OF MEGA EVENT
       adjust = n1*24*(60/dur)-33;
-      // x = document.getElementById("demo");
       y = document.getElementById("ticks");
       z = document.getElementById("timer");
 
       h = addZero(d.getUTCHours(), 2);
       m = addZero(d.getUTCMinutes(), 2);  
       s = addZero(d.getUTCSeconds(), 2);
-      // ms = addZero(d.getUTCMilliseconds(), 3); 
-
-      // x.innerHTML =n + ":" + h + ":" + m + ":" + s;
 
       sec = addZero(60 - s, 2);
       min = 60 - m -1 ;

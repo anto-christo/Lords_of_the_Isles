@@ -58,7 +58,6 @@
 	        // Store
 	        localStorage.setItem("i_name", name);
 	        // Retrieve
-	        // console.log("i_name " + localStorage.getItem("i_name"));
 	    } else {
 	        document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
 	    }
@@ -80,7 +79,6 @@ $(document).ready(function(){
        data:{user:user},
        success: function(result){
 
-			// console.log(result);
 
 			for(i=0;i<result[0].owned_islands_name.length;i++){
 				owned.push(result[0].owned_islands_name[i].island_name);
@@ -94,7 +92,6 @@ $(document).ready(function(){
 			explored.sort();
            
            for(i=0;i<owned.length;i++){
-           	// var i_name = result[0].owned_islands_name[i].island_name;
             var func = "pickIsland('" + owned[i] + "')";
 
            $('#is_card').append(
@@ -108,7 +105,6 @@ $(document).ready(function(){
 		   }
 		   
 		   for(i=0;i<explored.length;i++){
-           	// var i_name = result[0].owned_islands_name[i].island_name;
             var func = "pickIsland('" + explored[i] + "')";
 
            $('#is_card').append(
@@ -127,7 +123,6 @@ $(document).ready(function(){
     </script>
 
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
