@@ -7,11 +7,17 @@ An addictive multiplayer game developed using Javascript, HTML, CSS, Node and Mo
 3. Go to preferred browser and type `http://localhost:3008` in address bar.
 4. Test the game!!!.
 
+In case of any difficulties in running the game or understanding the code, feel free to put an issue.
+
 # Screenshots
-![index](/screenshots/index.png?raw=true "index")
-![home](/screenshots/home.png?raw=true "home")
-![ship](/screenshots/ship.png?raw=true "ship")
-![market](/screenshots/market.png?raw=true "market")
+![index](/screenshots/index.png?raw=true "index")  
+
+![home](/screenshots/home.png?raw=true "home")  
+
+![ship](/screenshots/ship.png?raw=true "ship")  
+
+![market](/screenshots/market.png?raw=true "market")  
+
 
 
 
