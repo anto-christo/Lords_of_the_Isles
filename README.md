@@ -1,5 +1,5 @@
 # Lord of the Isles
-An addictive multiplayer game developed using Javascript, HTML, CSS, Node and MongoDB. Explore the world, buy islands and trade resources with other players to become the ultimate Lord of the Isles.
+An addictive massive online multiplayer game developed using Javascript, HTML, CSS, Node.js and MongoDB. Explore the world, buy islands and trade resources with other players to become the ultimate Lord of the Isles.
 
 # Steps to run
 1. Run `npm install` in root of project directory.
@@ -8,6 +8,17 @@ An addictive multiplayer game developed using Javascript, HTML, CSS, Node and Mo
 4. Test the game!!!.
 
 In case of any difficulties in running the game or understanding the code, feel free to put an issue.
+
+# Features
+* More than 20,000 islands to explore.
+* Dice roll feature to land on any random island in the world.
+* Buy new islands using gold coins.
+* Buy new ships using gold coins
+* Trade resources with other players using your ships to earn gold coins.
+  * Sell resources to other players.
+  * Buy resources from other players.
+* Collect penalty from players landing on your island.
+* View a log of all events that happened when you were online as well as offline.
 
 # Screenshots
 ![index](/screenshots/index.png?raw=true "index")  
