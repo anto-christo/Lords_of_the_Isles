@@ -1,266 +1,245 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-    <META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
-	<title>Home</title>
-  
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-  <script src = "/socket.io/socket.io.js"></script>
-
+  <META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
+  <title>Home</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+    crossorigin="anonymous">
+  <script src="/socket.io/socket.io.js"></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" type="text/css" href="css/home.css">
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
   <script type="text/javascript">
-      $(document).ready(function(){
-          $('[data-toggle="popover"]').popover({
-              placement : 'bottom',
-              trigger : 'hover'
-          });
-          var text;
-          var random_event=1;
-          $('[data-toggle="dice"]').popover({
-              placement : 'bottom',
-              trigger : 'hover',
-              html : true,
-              content : text
-          });
+    $(document).ready(function () {
+      $('[data-toggle="popover"]').popover({
+        placement: 'bottom',
+        trigger: 'hover'
       });
-    </script>
-
-    <script type="text/javascript">
-         var change_iframe_src = function(new_src) {
-             $("#info-screen").attr('src', new_src);
-         }
-
-         var change_goods = function(new_src) {
-             $("#event-log").attr('src', new_src);
-         }
-    </script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-112389019-2');
-</script>
+      var text;
+      var random_event = 1;
+      $('[data-toggle="dice"]').popover({
+        placement: 'bottom',
+        trigger: 'hover',
+        html: true,
+        content: text
+      });
+    });
+  </script>
+  <script type="text/javascript">
+    var change_iframe_src = function (new_src) {
+      $("#info-screen").attr('src', new_src);
+    }
+    var change_goods = function (new_src) {
+      $("#event-log").attr('src', new_src);
+    }
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-112389019-2');
+  </script>
 </head>
-
 <body>
+  <div class="container-fluid">
+    <div class="row row-eq-height">
+      <div class="col-md-2">
+        <div class="row">
+          <div class="col-md-8" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom"
+            data-content="Your Gold">
+            <img src="assets/bg/gold.png" height="50" style="padding-left: 10px;">
+            <div class="money">
+              <script type="text/javascript">
+                var person = localStorage.getItem("user");
+                var socket = io();
+                // console.log("person:" + person);
+                socket.emit("add-user", { "username": person }); // LATER THIS SHOULD BE FROM INDEX.HTML
+                socket.emit("get_first_island", { "username": person });
+                socket.on("setLocalStorage", function (data) {
+                  localStorage.setItem("i_name", data);
+                });
+                setInterval(function () {
+                  socket.emit('getGold', { "username": person });
+                }, 3000);
+                socket.on('responseGold', function (data) {
+                  document.getElementById('gold').innerHTML = data;
+                });
+                function toggle_tut() {
+                  console.log("inside toggle tut js");
+                  $.ajax({
+                    type: 'POST',
+                    url: '/toggle_tut',
+                    dataType: 'json',
+                    data: { name: person },
+                    error: function (data) {
+                      console.log("in error data:" + data)
+                    },
+                    success: function (data) {
+                      console.log("in success data:" + data)
+                      if (data.status == "enabled") {
+                        alert("Tutorial enabled");
+                      }
+                      else if (data.status == "disabled") {
 
-	<div class="container-fluid" >
-  		<div class="row row-eq-height" >
-
-        <div class="col-md-2" >
-          <div class="row">
-            <div class="col-md-8" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Your Gold">
-                <img src="assets/bg/gold.png" height="50" style="padding-left: 10px;" >
-                <div class="money">
-                    <script type="text/javascript">
-
-                        var person = localStorage.getItem("user");
-
-                        var socket = io();
-                        // console.log("person:" + person);
-                        socket.emit("add-user", {"username": person}); // LATER THIS SHOULD BE FROM INDEX.HTML
-                        socket.emit("get_first_island", {"username": person});
-                        socket.on("setLocalStorage",function(data){
-                            localStorage.setItem("i_name", data);
-                        });
-
-                        setInterval(function(){ 
-                            socket.emit('getGold', {"username": person});
-                        }, 3000);
-
-                        socket.on('responseGold', function(data){
-                            document.getElementById('gold').innerHTML = data;
-                        });
-
-                        function toggle_tut(){
-                          console.log("inside toggle tut js");
-
-                          $.ajax({
-                            type:'POST',
-                            url:'/toggle_tut',
-                            dataType:'json',
-                            data:{name:person},
-                            error:function(data){
-                              console.log("in error data:"+data)
-                            },
-                            success: function(data){
-                              console.log("in success data:"+data)
-                              if(data.status=="enabled"){
-                                alert("Tutorial enabled");
-                              }
-                              else if(data.status=="disabled"){
-
-                                alert("Tutorial disabled");
-                              }
-                            }
-                          });
-                        }
-
-    
-                        
-                    </script>
-                    <div id="gold"></div>
-                </div> 
+                        alert("Tutorial disabled");
+                      }
+                    }
+                  });
+                }
+              </script>
+              <div id="gold"></div>
             </div>
-            <div class="col-md-4" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Click to view Bonuses">
+          </div>
+          <div class="col-md-4" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom"
+            data-content="Click to view Bonuses">
             <script type="text/javascript">
-              function showBonus(){
+              function showBonus() {
                 window.change_iframe_src('bonus.html');
               }
             </script>
-                <img height="40" style="margin-top: 5px;" src="assets/bg/gift.png" onclick="showBonus()">
-            </div>
-          </div>
-          
-        </div>
-        <div class="col-md-1" style="border: 1px solid grey;">
-          <div class="row" style="height: 50px">
-            
-            <div class="col-md-6 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Wiki">
-              <a href="wiki.html"><button type="button" class="btn btn-light linksb">W</button></a>
-            </div>
-            <div class="col-md-6 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Our Sponsors">
-              <script type="text/javascript">
-                function showSponsors(){
-                  window.change_iframe_src('sponsors.html');
-                }
-              </script>
-              <button type="button" class="btn btn-light linksb" onclick="showSponsors()">S</button>
-            </div>
+            <img height="40" style="margin-top: 5px;" src="assets/bg/gift.png" onclick="showBonus()">
           </div>
         </div>
-    		<div class="col-md-6" style="border: 1px solid grey" >
-      			<center>
-      				<img height="50" src="assets/bg/logo.png" style="padding: 5px;" >  
-      			</center>
-    		</div>
-        <div class="col-md-1" style="border: 1px solid grey" >
-          <div class="row" style="height: 50px">
-            <div class="col-md-12 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Help">
-              <button type="button" class="btn btn-light linksb" onclick="toggle_tut()" style="width:100%;height:100%">H</button>
-            </div>
-
+      </div>
+      <div class="col-md-1" style="border: 1px solid grey;">
+        <div class="row" style="height: 50px">
+          <div class="col-md-6 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom"
+            data-content="Wiki">
+            <a href="wiki.html">
+              <button type="button" class="btn btn-light linksb">W</button>
+            </a>
+          </div>
+          <div class="col-md-6 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom"
+            data-content="Our Sponsors">
+            <script type="text/javascript">
+              function showSponsors() {
+                window.change_iframe_src('sponsors.html');
+              }
+            </script>
+            <button type="button" class="btn btn-light linksb" onclick="showSponsors()">S</button>
           </div>
         </div>
-        <div class="col-md-2" style="border: 1px solid grey">
-            <div class="row">
-
-              <div class="col-md-4 dice"  style="border: 1px solid grey; height: 50px;background-color: #004" data-container="body" data-toggle="dice" data-placement="bottom" data-content="">
-                    <img height="50" src="assets/buttons/dice.png" style="margin-left: -15px; padding: 5px" id="dice_btn">
-              </div>
-              <div class="col-md-4" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Time left before next tick">
-                  <center>
-                    <h5 id="timer"></h5>
-                  </center>
-              </div>
-              <div class="col-md-4" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom" data-content="Current tick">
-                  <center>
-                    <h5 id="ticks"></h5>
-                  </center>
-              </div>
-            </div>
+      </div>
+      <div class="col-md-6" style="border: 1px solid grey">
+        <center>
+          <img height="50" src="assets/bg/logo.png" style="padding: 5px;">
+        </center>
+      </div>
+      <div class="col-md-1" style="border: 1px solid grey">
+        <div class="row" style="height: 50px">
+          <div class="col-md-12 " style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom"
+            data-content="Help">
+            <button type="button" class="btn btn-light linksb" onclick="toggle_tut()" style="width:100%;height:100%">H</button>
+          </div>
         </div>
-  		</div>
-	</div>
-
- 
-<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      </div>
+      <div class="col-md-2" style="border: 1px solid grey">
+        <div class="row">
+          <div class="col-md-4 dice" style="border: 1px solid grey; height: 50px;background-color: #004" data-container="body" data-toggle="dice"
+            data-placement="bottom" data-content="">
+            <img height="50" src="assets/buttons/dice.png" style="margin-left: -15px; padding: 5px" id="dice_btn">
+          </div>
+          <div class="col-md-4" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom"
+            data-content="Time left before next tick">
+            <center>
+              <h5 id="timer"></h5>
+            </center>
+          </div>
+          <div class="col-md-4" style="border: 1px solid grey" data-container="body" data-toggle="popover" data-placement="bottom"
+            data-content="Current tick">
+            <center>
+              <h5 id="ticks"></h5>
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-
-
-	<div class="container-fluid">
-  		<div class="row " > 
-    		<div class="col-md-2 columns" style="border: 1px solid grey;" >
-          <center>
-            <h5 style=" margin-top: 5%">Islands Menu</h5>
-          </center>
-    			<br>
-              <center >
-                <iframe name="island_menu" height="425 " width="215" src="islands-menu.html" frameborder="0" allowfullscreen ></iframe>
-              </center> 
-      	</div>
-    
-    		<div class="col-md-8 col-md-8c" style="border: 1px solid grey; ">
-      			<center>
-      				<div class="embed-responsive embed-responsive-16by9">
-					   <iframe class="embed-responsive-item" id="info-screen" height="700" width="500" src="islands-info.html" allowfullscreen></iframe>
-					</div>
-      			</center>
-    		</div>
-    
-    		<div class="col-md-2 columns" style="border: 1px solid grey; background-color: #111111">
-    			<h5 style="margin-left: 25%; margin-top: 15% ; color:white"> Leaderboard</h5>
-    			<br>
-    			<center>
-					<iframe height="305" width="210" style="margin-left: 10px" src="rankings.html" frameborder="0" allowfullscreen ></iframe>
-            <div id="myRank"></div>
-            <div id="myWealth"></div>
-            <!-- <div id="myRank"></div> -->
-                <script type="text/javascript">
-                    setInterval(function(){ 
-                      // console.log("updating rank");
-                      var person = localStorage.getItem("user");
-                      socket.emit('myRank', {"username": person});
-                    },5000);
-                    socket.on("responseRank",function(data){
-                      // console.log("my rank updated"+ data.rank);
-                        document.getElementById('myRank').innerHTML = "Your Rank: "+ data.rank;
-                        document.getElementById('myWealth').innerHTML = "Your Wealth: "+ data.wealth;
-                    });
-                </script>
-            </center>   
-      		</div>
-    	</div>
-	</div>
-
-
-<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  <div class="container-fluid">
+    <div class="row ">
+      <div class="col-md-2 columns" style="border: 1px solid grey;">
+        <center>
+          <h5 style=" margin-top: 5%">Islands Menu</h5>
+        </center>
+        <br>
+        <center>
+          <iframe name="island_menu" height="425 " width="215" src="islands-menu.html" frameborder="0" allowfullscreen></iframe>
+        </center>
+      </div>
+      <div class="col-md-8 col-md-8c" style="border: 1px solid grey; ">
+        <center>
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" id="info-screen" height="700" width="500" src="islands-info.html" allowfullscreen></iframe>
+          </div>
+        </center>
+      </div>
+      <div class="col-md-2 columns" style="border: 1px solid grey; background-color: #111111">
+        <h5 style="margin-left: 25%; margin-top: 15% ; color:white"> Leaderboard</h5>
+        <br>
+        <center>
+          <iframe height="305" width="210" style="margin-left: 10px" src="rankings.html" frameborder="0" allowfullscreen></iframe>
+          <div id="myRank"></div>
+          <div id="myWealth"></div>
+          <!-- <div id="myRank"></div> -->
+          <script type="text/javascript">
+            setInterval(function () {
+              // console.log("updating rank");
+              var person = localStorage.getItem("user");
+              socket.emit('myRank', { "username": person });
+            }, 5000);
+            socket.on("responseRank", function (data) {
+              // console.log("my rank updated"+ data.rank);
+              document.getElementById('myRank').innerHTML = "Your Rank: " + data.rank;
+              document.getElementById('myWealth').innerHTML = "Your Wealth: " + data.wealth;
+            });
+          </script>
+        </center>
+      </div>
+    </div>
+  </div>
+  <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  -->
+  <div class="container-fluid three">
+    <div class="row">
+      <div class="col-md-6" style="border: 1px solid grey">
+        <center>
+          <iframe name="ship_menu" height="118" width="100%" src="ships-menu.html" frameborder="0" allowfullscreen></iframe>
+        </center>
+      </div>
 
-	<div class="container-fluid three">
-  		<div class="row">
-    		<div class="col-md-6" style="border: 1px solid grey" >
-    			<center>
-					<iframe name="ship_menu" height="118" width="100%" src="ships-menu.html" frameborder="0" allowfullscreen ></iframe>
-      			</center>   
-      		</div>
-    
-    		<div class="col-md-6" style="border: 1px solid grey">
-    			<center>
-					<iframe height="118" id="event-log" width="100%" src="event-log.html" frameborder="0" allowfullscreen></iframe>
-      			</center>   
-      		</div>    	
-      	</div>
+      <div class="col-md-6" style="border: 1px solid grey">
+        <center>
+          <iframe height="118" id="event-log" width="100%" src="event-log.html" frameborder="0" allowfullscreen></iframe>
+        </center>
+      </div>
+    </div>
   </div>
-  
   <div class="modal fade" id="intro" tabindex="-1" role="dialog" aria-labelledby="ques" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="ques">Introduction</h5>
-            <span aria-hidden="true">&times;</span>
+          <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <p>Money maketh man in the world of Isles. To grow, to prosper and to expand is the only way of survival.
-            Your mission is to explore the adventurous lands lost in the vast oceans of an unknown world. 
-            Trade and own as many Isles and open up your oceanic empire for the exchange of exotic resources.
-            Sail the seas, win the land, earn the gold and the game is yours !!</p>
+          <p>Money maketh man in the world of Isles. To grow, to prosper and to expand is the only way of survival. Your mission
+            is to explore the adventurous lands lost in the vast oceans of an unknown world. Trade and own as many Isles
+            and open up your oceanic empire for the exchange of exotic resources. Sail the seas, win the land, earn the gold
+            and the game is yours !!</p>
         </div>
         <div class="modal-footer">
-          <a href="#island" data-toggle="modal" data-dismiss="modal"><button class="btn btn-success">Next</button></a>
-         </div>
+          <a href="#island" data-toggle="modal" data-dismiss="modal">
+            <button class="btn btn-success">Next</button>
+          </a>
+        </div>
       </div>
     </div>
   </div>
-
   <div class="modal fade" id="island" tabindex="-1" role="dialog" aria-labelledby="ques" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -272,41 +251,44 @@
         </div>
         <div class="modal-body">
           <p>
-            You can choose which resources to import for every island that you own. 
-            There are 15 common resources and 5 precious resources available to import or export. 
-            Each island can export one resource that it inherently owns and other resources which have been previously imported and can import as many resources you want.
+            You can choose which resources to import for every island that you own. There are 15 common resources and 5 precious resources
+            available to import or export. Each island can export one resource that it inherently owns and other resources
+            which have been previously imported and can import as many resources you want.
           </p>
         </div>
         <div class="modal-footer">
-          <a href="#wealth" data-toggle="modal" data-dismiss="modal"><button class="btn btn-success">Next</button></a>
+          <a href="#wealth" data-toggle="modal" data-dismiss="modal">
+            <button class="btn btn-success">Next</button>
+          </a>
         </div>
       </div>
     </div>
   </div>
-
   <div class="modal fade" id="wealth" tabindex="-1" role="dialog" aria-labelledby="ques" aria-hidden="true" data-backdrop="static">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="ques">Island</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>
-                Beware of importing too many resources as it decreases your wealth on buying them. 
-                The total number of islands, it's population and the amount of resources and the different types of resources (precious or common) you trade constitutes your total wealth.
-                Also, on choosing the dice if you refuse to buy the island or are unable to buy due to lack of gold , you can click ignore and island is available for trade, though you may not own it.
-            </p>
-          </div>
-          <div class="modal-footer">
-            <a href="#ship" data-toggle="modal" data-dismiss="modal"><button class="btn btn-success">Next</button></a>
-          </div>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ques">Island</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Beware of importing too many resources as it decreases your wealth on buying them. The total number of islands, it's population
+            and the amount of resources and the different types of resources (precious or common) you trade constitutes your
+            total wealth. Also, on choosing the dice if you refuse to buy the island or are unable to buy due to lack of
+            gold , you can click ignore and island is available for trade, though you may not own it.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <a href="#ship" data-toggle="modal" data-dismiss="modal">
+            <button class="btn btn-success">Next</button>
+          </a>
         </div>
       </div>
     </div>
-
+  </div>
   <div class="modal fade" id="ship" tabindex="-1" role="dialog" aria-labelledby="ques" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -317,10 +299,11 @@
           </button>
         </div>
         <div class="modal-body">
-          <p> 
-            Ships of different classes namely S, A ,B , C and D (in the descending order of  capacity, speed and cost) can be used by players to trade between islands.
+          <p>
+            Ships of different classes namely S, A ,B , C and D (in the descending order of  capacity, speed and cost) can be used by
+            players to trade between islands.
           </p>
-          <p> 
+          <p>
             You can click on the 'H' button to toggle instructions enable/disable.
           </p>
         </div>
@@ -330,11 +313,13 @@
       </div>
     </div>
   </div>
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-    <script src="js/home.js"></script>
-    <script src="js/island_gen.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
+  <script src="js/home.js"></script>
+  <script src="js/island_gen.js"></script>
 </body>
+
 </html>

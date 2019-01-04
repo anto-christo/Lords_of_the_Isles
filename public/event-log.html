@@ -1,40 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-		<META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
+	<META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
 	<title>Event</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+	 crossorigin="anonymous">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 	<link rel="stylesheet" type="text/css" href="css/good.css">
-
 	<style type="text/css">
 		.data {
-			 white-space: nowrap;
-			 font-size: 50px;
+			white-space: nowrap;
+			font-size: 50px;
 		}
 	</style>
-
 </head>
 <body>
-
 	<script>
-
 		var user = localStorage.getItem('user');
-
-		function delete_log(id){
-
+		function delete_log(id) {
 			var id_arr = [id];
-
 			console.log("delete clicked");
-				$.ajax({
+			$.ajax({
 				type: 'POST',
 				url: '/delete_log',
-				data:{id:JSON.stringify(id_arr)},
-				success: function(result){
-					if(result=="done")
+				data: { id: JSON.stringify(id_arr) },
+				success: function (result) {
+					if (result == "done")
 						location.reload();
 				}
 			});
@@ -42,15 +35,14 @@
 
 		var id_list = [];
 
-		function delete_all(id){
-
+		function delete_all(id) {
 			console.log("delete clicked");
-				$.ajax({
+			$.ajax({
 				type: 'POST',
 				url: '/delete_log',
-				data:{id:JSON.stringify(id_list)},
-				success: function(result){
-					if(result=="done"){
+				data: { id: JSON.stringify(id_list) },
+				success: function (result) {
+					if (result == "done") {
 						location.reload();
 						id_list = [];
 					}
@@ -61,57 +53,55 @@
 		$.ajax({
 			type: 'POST',
 			url: '/get_log',
-			data:{user:user},
-			success: function(result){
-
-				if(result.length == 0){
+			data: { user: user },
+			success: function (result) {
+				if (result.length == 0) {
 					$('#log_table').append(
 						'<tr><td colspan="3"><center>Nothing to show</center></td></tr>'
 					);
 				}
-
-				for(i=0;i<result.length;i++){
+				for (i = 0; i < result.length; i++) {
 					var id = "delete_log('" + result[i]._id + "')";
-
 					id_list.push(result[i]._id);
-
 					$('#log_table').append(
-						'<tr><td><center>'+result[i].tick+'</center></td>'+
-						'<td><center>'+result[i].event+'</center></td>'+
-						'<td><center><button class="btn btn-success" onclick="'+id+'">Delete</button></center></td></tr>'
+						'<tr><td><center>' + result[i].tick + '</center></td>' +
+						'<td><center>' + result[i].event + '</center></td>' +
+						'<td><center><button class="btn btn-success" onclick="' + id + '">Delete</button></center></td></tr>'
 					);
 				}
 			}
 		});
-
 	</script>
-
 	<div class="outer-container">
-			<div class="inner-container">
+		<div class="inner-container">
 			<div class="element">
-	   
-		   <div class="outer">
-				<center>
-					
-					<table border="1px" id="log_table" width="100%">
+				<div class="outer">
+					<center>
+						<table border="1px" id="log_table" width="100%">
 							<tr>
-								<th><center>Tick</center></th>
-								<th><center>Event</center></th>
-								<th><center><button class="btn btn-danger" onclick="delete_all()">Delete All</button></center></th>
+								<th>
+									<center>Tick</center>
+								</th>
+								<th>
+									<center>Event</center>
+								</th>
+								<th>
+									<center>
+										<button class="btn btn-danger" onclick="delete_all()">Delete All</button>
+									</center>
+								</th>
 							</tr>
 						</table>
 
-				</center>
-	   
-		   </div>
-	   
+					</center>
+				</div>
 			</div>
-			</div>
-			</div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-
+		</div>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+	 crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+	 crossorigin="anonymous"></script>
 </body>
 </html>

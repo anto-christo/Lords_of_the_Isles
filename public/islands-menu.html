@@ -1,130 +1,107 @@
 <html>
+
 <head>
-		<META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
+	<META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
 	<title>Game</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/vertical.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-	
 	<style type="text/css">
-		.element, .outer-container {
-			 width: 200px;
-			 height: 400px;
-			}
-			 
-			.outer-container {
-			 /*border: 5px solid purple;*/
-			 position: relative;
-			 overflow: hidden;
-			}
-			 
-			.inner-container {
-			 position: absolute;
-			 left: 0;
-			 overflow-x: hidden;
-			 overflow-y: scroll;
-			}
-			 
-			.inner-container::-webkit-scrollbar {
-			 display: none;
-			}
+		.element,
+		.outer-container {
+			width: 200px;
+			height: 400px;
+		}
+
+		.outer-container {
+			/*border: 5px solid purple;*/
+			position: relative;
+			overflow: hidden;
+		}
+
+		.inner-container {
+			position: absolute;
+			left: 0;
+			overflow-x: hidden;
+			overflow-y: scroll;
+		}
+
+		.inner-container::-webkit-scrollbar {
+			display: none;
+		}
 	</style>
 </head>
 <body>
-<div class="outer-container">
- <div class="inner-container">
- <div class="element">
-	
-  <div id="nav">
-       
-		<div class="outer" style="margin-bottom: 125px;" id="is_card">
-
-   </div>
- </div>
- </div>
- </div>
-
-    <script>
-
-        var reload_page = function(){
-            window.location.reload();
-        }
-
-    function pickIsland(name) {
-	    // console.log(name);
-
-	    if (typeof(Storage) !== "undefined") {
-	        // Store
-	        localStorage.setItem("i_name", name);
-	        // Retrieve
-	    } else {
-	        document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-	    }
-
-    localStorage.setItem("user_click",1);
-    parent.window.change_iframe_src('islands-info.html');
-}
-
-$(document).ready(function(){
-
-   var user = localStorage.getItem("user");
-
-   var owned = [];
-   var explored = [];
-
-   $.ajax({
-       type: 'POST',
-       url: '/get_island',
-       data:{user:user},
-       success: function(result){
-
-
-			for(i=0;i<result[0].owned_islands_name.length;i++){
-				owned.push(result[0].owned_islands_name[i].island_name);
+	<div class="inner-container">
+		<div class="element">
+			<div id="nav">
+				<div class="outer" style="margin-bottom: 125px;" id="is_card">
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		var reload_page = function () {
+			window.location.reload();
+		}
+		function pickIsland(name) {
+			// console.log(name);
+			if (typeof (Storage) !== "undefined") {
+				// Store
+				localStorage.setItem("i_name", name);
+				// Retrieve
+			} else {
+				document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
 			}
-
-			for(i=0;i<result[0].explored_islands_name.length;i++){
-				explored.push(result[0].explored_islands_name[i].island_name);
-			}
-
-			owned.sort();
-			explored.sort();
-           
-           for(i=0;i<owned.length;i++){
-            var func = "pickIsland('" + owned[i] + "')";
-
-           $('#is_card').append(
-               '<center>'+
-                   '<a href="#" rel="islands-info.html" onclick="'+func+'">'+
-                       '<div class="cardc">'+owned[i]+'</div>'+
-                   '</a>'+
-               '</center>'
-           );
-
-		   }
-		   
-		   for(i=0;i<explored.length;i++){
-            var func = "pickIsland('" + explored[i] + "')";
-
-           $('#is_card').append(
-               '<center>'+
-                   '<a href="#" rel="islands-info.html" onclick="'+func+'">'+
-                       '<div class="carde">'+explored[i]+'</div>'+
-                   '</a>'+
-               '</center>'
-           );
-
-           }
-
-       }
-   });
-});
-    </script>
-
- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-
+			localStorage.setItem("user_click", 1);
+			parent.window.change_iframe_src('islands-info.html');
+		}
+		$(document).ready(function () {
+			var user = localStorage.getItem("user");
+			var owned = [];
+			var explored = [];
+			$.ajax({
+				type: 'POST',
+				url: '/get_island',
+				data: { user: user },
+				success: function (result) {
+					for (i = 0; i < result[0].owned_islands_name.length; i++) {
+						owned.push(result[0].owned_islands_name[i].island_name);
+					}
+					for (i = 0; i < result[0].explored_islands_name.length; i++) {
+						explored.push(result[0].explored_islands_name[i].island_name);
+					}
+					owned.sort();
+					explored.sort();
+					for (i = 0; i < owned.length; i++) {
+						var func = "pickIsland('" + owned[i] + "')";
+						$('#is_card').append(
+							'<center>' +
+							'<a href="#" rel="islands-info.html" onclick="' + func + '">' +
+							'<div class="cardc">' + owned[i] + '</div>' +
+							'</a>' +
+							'</center>'
+						);
+					}
+					for (i = 0; i < explored.length; i++) {
+						var func = "pickIsland('" + explored[i] + "')";
+						$('#is_card').append(
+							'<center>' +
+							'<a href="#" rel="islands-info.html" onclick="' + func + '">' +
+							'<div class="carde">' + explored[i] + '</div>' +
+							'</a>' +
+							'</center>'
+						);
+					}
+				}
+			});
+		});
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+	 crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+	 crossorigin="anonymous"></script>
 </body>
+
 </html>

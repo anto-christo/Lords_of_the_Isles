@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-		<META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
+	<META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
 	<title>Game</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+	 crossorigin="anonymous">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -12,59 +14,53 @@
 
 	<style type="text/css">
 		.data {
-			 white-space: nowrap;
-			 font-size: 50px;
+			white-space: nowrap;
+			font-size: 50px;
 		}
 	</style>
 
 	<script type="text/javascript">
-
-    	function pickShip(s_id) {
-			
-    		if (typeof(Storage) !== "undefined") {
-			    // Store
-			    localStorage.setItem("s_id", s_id);
-			    // Retrieve
+		function pickShip(s_id) {
+			if (typeof (Storage) !== "undefined") {
+				// Store
+				localStorage.setItem("s_id", s_id);
+				// Retrieve
 			}
-
-			if (typeof(Storage) !== "undefined") {
-			    localStorage.setItem("s_id", s_id);
+			if (typeof (Storage) !== "undefined") {
+				localStorage.setItem("s_id", s_id);
 			}
-
 			parent.window.change_iframe_src('ship-console.html');
 		}
 
-		function buy_ship(){
+		function buy_ship() {
 			parent.window.change_iframe_src('ship_buying.html');
-        }
-		
-		$(document).ready(function(){
+		}
 
+		$(document).ready(function () {
 			var user = localStorage.getItem("user");
 			$.ajax({
-				type:'POST',
-				url:'/get_ship',
-				data:{user:user},
-				success: function(result){
+				type: 'POST',
+				url: '/get_ship',
+				data: { user: user },
+				success: function (result) {
 
-					for(i=0;i<result.length;i++){
-						var func = "pickShip('"+result[i]._id+"')";
-			   			if (i==0) 
-			   			{
-			   				localStorage.setItem("s_id", result[i]._id);
-			   			}
-						$('#ship_list').append('<div class="cardc" onclick='+func+'>'+result[i].name+'</div>')
+					for (i = 0; i < result.length; i++) {
+						var func = "pickShip('" + result[i]._id + "')";
+						if (i == 0) {
+							localStorage.setItem("s_id", result[i]._id);
+						}
+						$('#ship_list').append('<div class="cardc" onclick=' + func + '>' + result[i].name + '</div>')
 					}
 
 					$.ajax({
-						type:'POST',
-						url:'/get_ship_slots',
-						data:{user1:user},
-						success: function(result){
+						type: 'POST',
+						url: '/get_ship_slots',
+						data: { user1: user },
+						success: function (result) {
 							var len = result[0].empty_ship_slots;
-							for(i=0;i<len;i++){
+							for (i = 0; i < len; i++) {
 								var func1 = "buy_ship()";
-								$('#ship_list').append('<div class="carde" onclick='+func1+'>'+"<center>Buy<br>Ship</center>"+'</div>')
+								$('#ship_list').append('<div class="carde" onclick=' + func1 + '>' + "<center>Buy<br>Ship</center>" + '</div>')
 							}
 						}
 					});
@@ -72,25 +68,20 @@
 				}
 			});
 		});
-    </script>
-
+	</script>
 </head>
 <body>
-
-<div class="data" id="nav">
-<a href="#" rel="ships-info.html">
-	<div class="horizontal-scroll-wrapper squares" id="ship_list">
-		<div></div>
+	<div class="data" id="nav">
+		<a href="#" rel="ships-info.html">
+			<div class="horizontal-scroll-wrapper squares" id="ship_list">
+				<div></div>
+			</div>
+		</a>
 	</div>
-</a>
-
-</div>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+	 crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+	 crossorigin="anonymous"></script>
 </body>
 </html>
-

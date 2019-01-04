@@ -1,397 +1,360 @@
 <!doctype html>
-<html lang="en"><!DOCTYPE html>
+<html lang="en">
+<!DOCTYPE html>
 <html>
 <head>
-    <META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
-	<title>Island</title>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<style type="text/css">
-
-      body {
-          background: url('assets/bg/i5.jpg') no-repeat fixed;
-          -webkit-background-size: cover;
-          -moz-background-size: cover;
-          -o-background-size: cover;
-          background-size: cover;
-      }
-
-    </style>
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/island.css">
-
-    
-
-
+  <META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
+  <title>Island</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <style type="text/css">
+    body {
+      background: url('assets/bg/i5.jpg') no-repeat fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+    crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="css/island.css">
 </head>
 <body>
-
-  
-	
-	<div class="help" data-toggle="modal" data-target="#ques" > 
-      <img width="50" height="50" src="assets/buttons/ques.png" data-container="body" data-toggle="popover" data-placement="right" data-content="Click for help">
- 	 </div>
-
+  <div class="help" data-toggle="modal" data-target="#ques">
+    <img width="50" height="50" src="assets/buttons/ques.png" data-container="body" data-toggle="popover" data-placement="right"
+      data-content="Click for help">
+  </div>
   <div class="modal fade" id="ques" tabindex="-1" role="dialog" aria-labelledby="ques" aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ques">Island Information Screen</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>This is the Island Information Screen.</p>
-        <p>The name board at the bottom left shows the name of the island and it's population.</p>
-        <p>The right edge of the screen contains a list all the available resources. Numbers in <b style="color:green">green</b>/<b style="color:red">red</b>
-          signify quantity of that resource available for <b style="color:green">buying</b>/<b style="color:red">selling</b>.
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade " id="avail" tabindex="-1" role="dialog" aria-labelledby="avail" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="avail">Trading</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body trading_modal" id="mod"> 
-        <center>
-          <button class="btn btn-success" onclick="openImports()">Imports</button>
-          <button class="btn btn-success" onclick="openExports()">Exports</button><hr>
-        </center>
-        <center>
-          <div id="res_buy"></div><br><br>
-          <div id="res_sell"></div><br><br>
-        </center>
-        
-        <script>
-        $('#res_buy').hide();
-        $('#res_sell').hide();
-        function openImports(){
-          $('#res_buy').show();
-          $('#res_sell').hide();
-        }
-        function openExports(){
-          $('#res_buy').hide();
-          $('#res_sell').show();
-        }
-
-        function update_sell(id,qty,choice){
-                $.ajax({
-                  type:'POST',
-                  url:'/set_sell',
-                  data:{id:id, qty:qty, island:name,choice:choice},
-                  success: function(data){
-                      alert("Resource available for trade updated !!");
-                      window.location.reload();
-                    }
-                  });
-            }
-
-            function func(id){
-              var slider = document.getElementById("s"+id);
-              var output = document.getElementById("d"+id);
-              output.innerHTML = slider.value;
-              slider.oninput = function() {
-                  output.innerHTML = this.value;
-              }
-            }
-            function updating(id,choice){
-              var output = document.getElementById("d"+id);
-              update_sell(id,output.innerHTML,choice);
-            }
-           $.ajax({
-              type:'POST',
-              url:'/get_island_info',
-              data:{island:localStorage.getItem("i_name")},
-              success: function(object){
-                   var res_cap;
-                   result = object.result;
-                    if (result[0].max_population>700) 
-                    {
-                      res_cap = 3000;
-                    }
-                    else
-                    {
-                      res_cap = 2000;
-                    }
-                    // console.log("testing on island "+result)
-                  produced = result[0].res_produced.res_name;
-                  $('#res').empty();
-                  var sum_res = 0;
-                  for(j=0;j<result[0].res_present.length;j++){
-                    // console.log("in for");
-                      sum_res = sum_res +result[0].res_present[j].quantity;
-                      if (result[0].res_present[j].sell > 0) 
-                      {
-                        sum_res = sum_res + result[0].res_present[j].sell;
-                      }
-                  }
-                  for(i=0;i<result[0].res_present.length;i++){
-                      var tp = i + 15; // to keep sliders unique
-                      if(result[0].res_present[i].quantity>0){
-                          $('#res_sell').append(
-                            '<div class="row">'+
-                              '<div class="col-md-1" style="margin-top:20px">'+ result[0].res_present[i].name+'</div>'+
-                              '<div class="col-md-6 slidecontainer">'+
-                                '<div id="d'+tp+'" ></div>'+
-                                  '<input type="range" min="0" max="100" value="0" class="slider" id="s'+tp+'" oninput="func('+tp+')"">'+
-                              '</div>'+
-                              '<div "col-md-5"><button class="btn btn-danger" style="margin-left:15px;margin-top:15px" onclick="updating('+tp+',1)">Put for sale</button></div>'+
-                            '</div>'
-                          ); //exports
-
-                        var slider = document.getElementById("s"+tp);
-                        var output = document.getElementById("d"+tp);
-                        slider.max = result[0].res_present[i].quantity;
-                        if (result[0].res_present[i].sell < 0) 
-                        {
-                          slider.value = (result[0].res_present[i].sell)*(-1);
-                        }
-                        output.innerHTML = slider.value; // Display the default slider value
-                      }
-                      var atp = result[0].res_present[i].sell;
-                      if (atp < 0) 
-                      {
-                        atp = 0; // to not show negative value in accepting modal.
-                      }
-                       $('#res_buy').append(
-                            '<div class="row">'+
-                              '<div class="col-md-1" style="margin-top:20px">'+ result[0].res_present[i].name+'</div>'+
-                              '<div class="col-md-6 slidecontainer">'+
-                                '<div id="d'+i+'" ></div>'+
-                                  '<input type="range" min="0" max="100" value="0" class="slider" id="s'+i+'" oninput="func('+i+')"">'+
-                              '</div>'+
-                              '<div "col-md-5"><button class="btn btn-success" style="margin-left:15px;margin-top:15px" onclick="updating('+i+',0)">Accepting ('+atp+')</button></div>'+
-                            '</div>'
-                          ); // imports
-                        var slider = document.getElementById("s"+i);
-                        var output = document.getElementById("d"+i);
-                      
-                        slider.max = res_cap - sum_res;
-                        output.innerHTML = slider.value; // Display the default slider value
-
-                  }
-
-
-              }
-
-          });  
-
-        </script>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<center id="trading_button">
-  <button class="btn btn-primary trading" data-toggle="modal" data-target="#avail">Trading</button>
-</center>
-<div class="col-md-4" style="color: green;margin-left: -15px;">
-      <center>     
-        <div class="name1" id="owner" style=" width: 300%; ">
-          <div style="opacity: 1">
-            <script type="text/javascript">
-            var a = 60;
-            var b = parseInt(a/12);
-            var text = '<b>Population</b> <br>'+a+'<br> <b>Resources consumed</b><br>'+b+' per tick';
-              var name = localStorage.getItem("i_name");
-              var user = localStorage.getItem("user");
-              var old = localStorage.getItem("old");
-              var time = 60;
-              var time_int;
-
-              
-
-              function buy_island(reply){
-
-                $('#buy_btn').hide();
-                $('#ign_btn').hide();
-                $('#timer').hide();
-
-                clearInterval(time_int);
-
-                $.ajax({
-                        type: 'POST',
-                        url: '/assign_island',
-                        data: {username:user, island:name, reply:reply, old:old},
-                        success: function(data){
-                            // console.log(data.message);
-                            if (data.message=="success") 
-                            {
-                              // console.log("success");
-                                parent.window.island_menu.location.reload();
-                                parent.window.ship_menu.location.reload();
-                                parent.window.change_iframe_src('islands-info.html');
-                                localStorage.setItem("user_click",1);
-                                
-                            }
-                            else if (data.message=="failure")
-                            {
-                              // console.log("failed");
-                                localStorage.setItem("user_click",1);
-                                parent.window.island_menu.location.reload();
-                                parent.window.ship_menu.location.reload();
-                            }
-                            else
-                            {
-                              alert("Not Enough Gold!!")
-                              localStorage.setItem("user_click",1);
-                              parent.window.island_menu.location.reload();
-                              parent.window.ship_menu.location.reload();
-
-                            }
-                            
-                        }
-                    });
-              }
-
-
-              $(document).ready(function(){
-                $('#trading_button').hide();
-
-
-                $.ajax({
-                    type:'POST',
-                    url:'/get_island_info',
-                    data:{island:name},
-                    success: function(object){
-                       result = object.result;
-                        var owner = result[0].owner_name;
-                        a = result[0].current_population;
-                        $('#pop').text(result[0].current_population);
-                        if (owner!=user) 
-                        {
-                          $('#trading_button').hide();
-                        }
-                        else
-                        {
-                          $('#trading_button').show();
-                        }
-                        if(owner=='AI'){
-                          $('#owner').text("Owner: Not Owned");
-                          
-                          if(localStorage.getItem("user_click") == 0){
-
-                            var tr = 'true';
-                            var fl = 'false';
-                            var text = "Buy: "+result[0].value;
-
-                            $('#info_div').append('<button style="margin:10px" class="btn btn-success" onclick="buy_island('+tr+')" id="buy_btn">'+text+'</button>');
-                            $('#info_div').append('<button style="margin:10px" class="btn btn-danger" onclick="buy_island('+fl+')" id="ign_btn">Ignore</button><br><br>');
-                            $('#info_div').append('<p id="timer" style="margin-left:20px; font-size:20px"></p>');
-                          }
-                        }
-                        else if(owner!=user){
-                          $('#owner').text("Owner:"+owner);
-                          buy_island('false');
-                        }
-
-                        else{
-                          $('#owner').text("Owner:"+owner);
-                        }
-
-                        $('#res_table').empty();
-                        var temp_trade;
-                        for(i=0;i<result[0].res_present.length;i++){
-
-                          if(result[0].res_present[i].quantity){
-                            temp_trade = result[0].res_present[i].sell;
-                            if (result[0].res_present[i].sell < 0) 
-                            {
-                              temp_trade = result[0].res_present[i].sell*(-1);
-                            }
-                            $('#res_table').append(
-                              '<tr>'+
-                                  '<td width="50px">'+result[0].res_present[i].quantity+'&nbsp;/&nbsp;</td>'+
-                                  '<td id="trade'+i+'" style="color:green">'+temp_trade+'</td>'+
-                                  '<td><img src="resources/'+result[0].res_present[i].name+'.png" width="34px" height="34px" style="margin-left:10px" data-container="body" data-toggle="popover" data-placement="right" data-content="'+result[0].res_present[i].name+'"></td>'+
-                              '</tr>'
-                            );
-                          }
-                          if (result[0].res_present[i].sell < 0) 
-                          {
-                            $('#trade'+i).css({"color":"red"});
-                          }
-
-                        }
-
-              $('[data-toggle="popover"]').popover({
-              placement : 'right',
-              trigger : 'hover',
-              html : true,
-              content : text 
-          });
-
-                        if(localStorage.getItem("user_click") == 0 && owner == 'AI'){
-                            time_int = setInterval(function(){
-                            $('#timer').text("Time left to buy :"+time);
-                            time--;
-
-                            if(time == 0){
-                              buy_island('false');
-                              $('#buy_btn').hide();
-                              $('#ign_btn').hide();
-                              $('#timer').hide();
-                              clearInterval(time_int);
-                            }
-                          },1000);
-                        }
-                    }
-
-                });
-              });
-            </script>
-          </div> 
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ques">Island Information Screen</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-      </center>
+        <div class="modal-body">
+          <p>This is the Island Information Screen.</p>
+          <p>The name board at the bottom left shows the name of the island and it's population.</p>
+          <p>The right edge of the screen contains a list all the available resources. Numbers in
+            <b style="color:green">green</b>/
+            <b style="color:red">red</b>
+            signify quantity of that resource available for
+            <b style="color:green">buying</b>/
+            <b style="color:red">selling</b>.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
-
-<div class="resources" align="right" style="height: 70%; width: 15%">
-  <table border="0" id="res_table">
-  </table><br><br>
-
-
-</div>
-
-  <div id="info_div" class="buying">
-    
   </div>
 
+  <div class="modal fade " id="avail" tabindex="-1" role="dialog" aria-labelledby="avail" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="avail">Trading</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body trading_modal" id="mod">
+          <center>
+            <button class="btn btn-success" onclick="openImports()">Imports</button>
+            <button class="btn btn-success" onclick="openExports()">Exports</button>
+            <hr>
+          </center>
+          <center>
+            <div id="res_buy"></div>
+            <br>
+            <br>
+            <div id="res_sell"></div>
+            <br>
+            <br>
+          </center>
 
-<div class="man1" >
-	<img class="man" src="assets/bg/board2.png" >
-  <div class="name" style="height: 20%; width: 20%;">
+          <script>
+            $('#res_buy').hide();
+            $('#res_sell').hide();
+            function openImports() {
+              $('#res_buy').show();
+              $('#res_sell').hide();
+            }
+            function openExports() {
+              $('#res_buy').hide();
+              $('#res_sell').show();
+            }
+
+            function update_sell(id, qty, choice) {
+              $.ajax({
+                type: 'POST',
+                url: '/set_sell',
+                data: { id: id, qty: qty, island: name, choice: choice },
+                success: function (data) {
+                  alert("Resource available for trade updated !!");
+                  window.location.reload();
+                }
+              });
+            }
+
+            function func(id) {
+              var slider = document.getElementById("s" + id);
+              var output = document.getElementById("d" + id);
+              output.innerHTML = slider.value;
+              slider.oninput = function () {
+                output.innerHTML = this.value;
+              }
+            }
+            function updating(id, choice) {
+              var output = document.getElementById("d" + id);
+              update_sell(id, output.innerHTML, choice);
+            }
+            $.ajax({
+              type: 'POST',
+              url: '/get_island_info',
+              data: { island: localStorage.getItem("i_name") },
+              success: function (object) {
+                var res_cap;
+                result = object.result;
+                if (result[0].max_population > 700) {
+                  res_cap = 3000;
+                }
+                else {
+                  res_cap = 2000;
+                }
+                // console.log("testing on island "+result)
+                produced = result[0].res_produced.res_name;
+                $('#res').empty();
+                var sum_res = 0;
+                for (j = 0; j < result[0].res_present.length; j++) {
+                  // console.log("in for");
+                  sum_res = sum_res + result[0].res_present[j].quantity;
+                  if (result[0].res_present[j].sell > 0) {
+                    sum_res = sum_res + result[0].res_present[j].sell;
+                  }
+                }
+                for (i = 0; i < result[0].res_present.length; i++) {
+                  var tp = i + 15; // to keep sliders unique
+                  if (result[0].res_present[i].quantity > 0) {
+                    $('#res_sell').append(
+                      '<div class="row">' +
+                      '<div class="col-md-1" style="margin-top:20px">' + result[0].res_present[i].name + '</div>' +
+                      '<div class="col-md-6 slidecontainer">' +
+                      '<div id="d' + tp + '" ></div>' +
+                      '<input type="range" min="0" max="100" value="0" class="slider" id="s' + tp + '" oninput="func(' + tp + ')"">' +
+                      '</div>' +
+                      '<div "col-md-5"><button class="btn btn-danger" style="margin-left:15px;margin-top:15px" onclick="updating(' + tp + ',1)">Put for sale</button></div>' +
+                      '</div>'
+                    ); //exports
+
+                    var slider = document.getElementById("s" + tp);
+                    var output = document.getElementById("d" + tp);
+                    slider.max = result[0].res_present[i].quantity;
+                    if (result[0].res_present[i].sell < 0) {
+                      slider.value = (result[0].res_present[i].sell) * (-1);
+                    }
+                    output.innerHTML = slider.value; // Display the default slider value
+                  }
+                  var atp = result[0].res_present[i].sell;
+                  if (atp < 0) {
+                    atp = 0; // to not show negative value in accepting modal.
+                  }
+                  $('#res_buy').append(
+                    '<div class="row">' +
+                    '<div class="col-md-1" style="margin-top:20px">' + result[0].res_present[i].name + '</div>' +
+                    '<div class="col-md-6 slidecontainer">' +
+                    '<div id="d' + i + '" ></div>' +
+                    '<input type="range" min="0" max="100" value="0" class="slider" id="s' + i + '" oninput="func(' + i + ')"">' +
+                    '</div>' +
+                    '<div "col-md-5"><button class="btn btn-success" style="margin-left:15px;margin-top:15px" onclick="updating(' + i + ',0)">Accepting (' + atp + ')</button></div>' +
+                    '</div>'
+                  ); // imports
+                  var slider = document.getElementById("s" + i);
+                  var output = document.getElementById("d" + i);
+
+                  slider.max = res_cap - sum_res;
+                  output.innerHTML = slider.value; // Display the default slider value
+                }
+              }
+            });
+          </script>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <center id="trading_button">
+    <button class="btn btn-primary trading" data-toggle="modal" data-target="#avail">Trading</button>
+  </center>
+  <div class="col-md-4" style="color: green;margin-left: -15px;">
     <center>
-      <div style="vertical-align: middle">
-        <script type="text/javascript">
-          document.write(localStorage.getItem("i_name"));
-        </script>
-        <div id="pop"></div>
+      <div class="name1" id="owner" style=" width: 300%; ">
+        <div style="opacity: 1">
+          <script type="text/javascript">
+            var a = 60;
+            var b = parseInt(a / 12);
+            var text = '<b>Population</b> <br>' + a + '<br> <b>Resources consumed</b><br>' + b + ' per tick';
+            var name = localStorage.getItem("i_name");
+            var user = localStorage.getItem("user");
+            var old = localStorage.getItem("old");
+            var time = 60;
+            var time_int;
+            function buy_island(reply) {
+              $('#buy_btn').hide();
+              $('#ign_btn').hide();
+              $('#timer').hide();
+              clearInterval(time_int);
+              $.ajax({
+                type: 'POST',
+                url: '/assign_island',
+                data: { username: user, island: name, reply: reply, old: old },
+                success: function (data) {
+                  // console.log(data.message);
+                  if (data.message == "success") {
+                    // console.log("success");
+                    parent.window.island_menu.location.reload();
+                    parent.window.ship_menu.location.reload();
+                    parent.window.change_iframe_src('islands-info.html');
+                    localStorage.setItem("user_click", 1);
+                  }
+                  else if (data.message == "failure") {
+                    // console.log("failed");
+                    localStorage.setItem("user_click", 1);
+                    parent.window.island_menu.location.reload();
+                    parent.window.ship_menu.location.reload();
+                  }
+                  else {
+                    alert("Not Enough Gold!!")
+                    localStorage.setItem("user_click", 1);
+                    parent.window.island_menu.location.reload();
+                    parent.window.ship_menu.location.reload();
+                  }
+                }
+              });
+            }
+            $(document).ready(function () {
+              $('#trading_button').hide();
+              $.ajax({
+                type: 'POST',
+                url: '/get_island_info',
+                data: { island: name },
+                success: function (object) {
+                  result = object.result;
+                  var owner = result[0].owner_name;
+                  a = result[0].current_population;
+                  $('#pop').text(result[0].current_population);
+                  if (owner != user) {
+                    $('#trading_button').hide();
+                  }
+                  else {
+                    $('#trading_button').show();
+                  }
+                  if (owner == 'AI') {
+                    $('#owner').text("Owner: Not Owned");
+                    if (localStorage.getItem("user_click") == 0) {
+                      var tr = 'true';
+                      var fl = 'false';
+                      var text = "Buy: " + result[0].value;
+                      $('#info_div').append('<button style="margin:10px" class="btn btn-success" onclick="buy_island(' + tr + ')" id="buy_btn">' + text + '</button>');
+                      $('#info_div').append('<button style="margin:10px" class="btn btn-danger" onclick="buy_island(' + fl + ')" id="ign_btn">Ignore</button><br><br>');
+                      $('#info_div').append('<p id="timer" style="margin-left:20px; font-size:20px"></p>');
+                    }
+                  }
+                  else if (owner != user) {
+                    $('#owner').text("Owner:" + owner);
+                    buy_island('false');
+                  }
+                  else {
+                    $('#owner').text("Owner:" + owner);
+                  }
+                  $('#res_table').empty();
+                  var temp_trade;
+                  for (i = 0; i < result[0].res_present.length; i++) {
+                    if (result[0].res_present[i].quantity) {
+                      temp_trade = result[0].res_present[i].sell;
+                      if (result[0].res_present[i].sell < 0) {
+                        temp_trade = result[0].res_present[i].sell * (-1);
+                      }
+                      $('#res_table').append(
+                        '<tr>' +
+                        '<td width="50px">' + result[0].res_present[i].quantity + '&nbsp;/&nbsp;</td>' +
+                        '<td id="trade' + i + '" style="color:green">' + temp_trade + '</td>' +
+                        '<td><img src="resources/' + result[0].res_present[i].name + '.png" width="34px" height="34px" style="margin-left:10px" data-container="body" data-toggle="popover" data-placement="right" data-content="' + result[0].res_present[i].name + '"></td>' +
+                        '</tr>'
+                      );
+                    }
+                    if (result[0].res_present[i].sell < 0) {
+                      $('#trade' + i).css({ "color": "red" });
+                    }
+
+                  }
+                  $('[data-toggle="popover"]').popover({
+                    placement: 'right',
+                    trigger: 'hover',
+                    html: true,
+                    content: text
+                  });
+                  if (localStorage.getItem("user_click") == 0 && owner == 'AI') {
+                    time_int = setInterval(function () {
+                      $('#timer').text("Time left to buy :" + time);
+                      time--;
+
+                      if (time == 0) {
+                        buy_island('false');
+                        $('#buy_btn').hide();
+                        $('#ign_btn').hide();
+                        $('#timer').hide();
+                        clearInterval(time_int);
+                      }
+                    }, 1000);
+                  }
+                }
+
+              });
+            });
+          </script>
+        </div>
       </div>
     </center>
   </div>
-</div>
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <div class="resources" align="right" style="height: 70%; width: 15%">
+    <table border="0" id="res_table">
+    </table>
+    <br>
+    <br>
+  </div>
+
+  <div id="info_div" class="buying">
+  </div>
+
+  <div class="man1">
+    <img class="man" src="assets/bg/board2.png">
+    <div class="name" style="height: 20%; width: 20%;">
+      <center>
+        <div style="vertical-align: middle">
+          <script type="text/javascript">
+            document.write(localStorage.getItem("i_name"));
+          </script>
+          <div id="pop"></div>
+        </div>
+      </center>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
 
 </body>
+
 </html>

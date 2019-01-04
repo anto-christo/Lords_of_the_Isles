@@ -1,14 +1,14 @@
 <html>
-    <head>
-            <META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
-        <title>
-            Ship Console
-        </title>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
-        <style>
-                        select {
+<head>
+    <META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
+    <title>
+        Ship Console
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
+    <style>
+        select {
             margin: 10px;
             border: 1px solid #111;
             background: transparent;
@@ -20,123 +20,131 @@
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
+        }
+
+        select::-ms-expand {
+            display: none;
+            /* remove default arrow on ie10 and ie11 */
+        }
+
+        /* target Internet Explorer 9 to undo the custom arrow */
+
+        @media screen and (min-width:0\0) {
+            select {
+                background: none\9;
+                padding: 5px\9;
             }
+        }
+    </style>
+</head>
 
-            select::-ms-expand { 
-                display: none; /* remove default arrow on ie10 and ie11 */
-            }
-
-            /* target Internet Explorer 9 to undo the custom arrow */
-            @media screen and (min-width:0\0) {
-                select {
-                    background:none\9;
-                    padding: 5px\9;
-                } 
-            }
-        </style>
-
-    </head>
-    <body>
-        
-    </body>
-<div id="anchored">
-    
-    <center >
-        <center><h6 id="ship_name" style="background-color:brown;color:white"></h6></center>
-        <center><h6 id="source" style="background-color:brown;color:white"></h6></center>
-
-        <div class="row">
-            <div class="col-md-5">
-                <table border="0" id="res_table">
-                    <tr>
-                        <th>Resource |</th>
-                        <th>Quantity |</th>
-                        <th>Price |</th>
-                        <th>Load To Ship</th>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-md-3">
-            <strong>
-                <div id="ship_eta"></div>
-                <div id="ship_operating_cost"></div>
-                <div id="profit"></div>
-            </strong>
-            </div>
-            <div class="col-md-4">
-                <h5 id="destination"></h5>
-                <table border="0" id="dest_res_table">
-                    <tr>
-                        <th>Resource | </th>
-                        <!-- <th>Quantity</th> -->
-                        <!-- <th>Accepting</th> -->
-                        <th>Price</th>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4" id="class" style="background-color:brown;color:white"></div>
-            <div class="col-md-4" id="speed" style="background-color:brown;color:white"></div>
-            <div class="col-md-4" id="capacity" style="background-color:brown;color:white"></div>
-        </div>
-
-        
-        <br>
-        
+<body>
+    <div id="anchored">
         <center>
-            <div style="border:1px solid grey; border-radius:2%; width:50%; padding:2%" id="view_div">
-                <p>Choose a destination island to see trading possibilities between source and destination islands !</p>
-                <select id="dest_islands"><option>Select Destination</option></select><br><br><br>
+            <center>
+                <h6 id="ship_name" style="background-color:brown;color:white"></h6>
+            </center>
+            <center>
+                <h6 id="source" style="background-color:brown;color:white"></h6>
+            </center>
+            <div class="row">
+                <div class="col-md-5">
+                    <table border="0" id="res_table">
+                        <tr>
+                            <th>Resource |</th>
+                            <th>Quantity |</th>
+                            <th>Price |</th>
+                            <th>Load To Ship</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-3">
+                    <strong>
+                        <div id="ship_eta"></div>
+                        <div id="ship_operating_cost"></div>
+                        <div id="profit"></div>
+                    </strong>
+                </div>
+                <div class="col-md-4">
+                    <h5 id="destination"></h5>
+                    <table border="0" id="dest_res_table">
+                        <tr>
+                            <th>Resource | </th>
+                            <!-- <th>Quantity</th> -->
+                            <!-- <th>Accepting</th> -->
+                            <th>Price</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" id="class" style="background-color:brown;color:white"></div>
+                <div class="col-md-4" id="speed" style="background-color:brown;color:white"></div>
+                <div class="col-md-4" id="capacity" style="background-color:brown;color:white"></div>
+            </div>
+            <br>
+            <center>
+                <div style="border:1px solid grey; border-radius:2%; width:50%; padding:2%" id="view_div">
+                    <p>Choose a destination island to see trading possibilities between source and destination islands !</p>
+                    <select id="dest_islands">
+                        <option>Select Destination</option>
+                    </select>
+                    <br>
+                    <br>
+                    <br>
 
-                <button id="view_button"  class="btn btn-success" onclick="view_market()">View Market</button><br><br><br>
-                <!-- <button class="btn btn-primary" data-toggle="modal" data-target="#ques">Rename Ship</button> -->
+                    <button id="view_button" class="btn btn-success" onclick="view_market()">View Market</button>
+                    <br>
+                    <br>
+                    <br>
+                    <!-- <button class="btn btn-primary" data-toggle="modal" data-target="#ques">Rename Ship</button> -->
+                </div>
+            </center>
+            <button id="send_button" class="btn btn-success" onclick="send_ship()">Send Ship</button>
+            <br>
+            <br>
+            <br>
+            <div class="modal fade" id="ques" tabindex="-1" role="dialog" aria-labelledby="ques" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ques">Rename Ship</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="mod">
 
+                            <br>
+                            <br>
+                            <button class="btn btn-primary" onclick="rename()">Rename</button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </center>
-        
-        <button id="send_button"  class="btn btn-success" onclick="send_ship()">Send Ship</button><br><br><br>
-        <div class="modal fade" id="ques" tabindex="-1" role="dialog" aria-labelledby="ques" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="ques">Rename Ship</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body" id="mod"> 
-              
-                <br><br><button class="btn btn-primary" onclick="rename()">Rename</button>
-
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </center>
-
-</div>
-
-<div id="sailing">
-    <div id="s_source"></div>
-    <div id="s_destination"></div>
-    <div id="s_eta"></div>
-    <br>
-     <table border="0" id="s_res_table">
+    </div>
+    <div id="sailing">
+        <div id="s_source"></div>
+        <div id="s_destination"></div>
+        <div id="s_eta"></div>
+        <br>
+        <table border="0" id="s_res_table">
             <tr>
                 <th>Resource</th>
                 <th>Quantity</th>
-                </tr>
+            </tr>
         </table>
-</div>
-
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
     <script src="js/ship-console.js"></script>
+</body>
+
 </html>

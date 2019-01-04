@@ -1,73 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-		<META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
+	<META HTTP-EQUIV="Access-Control-Allow-Origin" CONTENT="https://loi.teknack.in/">
 	<title>Game</title>
 	<link rel="stylesheet" type="text/css" href="css/rankings.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+	 crossorigin="anonymous">
 	<style type="text/css">
-		.element, .outer-container {
-			 width: 200px;
-			 height: 250px;
-			}
-			 
-			.outer-container {
-			 /*border: 5px solid purple;*/
-			 position: relative;
-			 overflow: hidden;
-			}
-			 
-			.inner-container {
-			 position: absolute;
-			 left: 0;
-			 overflow-x: hidden;
-			 overflow-y: scroll;
-			}
-			 
-			.inner-container::-webkit-scrollbar {
-			 display: none;
-			}
+		.element,
+		.outer-container {
+			width: 200px;
+			height: 250px;
+		}
 
-			.row {
-				display: inline;
-			}
+		.outer-container {
+			/*border: 5px solid purple;*/
+			position: relative;
+			overflow: hidden;
+		}
 
-			body{
-				background-color: #111111;
-			}
+		.inner-container {
+			position: absolute;
+			left: 0;
+			overflow-x: hidden;
+			overflow-y: scroll;
+		}
+
+		.inner-container::-webkit-scrollbar {
+			display: none;
+		}
+
+		.row {
+			display: inline;
+		}
+
+		body {
+			background-color: #111111;
+		}
 	</style>
-
-	<script src = "/socket.io/socket.io.js"></script>
-   
-   <script>
-      var socket = io();
-      socket.on('getLeaderboard', function(data){
-      	var i = 0;
-      	// console.log("UPDATING LEADERBOARD WITH" + data);
-      	while(i<data.length){
-				var nid = "n"+i;
-				var wid = "w"+i;
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		var socket = io();
+		socket.on('getLeaderboard', function (data) {
+			var i = 0;
+			// console.log("UPDATING LEADERBOARD WITH" + data);
+			while (i < data.length) {
+				var nid = "n" + i;
+				var wid = "w" + i;
 				nid = nid.toString();
 				wid = wid.toString();
 				var n = document.getElementById(nid);
 				var w = document.getElementById(wid);
 				n.innerHTML = data[i].name;
 				w.innerHTML = data[i].total_wealth;
-			i++;
-		}
-
-      });
-   </script>
+				i++;
+			}
+		});
+	</script>
 </head>
 <body>
-
 	<div class="outer-container">
-	 <div class="inner-container">
-	 <div class="element">
+		<div class="inner-container">
+			<div class="element">
 
-	<div class="outer" style="margin-bottom: 125px;padding-top: 10px;">
+				<div class="outer" style="margin-bottom: 125px;padding-top: 10px;">
 					<center>
 						<div style="margin-bottom: 10px;margin-top: -10px;display: inline-block;">&emsp;&nbsp;&nbsp;&nbsp;
 							<div class="row legends col-md-8">Lord</div>&emsp;&emsp;
@@ -97,15 +94,11 @@
 							<div class="row r4 n0 col-md-8" id="n4">Rank 5</div>
 							<div class="row r4 w0 col-md-4" id="w4">0</div>
 						</div>
-
 					</center>
-
+				</div>
+			</div>
+		</div>
 	</div>
-
-	 </div>
-	 </div>
-	 </div>
-		
-
 </body>
+
 </html>
